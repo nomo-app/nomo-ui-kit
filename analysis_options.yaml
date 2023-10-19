@@ -1,0 +1,25 @@
+include: package:flutter_lints/flutter.yaml
+
+# Additional information about this file can be found at
+# https://dart.dev/guides/language/analysis-options
+
+linter:
+  # https://dart-lang.github.io/linter/lints/index.html.
+  rules:
+    avoid_print: false
+    prefer_const_constructors: false
+    prefer_conditional_assignment: false
+    overridden_fields: false
+    annotate_overrides: false
+    constant_identifier_names: false
+    non_constant_identifier_names: false
+    prefer_const_declarations: true
+    unnecessary_brace_in_string_interps: false
+    prefer_single_quotes: false
+    prefer_adjacent_string_concatenation: false
+    use_key_in_widget_constructors: false
+    unnecessary_this: true
+    unnecessary_const: true
+    file_names: false
+    unnecessary_string_escapes: false
+    require_trailing_commas: false
