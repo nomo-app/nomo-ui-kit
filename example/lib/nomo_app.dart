@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+// ignore: depend_on_referenced_packages
 import 'package:nomo_router/nomo_router.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
