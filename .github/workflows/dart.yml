@@ -1,9 +1,4 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
-name: Dart
+name: UI-KIT CI/CD
 
 on:
   push:
@@ -12,36 +7,15 @@ on:
     branches: [ "main" ]
 
 jobs:
-  analyze:
-    name: Analyze
-    if: github.event.pull_request.draft == false
-    timeout-minutes: 30
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-      - name: ⚙️ Setup Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-          cache: true
-      - name: ⚙️ Setup Melos
-        uses: bluefireteam/melos-action@v2
-      - name: ⚙️ Install dependencies for all packages
-        run: melos build:pub_get:al
-        
-      - name: Run Dart analysis for app package
-        uses: zgosalvez/github-actions-analyze-dart@v2.0.9
-        with:
-          working-directory: "${{github.workspace}}/app/"
-      - name: Run Dart analysis for data package
-        uses: zgosalvez/github-actions-analyze-dart@v2.0.9
-        with:
-          working-directory: "${{github.workspace}}/packages/package1/"
-      - name: Check metrics
-        uses: dart-code-checker/dart-code-metrics-action@v3.0.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          pull_request_comment: true
-          check_unused_files: true
-          folders: 'app, packages/package1'
+  lint:
+   name: Static code analysis
+   runs-on: ubuntu-latest
+   steps:
+     - uses: actions/checkout@v3
+     - uses: subosito/flutter-action@v1
+     - run: flutter pub get
+     - name: Lint analysis
+       run: flutter anaylze
+     - name: Run tests
+       run: flutter test
+     
