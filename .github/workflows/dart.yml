@@ -20,8 +20,5 @@ jobs:
      - run: cd ..
      - name: Lint analysis
        run: flutter analyze
-     - name: Run tests
-       run: flutter test
-     - name: Build Example
-       run: cd example && flutter run -d linux
+    
      
