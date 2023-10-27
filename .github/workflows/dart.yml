@@ -23,5 +23,5 @@ jobs:
      - name: Run tests
        run: flutter test
      - name: Build Example
-       run: flutter run -d linux
+       run: cd example && flutter run -d linux
      
