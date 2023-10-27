@@ -22,4 +22,6 @@ jobs:
        run: flutter analyze
      - name: Run tests
        run: flutter test
+     - name: Build Example
+       run: flutter run -d linux
      
