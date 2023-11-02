@@ -1,9 +1,10 @@
-# Nomo UI Kit
+# Nomo UI Kit Flutter
 
-Created exclusively for our company's internal use, this UI package offers a collection of reusable widgets,
-such as buttons and cards, designed to streamline our app development process. By seamlessly integrating into our main app as a submodule, it
+Created for the Nomo App, this Flutter UI package offers a collection of reusable widgets,
+such as buttons and cards, designed to streamline the Nomo App development process.
+By seamlessly integrating into the Nomo App as a submodule, it
 encourages modular design and ensures a cohesive user experience throughout.
-Simplify UI development while staying aligned with our company's unique design principles using this tailored UI package.
+Simplify UI development while staying aligned with the Nomo App design principles using this tailored UI package.
 
 ## Features
 
@@ -18,3 +19,19 @@ Simplify UI development while staying aligned with our company's unique design p
 Each feature within our UI package is thoughtfully designed and crafted to align with our company's identity and development requirements, streamlining the creation of a cohesive and user-friendly app experience.
 
 - More Widgets Coming Soon!
+
+## How to integrate
+
+Add this as a Git-submodule to a Flutter app by using Git-commands:
+
+````
+git submodule add https://github.com/nomo-app/nomo-ui-kit.git packages/nomo-ui-kit
+````
+
+Afterwards, expand your pubspec.yaml accordingly:
+
+```
+dependencies:
+    nomo_ui_kit:
+        path: packages/nomo-ui-kit
+```
