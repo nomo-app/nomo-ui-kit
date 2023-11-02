@@ -54,28 +54,32 @@ class NomoApp extends StatelessWidget {
               ),
             ),
           );
-          return MetricReactor(
-            child: NomoTheme(
-              value: theme,
-              child: NomoNavigator(
-                delegate: delegate,
-                child: WidgetsApp.router(
-                  debugShowCheckedModeBanner: false,
-                  localizationsDelegates: [
-                    if (localizationDelegate != null) localizationDelegate!,
-                    GlobalMaterialLocalizations.delegate,
-                    GlobalCupertinoLocalizations.delegate
-                  ],
-                  supportedLocales: supportedLocales,
+          return ScrollConfiguration(
+            behavior:
+                ScrollConfiguration.of(context).copyWith(scrollbars: false),
+            child: MetricReactor(
+              child: NomoTheme(
+                value: theme,
+                child: NomoNavigator(
+                  delegate: delegate,
+                  child: WidgetsApp.router(
+                    debugShowCheckedModeBanner: false,
+                    localizationsDelegates: [
+                      if (localizationDelegate != null) localizationDelegate!,
+                      GlobalMaterialLocalizations.delegate,
+                      GlobalCupertinoLocalizations.delegate
+                    ],
+                    supportedLocales: supportedLocales,
 
-                  locale: currentLocale,
+                    locale: currentLocale,
 
-                  color: theme.colors.primary,
-                  routerDelegate: delegate,
+                    color: theme.colors.primary,
+                    routerDelegate: delegate,
 
-                  //   routeInformationProvider: PlatformRouteInformationProvider(initialRouteInformation: WidgetsBinding.instance),
-                  routeInformationParser: NomoRouteInformationParser(
-                    nestedRoutes: nestedRoutes,
+                    //   routeInformationProvider: PlatformRouteInformationProvider(initialRouteInformation: WidgetsBinding.instance),
+                    routeInformationParser: NomoRouteInformationParser(
+                      nestedRoutes: nestedRoutes,
+                    ),
                   ),
                 ),
               ),

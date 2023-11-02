@@ -114,6 +114,8 @@ class ComponentThemeDataGenerator
       _getFromContext(
         widgetName: _className,
         themeDataClassName: themeDataClassName,
+        colorDataClassName: colorDataClassName,
+        sizingDataClassName: sizingDataClassName,
         themeName: themeName,
         overrideThemeInheritedWidgetClassName:
             themeOverrideInheritedWidgetClassName,
@@ -182,9 +184,9 @@ class ComponentThemeDataGenerator
     if (colorFields.isNotEmpty) {
       buffer.writeln("{");
       for (var colorfieldEntry in colorFields.entries) {
-        final (_, value) = colorfieldEntry.value;
+        final (type, value) = colorfieldEntry.value;
         final name = colorfieldEntry.key;
-        buffer.writeln("this.$name = $value,");
+        buffer.writeln("this.$name = ${(type, value).constPrefix} $value,");
       }
 
       buffer.writeln("}");
@@ -337,18 +339,19 @@ class ComponentThemeDataGenerator
       buffer.writeln("final ${type.getNullablePostfix(value)} $name;");
     }
 
+    /// Constructor
+    buffer.writeln("const $className(");
     if (fields.isNotEmpty) {
-      /// Constructor
-      buffer.writeln("const $className({");
+      buffer.writeln("{");
       for (final field in fields.entries) {
         final (type, value) = field.value;
         final name = field.key;
 
         buffer.writeln("this.$name = ${(type, value).constPrefix} $value,");
       }
-
-      buffer.writeln("});");
+      buffer.writeln("}");
     }
+    buffer.writeln(");");
 
     /// Factory
     buffer.writeln("factory $className.from(");
@@ -427,6 +430,8 @@ String _getThemeDataNullableClass({
 String _getFromContext({
   required String widgetName,
   required String themeDataClassName,
+  required String sizingDataClassName,
+  required String colorDataClassName,
   required String themeName,
   required String overrideThemeInheritedWidgetClassName,
   required Map<String, (String, String)> colorFields,
@@ -441,15 +446,15 @@ String _getFromContext({
 
   if (colorFields.isNotEmpty) {
     buffer.writeln(
-        "final globalColorTheme = NomoTheme.maybeOf(context)?.componentColors.$themeName ?? $themeDataClassName();");
+        "final globalColorTheme = NomoTheme.maybeOf(context)?.componentColors.$themeName ?? $colorDataClassName();");
   } else {
-    buffer.writeln("final globalColorTheme = $themeDataClassName();");
+    buffer.writeln("final globalColorTheme = $colorDataClassName();");
   }
   if (sizingFields.isNotEmpty) {
     buffer.writeln(
-        "final globalSizingTheme = NomoTheme.maybeOf(context)?.componentSizes.$themeName ?? $themeDataClassName();");
+        "final globalSizingTheme = NomoTheme.maybeOf(context)?.componentSizes.$themeName ?? $sizingDataClassName();");
   } else {
-    buffer.writeln("final globalSizingTheme = $themeDataClassName();");
+    buffer.writeln("final globalSizingTheme = $sizingDataClassName();");
   }
 
   buffer.writeln(

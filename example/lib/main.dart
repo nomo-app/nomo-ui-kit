@@ -7,8 +7,11 @@ import 'package:example/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:nomo_ui_kit/app/nomo_app.dart';
 import 'package:nomo_ui_kit/components/app_bar/nomo_app_bar.dart';
+import 'package:nomo_ui_kit/components/bottom_bar/nomo_bottom_bar.dart';
 import 'package:nomo_ui_kit/components/button/nomo_button.dart';
 import 'package:nomo_ui_kit/components/outline_container/nomo_outline_container.dart';
+import 'package:nomo_ui_kit/components/scaffold/nomo_scaffold.dart';
+import 'package:nomo_ui_kit/components/sider/nomo_sider.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 
 void main() {
@@ -29,29 +32,38 @@ class MyApp extends StatelessWidget {
         sizingTheme: SizingMode.LARGE.theme,
         textTheme: typography,
       ),
-      supportedLocales: const [
-        Locale('en', 'US'),
-      ],
+      supportedLocales: const [Locale('en', 'US')],
       routes: AppRoutes.routes,
       nestedRoutes: AppRoutes.nestedRoutes,
       nestedNavigatorWrapper: (nav, context) {
-        return Scaffold(
-          appBar: PreferredSize(
-            preferredSize:
-                Size.fromHeight(context.componentSizes.appBarTheme.height),
-            child: NomoAppBar(
-              title: const Text("Nested Navigator"),
-              trailling: ElevatedButton(
-                onPressed: () {
-                  final rand = Random().nextInt(ColorMode.values.length);
-                  ThemeProvider.of(context)
-                      .changeColorTheme(ColorMode.values[rand]);
-                },
-                child: Text("Theme Switcher"),
-              ),
+        return NomoScaffold(
+          bottomBar: NomoBottomBar(),
+          sider: NomoSider(
+            child: const Text("Sider"),
+          ),
+          padding: EdgeInsets.zero,
+          nestedAppBar: NomoAppBar(
+            leading: Text(
+              "Nomo Theme Playground",
+              style: context.typography.h3,
+            ),
+            topInset: 8,
+            backgroundColor: Colors.transparent,
+            trailling: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    final rand = Random().nextInt(ColorMode.values.length);
+                    ThemeProvider.of(context)
+                        .changeColorTheme(ColorMode.values[rand]);
+                  },
+                  child: const Text("Theme Switcher"),
+                ),
+              ],
             ),
           ),
-          body: nav,
+          child: nav,
         );
       },
     );
@@ -80,11 +92,13 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.all(18.0),
+    return Scrollbar(
+      thickness: 16,
       child: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Column(
+        padding: context.componentSizes.scaffoldTheme.padding,
+        controller: PrimaryScrollController.of(context),
+        child: const Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             // NomoOutlineContainer(
             //     //   background: Colors.amber,

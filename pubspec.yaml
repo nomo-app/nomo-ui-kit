@@ -18,8 +18,7 @@ dependencies:
   google_fonts: ^6.1.0
   nomo_router:
     path: packages/nomo-router
-  nomo_ui_generator:
-    path: packages/nomo_ui_generator
+
   flutter_localizations:
     sdk: flutter
 
@@ -31,7 +30,8 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   build_runner: ^2.0.0
   build_verify: ^3.0.0
-
+  nomo_ui_generator:
+    path: packages/nomo_ui_generator
 
 
   

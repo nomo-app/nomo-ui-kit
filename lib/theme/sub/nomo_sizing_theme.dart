@@ -25,21 +25,33 @@ class NomoSizes {
 class NomoComponentSizes {
   final NomoOutlineContainerSizingData outlineContainerTheme;
   final NomoAppBarSizingData appBarTheme;
+  final NomoScaffoldSizingData scaffoldTheme;
+  final NomoBottomBarSizingData bottomBarTheme;
+  final NomoSiderSizingData siderTheme;
 
   const NomoComponentSizes._({
     this.outlineContainerTheme = const NomoOutlineContainerSizingData(),
     this.appBarTheme = const NomoAppBarSizingData(),
+    this.scaffoldTheme = const NomoScaffoldSizingData(),
+    this.bottomBarTheme = const NomoBottomBarSizingData(),
+    this.siderTheme = const NomoSiderSizingData(),
   });
 
   factory NomoComponentSizes.override({
     required NomoSizes sizes,
     NomoOutlineContainerSizingData? outlineContainerTheme,
     NomoAppBarSizingData? appBarTheme,
+    NomoScaffoldSizingData? scaffoldTheme,
+    NomoBottomBarSizingData? bottomBarTheme,
+    NomoSiderSizingData? siderTheme,
   }) {
     final def = defaultComponents(sizes);
     return NomoComponentSizes._(
       outlineContainerTheme: outlineContainerTheme ?? def.outlineContainerTheme,
       appBarTheme: appBarTheme ?? def.appBarTheme,
+      scaffoldTheme: scaffoldTheme ?? def.scaffoldTheme,
+      bottomBarTheme: bottomBarTheme ?? def.bottomBarTheme,
+      siderTheme: siderTheme ?? def.siderTheme,
     );
   }
 
@@ -78,6 +90,11 @@ final sizingSmall = NomoSizingThemeData(
       padding: EdgeInsets.all(4),
       spacing: 4,
     ),
+    appBarTheme: NomoAppBarSizingData(),
+    scaffoldTheme: NomoScaffoldSizingData(
+      showBottomBar: true,
+      showSider: false,
+    ),
   ),
 );
 
@@ -101,6 +118,15 @@ final sizingLarge = NomoSizingThemeData(
     fontSizeH2: 28,
     fontSizeH3: 30,
   ),
+  buildComponents: (core) {
+    return NomoComponentSizes.override(
+      sizes: core,
+      siderTheme: NomoSiderThemeData(
+        padding: EdgeInsets.all(4),
+        width: 200,
+      ),
+    );
+  },
 );
 
 enum SizingMode {

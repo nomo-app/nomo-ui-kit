@@ -58,21 +58,33 @@ class NomoColors {
 class NomoComponentColors {
   final NomoOutlineContainerColorData outlineContainerTheme;
   final NomoAppBarColorData appBarTheme;
+  final NomoScaffoldColorData scaffoldTheme;
+  final NomoBottomBarColorData bottomBarTheme;
+  final NomoSiderColorData siderTheme;
 
   const NomoComponentColors._({
     required this.outlineContainerTheme,
     required this.appBarTheme,
+    required this.scaffoldTheme,
+    required this.bottomBarTheme,
+    required this.siderTheme,
   });
 
   factory NomoComponentColors.override({
     required NomoColors colors,
     NomoOutlineContainerColorData? outlineContainerTheme,
     NomoAppBarColorData? appBarTheme,
+    NomoScaffoldColorData? scaffoldTheme,
+    NomoBottomBarColorData? bottomBarTheme,
+    NomoSiderColorData? siderTheme,
   }) {
     final def = defaultComponents(colors);
     return NomoComponentColors._(
       outlineContainerTheme: outlineContainerTheme ?? def.outlineContainerTheme,
       appBarTheme: appBarTheme ?? def.appBarTheme,
+      scaffoldTheme: scaffoldTheme ?? def.scaffoldTheme,
+      bottomBarTheme: bottomBarTheme ?? def.bottomBarTheme,
+      siderTheme: siderTheme ?? def.siderTheme,
     );
   }
 
@@ -84,6 +96,15 @@ class NomoComponentColors {
         ),
         appBarTheme: NomoAppBarColorData(
           backgroundColor: core.primary,
+        ),
+        scaffoldTheme: NomoScaffoldColorData(
+          backgroundColor: core.background,
+        ),
+        bottomBarTheme: NomoBottomBarColorData(
+          backgroundColor: core.primaryContainer,
+        ),
+        siderTheme: NomoSiderColorData(
+          backgroundColor: core.primaryContainer,
         ),
       );
 }

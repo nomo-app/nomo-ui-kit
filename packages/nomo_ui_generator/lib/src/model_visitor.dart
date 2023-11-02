@@ -94,9 +94,8 @@ extension DartObjectUtil on String {
 extension DartTypeUtil on (String, String) {
   String get constPrefix {
     return switch (this) {
-      ("Color", String val) when !val.contains('.') => "const",
-      ("EdgeInsetsGeometry", _) => "const",
-      _ => "",
+      (_, String val) when !val.contains('(') => "",
+      _ => "const",
     };
   }
 }

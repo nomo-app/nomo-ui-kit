@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-// ignore_for_file: use_full_hex_values_for_flutter_colors, ignore_init_to_null
+// ignore_for_file: avoid_init_to_null
 
 part of 'nomo_outline_container.dart';
 
@@ -137,10 +137,10 @@ NomoOutlineContainerThemeData getFromContext(
 ) {
   final globalColorTheme =
       NomoTheme.maybeOf(context)?.componentColors.outlineContainerTheme ??
-          NomoOutlineContainerThemeData();
+          NomoOutlineContainerColorData();
   final globalSizingTheme =
       NomoTheme.maybeOf(context)?.componentSizes.outlineContainerTheme ??
-          NomoOutlineContainerThemeData();
+          NomoOutlineContainerSizingData();
   final themeOverride = NomoOutlineContainerThemeOverride.maybeOf(context);
   final themeData =
       NomoOutlineContainerThemeData.from(globalColorTheme, globalSizingTheme)

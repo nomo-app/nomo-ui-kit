@@ -1,8 +1,8 @@
 include: package:flutter_lints/flutter.yaml
 
 analyzer:
-  exclude:
-    - "**/*.g.dart"
+  # exclude:
+  #   - "**/*.g.dart"
 
 linter:
   # https://dart-lang.github.io/linter/lints/index.html.
@@ -25,3 +25,4 @@ linter:
     unnecessary_string_escapes: false
     require_trailing_commas: false
     depend_on_referenced_packages: false
+  

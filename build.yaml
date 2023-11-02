@@ -6,8 +6,7 @@ targets:
       source_gen|combining_builder:
         options:
           ignore_for_file:
-          - use_full_hex_values_for_flutter_colors
-          - ignore_init_to_null
+          - avoid_init_to_null
 
 
 

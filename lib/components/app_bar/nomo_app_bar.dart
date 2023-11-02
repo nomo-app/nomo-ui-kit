@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nomo_ui_generator/annotations.dart';
+
 import 'package:nomo_ui_kit/components/app_bar/layout/appbar_layout_delegate.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 
@@ -7,15 +7,19 @@ part 'nomo_app_bar.g.dart';
 
 @NomoComponentThemeData('appBarTheme')
 class NomoAppBar extends StatelessWidget {
-  final Widget title;
+  final Widget? title;
   final Widget? leading;
   final Widget? trailling;
-  final double spacing;
-  final double topInset;
-  final BorderRadiusGeometry? borderRadius;
-
-  @NomoSizingField<PreferredSizeWidget?>(null)
   final PreferredSizeWidget? bottom;
+
+  @NomoSizingField(16.0)
+  final double? spacing;
+
+  @NomoSizingField(0.0)
+  final double? topInset;
+
+  @NomoColorField<BorderRadiusGeometry?>(null)
+  final BorderRadiusGeometry? borderRadius;
 
   @NomoSizingField(kToolbarHeight)
   final double? height;
@@ -25,14 +29,14 @@ class NomoAppBar extends StatelessWidget {
 
   const NomoAppBar({
     super.key,
-    required this.title,
+    this.title,
     this.leading,
     this.trailling,
-    this.spacing = 16,
+    this.spacing,
     this.backgroundColor,
     this.borderRadius,
     this.bottom,
-    this.topInset = 0,
+    this.topInset,
     this.height,
   });
 
@@ -41,13 +45,13 @@ class NomoAppBar extends StatelessWidget {
     final theme = getFromContext(context, this);
 
     return Container(
-      margin: EdgeInsets.only(top: topInset),
+      margin: EdgeInsets.only(top: theme.topInset),
       decoration: BoxDecoration(
         borderRadius: borderRadius,
         color: theme.backgroundColor,
       ),
       height: theme.height,
-      padding: EdgeInsets.symmetric(horizontal: spacing),
+      padding: EdgeInsets.symmetric(horizontal: theme.spacing),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -56,7 +60,7 @@ class NomoAppBar extends StatelessWidget {
             child: AppBarLayoutDelegate(
               children: {
                 if (leading != null) AppBarItem.backButton: leading!,
-                AppBarItem.title: title,
+                if (title != null) AppBarItem.title: title!,
                 if (trailling != null) AppBarItem.actions: trailling!,
               },
             ),

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-// ignore_for_file: use_full_hex_values_for_flutter_colors, ignore_init_to_null
+// ignore_for_file: avoid_init_to_null
 
 part of 'nomo_app_bar.dart';
 
@@ -9,44 +9,56 @@ part of 'nomo_app_bar.dart';
 // **************************************************************************
 
 class NomoAppBarColorDataNullable {
+  final BorderRadiusGeometry? borderRadius;
   final Color? backgroundColor;
   const NomoAppBarColorDataNullable({
+    this.borderRadius,
     this.backgroundColor,
   });
 }
 
 class NomoAppBarColorData implements NomoAppBarColorDataNullable {
+  final BorderRadiusGeometry? borderRadius;
   final Color backgroundColor;
   const NomoAppBarColorData({
+    this.borderRadius = null,
     this.backgroundColor = Colors.red,
   });
 }
 
 class NomoAppBarSizingDataNullable {
-  final PreferredSizeWidget? bottom;
+  final double? spacing;
+  final double? topInset;
   final double? height;
   const NomoAppBarSizingDataNullable({
-    this.bottom,
+    this.spacing,
+    this.topInset,
     this.height,
   });
 }
 
 class NomoAppBarSizingData implements NomoAppBarSizingDataNullable {
-  final PreferredSizeWidget? bottom;
+  final double spacing;
+  final double topInset;
   final double height;
   const NomoAppBarSizingData({
-    this.bottom = null,
+    this.spacing = 16.0,
+    this.topInset = 0.0,
     this.height = kToolbarHeight,
   });
 }
 
 class NomoAppBarThemeData implements NomoAppBarColorData, NomoAppBarSizingData {
+  final BorderRadiusGeometry? borderRadius;
   final Color backgroundColor;
-  final PreferredSizeWidget? bottom;
+  final double spacing;
+  final double topInset;
   final double height;
   const NomoAppBarThemeData({
+    this.borderRadius = null,
     this.backgroundColor = Colors.red,
-    this.bottom = null,
+    this.spacing = 16.0,
+    this.topInset = 0.0,
     this.height = kToolbarHeight,
   });
   factory NomoAppBarThemeData.from(
@@ -54,15 +66,19 @@ class NomoAppBarThemeData implements NomoAppBarColorData, NomoAppBarSizingData {
     NomoAppBarSizingData sizing,
   ) {
     return NomoAppBarThemeData(
+      borderRadius: colors.borderRadius,
       backgroundColor: colors.backgroundColor,
-      bottom: sizing.bottom,
+      spacing: sizing.spacing,
+      topInset: sizing.topInset,
       height: sizing.height,
     );
   }
   NomoAppBarThemeData override([NomoAppBarThemeDataNullable? override]) {
     return NomoAppBarThemeData(
+      borderRadius: override?.borderRadius ?? borderRadius,
       backgroundColor: override?.backgroundColor ?? backgroundColor,
-      bottom: override?.bottom ?? bottom,
+      spacing: override?.spacing ?? spacing,
+      topInset: override?.topInset ?? topInset,
       height: override?.height ?? height,
     );
   }
@@ -70,12 +86,16 @@ class NomoAppBarThemeData implements NomoAppBarColorData, NomoAppBarSizingData {
 
 class NomoAppBarThemeDataNullable
     implements NomoAppBarColorDataNullable, NomoAppBarSizingDataNullable {
+  final BorderRadiusGeometry? borderRadius;
   final Color? backgroundColor;
-  final PreferredSizeWidget? bottom;
+  final double? spacing;
+  final double? topInset;
   final double? height;
   const NomoAppBarThemeDataNullable({
+    this.borderRadius,
     this.backgroundColor,
-    this.bottom,
+    this.spacing,
+    this.topInset,
     this.height,
   });
 }
@@ -111,17 +131,19 @@ NomoAppBarThemeData getFromContext(
 ) {
   final globalColorTheme =
       NomoTheme.maybeOf(context)?.componentColors.appBarTheme ??
-          NomoAppBarThemeData();
+          NomoAppBarColorData();
   final globalSizingTheme =
       NomoTheme.maybeOf(context)?.componentSizes.appBarTheme ??
-          NomoAppBarThemeData();
+          NomoAppBarSizingData();
   final themeOverride = NomoAppBarThemeOverride.maybeOf(context);
   final themeData =
       NomoAppBarThemeData.from(globalColorTheme, globalSizingTheme)
           .override(themeOverride);
   return NomoAppBarThemeData(
+    borderRadius: widget.borderRadius ?? themeData.borderRadius,
     backgroundColor: widget.backgroundColor ?? themeData.backgroundColor,
-    bottom: widget.bottom ?? themeData.bottom,
+    spacing: widget.spacing ?? themeData.spacing,
+    topInset: widget.topInset ?? themeData.topInset,
     height: widget.height ?? themeData.height,
   );
 }
