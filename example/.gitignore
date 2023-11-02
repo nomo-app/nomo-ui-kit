@@ -44,4 +44,13 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-/macos
+
+.vscode/
+
+# Build Dirs
+android/
+ios/
+web/
+windows/
+macos/
+linux/
