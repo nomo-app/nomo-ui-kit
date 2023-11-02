@@ -1,4 +1,4 @@
 [submodule "packages/nomo-router"]
 	path = packages/nomo-router
-	url = https://github.com/nomo-app/nomo-ui-kit.git
+	url = https://github.com/nomo-app/nomo-router.git
 	branch = develop
