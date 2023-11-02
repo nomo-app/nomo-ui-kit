@@ -1,0 +1,22 @@
+name: UI-KIT CI/CD
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  lint:
+   name: Static code analysis
+   runs-on: ubuntu-latest
+   steps:
+     - uses: actions/checkout@v3
+     - uses: subosito/flutter-action@v1
+     - run: git submodule update --init --recursive
+     - run: flutter pub get
+     - run: cd packages/nomo-router && flutter pub get
+     - run: cd ..
+     - run: cd ..
+     - name: Lint analysis
+       run: flutter analyze
