@@ -1,0 +1,16 @@
+name: nomo_ui_generator
+publish_to: none
+
+environment:
+  sdk: ^3.0.0
+
+dependencies:
+  analyzer: '>=5.2.0 <7.0.0'
+  build: ^2.0.0
+  source_gen: 1.4.0
+  collection: ^1.17.2
+
+dev_dependencies:
+  dart_flutter_team_lints: ^2.0.0
+
+

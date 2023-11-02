@@ -1,0 +1,44 @@
+image:
+  name: ghcr.io/cirruslabs/flutter:stable
+
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+  DEVELOPER_DIR: /Applications/Xcode.app/Contents/Developer
+  LANG: "en_US.UTF-8"
+
+stages:
+  - test
+
+cache:
+  paths:
+    - /flutter/bin/cache/dart-sdk
+
+lint:
+  stage: test
+  script:
+    - flutter clean
+    - flutter pub get
+    - flutter --version
+    - flutter analyze
+  tags:
+    - kubernetes
+
+test_coverage:
+  stage: test
+  script:
+    - flutter --version
+    - dart pub global activate junitreport
+    - export PATH="$PATH":"$HOME/.pub-cache/bin"
+    - flutter pub get
+    - flutter test --coverage --reporter=expanded --machine | tojunit > testreport.xml
+    - lcov -r coverage/lcov.info '*/__test*__/*' -o coverage/lcov_cleaned.info
+    - genhtml coverage/lcov_cleaned.info --output=coverage
+  artifacts:
+    expire_in: 1 day
+    reports:
+      junit: testreport.xml
+    paths:
+      - testreport.xml
+      - coverage
+  tags:
+    - kubernetes
