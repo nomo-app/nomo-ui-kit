@@ -37,3 +37,13 @@ coverage/
 **/.plugin_symlinks
 .flutter-plugins
 .flutter-plugins-dependencies
+
+.vscode/
+
+# Build Dirs
+android/
+ios/
+web/
+windows/
+macos/
+linux/
