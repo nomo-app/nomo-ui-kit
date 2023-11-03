@@ -1,7 +1,6 @@
 name: nomo_ui_kit
 description: UI Component Library
 version: 0.0.1
-homepage:
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
@@ -17,8 +16,9 @@ dependencies:
   wolt_modal_sheet: ^0.1.2
   google_fonts: ^6.1.0
   nomo_router:
-    path: packages/nomo-router
-
+    git:
+      url: https://github.com/nomo-app/nomo-router.git
+      ref: main
   flutter_localizations:
     sdk: flutter
 
@@ -32,8 +32,6 @@ dev_dependencies:
   build_verify: ^3.0.0
   nomo_ui_generator:
     path: packages/nomo_ui_generator
-
-
   
 
 flutter:
