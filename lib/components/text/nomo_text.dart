@@ -54,17 +54,16 @@ class NomoText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextStyle style = this.style ?? context.typography.b1
-      ..copyWith(
-        color: color,
-        fontWeight: fontWeight,
-      );
+    TextStyle style = (this.style ?? context.typography.b1).copyWith(
+      color: color,
+      fontWeight: fontWeight,
+    );
 
     return LayoutBuilder(
       builder: (context, constraints) {
         final maxWidth = constraints.maxWidth;
         final maxHeight = constraints.maxHeight;
-        double fontSize = max(style.fontSize!, minFontSize);
+        double fontSize = max(style.fontSize ?? 0, minFontSize);
 
         if (fitHeight != null) {
           if (constraints.maxHeight == double.infinity) {
@@ -163,4 +162,16 @@ class NomoText extends StatelessWidget {
   }
 
   return (_style.fontSize!, lines.length);
+}
+
+Size calculateTextSize({required String text, required TextStyle? style}) {
+  final textPainter = TextPainter(
+    text: TextSpan(
+      text: text,
+      style: style,
+    ),
+    textDirection: TextDirection.ltr,
+  )..layout();
+
+  return textPainter.size;
 }

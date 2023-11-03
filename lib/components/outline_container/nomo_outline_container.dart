@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nomo_ui_kit/components/text/nomo_text.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
-import 'package:nomo_ui_generator/annotations.dart';
 
 part 'nomo_outline_container.g.dart';
 

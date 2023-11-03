@@ -40,9 +40,10 @@ class NomoSider extends StatelessWidget {
         color: theme.backgroundColor,
         border: theme.border,
       ),
-      child: Center(
-        child: Padding(
-          padding: theme.padding,
+      child: Padding(
+        padding: theme.padding,
+        child: Align(
+          alignment: Alignment.topCenter,
           child: child,
         ),
       ),

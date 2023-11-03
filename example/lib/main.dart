@@ -1,9 +1,10 @@
 import 'dart:math';
 
-import 'package:example/buttons/icon_button_wrapper.dart';
-import 'package:example/buttons/text_button_wrapper.dart';
-import 'package:example/dialogs/dialog_wrapper.dart';
+import 'package:example/sections/buttons/icon_button_wrapper.dart';
+import 'package:example/sections/buttons/text_button_wrapper.dart';
+import 'package:example/sections/dialogs/dialog_wrapper.dart';
 import 'package:example/routes.dart';
+import 'package:example/widgets/sider.dart';
 import 'package:flutter/material.dart';
 import 'package:nomo_ui_kit/app/nomo_app.dart';
 import 'package:nomo_ui_kit/components/app_bar/nomo_app_bar.dart';
@@ -13,7 +14,9 @@ import 'package:nomo_ui_kit/components/outline_container/nomo_outline_container.
 import 'package:nomo_ui_kit/components/scaffold/nomo_scaffold.dart';
 import 'package:nomo_ui_kit/components/sider/nomo_sider.dart';
 import 'package:nomo_ui_kit/components/text/nomo_text.dart';
+import 'package:nomo_ui_kit/components/vertical_menu/nomo_vertical_menu.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
+import 'package:nomo_ui_kit/utils/layout_extensions.dart';
 
 void main() {
   // const savedColorMode = ColorMode.LIGHT;
@@ -39,15 +42,13 @@ class MyApp extends StatelessWidget {
       nestedNavigatorWrapper: (nav, context) {
         return NomoScaffold(
           bottomBar: NomoBottomBar(),
-          // sider: NomoSider(
-          //   child: const Text("Sider"),
-          // ),
+          sider: Sider(),
           padding: EdgeInsets.zero,
           nestedAppBar: NomoAppBar(
-            // leading: Text(
-            //   "Nomo Theme Playground",
-            //   style: context.typography.h3,
-            // ),
+            leading: NomoText(
+              "Nomo Theme Playground",
+              //  style: context.typography.h3,
+            ),
             topInset: 8,
             backgroundColor: Colors.transparent,
             trailling: Row(

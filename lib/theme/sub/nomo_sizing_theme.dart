@@ -28,6 +28,7 @@ class NomoComponentSizes {
   final NomoScaffoldSizingData scaffoldTheme;
   final NomoBottomBarSizingData bottomBarTheme;
   final NomoSiderSizingData siderTheme;
+  final NomoVerticalMenuSizingData verticalMenuTheme;
 
   const NomoComponentSizes._({
     this.outlineContainerTheme = const NomoOutlineContainerSizingData(),
@@ -35,6 +36,7 @@ class NomoComponentSizes {
     this.scaffoldTheme = const NomoScaffoldSizingData(),
     this.bottomBarTheme = const NomoBottomBarSizingData(),
     this.siderTheme = const NomoSiderSizingData(),
+    this.verticalMenuTheme = const NomoVerticalMenuSizingData(),
   });
 
   factory NomoComponentSizes.override({
@@ -44,6 +46,7 @@ class NomoComponentSizes {
     NomoScaffoldSizingData? scaffoldTheme,
     NomoBottomBarSizingData? bottomBarTheme,
     NomoSiderSizingData? siderTheme,
+    NomoVerticalMenuSizingData? verticalMenuTheme,
   }) {
     final def = defaultComponents(sizes);
     return NomoComponentSizes._(
@@ -52,6 +55,7 @@ class NomoComponentSizes {
       scaffoldTheme: scaffoldTheme ?? def.scaffoldTheme,
       bottomBarTheme: bottomBarTheme ?? def.bottomBarTheme,
       siderTheme: siderTheme ?? def.siderTheme,
+      verticalMenuTheme: verticalMenuTheme ?? def.verticalMenuTheme,
     );
   }
 
@@ -60,6 +64,10 @@ class NomoComponentSizes {
         outlineContainerTheme: NomoOutlineContainerSizingData(
           spacing: 100,
           padding: EdgeInsets.all(32),
+        ),
+        verticalMenuTheme: NomoVerticalMenuSizingData(
+          hPadding: 12,
+          height: 48,
         ),
       );
 }
@@ -77,12 +85,12 @@ class NomoSizingThemeData {
 
 final sizingSmall = NomoSizingThemeData(
   sizes: NomoSizes(
-    fontSizeB1: 14,
-    fontSizeB2: 16,
-    fontSizeB3: 18,
-    fontSizeH1: 20,
-    fontSizeH2: 22,
-    fontSizeH3: 24,
+    fontSizeB1: 10,
+    fontSizeB2: 12,
+    fontSizeB3: 14,
+    fontSizeH1: 16,
+    fontSizeH2: 18,
+    fontSizeH3: 20,
   ),
   buildComponents: (core) => NomoComponentSizes.override(
     sizes: core,
@@ -99,24 +107,25 @@ final sizingSmall = NomoSizingThemeData(
 );
 
 final sizingMedium = NomoSizingThemeData(
-    sizes: NomoSizes(
-  fontSizeB1: 16,
-  fontSizeB2: 18,
-  fontSizeB3: 20,
-  fontSizeH1: 22,
-  fontSizeH2: 24,
-  fontSizeH3: 26,
-));
+  sizes: NomoSizes(
+    fontSizeB1: 12,
+    fontSizeB2: 14,
+    fontSizeB3: 16,
+    fontSizeH1: 18,
+    fontSizeH2: 20,
+    fontSizeH3: 22,
+  ),
+);
 
 final sizingLarge = NomoSizingThemeData(
   sizes: NomoSizes(
     maxContentWidth: 1000,
-    fontSizeB1: 18,
-    fontSizeB2: 20,
-    fontSizeB3: 22,
-    fontSizeH1: 26,
-    fontSizeH2: 28,
-    fontSizeH3: 30,
+    fontSizeB1: 14,
+    fontSizeB2: 16,
+    fontSizeB3: 18,
+    fontSizeH1: 20,
+    fontSizeH2: 22,
+    fontSizeH3: 24,
   ),
   buildComponents: (core) {
     return NomoComponentSizes.override(

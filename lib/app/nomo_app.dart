@@ -38,6 +38,7 @@ class NomoApp extends StatelessWidget {
       child: ValueListenableBuilder(
         valueListenable: themeNotifier,
         builder: (context, theme, child) {
+          print("Theme Changed to ${theme.colorTheme}");
           final delegate = NomoRouterDelegate(
             rootNavigatorKey,
             routes: routes,
@@ -46,6 +47,7 @@ class NomoApp extends StatelessWidget {
               value: theme,
               child: Builder(
                 builder: (context) {
+                  print("Nested Navigator Wrapper Build");
                   return nestedNavigatorWrapper(
                     nav,
                     context,
@@ -54,6 +56,7 @@ class NomoApp extends StatelessWidget {
               ),
             ),
           );
+
           return ScrollConfiguration(
             behavior:
                 ScrollConfiguration.of(context).copyWith(scrollbars: false),

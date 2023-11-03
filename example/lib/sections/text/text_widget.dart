@@ -6,14 +6,12 @@ class TextWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: NomoText(
-        style: TextStyle(
-          color: Colors.black,
-          fontWeight: FontWeight.w500,
-        ),
-        'Hello World',
+    return NomoText(
+      style: TextStyle(
+        color: Colors.black,
+        fontWeight: FontWeight.w500,
       ),
+      'Hello World',
     );
   }
 }
