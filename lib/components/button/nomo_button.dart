@@ -214,7 +214,7 @@ class NomoButton extends HookWidget {
   getWidget(Widget child, BuildContext context) {
     if (child is NomoText && child.style == null) {
       child = NomoText(
-        child.data!,
+        child.text,
         style: context.typography.b2.copyWith(
           color: context.colors.onPrimary,
         ),

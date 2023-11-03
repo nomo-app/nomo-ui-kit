@@ -12,6 +12,7 @@ import 'package:nomo_ui_kit/components/button/nomo_button.dart';
 import 'package:nomo_ui_kit/components/outline_container/nomo_outline_container.dart';
 import 'package:nomo_ui_kit/components/scaffold/nomo_scaffold.dart';
 import 'package:nomo_ui_kit/components/sider/nomo_sider.dart';
+import 'package:nomo_ui_kit/components/text/nomo_text.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 
 void main() {
@@ -38,15 +39,15 @@ class MyApp extends StatelessWidget {
       nestedNavigatorWrapper: (nav, context) {
         return NomoScaffold(
           bottomBar: NomoBottomBar(),
-          sider: NomoSider(
-            child: const Text("Sider"),
-          ),
+          // sider: NomoSider(
+          //   child: const Text("Sider"),
+          // ),
           padding: EdgeInsets.zero,
           nestedAppBar: NomoAppBar(
-            leading: Text(
-              "Nomo Theme Playground",
-              style: context.typography.h3,
-            ),
+            // leading: Text(
+            //   "Nomo Theme Playground",
+            //   style: context.typography.h3,
+            // ),
             topInset: 8,
             backgroundColor: Colors.transparent,
             trailling: Row(
@@ -97,42 +98,90 @@ class HomePage extends StatelessWidget {
       child: SingleChildScrollView(
         padding: context.componentSizes.scaffoldTheme.padding,
         controller: PrimaryScrollController.of(context),
-        child: const Column(
+        child: Column(
           mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // NomoOutlineContainer(
             //     //   background: Colors.amber,
             //     ),
-            Text(
-              "Text Button",
-              style: TextStyle(fontSize: 24),
+            Container(
+              width: 600,
+              // height: 200,
+              color: Colors.red,
+              child: NomoText(
+                "data",
+                style: TextStyle(fontSize: 24),
+                maxLines: 3,
+
+                //   minFontSize: 12,
+                //       fitHeight: true,
+                //  fontSizes: [24, 20, 16, 12],
+                // overflow: TextOverflow.ellipsis,
+              ),
             ),
-            SizedBox(
-              height: 20,
-            ),
-            TextButtonWrapper(),
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              "Icon Button",
-              style: TextStyle(fontSize: 24),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            IconButtonWrapper(),
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              "Dialog / Card",
-              style: TextStyle(fontSize: 24),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            DialogWrapper(),
+            // NomoText(
+            //   "lorem ipsum dolor sit amet",
+            // ),
+            // SizedBox(
+            //   height: 100,
+            //   child: Row(
+            //     children: [
+            //       Expanded(child: NomoText("lorem ipsum dolor sit amet" * 10)),
+            //       Expanded(
+            //         flex: 2,
+            //         child: NomoText("lorem ipsum dolor sit amet" * 10),
+            //       ),
+            //     ],
+            //   ),
+            // ),
+
+            // SizedBox(
+            //   height: 100,
+            //   child: Row(
+            //     children: [
+            //       Container(
+            //         width: 400,
+            //         height: 100,
+            //         color: Colors.red,
+            //       ),
+            //       Expanded(
+            //         flex: 2,
+            //         child: NomoText("lorem ipsum dolor sit amet" * 10),
+            //       ),
+            //     ],
+            //   ),
+            // )
+            // Text(
+            //   "Text Button",
+            //   style: TextStyle(fontSize: 24),
+            // ),
+            // SizedBox(
+            //   height: 20,
+            // ),
+            // TextButtonWrapper(),
+            // SizedBox(
+            //   height: 20,
+            // ),
+            // Text(
+            //   "Icon Button",
+            //   style: TextStyle(fontSize: 24),
+            // ),
+            // SizedBox(
+            //   height: 20,
+            // ),
+            // IconButtonWrapper(),
+            // SizedBox(
+            //   height: 20,
+            // ),
+            // Text(
+            //   "Dialog / Card",
+            //   style: TextStyle(fontSize: 24),
+            // ),
+            // SizedBox(
+            //   height: 20,
+            // ),
+            // DialogWrapper(),
           ],
         ),
       ),

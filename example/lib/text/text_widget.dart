@@ -6,7 +6,7 @@ class TextWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Expanded(
+    return Expanded(
       child: NomoText(
         style: TextStyle(
           color: Colors.black,

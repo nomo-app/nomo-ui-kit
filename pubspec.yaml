@@ -19,6 +19,8 @@ dependencies:
     git:
       url: https://github.com/nomo-app/nomo-router.git
       ref: main
+  nomo_ui_generator:
+    path: packages/nomo_ui_generator
   flutter_localizations:
     sdk: flutter
 
@@ -30,8 +32,7 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   build_runner: ^2.0.0
   build_verify: ^3.0.0
-  nomo_ui_generator:
-    path: packages/nomo_ui_generator
+
   
 
 flutter:

@@ -105,8 +105,8 @@ class _NomoDropDownMenuState<T> extends State<NomoDropDownMenu<T>> {
                 overflow: widget.overflow,
                 _selectedItem.displayText,
                 style: widget.textStyle ?? const TextStyle(fontSize: 16),
-                minFontSize: widget.minFontSize!,
-                maxFontSize: widget.maxFontSize!,
+                //   minFontSize: widget.minFontSize!,
+                //     maxFontSize: widget.maxFontSize!,
               ),
             ),
             AnimatedRotation(
