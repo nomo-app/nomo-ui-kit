@@ -1,13 +1,16 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/widgets.dart';
-import 'package:nomo_ui_kit/app/nomo_app.dart';
+import 'package:nomo_ui_kit/theme/nomo_theme.dart';
+import 'package:nomo_ui_kit/theme/theme_provider.dart';
 
 class MetricReactor extends StatefulWidget {
   final Widget child;
+  final NomoSizingThemeData Function(double) sizingThemeBuilder;
 
   const MetricReactor({
     super.key,
     required this.child,
+    required this.sizingThemeBuilder,
   });
 
   @override
@@ -29,7 +32,7 @@ class _MetricReactorState extends State<MetricReactor>
 
     Future.microtask(() {
       ThemeProvider.of(context).changeSizingTheme(
-        mediaQueryData.size.width,
+        widget.sizingThemeBuilder(mediaQueryData.size.width),
       );
     });
   }
@@ -48,13 +51,12 @@ class _MetricReactorState extends State<MetricReactor>
     });
 
     ThemeProvider.of(context).changeSizingTheme(
-      mediaQueryData.size.width,
+      widget.sizingThemeBuilder(mediaQueryData.size.width),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    print("Rebuilding Metric Reactor");
     return MediaQuery(
       data: mediaQueryData,
       child: widget.child,

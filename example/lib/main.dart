@@ -1,16 +1,23 @@
 import 'package:example/routes.dart';
+import 'package:example/theme.dart';
 import 'package:example/widgets/bottom_bar.dart';
 import 'package:example/widgets/sider.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:markdown_widget/markdown_widget.dart';
+import 'package:markdown_widget/widget/all.dart';
 import 'package:nomo_ui_kit/app/nomo_app.dart';
+import 'package:nomo_ui_kit/components/app_bar/nomo_app_bar.dart';
 import 'package:nomo_ui_kit/components/scaffold/nomo_scaffold.dart';
-import 'package:nomo_ui_kit/components/text/nomo_text.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:nomo_ui_kit/theme/theme_provider.dart';
 
 void main() {
   // const savedColorMode = ColorMode.LIGHT;
+  usePathUrlStrategy();
 
-//  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
 
   runApp(const MyApp());
 }
@@ -20,6 +27,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return NomoApp(
+      sizingThemeBuilder: (width) => switch (width) {
+        < 480 => sizingSmall,
+        < 1080 => sizingMedium,
+        _ => sizingLarge,
+      },
       theme: NomoThemeData(
         colorTheme: ColorMode.LIGHT.theme,
         sizingTheme: SizingMode.LARGE.theme,
@@ -30,6 +42,41 @@ class MyApp extends StatelessWidget {
       nestedRoutes: AppRoutes.nestedRoutes,
       nestedNavigatorWrapper: (nav, context) {
         return NomoScaffold(
+          appBar: PreferredSize(
+            preferredSize:
+                Size.fromHeight(context.componentSizes.appBarTheme.height),
+            child: NomoAppBar(
+              leading: Text(
+                "Nomo UI Kit",
+                style: context.typography.h3,
+              ),
+              trailling: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      ThemeProvider.of(context).changeColorTheme(
+                        ColorMode.LIGHT.theme,
+                      );
+                    },
+                    icon: const Icon(
+                      Icons.light_mode,
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      ThemeProvider.of(context).changeColorTheme(
+                        ColorMode.DARK.theme,
+                      );
+                    },
+                    icon: const Icon(
+                      Icons.dark_mode,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
           sider: const Sider(),
           bottomBar: const BottomBar(),
           child: nav,
@@ -61,97 +108,29 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scrollbar(
-      thickness: 16,
-      child: SingleChildScrollView(
-        padding: context.componentSizes.scaffoldTheme.padding,
-        controller: PrimaryScrollController.of(context),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // NomoOutlineContainer(
-            //     //   background: Colors.amber,
-            //     ),
-            Container(
-              width: 600,
-              // height: 200,
-              color: Colors.red,
-              child: const NomoText(
-                "data",
-                style: TextStyle(fontSize: 24),
-                maxLines: 3,
-
-                //   minFontSize: 12,
-                //       fitHeight: true,
-                //  fontSizes: [24, 20, 16, 12],
-                // overflow: TextOverflow.ellipsis,
-              ),
-            ),
-            // NomoText(
-            //   "lorem ipsum dolor sit amet",
-            // ),
-            // SizedBox(
-            //   height: 100,
-            //   child: Row(
-            //     children: [
-            //       Expanded(child: NomoText("lorem ipsum dolor sit amet" * 10)),
-            //       Expanded(
-            //         flex: 2,
-            //         child: NomoText("lorem ipsum dolor sit amet" * 10),
-            //       ),
-            //     ],
-            //   ),
-            // ),
-
-            // SizedBox(
-            //   height: 100,
-            //   child: Row(
-            //     children: [
-            //       Container(
-            //         width: 400,
-            //         height: 100,
-            //         color: Colors.red,
-            //       ),
-            //       Expanded(
-            //         flex: 2,
-            //         child: NomoText("lorem ipsum dolor sit amet" * 10),
-            //       ),
-            //     ],
-            //   ),
-            // )
-            // Text(
-            //   "Text Button",
-            //   style: TextStyle(fontSize: 24),
-            // ),
-            // SizedBox(
-            //   height: 20,
-            // ),
-            // TextButtonWrapper(),
-            // SizedBox(
-            //   height: 20,
-            // ),
-            // Text(
-            //   "Icon Button",
-            //   style: TextStyle(fontSize: 24),
-            // ),
-            // SizedBox(
-            //   height: 20,
-            // ),
-            // IconButtonWrapper(),
-            // SizedBox(
-            //   height: 20,
-            // ),
-            // Text(
-            //   "Dialog / Card",
-            //   style: TextStyle(fontSize: 24),
-            // ),
-            // SizedBox(
-            //   height: 20,
-            // ),
-            // DialogWrapper(),
-          ],
+    final file = get(
+        Uri.parse(
+          "https://raw.githubusercontent.com/nomo-app/nomo-ui-kit/develop/README.md",
         ),
+        headers: {"Accept": "text/plain"}).then(
+      (value) => value.body,
+    );
+
+    return DefaultTextStyle(
+      style: context.typography.b1,
+      child: FutureBuilder(
+        future: file,
+        builder: (context, snapshot) {
+          if (snapshot.data != null) {
+            return MarkdownWidget(
+              data: snapshot.data as String,
+            );
+          }
+
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        },
       ),
     );
   }

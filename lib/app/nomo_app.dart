@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:logger/logger.dart';
 import 'package:nomo_router/nomo_router.dart';
 import 'package:nomo_ui_kit/app/metric_reactor.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
+import 'package:nomo_ui_kit/theme/theme_provider.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
-
-typedef ThemeNotifier = ValueNotifier<NomoThemeData>;
 
 class NomoApp extends StatelessWidget {
   final List<RouteInfo> routes;
@@ -17,6 +15,7 @@ class NomoApp extends StatelessWidget {
   final Locale? currentLocale;
   final NomoThemeData theme;
   final Widget Function(Widget, BuildContext) nestedNavigatorWrapper;
+  final NomoSizingThemeData Function(double) sizingThemeBuilder;
 
   const NomoApp({
     super.key,
@@ -26,6 +25,7 @@ class NomoApp extends StatelessWidget {
     required this.supportedLocales,
     required this.nestedNavigatorWrapper,
     required this.theme,
+    required this.sizingThemeBuilder,
     this.currentLocale,
   });
 
@@ -53,18 +53,16 @@ class NomoApp extends StatelessWidget {
       child: ValueListenableBuilder(
         valueListenable: themeNotifier,
         builder: (context, theme, child) {
-          print("Theme Changed to ${theme.colorTheme}");
-
           return ScrollConfiguration(
             behavior:
                 ScrollConfiguration.of(context).copyWith(scrollbars: false),
             child: MetricReactor(
+              sizingThemeBuilder: sizingThemeBuilder,
               child: NomoTheme(
                 value: theme,
                 child: NomoNavigator(
                   delegate: delegate,
                   child: Builder(builder: (context) {
-                    print("Nomo Navigator Build");
                     return WidgetsApp.router(
                       debugShowCheckedModeBanner: false,
                       localizationsDelegates: [
@@ -73,13 +71,16 @@ class NomoApp extends StatelessWidget {
                         GlobalCupertinoLocalizations.delegate
                       ],
                       supportedLocales: supportedLocales,
-
                       locale: currentLocale,
-
                       color: theme.colors.primary,
                       routerDelegate: delegate,
-
-                      //   routeInformationProvider: PlatformRouteInformationProvider(initialRouteInformation: WidgetsBinding.instance),
+                      // routeInformationProvider:
+                      //     PlatformRouteInformationProvider(
+                      //   initialRouteInformation: RouteInformation(
+                      //     uri: WidgetsBinding
+                      //         .instance.platformDispatcher.defaultRouteName.uri,
+                      //   ),
+                      // ),
                       routeInformationParser: NomoRouteInformationParser(
                         nestedRoutes: nestedRoutes,
                       ),
@@ -92,60 +93,5 @@ class NomoApp extends StatelessWidget {
         },
       ),
     );
-  }
-}
-
-class MultiWrapper extends StatelessWidget {
-  final Widget child;
-
-  final List<Function(BuildContext context, Widget child)> wrappers;
-
-  const MultiWrapper({
-    Key? key,
-    required this.wrappers,
-    required this.child,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}
-
-class ThemeProvider extends InheritedWidget {
-  final ThemeNotifier notifier;
-
-  const ThemeProvider({
-    Key? key,
-    required this.notifier,
-    required Widget child,
-  }) : super(key: key, child: child);
-
-  static ThemeProvider of(BuildContext context) {
-    final result = context.dependOnInheritedWidgetOfExactType<ThemeProvider>();
-    assert(result != null, 'No ThemeProvider found in context');
-    return result!;
-  }
-
-  void changeColorTheme(ColorMode mode) {
-    notifier.value = notifier.value.copyWith(colorTheme: mode.theme);
-    Logger().i("Color Theme Changed to ${mode.name}");
-  }
-
-  void changeSizingTheme(double width) {
-    final sizingMode = SizingMode.values.firstWhere(
-      (element) => width < element.width,
-      orElse: () => SizingMode.LARGE,
-    );
-    if (notifier.value.sizingTheme == sizingMode.theme) return;
-
-    notifier.value = notifier.value.copyWith(sizingTheme: sizingMode.theme);
-
-    Logger().i("Sizing Changed to ${sizingMode.name}");
-  }
-
-  @override
-  bool updateShouldNotify(ThemeProvider oldWidget) {
-    return oldWidget.notifier != notifier;
   }
 }

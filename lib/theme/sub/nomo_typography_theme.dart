@@ -50,12 +50,3 @@ class NomoTypographyTheme {
     );
   }
 }
-
-final typography = NomoTypographyTheme(
-  b1: GoogleFonts.inter(),
-  b2: GoogleFonts.inter(),
-  b3: GoogleFonts.inter(),
-  h1: GoogleFonts.inter(),
-  h2: GoogleFonts.inter(),
-  h3: GoogleFonts.inter(),
-);

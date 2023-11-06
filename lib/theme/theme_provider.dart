@@ -1,44 +1,36 @@
+import 'package:flutter/widgets.dart';
+import 'package:nomo_ui_kit/app/nomo_app.dart';
+import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 
-// final themeProvider =
-//     StateNotifierProvider<ThemeNotifier, NomoThemeData>((ref) {
-//   final initial = ZeniqThemeData(
-//     colors: ThemeDB.savedTheme,
-//     sizing: SizingMode.LARGE.theme,
-//     textTheme: typography,
-//   );
+typedef ThemeNotifier = ValueNotifier<NomoThemeData>;
 
-//   return ThemeNotifier(initial);
-// });
+class ThemeProvider extends InheritedWidget {
+  final ThemeNotifier notifier;
 
-// class ThemeNotifier extends StateNotifier<ZeniqThemeData> {
-//   ThemeNotifier(ZeniqThemeData inital) : super(inital);
+  const ThemeProvider({
+    Key? key,
+    required this.notifier,
+    required Widget child,
+  }) : super(key: key, child: child);
 
-//   void changeSizingTheme(double width) {
-//     final sizingMode = SizingMode.values.firstWhere(
-//       (element) => width < element.width,
-//       orElse: () => SizingMode.LARGE,
-//     );
-//     if (state.sizing == sizingMode.theme) return;
+  static ThemeProvider of(BuildContext context) {
+    final result = context.dependOnInheritedWidgetOfExactType<ThemeProvider>();
+    assert(result != null, 'No ThemeProvider found in context');
+    return result!;
+  }
 
-//     state = state.copyWith(sizing: sizingMode.theme);
+  void changeColorTheme(NomoColorThemeData mode) {
+    notifier.value = notifier.value.copyWith(colorTheme: mode);
+  }
 
-//     Logger.log("Sizing Changed to ${sizingMode.name}");
-//   }
+  void changeSizingTheme(NomoSizingThemeData mode) {
+    if (notifier.value.sizingTheme == mode) return;
 
-//   void changeTheme(ColorMode themeMode) {
-//     if (state.colors == themeMode.theme) return;
+    notifier.value = notifier.value.copyWith(sizingTheme: mode);
+  }
 
-//     state = state.copyWith(colors: themeMode.theme)
-//       ..colors.setSystemUiOverlayStyle()
-//       ..colors.precacheAssets();
-
-//     ThemeDB.saveTheme(state.colors);
-//   }
-
-//   void incrementTheme() {
-//     final index = ColorMode.values.indexOf(state.colors.type);
-//     final nextIndex = (index + 1) % ColorMode.values.length;
-//     changeTheme(ColorMode.values[nextIndex]);
-//   }
-// }
-
+  @override
+  bool updateShouldNotify(ThemeProvider oldWidget) {
+    return oldWidget.notifier != notifier;
+  }
+}

@@ -30,10 +30,12 @@ class NomoAppBarSizingDataNullable {
   final double? spacing;
   final double? topInset;
   final double? height;
+  final double? elevation;
   const NomoAppBarSizingDataNullable({
     this.spacing,
     this.topInset,
     this.height,
+    this.elevation,
   });
 }
 
@@ -41,10 +43,12 @@ class NomoAppBarSizingData implements NomoAppBarSizingDataNullable {
   final double spacing;
   final double topInset;
   final double height;
+  final double elevation;
   const NomoAppBarSizingData({
     this.spacing = 16.0,
     this.topInset = 0.0,
     this.height = kToolbarHeight,
+    this.elevation = 2.0,
   });
 }
 
@@ -54,12 +58,14 @@ class NomoAppBarThemeData implements NomoAppBarColorData, NomoAppBarSizingData {
   final double spacing;
   final double topInset;
   final double height;
+  final double elevation;
   const NomoAppBarThemeData({
     this.borderRadius = null,
     this.backgroundColor = Colors.red,
     this.spacing = 16.0,
     this.topInset = 0.0,
     this.height = kToolbarHeight,
+    this.elevation = 2.0,
   });
   factory NomoAppBarThemeData.from(
     NomoAppBarColorData colors,
@@ -71,6 +77,7 @@ class NomoAppBarThemeData implements NomoAppBarColorData, NomoAppBarSizingData {
       spacing: sizing.spacing,
       topInset: sizing.topInset,
       height: sizing.height,
+      elevation: sizing.elevation,
     );
   }
   NomoAppBarThemeData override([NomoAppBarThemeDataNullable? override]) {
@@ -80,6 +87,7 @@ class NomoAppBarThemeData implements NomoAppBarColorData, NomoAppBarSizingData {
       spacing: override?.spacing ?? spacing,
       topInset: override?.topInset ?? topInset,
       height: override?.height ?? height,
+      elevation: override?.elevation ?? elevation,
     );
   }
 }
@@ -91,12 +99,14 @@ class NomoAppBarThemeDataNullable
   final double? spacing;
   final double? topInset;
   final double? height;
+  final double? elevation;
   const NomoAppBarThemeDataNullable({
     this.borderRadius,
     this.backgroundColor,
     this.spacing,
     this.topInset,
     this.height,
+    this.elevation,
   });
 }
 
@@ -145,5 +155,6 @@ NomoAppBarThemeData getFromContext(
     spacing: widget.spacing ?? themeData.spacing,
     topInset: widget.topInset ?? themeData.topInset,
     height: widget.height ?? themeData.height,
+    elevation: widget.elevation ?? themeData.elevation,
   );
 }

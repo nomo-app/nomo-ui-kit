@@ -23,7 +23,7 @@ class NomoSiderColorData implements NomoSiderColorDataNullable {
   const NomoSiderColorData({
     this.backgroundColor = primaryColor,
     this.border =
-        const Border(right: BorderSide(color: Colors.black12, width: 2)),
+        const Border(right: BorderSide(color: Colors.black12, width: 1)),
   });
 }
 
@@ -53,7 +53,7 @@ class NomoSiderThemeData implements NomoSiderColorData, NomoSiderSizingData {
   const NomoSiderThemeData({
     this.backgroundColor = primaryColor,
     this.border =
-        const Border(right: BorderSide(color: Colors.black12, width: 2)),
+        const Border(right: BorderSide(color: Colors.black12, width: 1)),
     this.padding = const EdgeInsets.all(16),
     this.width = 80.0,
   });

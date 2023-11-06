@@ -17,7 +17,7 @@ class NomoSider extends StatelessWidget {
   final double? width;
 
   @NomoColorField(Border(
-    right: BorderSide(color: Colors.black12, width: 2),
+    right: BorderSide(color: Colors.black12, width: 1),
   ))
   final Border? border;
 

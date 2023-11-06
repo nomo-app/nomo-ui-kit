@@ -30,94 +30,32 @@ extension ThemeContextExtension on BuildContext {
 
   double get insetTop => mediaQuery.padding.top;
 
-  T responsiveValue<T>({
-    required T small,
-    required T medium,
-    required T large,
-  }) {
-    if (sizingTheme.isSmall) return small;
-    if (sizingTheme.isMedium) return medium;
-    return large;
-  }
+  // T responsiveValue<T>({
+  //   required T small,
+  //   required T medium,
+  //   required T large,
+  // }) {
+  //   if (sizingTheme.isSmall) return small;
+  //   if (sizingTheme.isMedium) return medium;
+  //   return large;
+  // }
 }
 
 ///
 /// This Extension allows us to access the sizing type from the theme
 ///
-extension SizingTypeExt on NomoSizingThemeData {
-  SizingMode get type {
-    return SizingMode.values.firstWhere(
-      (element) => element.theme == this,
-      orElse: () => SizingMode.LARGE,
-    );
-  }
+// extension SizingTypeExt on NomoSizingThemeData {
+//   SizingMode get type {
+//     return SizingMode.values.firstWhere(
+//       (element) => element.theme == this,
+//       orElse: () => SizingMode.LARGE,
+//     );
+//   }
 
-  bool get isSmall => type == SizingMode.SMALL;
-  bool get isMedium => type == SizingMode.MEDIUM;
-  bool get isLarge => type == SizingMode.LARGE;
-}
-
-///
-/// ColorTheme Extension
-///
-
-const lightShimmerGradient = LinearGradient(
-  colors: [Color(0xFFEBEBF4), Color(0xFFF4F4F4), Color(0xFFEBEBF4)],
-  stops: [0.1, 0.3, 0.4],
-  begin: Alignment(-1.0, -0.3),
-  end: Alignment(1.0, 0.3),
-  tileMode: TileMode.clamp,
-);
-const darkshimmerGradient = LinearGradient(
-  colors: [
-    Color.fromARGB(255, 59, 70, 77),
-    Color.fromARGB(255, 153, 153, 153),
-    Color.fromARGB(255, 59, 70, 77)
-  ],
-  stops: [0.1, 0.3, 0.4],
-  begin: Alignment(-1.0, -0.3),
-  end: Alignment(1.0, 0.3),
-  tileMode: TileMode.clamp,
-);
-
-const avinocShimmerGradient = LinearGradient(
-  colors: [
-    Color(0x222FAAA5),
-    Color.fromARGB(126, 104, 115, 154),
-    Color(0x222FAAA5)
-  ],
-  stops: [0.1, 0.3, 0.4],
-  begin: Alignment(-1.0, -0.3),
-  end: Alignment(1.0, 0.3),
-  tileMode: TileMode.clamp,
-);
-
-extension ColorTypeExt on NomoColorThemeData {
-  ColorMode get type {
-    return ColorMode.values.firstWhere(
-      (element) => element.theme == this,
-      orElse: () => ColorMode.LIGHT,
-    );
-  }
-
-  bool get isLight => type == ColorMode.LIGHT;
-  bool get isDark => type == ColorMode.DARK;
-  bool get isAvinoc => type == ColorMode.AVINOC;
-
-  LinearGradient get shimmerGradient {
-    switch (type) {
-      case ColorMode.AVINOC:
-        return avinocShimmerGradient;
-
-      case ColorMode.DARK:
-        return darkshimmerGradient;
-      default:
-        return lightShimmerGradient;
-    }
-  }
-
-  Color get borderColor => Colors.white24;
-}
+//   bool get isSmall => type == SizingMode.SMALL;
+//   bool get isMedium => type == SizingMode.MEDIUM;
+//   bool get isLarge => type == SizingMode.LARGE;
+// }
 
 ///
 /// ZeniqThemeData Extension
@@ -140,7 +78,7 @@ extension ThemeUtil on NomoThemeData {
     ];
 
     final border = Border.all(
-      color: colorTheme.borderColor,
+      color: Colors.white24,
       width: 2,
     );
 
