@@ -30,9 +30,9 @@ class MyApp extends StatelessWidget {
       nestedRoutes: AppRoutes.nestedRoutes,
       nestedNavigatorWrapper: (nav, context) {
         return NomoScaffold(
-          child: nav,
           sider: const Sider(),
           bottomBar: const BottomBar(),
+          child: nav,
         );
       },
     );
@@ -77,7 +77,7 @@ class HomePage extends StatelessWidget {
               width: 600,
               // height: 200,
               color: Colors.red,
-              child: NomoText(
+              child: const NomoText(
                 "data",
                 style: TextStyle(fontSize: 24),
                 maxLines: 3,

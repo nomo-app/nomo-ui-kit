@@ -3,7 +3,6 @@ import 'package:example/sections/buttons/text_button_wrapper.dart';
 import 'package:example/sections/dialogs/dialog_wrapper.dart';
 import 'package:example/sections/text/text_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:nomo_ui_kit/components/vertical_menu/nomo_vertical_menu.dart';
 import 'package:nomo_ui_kit/entities/menu_item.dart';
 import 'package:nomo_ui_kit/nomo_ui_kit_base.dart';
 
@@ -61,7 +60,7 @@ class AppRoutes {
 
 extension RouteUtil on NomoMenuItem {
   RouteInfo get route {
-    switch (this.title) {
+    switch (title) {
       case "Text":
         return AppRoutes.textSectionRoute;
       case "Buttons":
@@ -76,7 +75,7 @@ extension RouteUtil on NomoMenuItem {
 
 extension RouteUtil2 on RouteInfo {
   NomoMenuItem get menuItem {
-    switch (this.name) {
+    switch (name) {
       case "/text":
         return AppRoutes.menuItems[1];
       case "/buttons":

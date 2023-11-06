@@ -164,8 +164,8 @@ class DialogWrapper extends StatelessWidget {
           ),
         ),
       ),
-      pageTitle: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
+      pageTitle: const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 30),
         child: Text(
           'Material Colors',
         ),
@@ -230,7 +230,7 @@ class DialogWrapper extends StatelessWidget {
           ],
         ),
       ),
-      topBarTitle: Text(
+      topBarTitle: const Text(
         'Pagination',
       ),
       isTopBarLayerAlwaysVisible: true,

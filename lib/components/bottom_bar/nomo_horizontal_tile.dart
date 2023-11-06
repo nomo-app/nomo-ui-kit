@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:nomo_ui_kit/components/bottom_bar/nomo_bottom_bar.dart';
 import 'package:nomo_ui_kit/components/text/nomo_text.dart';
 import 'package:nomo_ui_kit/components/vertical_menu/nomo_vertical_menu.dart';
 import 'package:nomo_ui_kit/entities/menu_item.dart';
-import 'package:nomo_ui_kit/utils/layout_extensions.dart';
 
 class NomoHorizontalListTile extends StatefulWidget {
   final NomoMenuItem item;

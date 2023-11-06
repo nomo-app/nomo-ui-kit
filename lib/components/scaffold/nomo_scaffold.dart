@@ -63,12 +63,12 @@ class NomoScaffold extends StatelessWidget {
       ),
     );
 
-    final _bottomBar = theme.showBottomBar ? bottomBar : null;
+    final bottomBar = theme.showBottomBar ? this.bottomBar : null;
 
     return Scaffold(
       body: body,
       appBar: appBar,
-      bottomNavigationBar: _bottomBar,
+      bottomNavigationBar: bottomBar,
       bottomSheet: bottomSheet,
       backgroundColor: theme.backgroundColor,
     );

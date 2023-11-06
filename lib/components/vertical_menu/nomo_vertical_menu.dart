@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nomo_ui_kit/components/text/nomo_text.dart';
 import 'package:nomo_ui_kit/components/vertical_menu/nomo_vertical_tile.dart';
 import 'package:nomo_ui_kit/entities/menu_item.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';

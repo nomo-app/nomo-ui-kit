@@ -6,7 +6,7 @@ class TextWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return NomoText(
+    return const NomoText(
       style: TextStyle(
         color: Colors.black,
         fontWeight: FontWeight.w500,

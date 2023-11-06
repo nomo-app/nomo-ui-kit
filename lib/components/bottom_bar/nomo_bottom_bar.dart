@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:nomo_ui_kit/components/bottom_bar/nomo_horizontal_tile.dart';
-import 'package:nomo_ui_kit/components/text/nomo_text.dart';
-import 'package:nomo_ui_kit/components/vertical_menu/nomo_vertical_menu.dart';
 import 'package:nomo_ui_kit/entities/menu_item.dart';
 import 'package:nomo_ui_kit/entities/nomo_decoration.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
-import 'package:nomo_ui_kit/utils/layout_extensions.dart';
 
 part 'nomo_bottom_bar.g.dart';
 
