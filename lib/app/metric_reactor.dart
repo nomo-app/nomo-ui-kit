@@ -54,6 +54,7 @@ class _MetricReactorState extends State<MetricReactor>
 
   @override
   Widget build(BuildContext context) {
+    print("Rebuilding Metric Reactor");
     return MediaQuery(
       data: mediaQueryData,
       child: widget.child,

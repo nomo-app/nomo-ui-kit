@@ -8,16 +8,19 @@ import 'package:nomo_ui_kit/nomo_ui_kit_base.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 import 'package:nomo_ui_kit/utils/layout_extensions.dart';
 
-class Sider extends StatelessWidget {
+class Sider extends StatefulWidget {
   const Sider({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final selection = ValueNotifier<NomoMenuItem?>(null);
-    //   print(NomoNavigator.of(context).delegate.currentConfiguration);
+  State<Sider> createState() => _SiderState();
+}
 
+class _SiderState extends State<Sider> {
+  @override
+  Widget build(BuildContext context) {
+    final current = NomoNavigator.of(context).current.menuItem;
     return NomoSider(
-      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
       child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -25,11 +28,10 @@ class Sider extends StatelessWidget {
             16.vSpacing,
             NomoVerticalMenu(
               style: context.typography.b1,
-              selectedNotifier: selection,
+              selected: current,
               onTap: (item) {
-                selection.value = item;
-
                 NomoNavigator.of(context).push(item.route);
+                setState(() {});
               },
               iconSize: 22,
               title: NomoText(

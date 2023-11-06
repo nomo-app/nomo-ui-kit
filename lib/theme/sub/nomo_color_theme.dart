@@ -105,7 +105,10 @@ class NomoComponentColors {
           backgroundColor: core.background,
         ),
         bottomBarTheme: NomoBottomBarColorData(
-          backgroundColor: core.primaryContainer,
+          background: core.primaryContainer,
+          borderRadius: BorderRadius.circular(8),
+          foreground: core.foreground1,
+          selectedForeground: core.primary,
         ),
         siderTheme: NomoSiderColorData(
           backgroundColor: core.primaryContainer,

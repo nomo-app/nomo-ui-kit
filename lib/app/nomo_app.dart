@@ -32,6 +32,21 @@ class NomoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeNotifier = ThemeNotifier(theme);
+    print("Nomo App Build");
+    final delegate = NomoRouterDelegate(
+      rootNavigatorKey,
+      routes: routes,
+      nestedRoutes: nestedRoutes,
+      nestedNavigatorWrapper: (nav) => Builder(
+        builder: (context) {
+          print("Nested Navigator Wrapper Build");
+          return nestedNavigatorWrapper(
+            nav,
+            context,
+          );
+        },
+      ),
+    );
 
     return ThemeProvider(
       notifier: themeNotifier,
@@ -39,23 +54,6 @@ class NomoApp extends StatelessWidget {
         valueListenable: themeNotifier,
         builder: (context, theme, child) {
           print("Theme Changed to ${theme.colorTheme}");
-          final delegate = NomoRouterDelegate(
-            rootNavigatorKey,
-            routes: routes,
-            nestedRoutes: nestedRoutes,
-            nestedNavigatorWrapper: (nav) => NomoTheme(
-              value: theme,
-              child: Builder(
-                builder: (context) {
-                  print("Nested Navigator Wrapper Build");
-                  return nestedNavigatorWrapper(
-                    nav,
-                    context,
-                  );
-                },
-              ),
-            ),
-          );
 
           return ScrollConfiguration(
             behavior:
@@ -65,25 +63,28 @@ class NomoApp extends StatelessWidget {
                 value: theme,
                 child: NomoNavigator(
                   delegate: delegate,
-                  child: WidgetsApp.router(
-                    debugShowCheckedModeBanner: false,
-                    localizationsDelegates: [
-                      if (localizationDelegate != null) localizationDelegate!,
-                      GlobalMaterialLocalizations.delegate,
-                      GlobalCupertinoLocalizations.delegate
-                    ],
-                    supportedLocales: supportedLocales,
+                  child: Builder(builder: (context) {
+                    print("Nomo Navigator Build");
+                    return WidgetsApp.router(
+                      debugShowCheckedModeBanner: false,
+                      localizationsDelegates: [
+                        if (localizationDelegate != null) localizationDelegate!,
+                        GlobalMaterialLocalizations.delegate,
+                        GlobalCupertinoLocalizations.delegate
+                      ],
+                      supportedLocales: supportedLocales,
 
-                    locale: currentLocale,
+                      locale: currentLocale,
 
-                    color: theme.colors.primary,
-                    routerDelegate: delegate,
+                      color: theme.colors.primary,
+                      routerDelegate: delegate,
 
-                    //   routeInformationProvider: PlatformRouteInformationProvider(initialRouteInformation: WidgetsBinding.instance),
-                    routeInformationParser: NomoRouteInformationParser(
-                      nestedRoutes: nestedRoutes,
-                    ),
-                  ),
+                      //   routeInformationProvider: PlatformRouteInformationProvider(initialRouteInformation: WidgetsBinding.instance),
+                      routeInformationParser: NomoRouteInformationParser(
+                        nestedRoutes: nestedRoutes,
+                      ),
+                    );
+                  }),
                 ),
               ),
             ),

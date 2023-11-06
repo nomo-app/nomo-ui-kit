@@ -69,6 +69,11 @@ class NomoComponentSizes {
           hPadding: 12,
           height: 48,
         ),
+        bottomBarTheme: NomoBottomBarSizingData(
+          height: 56,
+          iconSize: 24,
+          spacing: 4,
+        ),
       );
 }
 

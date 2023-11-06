@@ -4,6 +4,7 @@ import 'package:example/sections/dialogs/dialog_wrapper.dart';
 import 'package:example/sections/text/text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:nomo_ui_kit/components/vertical_menu/nomo_vertical_menu.dart';
+import 'package:nomo_ui_kit/entities/menu_item.dart';
 import 'package:nomo_ui_kit/nomo_ui_kit_base.dart';
 
 class AppRoutes {
@@ -42,6 +43,7 @@ class AppRoutes {
   );
 
   static const menuItems = [
+    NomoMenuIconItem(title: "Home", icon: Icons.home),
     NomoMenuIconItem(
       title: "Text",
       icon: Icons.text_format,
@@ -68,6 +70,21 @@ extension RouteUtil on NomoMenuItem {
         return AppRoutes.dialogSectionRoute;
       default:
         return AppRoutes.homeRoute;
+    }
+  }
+}
+
+extension RouteUtil2 on RouteInfo {
+  NomoMenuItem get menuItem {
+    switch (this.name) {
+      case "/text":
+        return AppRoutes.menuItems[1];
+      case "/buttons":
+        return AppRoutes.menuItems[2];
+      case "/dialogs":
+        return AppRoutes.menuItems[3];
+      default:
+        return AppRoutes.menuItems[0];
     }
   }
 }
