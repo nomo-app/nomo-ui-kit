@@ -16,10 +16,7 @@ dependencies:
   wolt_modal_sheet: ^0.1.2
   google_fonts: ^6.1.0
   nomo_router:
-    git:
-      url: https://github.com/nomo-app/nomo-router.git
-      ref: main
-      commit: 995edad
+    path: packages/nomo-router
   nomo_ui_generator:
     path: packages/nomo_ui_generator
   flutter_localizations:
