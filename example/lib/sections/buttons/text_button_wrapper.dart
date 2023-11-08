@@ -114,15 +114,16 @@ class TextButtonWrapper extends StatelessWidget {
               ),
               const SizedBox(
                 width: 12,
+                height: 12,
               ),
               NomoOutlineContainer(
-                width: 600,
+                width: 300,
                 border: Border.all(color: context.colors.primary),
                 background: context.colors.background,
                 child: buttonSectionIcon(context),
               ),
             ],
-          ),
+          ).toColumn(context),
         ],
       ),
     );
@@ -460,5 +461,20 @@ class TextButtonWrapper extends StatelessWidget {
         ),
       ],
     );
+  }
+}
+
+extension RowToColumn on Row {
+  toColumn(BuildContext context) {
+    if (MediaQuery.of(context).size.width > 1200) {
+      return Row(
+        children: children,
+      );
+    } else {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: children,
+      );
+    }
   }
 }
