@@ -33,32 +33,35 @@ class DialogWrapper extends StatelessWidget {
                 context: context,
                 builder: (context) {
                   return NomoDialog(
+                    showCloseButton: true,
+                    maxWidth: 600,
                     title: "Nomo Dialog",
-                    content: [
-                      Expanded(
-                        child: ListView.builder(
-                          itemCount: 10, // Number of items to generate
-                          itemBuilder: (context, index) {
-                            return Container(
-                              height: 60,
-                              color: Colors.blue,
-                              margin: const EdgeInsets.symmetric(vertical: 8.0),
-                              alignment: Alignment.center,
-                              child: Text(
-                                'Container ${index + 1}',
-                                style: const TextStyle(
-                                    color: Colors.white, fontSize: 18),
-                              ),
-                            );
-                          },
-                        ),
+                    content: Expanded(
+                      child: ListView.builder(
+                        itemCount: 10, // Number of items to generate
+                        itemBuilder: (context, index) {
+                          return Container(
+                            height: 60,
+                            color: context.colors.secondaryContainer,
+                            margin: const EdgeInsets.symmetric(vertical: 8.0),
+                            alignment: Alignment.center,
+                            child: Text(
+                              'Container ${index + 1}',
+                              style: const TextStyle(
+                                  color: Colors.white, fontSize: 18),
+                            ),
+                          );
+                        },
                       ),
-                    ],
+                    ),
                     actions: [
                       Expanded(
-                        child: NomoButton.text(
-                          onPressed: () => Navigator.pop(context),
-                          text: "Cancel",
+                        child: SizedBox(
+                          height: 50,
+                          child: NomoButton.text(
+                            onPressed: () => Navigator.pop(context),
+                            text: "Cancel",
+                          ),
                         ),
                       ),
                     ],
