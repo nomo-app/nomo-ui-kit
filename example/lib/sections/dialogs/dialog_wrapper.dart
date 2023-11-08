@@ -194,7 +194,7 @@ class DialogWrapper extends StatelessWidget {
             margin: const EdgeInsets.symmetric(vertical: 8.0),
             alignment: Alignment.center,
             child: Text(
-              'Container ${index + 1}',
+              'Box ${index + 1}',
               style: const TextStyle(color: Colors.white, fontSize: 18),
             ),
           ),
