@@ -21,8 +21,22 @@ class NomoOutlineContainer extends StatelessWidget {
   @NomoSizingField(16.0)
   final double? spacing;
 
+  final BoxBorder? border;
+
+  final Widget child;
+
+  final double? radius;
+
+  final double? width;
+  final double? height;
+
   const NomoOutlineContainer({
     this.foreground,
+    required this.child,
+    this.radius,
+    this.border,
+    this.width,
+    this.height,
     this.background,
     this.padding,
     this.shape,
@@ -35,27 +49,15 @@ class NomoOutlineContainer extends StatelessWidget {
     final theme = getFromContext(context, this);
     return Container(
       decoration: BoxDecoration(
+        border: border,
         color: theme.background,
         shape: theme.shape,
+        borderRadius: BorderRadius.circular(radius ?? 8),
       ),
       padding: theme.padding,
-      width: 300,
-      height: 300,
-      child: Row(
-        children: [
-          NomoText(
-            "Hello",
-            style: context.typography.h3,
-            color: theme.foreground,
-          ),
-          SizedBox(width: theme.spacing),
-          NomoText(
-            "World",
-            style: context.typography.h3,
-            color: theme.foreground,
-          ),
-        ],
-      ),
+      width: width,
+      height: height,
+      child: child,
     );
   }
 }
