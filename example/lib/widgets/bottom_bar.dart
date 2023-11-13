@@ -20,14 +20,14 @@ class _BottomBarState extends State<BottomBar> {
       style: context.typography.b1,
       selected: current,
       onTap: (item) {
-        NomoNavigator.of(context).push(item.route);
+        NomoNavigator.of(context).push(RoutePath(name: item.route.name));
         setState(() {});
       },
       title: NomoText(
         "Widgets",
         style: context.typography.b1,
       ),
-      items: AppRoutes.menuItems,
+      items: menuItems,
     );
   }
 }

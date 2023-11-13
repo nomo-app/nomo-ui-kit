@@ -57,26 +57,31 @@ class NomoAppBar extends StatelessWidget {
         elevation: theme.elevation,
       ),
       height: theme.height,
-      padding: EdgeInsets.symmetric(horizontal: theme.spacing),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Expanded(
-            child: AppBarLayoutDelegate(
-              children: {
-                if (leading != null) AppBarItem.backButton: leading!,
-                if (title != null) AppBarItem.title: title!,
-                if (trailling != null) AppBarItem.actions: trailling!,
-              },
-            ),
+      child: Material(
+        color: Colors.transparent,
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: theme.spacing),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Expanded(
+                child: AppBarLayoutDelegate(
+                  children: {
+                    if (leading != null) AppBarItem.backButton: leading!,
+                    if (title != null) AppBarItem.title: title!,
+                    if (trailling != null) AppBarItem.actions: trailling!,
+                  },
+                ),
+              ),
+              if (bottom != null)
+                SizedBox(
+                  height: bottom!.preferredSize.height,
+                  child: bottom!,
+                ),
+            ],
           ),
-          if (bottom != null)
-            SizedBox(
-              height: bottom!.preferredSize.height,
-              child: bottom!,
-            ),
-        ],
+        ),
       ),
     );
   }

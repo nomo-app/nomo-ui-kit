@@ -39,6 +39,7 @@ class DialogWrapper extends StatelessWidget {
                     content: Expanded(
                       child: ListView.builder(
                         itemCount: 10, // Number of items to generate
+                        shrinkWrap: true,
                         itemBuilder: (context, index) {
                           return Container(
                             height: 60,
