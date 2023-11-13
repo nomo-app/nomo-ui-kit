@@ -8,22 +8,20 @@ import 'package:nomo_ui_kit/theme/theme_provider.dart';
 final rootNavigatorKey = GlobalKey<NavigatorState>();
 
 class NomoApp extends StatelessWidget {
-  final List<RouteInfo> routes;
-  final List<RouteInfo> nestedRoutes;
+  final Iterable<RouteInfo> routes;
+
   final LocalizationsDelegate? localizationDelegate;
   final Iterable<Locale> supportedLocales;
   final Locale? currentLocale;
   final NomoThemeData theme;
-  final Widget Function(Widget, BuildContext) nestedNavigatorWrapper;
+
   final NomoSizingThemeData Function(double) sizingThemeBuilder;
 
   const NomoApp({
     super.key,
     required this.routes,
-    required this.nestedRoutes,
     this.localizationDelegate,
     required this.supportedLocales,
-    required this.nestedNavigatorWrapper,
     required this.theme,
     required this.sizingThemeBuilder,
     this.currentLocale,
@@ -32,21 +30,7 @@ class NomoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeNotifier = ThemeNotifier(theme);
-    print("Nomo App Build");
-    final delegate = NomoRouterDelegate(
-      rootNavigatorKey,
-      routes: routes,
-      nestedRoutes: nestedRoutes,
-      nestedNavigatorWrapper: (nav) => Builder(
-        builder: (context) {
-          print("Nested Navigator Wrapper Build");
-          return nestedNavigatorWrapper(
-            nav,
-            context,
-          );
-        },
-      ),
-    );
+    final delegate = NomoRouterDelegate(rootNavigatorKey, routes: routes);
 
     return ThemeProvider(
       notifier: themeNotifier,
@@ -81,9 +65,9 @@ class NomoApp extends StatelessWidget {
                       //         .instance.platformDispatcher.defaultRouteName.uri,
                       //   ),
                       // ),
-                      routeInformationParser: NomoRouteInformationParser(
-                        nestedRoutes: nestedRoutes,
-                      ),
+                      // backButtonDispatcher:
+                      //     CustomBackButtonDispatcher(delegate),
+                      routeInformationParser: NomoRouteInformationParser(),
                     );
                   }),
                 ),
@@ -95,3 +79,20 @@ class NomoApp extends StatelessWidget {
     );
   }
 }
+
+// class CustomBackButtonDispatcher extends RootBackButtonDispatcher {
+//   final NomoRouterDelegate delegate;
+//   CustomBackButtonDispatcher(this.delegate);
+
+//   @override
+//   Future<bool> didPopRoute() {
+//     var (rootRoutes, nestedRoutes) = delegate.currentConfiguration;
+
+//     if (nestedRoutes.length > 1) {
+//       delegate.popNested();
+//       return Future.value(true);
+//     }
+
+//     return super.didPopRoute();
+//   }
+// }

@@ -4,13 +4,15 @@ import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 part 'nomo_scaffold.g.dart';
 
 @NomoComponentThemeData('scaffoldTheme')
-class NomoScaffold extends StatelessWidget {
+class NomoScaffold extends StatefulWidget {
   final Widget child;
   final PreferredSizeWidget? appBar;
   final Widget? nestedAppBar;
   final Widget? bottomBar;
   final Widget? sider;
   final Widget? bottomSheet;
+  final Widget? drawer;
+  final Widget? endDrawer;
 
   @NomoSizingField(EdgeInsets.all(16))
   final EdgeInsetsGeometry? padding;
@@ -35,42 +37,72 @@ class NomoScaffold extends StatelessWidget {
     this.backgroundColor,
     this.showBottomBar,
     this.showSider,
+    this.drawer,
     this.nestedAppBar,
+    this.endDrawer,
   });
+
+  static ScaffoldState of(BuildContext context) {
+    final result = context
+        .findAncestorStateOfType<_NomoScaffoldState>()!
+        .scaffoldKey
+        .currentState!;
+
+    return result;
+  }
+
+  static ScaffoldState? maybeOf(BuildContext context) {
+    final result = context
+        .findAncestorStateOfType<_NomoScaffoldState>()
+        ?.scaffoldKey
+        .currentState;
+
+    return result;
+  }
+
+  @override
+  State<NomoScaffold> createState() => _NomoScaffoldState();
+}
+
+class _NomoScaffoldState extends State<NomoScaffold> {
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
-    final theme = getFromContext(context, this);
+    final theme = getFromContext(context, widget);
 
-    final body = SafeArea(
-      child: Row(
-        children: [
-          if (sider != null && theme.showSider) sider!,
-          Expanded(
-            child: Column(
-              children: [
-                if (nestedAppBar != null) nestedAppBar!,
-                Expanded(
-                  child: Padding(
-                    padding: theme.padding,
-                    child: child,
-                  ),
+    final body = Row(
+      children: [
+        if (widget.sider != null && theme.showSider) widget.sider!,
+        Expanded(
+          child: Column(
+            children: [
+              if (widget.nestedAppBar != null) widget.nestedAppBar!,
+              Expanded(
+                child: Padding(
+                  padding: theme.padding,
+                  child: widget.child,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
 
-    final bottomBar = theme.showBottomBar ? this.bottomBar : null;
+    final bottomBar = theme.showBottomBar ? widget.bottomBar : null;
 
-    return Scaffold(
-      body: body,
-      appBar: appBar,
-      bottomNavigationBar: bottomBar,
-      bottomSheet: bottomSheet,
-      backgroundColor: theme.backgroundColor,
+    return SafeArea(
+      child: Scaffold(
+        key: scaffoldKey,
+        body: body,
+        appBar: widget.appBar,
+        bottomNavigationBar: bottomBar,
+        bottomSheet: widget.bottomSheet,
+        backgroundColor: theme.backgroundColor,
+        drawer: widget.drawer,
+        endDrawer: widget.endDrawer,
+      ),
     );
   }
 }
