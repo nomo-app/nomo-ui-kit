@@ -7,12 +7,12 @@ import 'package:nomo_ui_kit/components/sider/nomo_sider.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 
 final typography = NomoTypographyTheme(
-  b1: GoogleFonts.inter(),
-  b2: GoogleFonts.inter(),
-  b3: GoogleFonts.inter(),
-  h1: GoogleFonts.roboto(),
-  h2: GoogleFonts.roboto(),
-  h3: GoogleFonts.roboto(),
+  b1: GoogleFonts.roboto(),
+  b2: GoogleFonts.roboto(),
+  b3: GoogleFonts.roboto(),
+  h1: GoogleFonts.playfairDisplay(),
+  h2: GoogleFonts.playfairDisplay(),
+  h3: GoogleFonts.playfairDisplay(),
 );
 
 enum ColorMode {
