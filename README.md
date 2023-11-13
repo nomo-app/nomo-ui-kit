@@ -11,7 +11,7 @@ Simplify UI development without locking yourself into a fixed system.
 Compared to Kits like Material UI, Nomo UI Kit offers a few outstanding features:
 
 - **Extremely lightweight**: Nomo UI Kit has almost zero runtime-dependencies and can fit easily into any web app or native app.
-- **Highly customizable**: Although Nomo UI Kit has its opinion on how a UI should look, it allows to custimize almost every detail.
+- **Highly customizable**: Although Nomo UI Kit has its opinion on how a UI should look, it allows to customize almost every detail.
 - **Highly extensible**: By subclassing Nomo UI widgets, it is easy to adopt for a wide range of design languages.
 
 ## Features
