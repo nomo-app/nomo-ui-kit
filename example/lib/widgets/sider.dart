@@ -21,7 +21,11 @@ class Sider extends StatefulWidget {
 class _SiderState extends State<Sider> {
   @override
   Widget build(BuildContext context) {
-    final current = NomoNavigator.of(context).current.menuItem;
+    final currentRoute = NomoNavigatorInformationProvider.of(context);
+    final current = switch (currentRoute) {
+      MenuPageRouteInfo currentRoute => currentRoute.toMenuItem,
+      _ => null,
+    };
     return Padding(
       padding: EdgeInsets.only(top: widget.topInset ?? 0),
       child: NomoSider(
@@ -31,11 +35,11 @@ class _SiderState extends State<Sider> {
             style: context.typography.b1,
             selected: current,
             onTap: (item) {
-              NomoNavigator.of(context).push(RoutePath(name: item.route.name));
+              NomoNavigator.of(context).push(RoutePath(name: item.path));
               setState(() {});
             },
             iconSize: 22,
-            items: menuItems,
+            items: menuItems.toMenuItems,
           ),
         ),
       ),

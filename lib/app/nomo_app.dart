@@ -7,14 +7,12 @@ import 'package:nomo_ui_kit/theme/theme_provider.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
 
-class NomoApp extends StatelessWidget {
+class NomoApp extends StatefulWidget {
   final Iterable<RouteInfo> routes;
-
   final LocalizationsDelegate? localizationDelegate;
   final Iterable<Locale> supportedLocales;
   final Locale? currentLocale;
   final NomoThemeData theme;
-
   final NomoSizingThemeData Function(double) sizingThemeBuilder;
 
   const NomoApp({
@@ -28,71 +26,66 @@ class NomoApp extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    final themeNotifier = ThemeNotifier(theme);
-    final delegate = NomoRouterDelegate(rootNavigatorKey, routes: routes);
+  State<NomoApp> createState() => _NomoAppState();
+}
 
+class _NomoAppState extends State<NomoApp> {
+  late final ThemeNotifier themeNotifier;
+  late final NomoRouterDelegate delegate;
+
+  @override
+  void initState() {
+    themeNotifier = ThemeNotifier(widget.theme);
+    delegate = NomoRouterDelegate(rootNavigatorKey, routes: widget.routes);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    themeNotifier.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return ThemeProvider(
       notifier: themeNotifier,
-      child: ValueListenableBuilder(
-        valueListenable: themeNotifier,
-        builder: (context, theme, child) {
-          return ScrollConfiguration(
-            behavior:
-                ScrollConfiguration.of(context).copyWith(scrollbars: false),
-            child: MetricReactor(
-              sizingThemeBuilder: sizingThemeBuilder,
-              child: NomoTheme(
+      child: MetricReactor(
+        sizingThemeBuilder: widget.sizingThemeBuilder,
+        child: NomoNavigator(
+          delegate: delegate,
+          child: ValueListenableBuilder(
+            valueListenable: themeNotifier,
+            builder: (context, theme, child) {
+              return NomoTheme(
                 value: theme,
-                child: NomoNavigator(
-                  delegate: delegate,
-                  child: Builder(builder: (context) {
-                    return WidgetsApp.router(
-                      debugShowCheckedModeBanner: false,
-                      localizationsDelegates: [
-                        if (localizationDelegate != null) localizationDelegate!,
-                        GlobalMaterialLocalizations.delegate,
-                        GlobalCupertinoLocalizations.delegate
-                      ],
-                      supportedLocales: supportedLocales,
-                      locale: currentLocale,
-                      color: theme.colors.primary,
-                      routerDelegate: delegate,
-                      // routeInformationProvider:
-                      //     PlatformRouteInformationProvider(
-                      //   initialRouteInformation: RouteInformation(
-                      //     uri: WidgetsBinding
-                      //         .instance.platformDispatcher.defaultRouteName.uri,
-                      //   ),
-                      // ),
-                      // backButtonDispatcher:
-                      //     CustomBackButtonDispatcher(delegate),
-                      routeInformationParser: NomoRouteInformationParser(),
-                    );
-                  }),
+                child: child!,
+              );
+            },
+            child: WidgetsApp.router(
+              debugShowCheckedModeBanner: false,
+              localizationsDelegates: [
+                if (widget.localizationDelegate != null)
+                  widget.localizationDelegate!,
+                GlobalMaterialLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate
+              ],
+              supportedLocales: widget.supportedLocales,
+              locale: widget.currentLocale,
+              color: widget.theme.colors.primary,
+              routerDelegate: delegate,
+              routeInformationProvider: PlatformRouteInformationProvider(
+                initialRouteInformation: RouteInformation(
+                  uri: WidgetsBinding
+                      .instance.platformDispatcher.defaultRouteName.uri,
                 ),
               ),
+              backButtonDispatcher: NomoBackButtonDispatcher(delegate),
+              routeInformationParser: NomoRouteInformationParser(),
             ),
-          );
-        },
+          ),
+        ),
       ),
     );
   }
 }
-
-// class CustomBackButtonDispatcher extends RootBackButtonDispatcher {
-//   final NomoRouterDelegate delegate;
-//   CustomBackButtonDispatcher(this.delegate);
-
-//   @override
-//   Future<bool> didPopRoute() {
-//     var (rootRoutes, nestedRoutes) = delegate.currentConfiguration;
-
-//     if (nestedRoutes.length > 1) {
-//       delegate.popNested();
-//       return Future.value(true);
-//     }
-
-//     return super.didPopRoute();
-//   }
-// }

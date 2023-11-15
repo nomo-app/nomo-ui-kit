@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:nomo_ui_kit/app/nomo_app.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 
 typedef ThemeNotifier = ValueNotifier<NomoThemeData>;
@@ -31,6 +30,6 @@ class ThemeProvider extends InheritedWidget {
 
   @override
   bool updateShouldNotify(ThemeProvider oldWidget) {
-    return oldWidget.notifier != notifier;
+    return false;
   }
 }

@@ -15,19 +15,23 @@ class BottomBar extends StatefulWidget {
 class _BottomBarState extends State<BottomBar> {
   @override
   Widget build(BuildContext context) {
-    final current = NomoNavigator.of(context).current.menuItem;
+    final currentRoute = NomoNavigatorInformationProvider.of(context);
+    final current = switch (currentRoute) {
+      MenuPageRouteInfo currentRoute => currentRoute.toMenuItem,
+      _ => null,
+    };
     return NomoBottomBar(
       style: context.typography.b1,
       selected: current,
       onTap: (item) {
-        NomoNavigator.of(context).push(RoutePath(name: item.route.name));
+        NomoNavigator.of(context).push(RoutePath(name: item.path));
         setState(() {});
       },
       title: NomoText(
         "Widgets",
         style: context.typography.b1,
       ),
-      items: menuItems,
+      items: menuItems.toMenuItems,
     );
   }
 }

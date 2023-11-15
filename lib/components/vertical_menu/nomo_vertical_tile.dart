@@ -111,6 +111,7 @@ class _NomoVerticalListTileState extends State<NomoVerticalListTile>
                   image: imageItem.image,
                   color: foreground,
                 ),
+              _ => null
             };
             return Material(
               color: background,
@@ -131,7 +132,7 @@ class _NomoVerticalListTileState extends State<NomoVerticalListTile>
                       false => MainAxisAlignment.start,
                     },
                     children: [
-                      icon,
+                      if (icon != null) icon,
                       if (!widget.collapsed) ...[
                         SizedBox(width: widget.theme.spacing),
                         NomoText(

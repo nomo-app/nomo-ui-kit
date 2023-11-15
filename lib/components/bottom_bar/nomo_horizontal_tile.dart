@@ -84,6 +84,7 @@ class _NomoHorizontalListTileState extends State<NomoHorizontalListTile>
                 image: imageItem.image,
                 color: foreground,
               ),
+            _ => null
           };
           return Material(
             color: Colors.transparent,
@@ -98,7 +99,7 @@ class _NomoHorizontalListTileState extends State<NomoHorizontalListTile>
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      icon,
+                      if (icon != null) icon,
                       SizedBox(height: widget.theme.spacing),
                       NomoText(
                         widget.item.title,
