@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the performLayout method from the AppBarLayoutRenderBox class, for the Dart programming language.">
+  <title>performLayout method - AppBarLayoutRenderBox class - appbar_layout_renderbox library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="../../" data-using-base-href="false" class="light-theme">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">nomo_ui_kit</a></li>
+    <li><a href="../../file-___home_runner_work_nomo-ui-kit_nomo-ui-kit_lib_components_app_bar_layout_appbar_layout_renderbox/file-___home_runner_work_nomo-ui-kit_nomo-ui-kit_lib_components_app_bar_layout_appbar_layout_renderbox-library.html">appbar_layout_renderbox</a></li>
+    <li><a href="../../file-___home_runner_work_nomo-ui-kit_nomo-ui-kit_lib_components_app_bar_layout_appbar_layout_renderbox/AppBarLayoutRenderBox-class.html">AppBarLayoutRenderBox</a></li>
+    <li class="self-crumb">performLayout method</li>
+  </ol>
+  <div class="self-name">performLayout</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <div class="toggle" id="theme-button">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        brightness_4
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        brightness_5
+      </span>
+    </label>
+  </div>
+</header>
+<main>
+
+  <div
+      id="dartdoc-main-content"
+      class="main-content"
+      data-above-sidebar="file-___home_runner_work_nomo-ui-kit_nomo-ui-kit_lib_components_app_bar_layout_appbar_layout_renderbox&#47;AppBarLayoutRenderBox-class-sidebar.html"
+      data-below-sidebar="">
+      <div>
+<h1><span class="kind-method">performLayout</span> method 
+</h1></div>
+
+    <section class="multi-line-signature">
+      
+  <div>
+    <ol class="annotation-list">
+        <li>@<a href="https://api.flutter.dev/flutter/dart-core/override-constant.html">override</a></li>
+    </ol>
+  </div>
+
+<span class="returntype">void</span>
+<span class="name ">performLayout</span>(<wbr>)
+
+      
+
+    </section>
+    
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">@override
+void performLayout() {
+  BoxConstraints constraints = this.constraints;
+  double maxWidth = constraints.maxWidth;
+  double maxHeight = constraints.maxHeight;
+  contentSize = Size(maxWidth, maxHeight);
+
+  RenderBox? actions = childForSlot(AppBarItem.actions);
+  RenderBox? title = childForSlot(AppBarItem.title);
+  RenderBox? backButton = childForSlot(AppBarItem.backButton);
+
+  BoxConstraints remaingConstraints = constraints.copyWith(minHeight: 0);
+
+  &#47;&#47;&#47;
+  &#47;&#47;&#47; Back Button
+  &#47;&#47;&#47;
+  Size backButtonSize = Size.zero;
+  BoxParentData? backButtonParentData;
+
+  if (backButton != null) {
+    backButton.layout(remaingConstraints, parentUsesSize: true);
+    backButtonSize = backButton.size;
+
+    final backButtonOffset =
+        Offset(0, centerVertically(maxHeight, backButtonSize));
+
+    backButtonParentData = backButton.parentData! as BoxParentData;
+    backButtonParentData.offset = backButtonOffset;
+    remaingConstraints = remaingConstraints.copyWith(
+      maxWidth: remaingConstraints.maxWidth - backButtonSize.width,
+    );
+  }
+
+  &#47;&#47;&#47;
+  &#47;&#47;&#47; Actions
+  &#47;&#47;&#47;
+  Size actionSize = Size.zero;
+  BoxParentData? actionParentData;
+  if (actions != null) {
+    actions.layout(remaingConstraints, parentUsesSize: true);
+    actionSize = actions.size;
+    final offset_action = Offset(
+      maxWidth - actionSize.width,
+      centerVertically(maxHeight, actionSize),
+    );
+    actionParentData = actions.parentData! as BoxParentData;
+    actionParentData.offset = offset_action;
+    remaingConstraints = remaingConstraints.copyWith(
+      maxWidth: remaingConstraints.maxWidth - actionSize.width,
+    );
+  }
+
+  &#47;&#47;&#47;
+  &#47;&#47;&#47; Title
+  &#47;&#47;&#47;
+  final biggestIndent = backButtonSize.width &gt;= actionSize.width
+      ? backButtonSize.width
+      : actionSize.width;
+
+  final titleConstraints = BoxConstraints(
+    maxWidth: maxWidth - biggestIndent * 2,
+    maxHeight: remaingConstraints.maxHeight,
+  );
+  Size titleSize = Size.zero;
+  BoxParentData? titleParentData;
+  if (title != null) {
+    title.layout(titleConstraints, parentUsesSize: true);
+    titleSize = title.size;
+    final offset_title = Offset(
+      ((titleConstraints.maxWidth - titleSize.width) &#47; 2) + biggestIndent,
+      centerVertically(maxHeight, titleSize),
+    );
+    titleParentData = title.parentData! as BoxParentData;
+    titleParentData.offset = offset_title;
+  }
+
+  &#47;&#47;&#47; Find the biggest height
+  final biggestHeight =
+      max(backButtonSize.height, max(titleSize.height, actionSize.height));
+
+  if (maxHeight == double.infinity) {
+    maxHeight = biggestHeight;
+    contentSize = Size(maxWidth, biggestHeight);
+
+    if (backButtonParentData != null) {
+      backButtonParentData.offset = Offset(
+        backButtonParentData.offset.dx,
+        centerVertically(maxHeight, backButtonSize),
+      );
+    }
+    if (actionParentData != null) {
+      actionParentData.offset = Offset(
+        actionParentData.offset.dx,
+        centerVertically(maxHeight, actionSize),
+      );
+    }
+    if (titleParentData != null) {
+      titleParentData.offset = Offset(
+        titleParentData.offset.dx,
+        centerVertically(maxHeight, titleSize),
+      );
+    }
+  }
+
+  size = contentSize;
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../../index.html">nomo_ui_kit</a></li>
+    <li><a href="../../file-___home_runner_work_nomo-ui-kit_nomo-ui-kit_lib_components_app_bar_layout_appbar_layout_renderbox/file-___home_runner_work_nomo-ui-kit_nomo-ui-kit_lib_components_app_bar_layout_appbar_layout_renderbox-library.html">appbar_layout_renderbox</a></li>
+    <li><a href="../../file-___home_runner_work_nomo-ui-kit_nomo-ui-kit_lib_components_app_bar_layout_appbar_layout_renderbox/AppBarLayoutRenderBox-class.html">AppBarLayoutRenderBox</a></li>
+    <li class="self-crumb">performLayout method</li>
+</ol>
+
+
+    <h5>AppBarLayoutRenderBox class</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-->
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    nomo_ui_kit
+      0.0.1
+  </span>
+
+  
+</footer>
+
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
+
+
+
+</body>
+
+</html>
+
