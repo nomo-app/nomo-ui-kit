@@ -1,5 +1,7 @@
 # Nomo UI Kit Flutter
 
+See the [api-docs](https://dev.nomo.app/nomo-ui-kit) for a list of individual functions.
+
 Originally created for the Nomo App, this Flutter UI package offers a collection of reusable widgets,
 such as buttons and cards.
 By seamlessly integrating as a submodule, it
