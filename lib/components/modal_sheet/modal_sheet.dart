@@ -50,35 +50,5 @@ class NomoModalSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Placeholder();
-    //  WoltModalSheet.show(
-    //   modalTypeBuilder: (context) {
-    //               final size = MediaQuery.of(context).size.width;
-    //               if (size < 800.0) {
-    //                 return WoltModalType.bottomSheet;
-    //               } else {
-    //                 return WoltModalType.dialog;
-    //               }
-    //             },
-    //   pageIndexNotifier: pageIndexNotifier,
-    //   decorator: decorator,
-    //   useSafeArea: useSafeArea,
-    //   barrierDismissible: barrierDismissible,
-    //   enableDrag: enableDrag,
-    //   showDragHandle: showDragHandle,
-    //   routeSettings: routeSettings,
-    //   transitionDuration: transitionDuration,
-    //   onModalDismissedWithBarrierTap: onModalDismissedWithBarrierTap,
-    //   onModalDismissedWithDrag: onModalDismissedWithDrag,
-    //   transitionAnimationController: transitionAnimationController,
-    //   bottomSheetTransitionAnimation: bottomSheetTransitionAnimation,
-    //   dialogTransitionAnimation: dialogTransitionAnimation,
-    //   minDialogWidth: minDialogWidth,
-    //   maxDialogWidth: maxDialogWidth,
-    //   minPageHeight: minPageHeight,
-    //   maxPageHeight: maxPageHeight,
-    //   modalBarrierColor: modalBarrierColor,
-    //   context: context,
-    //   pageListBuilder: (controller) => pages,
-    // );
   }
 }

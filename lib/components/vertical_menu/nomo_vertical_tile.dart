@@ -46,8 +46,8 @@ class _NomoVerticalListTileState extends State<NomoVerticalListTile>
     vsync: this,
   );
 
-  late final Animation<Color?> foreGroundAnimation;
-  late final Animation<Color?> backgroundAnimation;
+  late Animation<Color?> foreGroundAnimation;
+  late Animation<Color?> backgroundAnimation;
 
   @override
   void initState() {
@@ -62,6 +62,21 @@ class _NomoVerticalListTileState extends State<NomoVerticalListTile>
     ).animate(backgroundController);
 
     super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant NomoVerticalListTile oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    foreGroundAnimation = ColorTween(
+      begin: widget.theme.foreground,
+      end: widget.theme.selectedForeground,
+    ).animate(foregroundController);
+
+    backgroundAnimation = ColorTween(
+      begin: widget.theme.background,
+      end: widget.theme.selectedBackground,
+    ).animate(backgroundController);
   }
 
   @override
@@ -111,6 +126,7 @@ class _NomoVerticalListTileState extends State<NomoVerticalListTile>
                   image: imageItem.image,
                   color: foreground,
                 ),
+              _ => null
             };
             return Material(
               color: background,
@@ -131,7 +147,7 @@ class _NomoVerticalListTileState extends State<NomoVerticalListTile>
                       false => MainAxisAlignment.start,
                     },
                     children: [
-                      icon,
+                      if (icon != null) icon,
                       if (!widget.collapsed) ...[
                         SizedBox(width: widget.theme.spacing),
                         NomoText(

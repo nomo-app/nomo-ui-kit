@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:nomo_ui_kit/components/text/nomo_text.dart';
+import 'package:nomo_ui_generator/annotations.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 
 part 'nomo_outline_container.g.dart';
 
 @NomoComponentThemeData("outlineContainerTheme")
+
+///
+/// A container with a border and a background color.
+///
 class NomoOutlineContainer extends StatelessWidget {
   @NomoColorField(Colors.black)
   final Color? foreground;
