@@ -1,8 +1,8 @@
 import 'package:example/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:nomo_router/nomo_router.dart';
 import 'package:nomo_ui_kit/components/bottom_bar/nomo_bottom_bar.dart';
 import 'package:nomo_ui_kit/components/text/nomo_text.dart';
-import 'package:nomo_ui_kit/nomo_ui_kit_base.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 
 class BottomBar extends StatefulWidget {

@@ -6,11 +6,11 @@ import 'package:example/theme.dart';
 import 'package:example/widgets/drawer.dart';
 import 'package:example/widgets/sider.dart';
 import 'package:flutter/material.dart';
+import 'package:nomo_router/nomo_router.dart';
 import 'package:nomo_ui_kit/components/app_bar/nomo_app_bar.dart';
 import 'package:nomo_ui_kit/components/scaffold/nomo_scaffold.dart';
 import 'package:nomo_ui_kit/entities/menu_item.dart';
 
-import 'package:nomo_ui_kit/nomo_ui_kit_base.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 import 'package:nomo_ui_kit/theme/theme_provider.dart';
 

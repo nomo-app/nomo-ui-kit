@@ -32,6 +32,8 @@ dependencies:
     sdk: flutter
   nomo_ui_kit:
     path: ../
+  nomo_router:
+    path: ../packages/nomo-router
   logger: ^1.4.0
   animations: ^2.0.7
   markdown_widget: ^2.3.1

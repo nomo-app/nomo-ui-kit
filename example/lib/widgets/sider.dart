@@ -1,9 +1,9 @@
 import 'package:example/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:nomo_router/nomo_router.dart';
 import 'package:nomo_ui_kit/components/sider/nomo_sider.dart';
 import 'package:nomo_ui_kit/components/vertical_menu/nomo_vertical_menu.dart';
-import 'package:nomo_ui_kit/nomo_ui_kit_base.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 
 class Sider extends StatelessWidget {
