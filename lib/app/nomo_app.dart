@@ -89,3 +89,20 @@ class _NomoAppState extends State<NomoApp> {
     );
   }
 }
+
+// class CustomBackButtonDispatcher extends RootBackButtonDispatcher {
+//   final NomoRouterDelegate delegate;
+//   CustomBackButtonDispatcher(this.delegate);
+
+//   @override
+//   Future<bool> didPopRoute() {
+//     var (rootRoutes, nestedRoutes) = delegate.currentConfiguration;
+
+//     if (nestedRoutes.length > 1) {
+//       delegate.popNested();
+//       return Future.value(true);
+//     }
+
+//     return super.didPopRoute();
+//   }
+// }
