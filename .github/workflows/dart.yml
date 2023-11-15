@@ -28,8 +28,11 @@ jobs:
     - uses: actions/checkout@v2
     - uses: subosito/flutter-action@v1
 
+    - name: Install dartdoc
+      run: flutter pub global activate dartdoc
+
     - name: Generate API docs
-      run: dartdoc
+      run: flutter pub global run dartdoc
 
     - name: Copy Docs output
       run: cp -R doc/api docs
