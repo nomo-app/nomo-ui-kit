@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nomo_ui_generator/annotations.dart';
 
 import 'package:nomo_ui_kit/components/app_bar/layout/appbar_layout_delegate.dart';
 import 'package:nomo_ui_kit/entities/nomo_decoration.dart';

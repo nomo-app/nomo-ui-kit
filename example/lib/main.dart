@@ -6,6 +6,7 @@ import 'package:markdown_widget/markdown_widget.dart';
 import 'package:markdown_widget/widget/all.dart';
 import 'package:nomo_ui_kit/app/nomo_app.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
+// ignore: depend_on_referenced_packages
 import 'package:flutter_web_plugins/url_strategy.dart';
 
 void main() {
