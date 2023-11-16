@@ -72,7 +72,6 @@ class HomePage extends StatelessWidget {
       future: file,
       builder: (context, snapshot) {
         if (snapshot.data != null) {
-          print("Rendering");
           return MarkdownWidget(
             config: MarkdownConfig(
               configs: [
