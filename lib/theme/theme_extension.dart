@@ -62,11 +62,9 @@ extension ThemeContextExtension on BuildContext {
 ///
 extension ThemeUtil on NomoThemeData {
   BoxDecoration getCardDecoration({
-    Color? color,
+    required double elevation, required Offset offset, Color? color,
     BorderRadius? borderRadius,
     BoxShape? shape,
-    required double elevation,
-    required Offset offset,
   }) {
     final shadows = [
       BoxShadow(

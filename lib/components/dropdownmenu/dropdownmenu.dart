@@ -4,6 +4,23 @@ import 'package:nomo_ui_kit/components/dropdownmenu/drop_down_item.dart';
 import 'package:nomo_ui_kit/components/text/nomo_text.dart';
 
 class NomoDropDownMenu<T> extends StatefulWidget {
+
+  const NomoDropDownMenu({
+    required this.items, required this.onChanged, super.key,
+    this.initailValue,
+    this.width,
+    this.height,
+    this.decoration,
+    this.iconColor,
+    this.textStyle,
+    this.dropdownElevation,
+    this.dropDownShape,
+    this.offset,
+    this.dropdownColor,
+    this.minFontSize = 12,
+    this.maxFontSize = double.infinity,
+    this.overflow = TextOverflow.ellipsis,
+  });
   final List<NomoDropdownItem<T>> items;
   final NomoDropdownItem<T>? initailValue;
   final double? width;
@@ -20,25 +37,6 @@ class NomoDropDownMenu<T> extends StatefulWidget {
   final double? maxFontSize;
   final TextOverflow? overflow;
 
-  const NomoDropDownMenu({
-    Key? key,
-    required this.items,
-    required this.onChanged,
-    this.initailValue,
-    this.width,
-    this.height,
-    this.decoration,
-    this.iconColor,
-    this.textStyle,
-    this.dropdownElevation,
-    this.dropDownShape,
-    this.offset,
-    this.dropdownColor,
-    this.minFontSize = 12,
-    this.maxFontSize = double.infinity,
-    this.overflow = TextOverflow.ellipsis,
-  }) : super(key: key);
-
   @override
   State<NomoDropDownMenu> createState() => _NomoDropDownMenuState();
 }
@@ -49,7 +47,7 @@ class _NomoDropDownMenuState<T> extends State<NomoDropDownMenu<T>> {
   double _turns = 0;
   final LayerLink _layerLink = LayerLink();
   final ScrollController _scrollController =
-      ScrollController(initialScrollOffset: 0);
+      ScrollController();
   late OverlayEntry _overlayEntry;
 
   @override
@@ -92,9 +90,8 @@ class _NomoDropDownMenuState<T> extends State<NomoDropDownMenu<T>> {
     return CompositedTransformTarget(
       link: _layerLink,
       child: NomoCard(
-        onPressed: () => toogleExpanded(),
+        onPressed: toogleExpanded,
         decoration: widget.decoration,
-        padding: const EdgeInsets.all(8.0),
         width: widget.width,
         height: widget.height,
         child: Row(
@@ -124,13 +121,13 @@ class _NomoDropDownMenuState<T> extends State<NomoDropDownMenu<T>> {
   }
 
   OverlayEntry _createOverlayEntry() {
-    RenderBox renderBox = context.findRenderObject()! as RenderBox;
-    var size = renderBox.size;
-    var offset = renderBox.localToGlobal(Offset.zero);
-    var topOffset = offset.dy + size.height + 5;
+    final renderBox = context.findRenderObject()! as RenderBox;
+    final size = renderBox.size;
+    final offset = renderBox.localToGlobal(Offset.zero);
+    final topOffset = offset.dy + size.height + 5;
     return OverlayEntry(
       builder: (context) => GestureDetector(
-        onTap: () => closeOverlay(),
+        onTap: closeOverlay,
         behavior: HitTestBehavior.translucent,
         child: SizedBox(
           height: MediaQuery.of(context).size.height,
@@ -148,7 +145,7 @@ class _NomoDropDownMenuState<T> extends State<NomoDropDownMenu<T>> {
                   child: Material(
                     shape: widget.dropDownShape ??
                         RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
+                          borderRadius: BorderRadius.circular(8),
                         ),
                     elevation: widget.dropdownElevation ?? 0,
                     color: widget.dropdownColor ?? Colors.white,
@@ -179,7 +176,7 @@ class _NomoDropDownMenuState<T> extends State<NomoDropDownMenu<T>> {
                               },
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 8.0, vertical: 8.0),
+                                    horizontal: 8, vertical: 8,),
                                 child: NomoText(
                                   item.value.displayText,
                                   style: widget.textStyle ??

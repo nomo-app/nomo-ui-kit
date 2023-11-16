@@ -1,4 +1,3 @@
-library layout_extensions;
 
 import 'package:flutter/widgets.dart';
 

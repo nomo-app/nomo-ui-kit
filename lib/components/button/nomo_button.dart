@@ -3,33 +3,12 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:nomo_ui_kit/components/button/widgets/button_box.dart';
 import 'package:nomo_ui_kit/components/text/nomo_text.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
-import 'button_const.dart';
+import 'package:nomo_ui_kit/components/button/button_const.dart';
 
 class NomoButton extends HookWidget {
-  final VoidCallback onPressed;
-  final Widget child;
-  final Color? color;
-  final Color? disabledColor;
-  final Color? highlightColor;
-  final Color? splashColor;
-  final EdgeInsetsGeometry? padding;
-  final EdgeInsetsGeometry? margin;
-  final BorderRadiusGeometry borderRadius;
-  final BorderSide border;
-  final double elevation;
-  final bool isEnabled;
-  final double? width;
-  final double? height;
-  final bool isLoading;
-  final Widget? loadingWidget;
-  final ButtonSize size;
-  final Widget? leading;
-  final Widget? trailing;
 
   const NomoButton({
-    super.key,
-    required this.onPressed,
-    required this.child,
+    required this.onPressed, required this.child, super.key,
     this.size = ButtonSize.small,
     this.width,
     this.height,
@@ -76,15 +55,12 @@ class NomoButton extends HookWidget {
       case ButtonSize.small:
         width = ButtonConstants.smallTextButtonWidth;
         height = ButtonConstants.smallTextButtonHeight;
-        break;
       case ButtonSize.medium:
         width = ButtonConstants.mediumTextButtonWidth;
         height = ButtonConstants.mediumTextButtonHeight;
-        break;
       case ButtonSize.large:
         width = ButtonConstants.largeTextButtonWidth;
         height = ButtonConstants.largeTextButtonHeight;
-        break;
       default:
         break;
     }
@@ -135,15 +111,12 @@ class NomoButton extends HookWidget {
       case ButtonSize.small:
         width = ButtonConstants.smallIconButtonWidth;
         height = ButtonConstants.smallIconButtonHeight;
-        break;
       case ButtonSize.medium:
         width = ButtonConstants.mediumIconButtonWidth;
         height = ButtonConstants.mediumIconButtonHeight;
-        break;
       case ButtonSize.large:
         width = ButtonConstants.largeIconButtonWidth;
         height = ButtonConstants.largeIconButtonHeight;
-        break;
       default:
         break;
     }
@@ -166,6 +139,25 @@ class NomoButton extends HookWidget {
       child: icon,
     );
   }
+  final VoidCallback onPressed;
+  final Widget child;
+  final Color? color;
+  final Color? disabledColor;
+  final Color? highlightColor;
+  final Color? splashColor;
+  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? margin;
+  final BorderRadiusGeometry borderRadius;
+  final BorderSide border;
+  final double elevation;
+  final bool isEnabled;
+  final double? width;
+  final double? height;
+  final bool isLoading;
+  final Widget? loadingWidget;
+  final ButtonSize size;
+  final Widget? leading;
+  final Widget? trailing;
 
   @override
   Widget build(BuildContext context) {
@@ -174,7 +166,7 @@ class NomoButton extends HookWidget {
     final highlightColor = this.highlightColor ?? context.colors.secondary;
     final splashColor = this.splashColor ?? context.colors.surface;
 
-    var isPressed = useState(false);
+    final isPressed = useState(false);
     final widget = getWidget(child, context);
 
     return ButtonBox(
@@ -201,8 +193,8 @@ class NomoButton extends HookWidget {
     );
   }
 
-  getColor(
-      bool isPressed, Color color, Color disabledColor, Color highlightColor) {
+  Color getColor(
+      bool isPressed, Color color, Color disabledColor, Color highlightColor,) {
     if (isPressed) {
       return highlightColor == ButtonConstants.highlightColor
           ? color
@@ -211,7 +203,7 @@ class NomoButton extends HookWidget {
     return isEnabled ? color : disabledColor;
   }
 
-  getWidget(Widget child, BuildContext context) {
+  Container getWidget(Widget child, BuildContext context) {
     if (child is NomoText && child.style == null) {
       child = NomoText(
         child.text,
@@ -251,7 +243,6 @@ class NomoButton extends HookWidget {
                       children: [
                         if (leading != null)
                           Expanded(
-                            flex: 1,
                             child: leading!,
                           ),
                         Expanded(
@@ -259,7 +250,7 @@ class NomoButton extends HookWidget {
                           child: child,
                         ),
                         if (trailing != null)
-                          Expanded(flex: 1, child: trailing!),
+                          Expanded(child: trailing!),
                       ],
                     )
                   : FittedBox(

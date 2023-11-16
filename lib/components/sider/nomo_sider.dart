@@ -6,6 +6,14 @@ part 'nomo_sider.g.dart';
 
 @NomoComponentThemeData('siderTheme')
 class NomoSider extends StatelessWidget {
+
+  const NomoSider({
+    required this.child, super.key,
+    this.backgroundColor,
+    this.border,
+    this.padding,
+    this.width,
+  });
   final Widget child;
 
   @NomoColorField(primaryColor)
@@ -14,22 +22,13 @@ class NomoSider extends StatelessWidget {
   @NomoSizingField(EdgeInsets.all(16))
   final EdgeInsetsGeometry? padding;
 
-  @NomoSizingField(80.0)
+  @NomoSizingField(80)
   final double? width;
 
   @NomoColorField(Border(
-    right: BorderSide(color: Colors.black12, width: 1),
-  ))
+    right: BorderSide(color: Colors.black12),
+  ),)
   final Border? border;
-
-  const NomoSider({
-    super.key,
-    required this.child,
-    this.backgroundColor,
-    this.border,
-    this.padding,
-    this.width,
-  });
 
   @override
   Widget build(BuildContext context) {

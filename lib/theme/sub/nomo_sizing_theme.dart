@@ -1,6 +1,10 @@
 part of nomo_theme;
 
 class NomoSizes {
+
+  const NomoSizes({
+    required this.fontSizeB1, required this.fontSizeB2, required this.fontSizeB3, required this.fontSizeH1, required this.fontSizeH2, required this.fontSizeH3, this.maxContentWidth,
+  });
   final double? maxContentWidth;
 
   final double fontSizeB1;
@@ -10,16 +14,6 @@ class NomoSizes {
   final double fontSizeH1;
   final double fontSizeH2;
   final double fontSizeH3;
-
-  const NomoSizes({
-    this.maxContentWidth,
-    required this.fontSizeB1,
-    required this.fontSizeB2,
-    required this.fontSizeB3,
-    required this.fontSizeH1,
-    required this.fontSizeH2,
-    required this.fontSizeH3,
-  });
 
   static NomoSizes lerp(NomoSizes a, NomoSizes b, double t) {
     return NomoSizes(
@@ -35,12 +29,6 @@ class NomoSizes {
 }
 
 class NomoComponentSizes {
-  final NomoOutlineContainerSizingData outlineContainerTheme;
-  final NomoAppBarSizingData appBarTheme;
-  final NomoScaffoldSizingData scaffoldTheme;
-  final NomoBottomBarSizingData bottomBarTheme;
-  final NomoSiderSizingData siderTheme;
-  final NomoVerticalMenuSizingData verticalMenuTheme;
 
   const NomoComponentSizes._({
     this.outlineContainerTheme = const NomoOutlineContainerSizingData(),
@@ -70,9 +58,15 @@ class NomoComponentSizes {
       verticalMenuTheme: verticalMenuTheme ?? def.verticalMenuTheme,
     );
   }
+  final NomoOutlineContainerSizingData outlineContainerTheme;
+  final NomoAppBarSizingData appBarTheme;
+  final NomoScaffoldSizingData scaffoldTheme;
+  final NomoBottomBarSizingData bottomBarTheme;
+  final NomoSiderSizingData siderTheme;
+  final NomoVerticalMenuSizingData verticalMenuTheme;
 
   static NomoComponentSizes defaultComponents(NomoSizes core) =>
-      NomoComponentSizes._(
+      const NomoComponentSizes._(
         outlineContainerTheme: NomoOutlineContainerSizingData(
           spacing: 100,
           padding: EdgeInsets.all(32),
@@ -82,9 +76,7 @@ class NomoComponentSizes {
           height: 48,
         ),
         bottomBarTheme: NomoBottomBarSizingData(
-          height: 56,
           iconSize: 24,
-          spacing: 4,
         ),
       );
 
@@ -118,8 +110,6 @@ class NomoComponentSizes {
 }
 
 class NomoSizingThemeData {
-  final NomoSizes sizes;
-  final NomoComponentSizes components;
 
   NomoSizingThemeData({
     required this.sizes,
@@ -131,6 +121,8 @@ class NomoSizingThemeData {
     required this.sizes,
     required this.components,
   });
+  final NomoSizes sizes;
+  final NomoComponentSizes components;
 
   static NomoSizingThemeData lerp(
     NomoSizingThemeData a,

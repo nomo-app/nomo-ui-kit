@@ -12,6 +12,25 @@ const kCurve = Curves.easeInOut;
 
 @NomoComponentThemeData('verticalMenuTheme')
 class NomoVerticalMenu extends StatelessWidget {
+
+  const NomoVerticalMenu({
+    required this.items,
+    required this.selected,
+    this.foreground,
+    this.background,
+    this.selectedBackground,
+    this.selectedForeground,
+    this.height,
+    this.hPadding,
+    this.itemSpacing,
+    this.borderRadius,
+    this.iconSize,
+    this.style,
+    this.spacing,
+    this.title,
+    this.onTap,
+    super.key,
+  });
   final List<NomoMenuItem> items;
   final TextStyle? style;
   final Widget? title;
@@ -33,39 +52,20 @@ class NomoVerticalMenu extends StatelessWidget {
   @NomoColorField(BorderRadius.all(Radius.circular(16)))
   final BorderRadius? borderRadius;
 
-  @NomoSizingField(16.0)
+  @NomoSizingField(16)
   final double? hPadding;
 
-  @NomoSizingField(8.0)
+  @NomoSizingField(8)
   final double? itemSpacing;
 
-  @NomoSizingField(8.0)
+  @NomoSizingField(8)
   final double? spacing;
 
-  @NomoSizingField(56.0)
+  @NomoSizingField(56)
   final double? height;
 
-  @NomoSizingField(28.0)
+  @NomoSizingField(28)
   final double? iconSize;
-
-  const NomoVerticalMenu({
-    required this.items,
-    required this.selected,
-    this.foreground,
-    this.background,
-    this.selectedBackground,
-    this.selectedForeground,
-    this.height,
-    this.hPadding,
-    this.itemSpacing,
-    this.borderRadius,
-    this.iconSize,
-    this.style,
-    this.spacing,
-    this.title,
-    this.onTap,
-    super.key,
-  });
 
   @override
   Widget build(BuildContext context) {

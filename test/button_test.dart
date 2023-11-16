@@ -187,7 +187,7 @@ void main() {
   });
   testWidgets('Test NomoButton.text widget large with icon',
       (WidgetTester tester) async {
-    int i = 0;
+    var i = 0;
 
     await tester.pumpWidget(
       MaterialApp(
@@ -224,7 +224,7 @@ void main() {
     expect(buttonWidget.height, largeHeight);
   });
 
-  testWidgets("Test isLoading Button", (widgetTester) async {
+  testWidgets('Test isLoading Button', (widgetTester) async {
     await widgetTester.pumpWidget(
       MaterialApp(
         home: Scaffold(

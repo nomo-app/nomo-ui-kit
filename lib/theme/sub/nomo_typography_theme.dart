@@ -1,13 +1,6 @@
 part of nomo_theme;
 
 class NomoTypographyTheme {
-  final TextStyle b1;
-  final TextStyle b2;
-  final TextStyle b3;
-
-  final TextStyle h1;
-  final TextStyle h2;
-  final TextStyle h3;
 
   const NomoTypographyTheme({
     required this.b1,
@@ -17,6 +10,13 @@ class NomoTypographyTheme {
     required this.h2,
     required this.h3,
   });
+  final TextStyle b1;
+  final TextStyle b2;
+  final TextStyle b3;
+
+  final TextStyle h1;
+  final TextStyle h2;
+  final TextStyle h3;
 
   NomoTypographyTheme copyWith({
     NomoColors? colors,

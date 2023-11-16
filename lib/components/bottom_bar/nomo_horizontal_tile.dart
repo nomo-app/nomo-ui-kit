@@ -5,21 +5,19 @@ import 'package:nomo_ui_kit/components/vertical_menu/nomo_vertical_menu.dart';
 import 'package:nomo_ui_kit/entities/menu_item.dart';
 
 class NomoHorizontalListTile extends StatefulWidget {
+
+  const NomoHorizontalListTile({
+    required this.item, required this.theme, super.key,
+    this.style,
+    this.onTap,
+    this.selected = false,
+  });
   final NomoMenuItem item;
   final NomoBottomBarThemeData theme;
   final TextStyle? style;
 
   final VoidCallback? onTap;
   final bool selected;
-
-  const NomoHorizontalListTile({
-    super.key,
-    required this.item,
-    required this.theme,
-    this.style,
-    this.onTap,
-    this.selected = false,
-  });
 
   @override
   State<NomoHorizontalListTile> createState() => _NomoHorizontalListTileState();
@@ -75,12 +73,12 @@ class _NomoHorizontalListTileState extends State<NomoHorizontalListTile>
           final foreground = foreGroundAnimation.value;
 
           final icon = switch (widget.item) {
-            NomoMenuIconItem iconItem => Icon(
+            final NomoMenuIconItem iconItem => Icon(
                 iconItem.icon,
                 color: foreground,
                 size: theme.iconSize,
               ),
-            NomoMenuImageItem imageItem => Image(
+            final NomoMenuImageItem imageItem => Image(
                 image: imageItem.image,
                 color: foreground,
               ),

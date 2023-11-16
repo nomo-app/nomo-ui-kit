@@ -1,10 +1,10 @@
 import 'package:flutter/widgets.dart';
 
 sealed class NomoMenuItem {
-  final String title;
-  final String path;
 
   const NomoMenuItem({required this.title, required this.path});
+  final String title;
+  final String path;
 
   @override
   int get hashCode => title.hashCode ^ path.hashCode;
@@ -26,21 +26,21 @@ final class NomoMenuTextItem extends NomoMenuItem {
 }
 
 final class NomoMenuIconItem extends NomoMenuItem {
-  final IconData icon;
 
   const NomoMenuIconItem({
     required super.title,
     required super.path,
     required this.icon,
   });
+  final IconData icon;
 }
 
 final class NomoMenuImageItem extends NomoMenuItem {
-  final ImageProvider image;
 
   const NomoMenuImageItem({
     required super.title,
     required super.path,
     required this.image,
   });
+  final ImageProvider image;
 }

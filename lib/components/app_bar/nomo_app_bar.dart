@@ -9,28 +9,6 @@ part 'nomo_app_bar.g.dart';
 
 @NomoComponentThemeData('appBarTheme')
 class NomoAppBar extends StatelessWidget {
-  final Widget? title;
-  final Widget? leading;
-  final Widget? trailling;
-  final PreferredSizeWidget? bottom;
-
-  @NomoSizingField(16.0)
-  final double? spacing;
-
-  @NomoSizingField(0.0)
-  final double? topInset;
-
-  @NomoColorField<BorderRadiusGeometry?>(null)
-  final BorderRadiusGeometry? borderRadius;
-
-  @NomoSizingField(kToolbarHeight)
-  final double? height;
-
-  @NomoColorField(Colors.red)
-  final Color? backgroundColor;
-
-  @NomoSizingField(2.0)
-  final double? elevation;
 
   const NomoAppBar({
     super.key,
@@ -45,6 +23,28 @@ class NomoAppBar extends StatelessWidget {
     this.height,
     this.elevation,
   });
+  final Widget? title;
+  final Widget? leading;
+  final Widget? trailling;
+  final PreferredSizeWidget? bottom;
+
+  @NomoSizingField(16)
+  final double? spacing;
+
+  @NomoSizingField(0)
+  final double? topInset;
+
+  @NomoColorField<BorderRadiusGeometry?>(null)
+  final BorderRadiusGeometry? borderRadius;
+
+  @NomoSizingField(kToolbarHeight)
+  final double? height;
+
+  @NomoColorField(Colors.red)
+  final Color? backgroundColor;
+
+  @NomoSizingField(2)
+  final double? elevation;
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +78,7 @@ class NomoAppBar extends StatelessWidget {
               if (bottom != null)
                 SizedBox(
                   height: bottom!.preferredSize.height,
-                  child: bottom!,
+                  child: bottom,
                 ),
             ],
           ),

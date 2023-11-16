@@ -28,16 +28,16 @@ class ButtonConstants {
   static const double largeIconButtonWidth = 60;
   static const double largeIconButtonHeight = 60;
 
-  static const EdgeInsetsGeometry padding = EdgeInsets.all(8.0);
+  static const EdgeInsetsGeometry padding = EdgeInsets.all(8);
   static const EdgeInsetsGeometry margin = EdgeInsets.all(0);
 
   //Border
   static const BorderRadiusGeometry borderRadius =
-      BorderRadius.all(Radius.circular(5.0));
+      BorderRadius.all(Radius.circular(5));
   static const BorderSide border = BorderSide.none;
 
   //Other
-  static const double elevation = 1.0;
+  static const double elevation = 1;
   static const bool isEnabled = true;
   static const bool isLoading = false;
   static const Widget loadingWidget = CircularProgressIndicator();
@@ -48,6 +48,6 @@ class ButtonConstants {
     fontSize: 16,
     fontWeight: FontWeight.w500,
     fontStyle: FontStyle.normal,
-    letterSpacing: 0.0,
+    letterSpacing: 0,
   );
 }

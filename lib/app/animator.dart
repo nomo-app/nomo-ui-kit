@@ -16,14 +16,12 @@ class NomoThemeDataTween extends Tween<NomoThemeData> {
 }
 
 class ThemeAnimator extends StatefulWidget {
-  final ThemeNotifier notifier;
-  final Widget child;
 
   const ThemeAnimator({
-    super.key,
-    required this.notifier,
-    required this.child,
+    required this.notifier, required this.child, super.key,
   });
+  final ThemeNotifier notifier;
+  final Widget child;
 
   @override
   State<ThemeAnimator> createState() => _ThemeAnimatorState();

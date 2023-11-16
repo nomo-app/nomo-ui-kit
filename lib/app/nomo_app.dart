@@ -12,22 +12,18 @@ const kThemeChangeDuration = Duration(milliseconds: 400);
 const kThemeChangeCurve = Curves.easeInOut;
 
 class NomoApp extends StatefulWidget {
+
+  const NomoApp({
+    required this.routes, required this.supportedLocales, required this.theme, required this.sizingThemeBuilder, super.key,
+    this.localizationDelegate,
+    this.currentLocale,
+  });
   final Iterable<RouteInfo> routes;
   final LocalizationsDelegate? localizationDelegate;
   final Iterable<Locale> supportedLocales;
   final Locale? currentLocale;
   final NomoThemeData theme;
   final NomoSizingThemeData Function(double) sizingThemeBuilder;
-
-  const NomoApp({
-    super.key,
-    required this.routes,
-    this.localizationDelegate,
-    required this.supportedLocales,
-    required this.theme,
-    required this.sizingThemeBuilder,
-    this.currentLocale,
-  });
 
   @override
   State<NomoApp> createState() => _NomoAppState();
@@ -66,7 +62,7 @@ class _NomoAppState extends State<NomoApp> {
                 if (widget.localizationDelegate != null)
                   widget.localizationDelegate!,
                 GlobalMaterialLocalizations.delegate,
-                GlobalCupertinoLocalizations.delegate
+                GlobalCupertinoLocalizations.delegate,
               ],
               supportedLocales: widget.supportedLocales,
               locale: widget.currentLocale,
@@ -79,7 +75,7 @@ class _NomoAppState extends State<NomoApp> {
                 ),
               ),
               backButtonDispatcher: NomoBackButtonDispatcher(delegate),
-              routeInformationParser: NomoRouteInformationParser(),
+              routeInformationParser: const NomoRouteInformationParser(),
             ),
           ),
         ),

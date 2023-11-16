@@ -6,6 +6,21 @@ part 'nomo_scaffold.g.dart';
 
 @NomoComponentThemeData('scaffoldTheme')
 class NomoScaffold extends StatefulWidget {
+
+  const NomoScaffold({
+    required this.child, super.key,
+    this.appBar,
+    this.bottomBar,
+    this.sider,
+    this.bottomSheet,
+    this.padding,
+    this.backgroundColor,
+    this.showBottomBar,
+    this.showSider,
+    this.drawer,
+    this.nestedAppBar,
+    this.endDrawer,
+  });
   final Widget child;
   final PreferredSizeWidget? appBar;
   final Widget? nestedAppBar;
@@ -26,22 +41,6 @@ class NomoScaffold extends StatefulWidget {
 
   @NomoSizingField(true)
   final bool? showSider;
-
-  const NomoScaffold({
-    super.key,
-    required this.child,
-    this.appBar,
-    this.bottomBar,
-    this.sider,
-    this.bottomSheet,
-    this.padding,
-    this.backgroundColor,
-    this.showBottomBar,
-    this.showSider,
-    this.drawer,
-    this.nestedAppBar,
-    this.endDrawer,
-  });
 
   static ScaffoldState of(BuildContext context) {
     final result = context

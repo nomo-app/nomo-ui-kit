@@ -1,9 +1,8 @@
-import 'package:flutter/material.dart';
 
 class NomoDropdownItem<T> {
+
+  const NomoDropdownItem({required this.displayText, this.value})
+      : super();
   final T? value;
   final String displayText;
-
-  const NomoDropdownItem({Key? key, this.value, required this.displayText})
-      : super();
 }

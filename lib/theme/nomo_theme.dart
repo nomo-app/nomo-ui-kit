@@ -21,15 +21,6 @@ const primaryColor = Color(0xFFBCA570);
 const secondary = Color(0xffd1af72);
 
 class NomoThemeData {
-  final NomoColorThemeData colorTheme;
-  final NomoTypographyTheme typographyTheme;
-  final NomoSizingThemeData sizingTheme;
-
-  NomoColors get colors => colorTheme.colors;
-  NomoComponentColors get componentColors => colorTheme.components;
-
-  NomoSizes get sizes => sizingTheme.sizes;
-  NomoComponentSizes get componentSizes => sizingTheme.components;
 
   NomoThemeData({
     required this.colorTheme,
@@ -39,6 +30,15 @@ class NomoThemeData {
           colors: colorTheme.colors,
           sizes: sizingTheme.sizes,
         );
+  final NomoColorThemeData colorTheme;
+  final NomoTypographyTheme typographyTheme;
+  final NomoSizingThemeData sizingTheme;
+
+  NomoColors get colors => colorTheme.colors;
+  NomoComponentColors get componentColors => colorTheme.components;
+
+  NomoSizes get sizes => sizingTheme.sizes;
+  NomoComponentSizes get componentSizes => sizingTheme.components;
 
   static NomoThemeData lerp(NomoThemeData a, NomoThemeData b, double t) {
     return NomoThemeData(
@@ -65,13 +65,11 @@ class NomoThemeData {
 }
 
 class NomoTheme extends InheritedWidget {
-  final NomoThemeData value;
 
   const NomoTheme({
-    super.key,
-    required this.value,
-    required super.child,
+    required this.value, required super.child, super.key,
   });
+  final NomoThemeData value;
 
   static NomoThemeData of(BuildContext context) {
     final result = context.dependOnInheritedWidgetOfExactType<NomoTheme>();

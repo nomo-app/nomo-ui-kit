@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import 'appbar_layout_renderbox.dart';
+import 'package:nomo_ui_kit/components/app_bar/layout/appbar_layout_renderbox.dart';
 
 enum AppBarItem {
   title,
@@ -10,11 +10,11 @@ enum AppBarItem {
 
 class AppBarLayoutDelegate
     extends SlottedMultiChildRenderObjectWidget<AppBarItem, RenderBox> {
-  final Map<AppBarItem, Widget> children;
 
   AppBarLayoutDelegate({
     required this.children,
   }) : super(key: ValueKey(children.hashCode));
+  final Map<AppBarItem, Widget> children;
 
   @override
   Iterable<AppBarItem> get slots => children.keys;
@@ -38,6 +38,6 @@ class AppBarLayoutDelegate
     BuildContext context,
     SlottedContainerRenderObjectMixin<AppBarItem, RenderBox> renderObject,
   ) {
-    (renderObject as AppBarLayoutRenderBox);
+    renderObject as AppBarLayoutRenderBox;
   }
 }

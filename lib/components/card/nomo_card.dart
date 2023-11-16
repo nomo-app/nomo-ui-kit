@@ -1,25 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 
-import 'card_const.dart';
+import 'package:nomo_ui_kit/components/card/card_const.dart';
 
 class NomoCard extends StatelessWidget {
-  final Widget child;
-  final Color? color;
-  final double elevation;
-  final BorderRadius? borderRadius;
-  final EdgeInsetsGeometry padding;
-  final EdgeInsetsGeometry margin;
-  final VoidCallback? onPressed;
-  final double? width;
-  final double? height;
-  final Offset offset;
-  final Decoration? decoration;
-  final BoxShape? shape;
 
   const NomoCard({
-    super.key,
-    required this.child,
+    required this.child, super.key,
     this.color,
     this.elevation = CardConst.elevation,
     this.borderRadius,
@@ -32,6 +19,18 @@ class NomoCard extends StatelessWidget {
     this.decoration,
     this.shape,
   }) : assert(elevation < 10);
+  final Widget child;
+  final Color? color;
+  final double elevation;
+  final BorderRadius? borderRadius;
+  final EdgeInsetsGeometry padding;
+  final EdgeInsetsGeometry margin;
+  final VoidCallback? onPressed;
+  final double? width;
+  final double? height;
+  final Offset offset;
+  final Decoration? decoration;
+  final BoxShape? shape;
 
   @override
   Widget build(BuildContext context) {

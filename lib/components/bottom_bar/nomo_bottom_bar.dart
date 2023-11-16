@@ -9,19 +9,38 @@ part 'nomo_bottom_bar.g.dart';
 
 @NomoComponentThemeData('bottomBarTheme')
 class NomoBottomBar extends StatelessWidget {
+
+  const NomoBottomBar({
+    required this.items, required this.selected, super.key,
+    this.height,
+    this.style,
+    this.onTap,
+    this.title,
+    this.background,
+    this.foreground,
+    this.selectedForeground,
+    this.borderRadius,
+    this.spacing,
+    this.padding,
+    this.iconSize,
+    this.itemPadding,
+  }) : assert(
+          items.length > 0 && items.length <= 5,
+          'Items must be between 1 and 5',
+        );
   final List<NomoMenuItem> items;
   final TextStyle? style;
   final Widget? title;
   final void Function(NomoMenuItem item)? onTap;
   final NomoMenuItem? selected;
 
-  @NomoSizingField(56.0)
+  @NomoSizingField(56)
   final double? height;
 
-  @NomoSizingField(4.0)
+  @NomoSizingField(4)
   final double? spacing;
 
-  @NomoSizingField(28.0)
+  @NomoSizingField(28)
   final double? iconSize;
 
   @NomoSizingField(EdgeInsets.all(4))
@@ -41,27 +60,6 @@ class NomoBottomBar extends StatelessWidget {
 
   @NomoColorField(BorderRadius.all(Radius.circular(8)))
   final BorderRadius? borderRadius;
-
-  const NomoBottomBar({
-    super.key,
-    this.height,
-    required this.items,
-    required this.selected,
-    this.style,
-    this.onTap,
-    this.title,
-    this.background,
-    this.foreground,
-    this.selectedForeground,
-    this.borderRadius,
-    this.spacing,
-    this.padding,
-    this.iconSize,
-    this.itemPadding,
-  }) : assert(
-          items.length > 0 && items.length <= 5,
-          "Items must be between 1 and 5",
-        );
 
   @override
   Widget build(BuildContext context) {

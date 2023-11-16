@@ -4,12 +4,25 @@ import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 
 part 'nomo_outline_container.g.dart';
 
-@NomoComponentThemeData("outlineContainerTheme")
+@NomoComponentThemeData('outlineContainerTheme')
 
 ///
 /// A container with a border and a background color.
 ///
 class NomoOutlineContainer extends StatelessWidget {
+
+  const NomoOutlineContainer({
+    required this.child, this.foreground,
+    this.radius,
+    this.border,
+    this.width,
+    this.height,
+    this.background,
+    this.padding,
+    this.shape,
+    this.spacing,
+    super.key,
+  });
   @NomoColorField(Colors.black)
   final Color? foreground;
 
@@ -22,7 +35,7 @@ class NomoOutlineContainer extends StatelessWidget {
   @NomoSizingField(EdgeInsets.all(16))
   final EdgeInsets? padding;
 
-  @NomoSizingField(16.0)
+  @NomoSizingField(16)
   final double? spacing;
 
   final BoxBorder? border;
@@ -33,20 +46,6 @@ class NomoOutlineContainer extends StatelessWidget {
 
   final double? width;
   final double? height;
-
-  const NomoOutlineContainer({
-    this.foreground,
-    required this.child,
-    this.radius,
-    this.border,
-    this.width,
-    this.height,
-    this.background,
-    this.padding,
-    this.shape,
-    this.spacing,
-    super.key,
-  });
 
   @override
   Widget build(BuildContext context) {

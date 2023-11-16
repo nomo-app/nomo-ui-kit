@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 
 class NomoDecoration extends BoxDecoration {
-  final double elevation;
-  final Offset elevationOffset;
-  final double blurRadiusK;
-  final double spreadRadiusK;
-  final Color shadowColor;
 
   NomoDecoration({
     super.color,
@@ -29,6 +24,11 @@ class NomoDecoration extends BoxDecoration {
             spreadRadiusK,
           ),
         );
+  final double elevation;
+  final Offset elevationOffset;
+  final double blurRadiusK;
+  final double spreadRadiusK;
+  final Color shadowColor;
 
   static List<BoxShadow>? getBoxShadow(
     Color color,

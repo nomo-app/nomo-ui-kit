@@ -9,12 +9,11 @@ class AppBarLayoutRenderBox extends RenderBox
     with
         SlottedContainerRenderObjectMixin<AppBarItem, RenderBox>,
         DebugOverflowIndicatorMixin {
-  final List<AppBarItem> items;
-  late Size contentSize;
-
   AppBarLayoutRenderBox({
     required this.items,
   });
+  final List<AppBarItem> items;
+  late Size contentSize;
 
   double centerVertically(double maxHeight, Size s) {
     if (maxHeight == double.infinity) {
@@ -25,21 +24,21 @@ class AppBarLayoutRenderBox extends RenderBox
 
   @override
   void performLayout() {
-    BoxConstraints constraints = this.constraints;
-    double maxWidth = constraints.maxWidth;
-    double maxHeight = constraints.maxHeight;
+    final constraints = this.constraints;
+    final maxWidth = constraints.maxWidth;
+    var maxHeight = constraints.maxHeight;
     contentSize = Size(maxWidth, maxHeight);
 
-    RenderBox? actions = childForSlot(AppBarItem.actions);
-    RenderBox? title = childForSlot(AppBarItem.title);
-    RenderBox? backButton = childForSlot(AppBarItem.backButton);
+    final actions = childForSlot(AppBarItem.actions);
+    final title = childForSlot(AppBarItem.title);
+    final backButton = childForSlot(AppBarItem.backButton);
 
-    BoxConstraints remaingConstraints = constraints.copyWith(minHeight: 0);
+    var remaingConstraints = constraints.copyWith(minHeight: 0);
 
     ///
     /// Back Button
     ///
-    Size backButtonSize = Size.zero;
+    var backButtonSize = Size.zero;
     BoxParentData? backButtonParentData;
 
     if (backButton != null) {
@@ -49,8 +48,8 @@ class AppBarLayoutRenderBox extends RenderBox
       final backButtonOffset =
           Offset(0, centerVertically(maxHeight, backButtonSize));
 
-      backButtonParentData = backButton.parentData! as BoxParentData;
-      backButtonParentData.offset = backButtonOffset;
+      backButtonParentData = backButton.parentData! as BoxParentData
+        ..offset = backButtonOffset;
       remaingConstraints = remaingConstraints.copyWith(
         maxWidth: remaingConstraints.maxWidth - backButtonSize.width,
       );
@@ -59,17 +58,17 @@ class AppBarLayoutRenderBox extends RenderBox
     ///
     /// Actions
     ///
-    Size actionSize = Size.zero;
+    var actionSize = Size.zero;
     BoxParentData? actionParentData;
     if (actions != null) {
       actions.layout(remaingConstraints, parentUsesSize: true);
       actionSize = actions.size;
-      final offset_action = Offset(
+      final offsetAction = Offset(
         maxWidth - actionSize.width,
         centerVertically(maxHeight, actionSize),
       );
-      actionParentData = actions.parentData! as BoxParentData;
-      actionParentData.offset = offset_action;
+      actionParentData = actions.parentData! as BoxParentData
+        ..offset = offsetAction;
       remaingConstraints = remaingConstraints.copyWith(
         maxWidth: remaingConstraints.maxWidth - actionSize.width,
       );
@@ -86,17 +85,17 @@ class AppBarLayoutRenderBox extends RenderBox
       maxWidth: maxWidth - biggestIndent * 2,
       maxHeight: remaingConstraints.maxHeight,
     );
-    Size titleSize = Size.zero;
+    var titleSize = Size.zero;
     BoxParentData? titleParentData;
     if (title != null) {
       title.layout(titleConstraints, parentUsesSize: true);
       titleSize = title.size;
-      final offset_title = Offset(
+      final offsetTitle = Offset(
         ((titleConstraints.maxWidth - titleSize.width) / 2) + biggestIndent,
         centerVertically(maxHeight, titleSize),
       );
       titleParentData = title.parentData! as BoxParentData;
-      titleParentData.offset = offset_title;
+      titleParentData.offset = offsetTitle;
     }
 
     /// Find the biggest height
@@ -138,15 +137,15 @@ class AppBarLayoutRenderBox extends RenderBox
     // Paint the background.
     context.canvas.drawRect(
       offset & size,
-      Paint()..color = Color(0x00FFFFFF),
+      Paint()..color = const Color(0x00FFFFFF),
     );
 
     void paintChild(RenderBox child, PaintingContext context, Offset offset) {
-      final BoxParentData childParentData = child.parentData! as BoxParentData;
+      final childParentData = child.parentData! as BoxParentData;
       context.paintChild(child, childParentData.offset + offset);
     }
 
-    for (RenderBox box in children) {
+    for (final box in children) {
       paintChild(box, context, offset);
     }
 
@@ -168,9 +167,9 @@ class AppBarLayoutRenderBox extends RenderBox
   ///
   @override
   bool hitTestChildren(BoxHitTestResult result, {required Offset position}) {
-    for (final RenderBox child in children) {
-      final BoxParentData parentData = child.parentData! as BoxParentData;
-      final bool isHit = result.addWithPaintOffset(
+    for (final child in children) {
+      final parentData = child.parentData! as BoxParentData;
+      final isHit = result.addWithPaintOffset(
         offset: parentData.offset,
         position: position,
         hitTest: (BoxHitTestResult result, Offset transformed) {
@@ -191,8 +190,8 @@ class AppBarLayoutRenderBox extends RenderBox
 
   @override
   double computeMinIntrinsicWidth(double height) {
-    double width = 0;
-    for (RenderBox box in children) {
+    var width = 0.0;
+    for (final box in children) {
       width += box.getMinIntrinsicWidth(double.infinity);
     }
     return width;
@@ -200,8 +199,8 @@ class AppBarLayoutRenderBox extends RenderBox
 
   @override
   double computeMaxIntrinsicWidth(double height) {
-    double width = 0;
-    for (RenderBox box in children) {
+    var width = 0.0;
+    for (final box in children) {
       width += box.getMaxIntrinsicWidth(double.infinity);
     }
     return width;
@@ -209,8 +208,8 @@ class AppBarLayoutRenderBox extends RenderBox
 
   @override
   double computeMinIntrinsicHeight(double width) {
-    double height = 0;
-    for (RenderBox box in children) {
+    var height = 0.0;
+    for (final box in children) {
       height += box.getMinIntrinsicHeight(double.infinity);
     }
     return height;
@@ -218,8 +217,8 @@ class AppBarLayoutRenderBox extends RenderBox
 
   @override
   double computeMaxIntrinsicHeight(double width) {
-    double height = 0;
-    for (RenderBox box in children) {
+    var height = 0.0;
+    for (final box in children) {
       height += box.getMaxIntrinsicHeight(double.infinity);
     }
     return height;
@@ -227,10 +226,10 @@ class AppBarLayoutRenderBox extends RenderBox
 
   @override
   Size computeDryLayout(BoxConstraints constraints) {
-    const BoxConstraints childConstraints = BoxConstraints();
-    Size s = Size.zero;
-    for (RenderBox box in children) {
-      Size boxSize = box.computeDryLayout(childConstraints);
+    const childConstraints = BoxConstraints();
+    var s = Size.zero;
+    for (final box in children) {
+      final boxSize = box.computeDryLayout(childConstraints);
       s = Size(s.width + boxSize.width, s.height + boxSize.height);
     }
     return constraints.constrain(s);

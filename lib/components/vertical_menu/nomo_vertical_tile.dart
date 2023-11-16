@@ -5,22 +5,20 @@ import 'package:nomo_ui_kit/entities/menu_item.dart';
 import 'package:nomo_ui_kit/utils/layout_extensions.dart';
 
 class NomoVerticalListTile extends StatefulWidget {
+
+  const NomoVerticalListTile({
+    required this.item, required this.theme, super.key,
+    this.collapsed = false,
+    this.style,
+    this.onTap,
+    this.selected = false,
+  });
   final NomoMenuItem item;
   final NomoVerticalMenuThemeData theme;
   final TextStyle? style;
   final bool collapsed;
   final VoidCallback? onTap;
   final bool selected;
-
-  const NomoVerticalListTile({
-    super.key,
-    required this.item,
-    required this.theme,
-    this.collapsed = false,
-    this.style,
-    this.onTap,
-    this.selected = false,
-  });
 
   double get intrinsicWidth {
     return (theme.hPadding * 2) +
@@ -118,12 +116,12 @@ class _NomoVerticalListTileState extends State<NomoVerticalListTile>
             final background = backgroundAnimation.value;
 
             final icon = switch (widget.item) {
-              NomoMenuIconItem iconItem => Icon(
+              final NomoMenuIconItem iconItem => Icon(
                   iconItem.icon,
                   color: foreground,
                   size: theme.iconSize,
                 ),
-              NomoMenuImageItem imageItem => Image(
+              final NomoMenuImageItem imageItem => Image(
                   image: imageItem.image,
                   color: foreground,
                 ),
@@ -156,7 +154,7 @@ class _NomoVerticalListTileState extends State<NomoVerticalListTile>
                           color: foreground,
                           style: widget.style,
                         ),
-                      ]
+                      ],
                     ],
                   ),
                 ),

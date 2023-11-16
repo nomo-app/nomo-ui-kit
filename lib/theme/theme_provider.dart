@@ -4,14 +4,11 @@ import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 typedef ThemeNotifier = ValueNotifier<NomoThemeData>;
 
 class ThemeProvider extends InheritedWidget {
-  final ThemeNotifier _notifier;
 
   const ThemeProvider({
-    Key? key,
-    required ValueNotifier<NomoThemeData> notifier,
-    required Widget child,
-  })  : _notifier = notifier,
-        super(key: key, child: child);
+    required ValueNotifier<NomoThemeData> notifier, required super.child, super.key,
+  })  : _notifier = notifier;
+  final ThemeNotifier _notifier;
 
   NomoThemeData get theme => _notifier.value;
   NomoColorThemeData get colorTheme => _notifier.value.colorTheme;

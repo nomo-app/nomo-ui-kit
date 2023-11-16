@@ -4,19 +4,6 @@ import 'package:flutter/widgets.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 
 class NomoText extends StatelessWidget {
-  final String text;
-  final TextStyle? style;
-  final TextAlign? textAlign;
-  final TextDirection? textDirection;
-  final TextOverflow? overflow;
-  final Color? color;
-  final FontWeight? fontWeight;
-  final int? maxLines;
-  final bool? fitHeight;
-  final List<double>? fontSizes;
-  final double decreaseBy;
-  final double minFontSize;
-
   const NomoText(
     this.text, {
     super.key,
@@ -33,13 +20,25 @@ class NomoText extends StatelessWidget {
     this.minFontSize = 6,
   })  : assert(
           fontSizes == null || fontSizes.length > 0,
-          "fontSizes must be a list of at least one value",
+          'fontSizes must be a list of at least one value',
         ),
         assert(
           (fitHeight != null && fontSizes == null && maxLines == null) ||
               fitHeight == null,
-          "Cant use FontSizes || maxLines with fitHeight",
+          'Cant use FontSizes || maxLines with fitHeight',
         );
+  final String text;
+  final TextStyle? style;
+  final TextAlign? textAlign;
+  final TextDirection? textDirection;
+  final TextOverflow? overflow;
+  final Color? color;
+  final FontWeight? fontWeight;
+  final int? maxLines;
+  final bool? fitHeight;
+  final List<double>? fontSizes;
+  final double decreaseBy;
+  final double minFontSize;
 
   double decreaseFontSize(double fontSize) {
     if (fontSizes != null) {
@@ -54,7 +53,7 @@ class NomoText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextStyle style = (this.style ?? context.typography.b1).copyWith(
+    var style = (this.style ?? context.typography.b1).copyWith(
       color: color,
       fontWeight: fontWeight,
     );
@@ -67,7 +66,7 @@ class NomoText extends StatelessWidget {
 
         if (fitHeight != null) {
           if (constraints.maxHeight == double.infinity) {
-            throw Exception("Cant use fitHeight with infinite height");
+            throw Exception('Cant use fitHeight with infinite height');
           }
           final (size, lines) = findStyleForFitHeight(
             maxWidth: maxWidth,

@@ -1,6 +1,23 @@
 part of nomo_theme;
 
 class NomoColors {
+
+  const NomoColors({
+    required this.brightness,
+    required this.primary,
+    required this.onPrimary,
+    required this.primaryContainer,
+    required this.secondary,
+    required this.onSecondary,
+    required this.secondaryContainer,
+    required this.background,
+    required this.surface,
+    required this.error,
+    required this.disabledColor,
+    required this.foreground1,
+    required this.foreground2,
+    required this.foreground3,
+  });
   final Brightness brightness;
 
   /// Primary color
@@ -19,23 +36,6 @@ class NomoColors {
   final Color foreground1;
   final Color foreground2;
   final Color foreground3;
-
-  const NomoColors({
-    required this.brightness,
-    required this.primary,
-    required this.onPrimary,
-    required this.primaryContainer,
-    required this.secondary,
-    required this.onSecondary,
-    required this.secondaryContainer,
-    required this.background,
-    required this.surface,
-    required this.error,
-    required this.disabledColor,
-    required this.foreground1,
-    required this.foreground2,
-    required this.foreground3,
-  });
 
   static NomoColors lerp(NomoColors a, NomoColors b, double t) {
     return NomoColors(
@@ -59,12 +59,6 @@ class NomoColors {
 }
 
 class NomoComponentColors {
-  final NomoOutlineContainerColorData outlineContainerTheme;
-  final NomoAppBarColorData appBarTheme;
-  final NomoScaffoldColorData scaffoldTheme;
-  final NomoBottomBarColorData bottomBarTheme;
-  final NomoSiderColorData siderTheme;
-  final NomoVerticalMenuColorData verticalMenuTheme;
 
   const NomoComponentColors._({
     this.outlineContainerTheme = const NomoOutlineContainerColorData(),
@@ -94,6 +88,12 @@ class NomoComponentColors {
       verticalMenuTheme: verticalMenuTheme ?? def.verticalMenuTheme,
     );
   }
+  final NomoOutlineContainerColorData outlineContainerTheme;
+  final NomoAppBarColorData appBarTheme;
+  final NomoScaffoldColorData scaffoldTheme;
+  final NomoBottomBarColorData bottomBarTheme;
+  final NomoSiderColorData siderTheme;
+  final NomoVerticalMenuColorData verticalMenuTheme;
 
   static NomoComponentColors defaultComponents(NomoColors core) =>
       NomoComponentColors._(
@@ -132,7 +132,7 @@ class NomoComponentColors {
   ) {
     return NomoComponentColors._(
       outlineContainerTheme: NomoOutlineContainerColorData.lerp(
-          a.outlineContainerTheme, b.outlineContainerTheme, t),
+          a.outlineContainerTheme, b.outlineContainerTheme, t,),
       appBarTheme: NomoAppBarColorData.lerp(a.appBarTheme, b.appBarTheme, t),
       scaffoldTheme:
           NomoScaffoldColorData.lerp(a.scaffoldTheme, b.scaffoldTheme, t),
@@ -149,8 +149,6 @@ class NomoComponentColors {
 }
 
 class NomoColorThemeData {
-  final NomoColors colors;
-  final NomoComponentColors components;
 
   NomoColorThemeData({
     required this.colors,
@@ -162,6 +160,19 @@ class NomoColorThemeData {
     required this.colors,
     required this.components,
   });
+
+  factory NomoColorThemeData.lerp(
+    NomoColorThemeData a,
+    NomoColorThemeData b,
+    double t,
+  ) {
+    return NomoColorThemeData._(
+      colors: NomoColors.lerp(a.colors, b.colors, t),
+      components: NomoComponentColors.lerp(a.components, b.components, t),
+    );
+  }
+  final NomoColors colors;
+  final NomoComponentColors components;
 
   ///
   /// We still need to use the material theme for some widgets.
@@ -182,17 +193,6 @@ class NomoColorThemeData {
         onBackground: colors.foreground2,
         onSurface: colors.foreground1,
       ),
-    );
-  }
-
-  factory NomoColorThemeData.lerp(
-    NomoColorThemeData a,
-    NomoColorThemeData b,
-    double t,
-  ) {
-    return NomoColorThemeData._(
-      colors: NomoColors.lerp(a.colors, b.colors, t),
-      components: NomoComponentColors.lerp(a.components, b.components, t),
     );
   }
 

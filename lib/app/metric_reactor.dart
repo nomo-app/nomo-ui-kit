@@ -3,14 +3,12 @@ import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 import 'package:nomo_ui_kit/theme/theme_provider.dart';
 
 class MetricReactor extends StatefulWidget {
-  final Widget child;
-  final NomoSizingThemeData Function(double) sizingThemeBuilder;
 
   const MetricReactor({
-    super.key,
-    required this.child,
-    required this.sizingThemeBuilder,
+    required this.child, required this.sizingThemeBuilder, super.key,
   });
+  final Widget child;
+  final NomoSizingThemeData Function(double) sizingThemeBuilder;
 
   @override
   State<MetricReactor> createState() => _MetricReactorState();

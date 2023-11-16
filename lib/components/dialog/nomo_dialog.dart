@@ -4,6 +4,26 @@ import 'package:nomo_ui_kit/components/text/nomo_text.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 
 class NomoDialog extends StatelessWidget {
+
+  const NomoDialog({
+    required this.title, required this.actions, required this.content, super.key,
+    this.showCloseButton = true,
+    this.border,
+    this.closeButton,
+    this.elevation = 2,
+    this.borderRadius = const BorderRadius.all(
+      Radius.circular(12),
+    ),
+    this.titleStyle,
+    this.widthRatio = 0.75,
+    this.padding = const EdgeInsets.all(12),
+    this.margin = const EdgeInsets.only(bottom: 16),
+    this.closeButtonColor,
+    this.closeButtonIconColor,
+    this.maxWidth,
+    this.maxHeight,
+    this.backgroundColor,
+  });
   final String title;
   final TextStyle? titleStyle;
   final Color? backgroundColor;
@@ -22,35 +42,12 @@ class NomoDialog extends StatelessWidget {
   final double? maxWidth;
   final double? maxHeight;
 
-  const NomoDialog({
-    super.key,
-    required this.title,
-    required this.actions,
-    required this.content,
-    this.showCloseButton = true,
-    this.border,
-    this.closeButton,
-    this.elevation = 2,
-    this.borderRadius = const BorderRadius.all(
-      Radius.circular(12.0),
-    ),
-    this.titleStyle,
-    this.widthRatio = 0.75,
-    this.padding = const EdgeInsets.all(12.0),
-    this.margin = const EdgeInsets.only(bottom: 16),
-    this.closeButtonColor,
-    this.closeButtonIconColor,
-    this.maxWidth,
-    this.maxHeight,
-    this.backgroundColor,
-  });
-
   @override
   Widget build(BuildContext context) {
-    final double width = MediaQuery.of(context).size.width * widthRatio!;
-    final double height = MediaQuery.of(context).size.height *
+    final width = MediaQuery.of(context).size.width * widthRatio!;
+    final height = MediaQuery.of(context).size.height *
         MediaQuery.of(context).systemGestureInsets.top;
-    final double rowWidth = width - padding!.horizontal - 100;
+    final rowWidth = width - padding!.horizontal - 100;
 
     return SizedBox(
       height: height,
@@ -82,7 +79,7 @@ class NomoDialog extends StatelessWidget {
                                 maxWidth: rowWidth,
                               ),
                               child: Padding(
-                                padding: const EdgeInsets.only(top: 8.0),
+                                padding: const EdgeInsets.only(top: 8),
                                 child: NomoText(
                                   title,
                                   style: titleStyle ??
@@ -101,7 +98,7 @@ class NomoDialog extends StatelessWidget {
                                     NomoButton.icon(
                                       onPressed: Navigator.of(context).pop,
                                       borderRadius: BorderRadius.circular(100),
-                                      icon: Icon(
+                                      icon: const Icon(
                                         Icons.close,
                                       ),
                                     ),
@@ -109,18 +106,17 @@ class NomoDialog extends StatelessWidget {
                             ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 16,
                       ),
                       ConstrainedBox(
                         constraints: BoxConstraints(
                           maxHeight: maxHeight ??
                               MediaQuery.of(context).size.height * 0.5,
-                          minHeight: 0,
                         ),
                         child: content,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 16,
                       ),
                       if (actions.isNotEmpty)
@@ -133,7 +129,7 @@ class NomoDialog extends StatelessWidget {
                 ),
               ),
             ),
-          )),
+          ),),
         ],
       ),
     );
