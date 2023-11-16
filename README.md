@@ -1,3 +1,5 @@
+[![style: very good analysis](https://img.shields.io/badge/style-very_good_analysis-B22C89.svg)](https://pub.dev/packages/very_good_analysis)
+
 # Nomo UI Kit Flutter
 
 See the [api-docs](https://dev.nomo.app/nomo-ui-kit) for a list of individual functions.
