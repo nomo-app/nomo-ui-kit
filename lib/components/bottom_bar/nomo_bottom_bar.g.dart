@@ -32,6 +32,16 @@ class NomoBottomBarColorData implements NomoBottomBarColorDataNullable {
     this.selectedForeground = Colors.red,
     this.borderRadius = const BorderRadius.all(Radius.circular(8)),
   });
+  static NomoBottomBarColorData lerp(
+      NomoBottomBarColorData a, NomoBottomBarColorData b, double t) {
+    return NomoBottomBarColorData(
+      foreground: Color.lerp(a.foreground, b.foreground, t)!,
+      background: Color.lerp(a.background, b.background, t)!,
+      selectedForeground:
+          Color.lerp(a.selectedForeground, b.selectedForeground, t)!,
+      borderRadius: BorderRadius.lerp(a.borderRadius, b.borderRadius, t)!,
+    );
+  }
 }
 
 class NomoBottomBarSizingDataNullable {
@@ -62,6 +72,16 @@ class NomoBottomBarSizingData implements NomoBottomBarSizingDataNullable {
     this.padding = const EdgeInsets.all(4),
     this.itemPadding = const EdgeInsets.symmetric(horizontal: 8),
   });
+  static NomoBottomBarSizingData lerp(
+      NomoBottomBarSizingData a, NomoBottomBarSizingData b, double t) {
+    return NomoBottomBarSizingData(
+      height: lerpDouble(a.height, b.height, t)!,
+      spacing: lerpDouble(a.spacing, b.spacing, t)!,
+      iconSize: lerpDouble(a.iconSize, b.iconSize, t)!,
+      padding: EdgeInsetsGeometry.lerp(a.padding, b.padding, t)!,
+      itemPadding: EdgeInsetsGeometry.lerp(a.itemPadding, b.itemPadding, t)!,
+    );
+  }
 }
 
 class NomoBottomBarThemeData

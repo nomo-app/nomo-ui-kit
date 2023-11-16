@@ -20,6 +20,12 @@ class NomoScaffoldColorData implements NomoScaffoldColorDataNullable {
   const NomoScaffoldColorData({
     this.backgroundColor = Colors.white,
   });
+  static NomoScaffoldColorData lerp(
+      NomoScaffoldColorData a, NomoScaffoldColorData b, double t) {
+    return NomoScaffoldColorData(
+      backgroundColor: Color.lerp(a.backgroundColor, b.backgroundColor, t)!,
+    );
+  }
 }
 
 class NomoScaffoldSizingDataNullable {
@@ -42,6 +48,14 @@ class NomoScaffoldSizingData implements NomoScaffoldSizingDataNullable {
     this.showBottomBar = false,
     this.showSider = true,
   });
+  static NomoScaffoldSizingData lerp(
+      NomoScaffoldSizingData a, NomoScaffoldSizingData b, double t) {
+    return NomoScaffoldSizingData(
+      padding: EdgeInsetsGeometry.lerp(a.padding, b.padding, t)!,
+      showBottomBar: t < 0.5 ? a.showBottomBar : b.showBottomBar,
+      showSider: t < 0.5 ? a.showSider : b.showSider,
+    );
+  }
 }
 
 class NomoScaffoldThemeData

@@ -193,6 +193,33 @@ class ComponentThemeDataGenerator
     }
     buffer.writeln(");");
 
+    /// Lerp
+    buffer.writeln(
+      "static $className lerp($className a, $className b, double t) {",
+    );
+    buffer.writeln("return $className(");
+    for (final entry in colorFields.entries) {
+      final name = entry.key;
+      final type = entry.value.$1;
+      final value = entry.value.$2;
+
+      final dontUseLerp = switch (type) {
+        "BoxShape" => true,
+        _ => false,
+      };
+      if (dontUseLerp) {
+        buffer.writeln("$name: t < 0.5 ? a.$name : b.$name,");
+        continue;
+      }
+
+      final isTypeNullable = type.getNullablePostfix(value).contains("?");
+
+      buffer.writeln(
+        "$name: $type.lerp(a.$name, b.$name, t)${isTypeNullable ? "" : "!"},",
+      );
+    }
+    buffer.writeln(");}");
+
     buffer.writeln("}");
     final content = buffer.toString();
     buffer.clear();
@@ -305,6 +332,41 @@ class ComponentThemeDataGenerator
       buffer.writeln("}");
     }
     buffer.writeln(");");
+
+    /// Lerp
+    buffer.writeln(
+      "static $className lerp($className a, $className b, double t) {",
+    );
+    buffer.writeln("return $className(");
+    for (final entry in sizingFields.entries) {
+      final name = entry.key;
+      final type = entry.value.$1;
+      final value = entry.value.$2;
+
+      final dontUseLerp = switch (type) {
+        "bool" => true,
+        _ => false,
+      };
+      if (dontUseLerp) {
+        buffer.writeln("$name: t < 0.5 ? a.$name : b.$name,");
+        continue;
+      }
+
+      final nullAssertion =
+          type.getNullablePostfix(value).contains("?") ? "" : "!";
+
+      if (type == "double") {
+        buffer.writeln(
+          "$name: lerpDouble(a.$name, b.$name, t)$nullAssertion,",
+        );
+        continue;
+      }
+
+      buffer.writeln(
+        "$name: $type.lerp(a.$name, b.$name, t)$nullAssertion,",
+      );
+    }
+    buffer.writeln(");}");
 
     buffer.writeln("}");
     final content = buffer.toString();

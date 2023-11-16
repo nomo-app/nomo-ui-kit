@@ -17,6 +17,7 @@ import 'package:nomo_ui_kit/theme/theme_provider.dart';
 Widget Function(Widget nav) wrapper = (nav) {
   return Builder(
     builder: (context) {
+      final themeProvider = ThemeProvider.of(context);
       return NomoScaffold(
         appBar: PreferredSize(
           preferredSize:
@@ -29,26 +30,29 @@ Widget Function(Widget nav) wrapper = (nav) {
             trailling: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                IconButton(
-                  onPressed: () {
-                    ThemeProvider.of(context).changeColorTheme(
-                      ColorMode.LIGHT.theme,
-                    );
-                  },
-                  icon: const Icon(
-                    Icons.light_mode,
+                if (themeProvider.colorTheme == ColorMode.DARK.theme)
+                  IconButton(
+                    onPressed: () {
+                      ThemeProvider.of(context).changeColorTheme(
+                        ColorMode.LIGHT.theme,
+                      );
+                    },
+                    icon: const Icon(
+                      Icons.light_mode,
+                      color: Colors.white,
+                    ),
+                  )
+                else
+                  IconButton(
+                    onPressed: () {
+                      ThemeProvider.of(context).changeColorTheme(
+                        ColorMode.DARK.theme,
+                      );
+                    },
+                    icon: const Icon(
+                      Icons.dark_mode,
+                    ),
                   ),
-                ),
-                IconButton(
-                  onPressed: () {
-                    ThemeProvider.of(context).changeColorTheme(
-                      ColorMode.DARK.theme,
-                    );
-                  },
-                  icon: const Icon(
-                    Icons.dark_mode,
-                  ),
-                ),
                 if (!context.componentSizes.scaffoldTheme.showSider)
                   Builder(builder: (context) {
                     return IconButton(

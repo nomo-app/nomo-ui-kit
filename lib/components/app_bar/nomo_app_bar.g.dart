@@ -24,6 +24,14 @@ class NomoAppBarColorData implements NomoAppBarColorDataNullable {
     this.borderRadius = null,
     this.backgroundColor = Colors.red,
   });
+  static NomoAppBarColorData lerp(
+      NomoAppBarColorData a, NomoAppBarColorData b, double t) {
+    return NomoAppBarColorData(
+      borderRadius:
+          BorderRadiusGeometry.lerp(a.borderRadius, b.borderRadius, t),
+      backgroundColor: Color.lerp(a.backgroundColor, b.backgroundColor, t)!,
+    );
+  }
 }
 
 class NomoAppBarSizingDataNullable {
@@ -50,6 +58,15 @@ class NomoAppBarSizingData implements NomoAppBarSizingDataNullable {
     this.height = kToolbarHeight,
     this.elevation = 2.0,
   });
+  static NomoAppBarSizingData lerp(
+      NomoAppBarSizingData a, NomoAppBarSizingData b, double t) {
+    return NomoAppBarSizingData(
+      spacing: lerpDouble(a.spacing, b.spacing, t)!,
+      topInset: lerpDouble(a.topInset, b.topInset, t)!,
+      height: lerpDouble(a.height, b.height, t)!,
+      elevation: lerpDouble(a.elevation, b.elevation, t)!,
+    );
+  }
 }
 
 class NomoAppBarThemeData implements NomoAppBarColorData, NomoAppBarSizingData {

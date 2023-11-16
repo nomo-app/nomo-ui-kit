@@ -29,6 +29,14 @@ class NomoOutlineContainerColorData
     this.background = Colors.white,
     this.shape = BoxShape.rectangle,
   });
+  static NomoOutlineContainerColorData lerp(NomoOutlineContainerColorData a,
+      NomoOutlineContainerColorData b, double t) {
+    return NomoOutlineContainerColorData(
+      foreground: Color.lerp(a.foreground, b.foreground, t)!,
+      background: Color.lerp(a.background, b.background, t)!,
+      shape: t < 0.5 ? a.shape : b.shape,
+    );
+  }
 }
 
 class NomoOutlineContainerSizingDataNullable {
@@ -48,6 +56,13 @@ class NomoOutlineContainerSizingData
     this.padding = const EdgeInsets.all(16),
     this.spacing = 16.0,
   });
+  static NomoOutlineContainerSizingData lerp(NomoOutlineContainerSizingData a,
+      NomoOutlineContainerSizingData b, double t) {
+    return NomoOutlineContainerSizingData(
+      padding: EdgeInsetsGeometry.lerp(a.padding, b.padding, t)!,
+      spacing: lerpDouble(a.spacing, b.spacing, t)!,
+    );
+  }
 }
 
 class NomoOutlineContainerThemeData

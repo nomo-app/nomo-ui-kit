@@ -4,13 +4,18 @@ import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 typedef ThemeNotifier = ValueNotifier<NomoThemeData>;
 
 class ThemeProvider extends InheritedWidget {
-  final ThemeNotifier notifier;
+  final ThemeNotifier _notifier;
 
   const ThemeProvider({
     Key? key,
-    required this.notifier,
+    required ValueNotifier<NomoThemeData> notifier,
     required Widget child,
-  }) : super(key: key, child: child);
+  })  : _notifier = notifier,
+        super(key: key, child: child);
+
+  NomoThemeData get theme => _notifier.value;
+  NomoColorThemeData get colorTheme => _notifier.value.colorTheme;
+  NomoSizingThemeData get sizingTheme => _notifier.value.sizingTheme;
 
   static ThemeProvider of(BuildContext context) {
     final result = context.dependOnInheritedWidgetOfExactType<ThemeProvider>();
@@ -19,13 +24,13 @@ class ThemeProvider extends InheritedWidget {
   }
 
   void changeColorTheme(NomoColorThemeData mode) {
-    notifier.value = notifier.value.copyWith(colorTheme: mode);
+    _notifier.value = _notifier.value.copyWith(colorTheme: mode);
   }
 
   void changeSizingTheme(NomoSizingThemeData mode) {
-    if (notifier.value.sizingTheme == mode) return;
+    if (_notifier.value.sizingTheme == mode) return;
 
-    notifier.value = notifier.value.copyWith(sizingTheme: mode);
+    _notifier.value = _notifier.value.copyWith(sizingTheme: mode);
   }
 
   @override

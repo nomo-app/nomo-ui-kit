@@ -20,6 +20,18 @@ class NomoSizes {
     required this.fontSizeH2,
     required this.fontSizeH3,
   });
+
+  static NomoSizes lerp(NomoSizes a, NomoSizes b, double t) {
+    return NomoSizes(
+      maxContentWidth: lerpDouble(a.maxContentWidth, b.maxContentWidth, t),
+      fontSizeB1: lerpDouble(a.fontSizeB1, b.fontSizeB1, t)!,
+      fontSizeB2: lerpDouble(a.fontSizeB2, b.fontSizeB2, t)!,
+      fontSizeB3: lerpDouble(a.fontSizeB3, b.fontSizeB3, t)!,
+      fontSizeH1: lerpDouble(a.fontSizeH1, b.fontSizeH1, t)!,
+      fontSizeH2: lerpDouble(a.fontSizeH2, b.fontSizeH2, t)!,
+      fontSizeH3: lerpDouble(a.fontSizeH3, b.fontSizeH3, t)!,
+    );
+  }
 }
 
 class NomoComponentSizes {
@@ -75,6 +87,34 @@ class NomoComponentSizes {
           spacing: 4,
         ),
       );
+
+  static NomoComponentSizes lerp(
+    NomoComponentSizes a,
+    NomoComponentSizes b,
+    double t,
+  ) {
+    return NomoComponentSizes._(
+      outlineContainerTheme: NomoOutlineContainerSizingData.lerp(
+        a.outlineContainerTheme,
+        b.outlineContainerTheme,
+        t,
+      ),
+      appBarTheme: NomoAppBarSizingData.lerp(a.appBarTheme, b.appBarTheme, t),
+      scaffoldTheme: NomoScaffoldSizingData.lerp(
+        a.scaffoldTheme,
+        b.scaffoldTheme,
+        t,
+      ),
+      bottomBarTheme:
+          NomoBottomBarSizingData.lerp(a.bottomBarTheme, b.bottomBarTheme, t),
+      siderTheme: NomoSiderSizingData.lerp(a.siderTheme, b.siderTheme, t),
+      verticalMenuTheme: NomoVerticalMenuSizingData.lerp(
+        a.verticalMenuTheme,
+        b.verticalMenuTheme,
+        t,
+      ),
+    );
+  }
 }
 
 class NomoSizingThemeData {
@@ -86,4 +126,20 @@ class NomoSizingThemeData {
     NomoComponentSizes Function(NomoSizes core) buildComponents =
         NomoComponentSizes.defaultComponents,
   }) : components = buildComponents(sizes);
+
+  NomoSizingThemeData._({
+    required this.sizes,
+    required this.components,
+  });
+
+  static NomoSizingThemeData lerp(
+    NomoSizingThemeData a,
+    NomoSizingThemeData b,
+    double t,
+  ) {
+    return NomoSizingThemeData._(
+      sizes: NomoSizes.lerp(a.sizes, b.sizes, t),
+      components: NomoComponentSizes.lerp(a.components, b.components, t),
+    );
+  }
 }

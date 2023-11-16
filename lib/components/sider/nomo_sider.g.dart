@@ -25,6 +25,13 @@ class NomoSiderColorData implements NomoSiderColorDataNullable {
     this.border =
         const Border(right: BorderSide(color: Colors.black12, width: 1)),
   });
+  static NomoSiderColorData lerp(
+      NomoSiderColorData a, NomoSiderColorData b, double t) {
+    return NomoSiderColorData(
+      backgroundColor: Color.lerp(a.backgroundColor, b.backgroundColor, t)!,
+      border: Border.lerp(a.border, b.border, t)!,
+    );
+  }
 }
 
 class NomoSiderSizingDataNullable {
@@ -43,6 +50,13 @@ class NomoSiderSizingData implements NomoSiderSizingDataNullable {
     this.padding = const EdgeInsets.all(16),
     this.width = 80.0,
   });
+  static NomoSiderSizingData lerp(
+      NomoSiderSizingData a, NomoSiderSizingData b, double t) {
+    return NomoSiderSizingData(
+      padding: EdgeInsetsGeometry.lerp(a.padding, b.padding, t)!,
+      width: lerpDouble(a.width, b.width, t)!,
+    );
+  }
 }
 
 class NomoSiderThemeData implements NomoSiderColorData, NomoSiderSizingData {

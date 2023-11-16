@@ -36,6 +36,18 @@ class NomoVerticalMenuColorData implements NomoVerticalMenuColorDataNullable {
     this.selectedForeground = Colors.red,
     this.borderRadius = const BorderRadius.all(Radius.circular(16)),
   });
+  static NomoVerticalMenuColorData lerp(
+      NomoVerticalMenuColorData a, NomoVerticalMenuColorData b, double t) {
+    return NomoVerticalMenuColorData(
+      foreground: Color.lerp(a.foreground, b.foreground, t)!,
+      background: Color.lerp(a.background, b.background, t)!,
+      selectedBackground:
+          Color.lerp(a.selectedBackground, b.selectedBackground, t)!,
+      selectedForeground:
+          Color.lerp(a.selectedForeground, b.selectedForeground, t)!,
+      borderRadius: BorderRadius.lerp(a.borderRadius, b.borderRadius, t)!,
+    );
+  }
 }
 
 class NomoVerticalMenuSizingDataNullable {
@@ -66,6 +78,16 @@ class NomoVerticalMenuSizingData implements NomoVerticalMenuSizingDataNullable {
     this.height = 56.0,
     this.iconSize = 28.0,
   });
+  static NomoVerticalMenuSizingData lerp(
+      NomoVerticalMenuSizingData a, NomoVerticalMenuSizingData b, double t) {
+    return NomoVerticalMenuSizingData(
+      hPadding: lerpDouble(a.hPadding, b.hPadding, t)!,
+      itemSpacing: lerpDouble(a.itemSpacing, b.itemSpacing, t)!,
+      spacing: lerpDouble(a.spacing, b.spacing, t)!,
+      height: lerpDouble(a.height, b.height, t)!,
+      iconSize: lerpDouble(a.iconSize, b.iconSize, t)!,
+    );
+  }
 }
 
 class NomoVerticalMenuThemeData

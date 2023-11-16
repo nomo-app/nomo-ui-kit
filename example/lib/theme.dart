@@ -166,6 +166,9 @@ final sizingLarge = NomoSizingThemeData(
         padding: EdgeInsets.all(4),
         width: 200,
       ),
+      scaffoldTheme: const NomoScaffoldSizingData(
+        padding: EdgeInsets.all(32),
+      ),
     );
   },
 );

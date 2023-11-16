@@ -25,7 +25,8 @@ class NomoVerticalListTile extends StatefulWidget {
   double get intrinsicWidth {
     return (theme.hPadding * 2) +
         theme.spacing +
-        calculateTextSize(text: item.title, style: style).width;
+        calculateTextSize(text: item.title, style: style).width +
+        24;
   }
 
   @override

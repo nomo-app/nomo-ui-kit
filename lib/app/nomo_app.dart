@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:nomo_router/nomo_router.dart';
+import 'package:nomo_ui_kit/app/animator.dart';
 import 'package:nomo_ui_kit/app/metric_reactor.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 import 'package:nomo_ui_kit/theme/theme_provider.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
+
+const kThemeChangeDuration = Duration(milliseconds: 400);
+const kThemeChangeCurve = Curves.easeInOut;
 
 class NomoApp extends StatefulWidget {
   final Iterable<RouteInfo> routes;
@@ -54,14 +58,8 @@ class _NomoAppState extends State<NomoApp> {
         sizingThemeBuilder: widget.sizingThemeBuilder,
         child: NomoNavigator(
           delegate: delegate,
-          child: ValueListenableBuilder(
-            valueListenable: themeNotifier,
-            builder: (context, theme, child) {
-              return NomoTheme(
-                value: theme,
-                child: child!,
-              );
-            },
+          child: ThemeAnimator(
+            notifier: themeNotifier,
             child: WidgetsApp.router(
               debugShowCheckedModeBanner: false,
               localizationsDelegates: [
@@ -89,20 +87,3 @@ class _NomoAppState extends State<NomoApp> {
     );
   }
 }
-
-// class CustomBackButtonDispatcher extends RootBackButtonDispatcher {
-//   final NomoRouterDelegate delegate;
-//   CustomBackButtonDispatcher(this.delegate);
-
-//   @override
-//   Future<bool> didPopRoute() {
-//     var (rootRoutes, nestedRoutes) = delegate.currentConfiguration;
-
-//     if (nestedRoutes.length > 1) {
-//       delegate.popNested();
-//       return Future.value(true);
-//     }
-
-//     return super.didPopRoute();
-//   }
-// }

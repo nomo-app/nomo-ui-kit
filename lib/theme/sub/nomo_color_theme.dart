@@ -36,6 +36,26 @@ class NomoColors {
     required this.foreground2,
     required this.foreground3,
   });
+
+  static NomoColors lerp(NomoColors a, NomoColors b, double t) {
+    return NomoColors(
+      brightness: t < 0.5 ? a.brightness : b.brightness,
+      primary: Color.lerp(a.primary, b.primary, t)!,
+      onPrimary: Color.lerp(a.onPrimary, b.onPrimary, t)!,
+      primaryContainer: Color.lerp(a.primaryContainer, b.primaryContainer, t)!,
+      secondary: Color.lerp(a.secondary, b.secondary, t)!,
+      onSecondary: Color.lerp(a.onSecondary, b.onSecondary, t)!,
+      secondaryContainer:
+          Color.lerp(a.secondaryContainer, b.secondaryContainer, t)!,
+      background: Color.lerp(a.background, b.background, t)!,
+      surface: Color.lerp(a.surface, b.surface, t)!,
+      error: Color.lerp(a.error, b.error, t)!,
+      disabledColor: Color.lerp(a.disabledColor, b.disabledColor, t)!,
+      foreground1: Color.lerp(a.foreground1, b.foreground1, t)!,
+      foreground2: Color.lerp(a.foreground2, b.foreground2, t)!,
+      foreground3: Color.lerp(a.foreground3, b.foreground3, t)!,
+    );
+  }
 }
 
 class NomoComponentColors {
@@ -104,6 +124,28 @@ class NomoComponentColors {
           borderRadius: BorderRadius.circular(6),
         ),
       );
+
+  static NomoComponentColors lerp(
+    NomoComponentColors a,
+    NomoComponentColors b,
+    double t,
+  ) {
+    return NomoComponentColors._(
+      outlineContainerTheme: NomoOutlineContainerColorData.lerp(
+          a.outlineContainerTheme, b.outlineContainerTheme, t),
+      appBarTheme: NomoAppBarColorData.lerp(a.appBarTheme, b.appBarTheme, t),
+      scaffoldTheme:
+          NomoScaffoldColorData.lerp(a.scaffoldTheme, b.scaffoldTheme, t),
+      bottomBarTheme:
+          NomoBottomBarColorData.lerp(a.bottomBarTheme, b.bottomBarTheme, t),
+      siderTheme: NomoSiderColorData.lerp(a.siderTheme, b.siderTheme, t),
+      verticalMenuTheme: NomoVerticalMenuColorData.lerp(
+        a.verticalMenuTheme,
+        b.verticalMenuTheme,
+        t,
+      ),
+    );
+  }
 }
 
 class NomoColorThemeData {
@@ -115,6 +157,11 @@ class NomoColorThemeData {
     NomoComponentColors Function(NomoColors core) buildComponents =
         NomoComponentColors.defaultComponents,
   }) : components = buildComponents.call(colors);
+
+  NomoColorThemeData._({
+    required this.colors,
+    required this.components,
+  });
 
   ///
   /// We still need to use the material theme for some widgets.
@@ -135,6 +182,17 @@ class NomoColorThemeData {
         onBackground: colors.foreground2,
         onSurface: colors.foreground1,
       ),
+    );
+  }
+
+  factory NomoColorThemeData.lerp(
+    NomoColorThemeData a,
+    NomoColorThemeData b,
+    double t,
+  ) {
+    return NomoColorThemeData._(
+      colors: NomoColors.lerp(a.colors, b.colors, t),
+      components: NomoComponentColors.lerp(a.components, b.components, t),
     );
   }
 

@@ -3,7 +3,6 @@ import 'package:example/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:markdown_widget/markdown_widget.dart';
-import 'package:markdown_widget/widget/all.dart';
 import 'package:nomo_ui_kit/app/nomo_app.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 // ignore: depend_on_referenced_packages
@@ -69,22 +68,31 @@ class HomePage extends StatelessWidget {
       (value) => value.body,
     );
 
-    return DefaultTextStyle(
-      style: context.typography.b1,
-      child: FutureBuilder(
-        future: file,
-        builder: (context, snapshot) {
-          if (snapshot.data != null) {
-            return MarkdownWidget(
-              data: snapshot.data as String,
-            );
-          }
-
-          return const Center(
-            child: CircularProgressIndicator(),
+    return FutureBuilder(
+      future: file,
+      builder: (context, snapshot) {
+        if (snapshot.data != null) {
+          print("Rendering");
+          return MarkdownWidget(
+            config: MarkdownConfig(
+              configs: [
+                // TEXT config
+                H1Config(style: context.typography.h1),
+                H2Config(style: context.typography.h2),
+                H3Config(style: context.typography.h3),
+                H4Config(style: context.typography.b3),
+                H5Config(style: context.typography.b2),
+                H6Config(style: context.typography.b1),
+              ],
+            ),
+            data: snapshot.data as String,
           );
-        },
-      ),
+        }
+
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
     );
   }
 }
