@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nomo_ui_generator/annotations.dart';
-import 'package:nomo_ui_kit/components/bottom_bar/nomo_horizontal_tile.dart';
+import 'package:nomo_ui_kit/components/layout/bottom_bar/nomo_horizontal_tile.dart';
 import 'package:nomo_ui_kit/entities/menu_item.dart';
 import 'package:nomo_ui_kit/entities/nomo_decoration.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
@@ -9,9 +9,10 @@ part 'nomo_bottom_bar.g.dart';
 
 @NomoComponentThemeData('bottomBarTheme')
 class NomoBottomBar extends StatelessWidget {
-
   const NomoBottomBar({
-    required this.items, required this.selected, super.key,
+    required this.items,
+    required this.selected,
+    super.key,
     this.height,
     this.style,
     this.onTap,
@@ -34,13 +35,13 @@ class NomoBottomBar extends StatelessWidget {
   final void Function(NomoMenuItem item)? onTap;
   final NomoMenuItem? selected;
 
-  @NomoSizingField(56)
+  @NomoSizingField(56.0)
   final double? height;
 
-  @NomoSizingField(4)
+  @NomoSizingField(4.0)
   final double? spacing;
 
-  @NomoSizingField(28)
+  @NomoSizingField(28.0)
   final double? iconSize;
 
   @NomoSizingField(EdgeInsets.all(4))

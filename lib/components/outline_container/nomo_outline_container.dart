@@ -10,9 +10,9 @@ part 'nomo_outline_container.g.dart';
 /// A container with a border and a background color.
 ///
 class NomoOutlineContainer extends StatelessWidget {
-
   const NomoOutlineContainer({
-    required this.child, this.foreground,
+    required this.child,
+    this.foreground,
     this.radius,
     this.border,
     this.width,
@@ -35,7 +35,7 @@ class NomoOutlineContainer extends StatelessWidget {
   @NomoSizingField(EdgeInsets.all(16))
   final EdgeInsets? padding;
 
-  @NomoSizingField(16)
+  @NomoSizingField(16.0)
   final double? spacing;
 
   final BoxBorder? border;

@@ -6,9 +6,9 @@ part 'nomo_scaffold.g.dart';
 
 @NomoComponentThemeData('scaffoldTheme')
 class NomoScaffold extends StatefulWidget {
-
   const NomoScaffold({
-    required this.child, super.key,
+    required this.child,
+    super.key,
     this.appBar,
     this.bottomBar,
     this.sider,
@@ -30,7 +30,7 @@ class NomoScaffold extends StatefulWidget {
   final Widget? drawer;
   final Widget? endDrawer;
 
-  @NomoSizingField(EdgeInsets.all(16))
+  @NomoSizingField(EdgeInsets.all(0.0))
   final EdgeInsetsGeometry? padding;
 
   @NomoColorField(Colors.white)
@@ -72,6 +72,7 @@ class _NomoScaffoldState extends State<NomoScaffold> {
     final theme = getFromContext(context, widget);
 
     final body = Row(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         if (widget.sider != null && theme.showSider) widget.sider!,
         Expanded(

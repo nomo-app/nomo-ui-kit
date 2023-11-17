@@ -1,14 +1,17 @@
+import 'dart:async';
+
 import 'package:example/main.dart';
 import 'package:example/sections/buttons/text_button_wrapper.dart';
 import 'package:example/sections/dialogs/dialog_wrapper.dart';
+import 'package:example/sections/modal_sheet_section.dart';
 import 'package:example/sections/text/text_widget.dart';
 import 'package:example/theme.dart';
 import 'package:example/widgets/drawer.dart';
 import 'package:example/widgets/sider.dart';
 import 'package:flutter/material.dart';
 import 'package:nomo_router/nomo_router.dart';
-import 'package:nomo_ui_kit/components/app_bar/nomo_app_bar.dart';
-import 'package:nomo_ui_kit/components/scaffold/nomo_scaffold.dart';
+import 'package:nomo_ui_kit/components/layout/app_bar/nomo_app_bar.dart';
+import 'package:nomo_ui_kit/components/layout/scaffold/nomo_scaffold.dart';
 import 'package:nomo_ui_kit/entities/menu_item.dart';
 
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
@@ -81,42 +84,101 @@ Widget Function(Widget nav) wrapper = (nav) {
 final routes = [
   MenuNestedPageRouteInfo(
     name: "/",
-    title: "Home",
-    icon: Icons.home,
+    title: "Overview",
     page: const HomePage(),
     wrapper: wrapper,
     children: const [
       MenuPageRouteInfo(
-        name: "/text",
-        title: "Text",
-        icon: Icons.text_fields,
+        name: "/modalSheet",
+        title: "Modal Sheet",
+        page: ModalSheetSection(),
+        children: [
+          ModalRouteInfo(
+            name: "/sheet1",
+            page: ModalSheet1(),
+            useRootNavigator: true,
+            type: ModalType.BOTTOM_SHEET,
+          ),
+        ],
+      ),
+      MenuPageRouteInfo(
+        name: "/typography",
+        title: "Typography",
         page: TextWidget(),
       ),
       MenuPageRouteInfo(
-        name: "/buttons",
-        title: "Buttons",
-        icon: Icons.text_fields,
+        name: "/button",
+        title: "Button",
         page: TextButtonWrapper(),
       ),
       MenuPageRouteInfo(
         name: "/dialogs",
         title: "Dialogs",
-        icon: Icons.text_fields,
+        page: DialogWrapper(),
+      ),
+      MenuPageRouteInfo(
+        name: "/input",
+        title: "Input",
+        page: DialogWrapper(),
+      ),
+      MenuPageRouteInfo(
+        name: "/dropdown",
+        title: "Dropdown",
+        page: DialogWrapper(),
+      ),
+      MenuPageRouteInfo(
+        name: "/card",
+        title: "Card",
+        page: DialogWrapper(),
+      ),
+      MenuPageRouteInfo(
+        name: "/list",
+        title: "List",
+        page: DialogWrapper(),
+      ),
+      MenuPageRouteInfo(
+        name: "/grid",
+        title: "Grid",
+        page: DialogWrapper(),
+      ),
+      MenuPageRouteInfo(
+        name: "/loading",
+        title: "Loading",
+        page: DialogWrapper(),
+      ),
+      MenuPageRouteInfo(
+        name: "/expandable",
+        title: "Expandable",
+        page: DialogWrapper(),
+      ),
+      MenuPageRouteInfo(
+        name: "/tile",
+        title: "Tile",
+        page: DialogWrapper(),
+      ),
+      MenuPageRouteInfo(
+        name: "/layout",
+        title: "Layout",
+        page: DialogWrapper(),
+      ),
+      MenuPageRouteInfo(
+        name: "/menu",
+        title: "Menu",
         page: DialogWrapper(),
       ),
     ],
   ),
 ].expanded.toList();
 
-final menuItems = routes.whereType<MenuPageRouteInfo>().toList();
+final menuItems = routes.whereType<MenuRouteInfoMixin>().toList();
 
-extension MenuUtilList on Iterable<MenuPageRouteInfo> {
+extension MenuUtilList on Iterable<MenuRouteInfoMixin> {
   List<NomoMenuItem> get toMenuItems {
     return map((route) => route.toMenuItem).toList();
   }
 }
 
-extension MenuUtil on MenuPageRouteInfo {
+extension MenuUtil on MenuRouteInfoMixin {
   NomoMenuItem get toMenuItem {
     if (icon != null) {
       return NomoMenuIconItem(

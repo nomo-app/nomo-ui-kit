@@ -6,13 +6,14 @@ part 'nomo_sider.g.dart';
 
 @NomoComponentThemeData('siderTheme')
 class NomoSider extends StatelessWidget {
-
   const NomoSider({
-    required this.child, super.key,
+    required this.child,
+    super.key,
     this.backgroundColor,
     this.border,
     this.padding,
     this.width,
+    this.scrollPadding,
   });
   final Widget child;
 
@@ -22,28 +23,36 @@ class NomoSider extends StatelessWidget {
   @NomoSizingField(EdgeInsets.all(16))
   final EdgeInsetsGeometry? padding;
 
-  @NomoSizingField(80)
+  @NomoSizingField(4.0)
+  final double? scrollPadding;
+
+  @NomoSizingField<double>(80)
   final double? width;
 
-  @NomoColorField(Border(
-    right: BorderSide(color: Colors.black12),
-  ),)
+  @NomoColorField(
+    Border(
+      right: BorderSide(color: Colors.black12),
+    ),
+  )
   final Border? border;
 
   @override
   Widget build(BuildContext context) {
     final theme = getFromContext(context, this);
-
-    return Container(
-      width: theme.width,
-      decoration: BoxDecoration(
-        color: theme.backgroundColor,
-        border: theme.border,
-      ),
-      child: Padding(
-        padding: theme.padding,
-        child: Align(
-          alignment: Alignment.topCenter,
+    final scrollController = ScrollController();
+    return Scrollbar(
+      controller: scrollController,
+      thickness: theme.padding.horizontal / 3,
+      child: Container(
+        width: theme.width,
+        height: context.height,
+        decoration: BoxDecoration(
+          color: theme.backgroundColor,
+          border: theme.border,
+        ),
+        child: SingleChildScrollView(
+          controller: scrollController,
+          padding: theme.padding,
           child: child,
         ),
       ),

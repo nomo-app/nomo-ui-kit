@@ -1,9 +1,14 @@
 part of nomo_theme;
 
 class NomoSizes {
-
   const NomoSizes({
-    required this.fontSizeB1, required this.fontSizeB2, required this.fontSizeB3, required this.fontSizeH1, required this.fontSizeH2, required this.fontSizeH3, this.maxContentWidth,
+    required this.fontSizeB1,
+    required this.fontSizeB2,
+    required this.fontSizeB3,
+    required this.fontSizeH1,
+    required this.fontSizeH2,
+    required this.fontSizeH3,
+    this.maxContentWidth,
   });
   final double? maxContentWidth;
 
@@ -29,7 +34,6 @@ class NomoSizes {
 }
 
 class NomoComponentSizes {
-
   const NomoComponentSizes._({
     this.outlineContainerTheme = const NomoOutlineContainerSizingData(),
     this.appBarTheme = const NomoAppBarSizingData(),
@@ -37,6 +41,7 @@ class NomoComponentSizes {
     this.bottomBarTheme = const NomoBottomBarSizingData(),
     this.siderTheme = const NomoSiderSizingData(),
     this.verticalMenuTheme = const NomoVerticalMenuSizingData(),
+    this.routeBodyTheme = const NomoRouteBodySizingData(),
   });
 
   factory NomoComponentSizes.override({
@@ -47,6 +52,7 @@ class NomoComponentSizes {
     NomoBottomBarSizingData? bottomBarTheme,
     NomoSiderSizingData? siderTheme,
     NomoVerticalMenuSizingData? verticalMenuTheme,
+    NomoRouteBodySizingData? routeBodyTheme,
   }) {
     final def = defaultComponents(sizes);
     return NomoComponentSizes._(
@@ -56,6 +62,7 @@ class NomoComponentSizes {
       bottomBarTheme: bottomBarTheme ?? def.bottomBarTheme,
       siderTheme: siderTheme ?? def.siderTheme,
       verticalMenuTheme: verticalMenuTheme ?? def.verticalMenuTheme,
+      routeBodyTheme: routeBodyTheme ?? def.routeBodyTheme,
     );
   }
   final NomoOutlineContainerSizingData outlineContainerTheme;
@@ -64,6 +71,7 @@ class NomoComponentSizes {
   final NomoBottomBarSizingData bottomBarTheme;
   final NomoSiderSizingData siderTheme;
   final NomoVerticalMenuSizingData verticalMenuTheme;
+  final NomoRouteBodySizingData routeBodyTheme;
 
   static NomoComponentSizes defaultComponents(NomoSizes core) =>
       const NomoComponentSizes._(
@@ -77,6 +85,9 @@ class NomoComponentSizes {
         ),
         bottomBarTheme: NomoBottomBarSizingData(
           iconSize: 24,
+        ),
+        routeBodyTheme: NomoRouteBodySizingData(
+          padding: EdgeInsets.all(16),
         ),
       );
 
@@ -105,12 +116,13 @@ class NomoComponentSizes {
         b.verticalMenuTheme,
         t,
       ),
+      routeBodyTheme:
+          NomoRouteBodySizingData.lerp(a.routeBodyTheme, b.routeBodyTheme, t),
     );
   }
 }
 
 class NomoSizingThemeData {
-
   NomoSizingThemeData({
     required this.sizes,
     NomoComponentSizes Function(NomoSizes core) buildComponents =

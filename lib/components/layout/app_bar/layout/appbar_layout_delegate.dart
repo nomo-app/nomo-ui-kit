@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
-
-import 'package:nomo_ui_kit/components/app_bar/layout/appbar_layout_renderbox.dart';
+import 'package:nomo_ui_kit/components/layout/app_bar/layout/appbar_layout_renderbox.dart';
 
 enum AppBarItem {
   title,
@@ -10,7 +9,6 @@ enum AppBarItem {
 
 class AppBarLayoutDelegate
     extends SlottedMultiChildRenderObjectWidget<AppBarItem, RenderBox> {
-
   AppBarLayoutDelegate({
     required this.children,
   }) : super(key: ValueKey(children.hashCode));

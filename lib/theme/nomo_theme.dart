@@ -3,11 +3,12 @@ library nomo_theme;
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:nomo_ui_kit/components/app_bar/nomo_app_bar.dart';
-import 'package:nomo_ui_kit/components/bottom_bar/nomo_bottom_bar.dart';
+import 'package:nomo_ui_kit/components/layout/app_bar/nomo_app_bar.dart';
+import 'package:nomo_ui_kit/components/layout/bottom_bar/nomo_bottom_bar.dart';
+import 'package:nomo_ui_kit/components/layout/routebody/nomo_route_body.dart';
+import 'package:nomo_ui_kit/components/layout/scaffold/nomo_scaffold.dart';
+import 'package:nomo_ui_kit/components/layout/sider/nomo_sider.dart';
 import 'package:nomo_ui_kit/components/outline_container/nomo_outline_container.dart';
-import 'package:nomo_ui_kit/components/scaffold/nomo_scaffold.dart';
-import 'package:nomo_ui_kit/components/sider/nomo_sider.dart';
 import 'package:nomo_ui_kit/components/vertical_menu/nomo_vertical_menu.dart';
 
 export 'dart:ui';
@@ -21,7 +22,6 @@ const primaryColor = Color(0xFFBCA570);
 const secondary = Color(0xffd1af72);
 
 class NomoThemeData {
-
   NomoThemeData({
     required this.colorTheme,
     required this.sizingTheme,
@@ -65,9 +65,10 @@ class NomoThemeData {
 }
 
 class NomoTheme extends InheritedWidget {
-
   const NomoTheme({
-    required this.value, required super.child, super.key,
+    required this.value,
+    required super.child,
+    super.key,
   });
   final NomoThemeData value;
 

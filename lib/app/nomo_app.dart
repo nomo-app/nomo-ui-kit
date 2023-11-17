@@ -12,9 +12,12 @@ const kThemeChangeDuration = Duration(milliseconds: 400);
 const kThemeChangeCurve = Curves.easeInOut;
 
 class NomoApp extends StatefulWidget {
-
   const NomoApp({
-    required this.routes, required this.supportedLocales, required this.theme, required this.sizingThemeBuilder, super.key,
+    required this.routes,
+    required this.supportedLocales,
+    required this.theme,
+    required this.sizingThemeBuilder,
+    super.key,
     this.localizationDelegate,
     this.currentLocale,
   });
@@ -48,34 +51,37 @@ class _NomoAppState extends State<NomoApp> {
 
   @override
   Widget build(BuildContext context) {
-    return ThemeProvider(
-      notifier: themeNotifier,
-      child: MetricReactor(
-        sizingThemeBuilder: widget.sizingThemeBuilder,
-        child: NomoNavigator(
-          delegate: delegate,
-          child: ThemeAnimator(
-            notifier: themeNotifier,
-            child: WidgetsApp.router(
-              debugShowCheckedModeBanner: false,
-              localizationsDelegates: [
-                if (widget.localizationDelegate != null)
-                  widget.localizationDelegate!,
-                GlobalMaterialLocalizations.delegate,
-                GlobalCupertinoLocalizations.delegate,
-              ],
-              supportedLocales: widget.supportedLocales,
-              locale: widget.currentLocale,
-              color: widget.theme.colors.primary,
-              routerDelegate: delegate,
-              routeInformationProvider: PlatformRouteInformationProvider(
-                initialRouteInformation: RouteInformation(
-                  uri: WidgetsBinding
-                      .instance.platformDispatcher.defaultRouteName.uri,
-                ),
+    return ScrollConfiguration(
+      behavior: const ScrollBehavior().copyWith(scrollbars: false),
+      child: ThemeProvider(
+        notifier: themeNotifier,
+        child: MetricReactor(
+          sizingThemeBuilder: widget.sizingThemeBuilder,
+          child: NomoNavigator(
+            delegate: delegate,
+            child: ThemeAnimator(
+              notifier: themeNotifier,
+              child: WidgetsApp.router(
+                debugShowCheckedModeBanner: false,
+                localizationsDelegates: [
+                  if (widget.localizationDelegate != null)
+                    widget.localizationDelegate!,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                ],
+                supportedLocales: widget.supportedLocales,
+                locale: widget.currentLocale,
+                color: widget.theme.colors.primary,
+                routerDelegate: delegate,
+                // routeInformationProvider: PlatformRouteInformationProvider(
+                //   initialRouteInformation: RouteInformation(
+                //     uri: WidgetsBinding
+                //         .instance.platformDispatcher.defaultRouteName.uri,
+                //   ),
+                // ),
+                backButtonDispatcher: NomoBackButtonDispatcher(delegate),
+                routeInformationParser: const NomoRouteInformationParser(),
               ),
-              backButtonDispatcher: NomoBackButtonDispatcher(delegate),
-              routeInformationParser: const NomoRouteInformationParser(),
             ),
           ),
         ),

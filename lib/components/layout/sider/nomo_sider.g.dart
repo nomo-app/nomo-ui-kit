@@ -22,8 +22,7 @@ class NomoSiderColorData implements NomoSiderColorDataNullable {
   final Border border;
   const NomoSiderColorData({
     this.backgroundColor = primaryColor,
-    this.border =
-        const Border(right: BorderSide(color: Colors.black12, width: 1)),
+    this.border = const Border(right: BorderSide(color: Colors.black12)),
   });
   static NomoSiderColorData lerp(
       NomoSiderColorData a, NomoSiderColorData b, double t) {
@@ -36,24 +35,29 @@ class NomoSiderColorData implements NomoSiderColorDataNullable {
 
 class NomoSiderSizingDataNullable {
   final EdgeInsetsGeometry? padding;
+  final double? scrollPadding;
   final double? width;
   const NomoSiderSizingDataNullable({
     this.padding,
+    this.scrollPadding,
     this.width,
   });
 }
 
 class NomoSiderSizingData implements NomoSiderSizingDataNullable {
   final EdgeInsetsGeometry padding;
+  final double scrollPadding;
   final double width;
   const NomoSiderSizingData({
     this.padding = const EdgeInsets.all(16),
-    this.width = 80.0,
+    this.scrollPadding = 4.0,
+    this.width = 80,
   });
   static NomoSiderSizingData lerp(
       NomoSiderSizingData a, NomoSiderSizingData b, double t) {
     return NomoSiderSizingData(
       padding: EdgeInsetsGeometry.lerp(a.padding, b.padding, t)!,
+      scrollPadding: lerpDouble(a.scrollPadding, b.scrollPadding, t)!,
       width: lerpDouble(a.width, b.width, t)!,
     );
   }
@@ -63,13 +67,14 @@ class NomoSiderThemeData implements NomoSiderColorData, NomoSiderSizingData {
   final Color backgroundColor;
   final Border border;
   final EdgeInsetsGeometry padding;
+  final double scrollPadding;
   final double width;
   const NomoSiderThemeData({
     this.backgroundColor = primaryColor,
-    this.border =
-        const Border(right: BorderSide(color: Colors.black12, width: 1)),
+    this.border = const Border(right: BorderSide(color: Colors.black12)),
     this.padding = const EdgeInsets.all(16),
-    this.width = 80.0,
+    this.scrollPadding = 4.0,
+    this.width = 80,
   });
   factory NomoSiderThemeData.from(
     NomoSiderColorData colors,
@@ -79,6 +84,7 @@ class NomoSiderThemeData implements NomoSiderColorData, NomoSiderSizingData {
       backgroundColor: colors.backgroundColor,
       border: colors.border,
       padding: sizing.padding,
+      scrollPadding: sizing.scrollPadding,
       width: sizing.width,
     );
   }
@@ -87,6 +93,7 @@ class NomoSiderThemeData implements NomoSiderColorData, NomoSiderSizingData {
       backgroundColor: override?.backgroundColor ?? backgroundColor,
       border: override?.border ?? border,
       padding: override?.padding ?? padding,
+      scrollPadding: override?.scrollPadding ?? scrollPadding,
       width: override?.width ?? width,
     );
   }
@@ -97,11 +104,13 @@ class NomoSiderThemeDataNullable
   final Color? backgroundColor;
   final Border? border;
   final EdgeInsetsGeometry? padding;
+  final double? scrollPadding;
   final double? width;
   const NomoSiderThemeDataNullable({
     this.backgroundColor,
     this.border,
     this.padding,
+    this.scrollPadding,
     this.width,
   });
 }
@@ -148,6 +157,7 @@ NomoSiderThemeData getFromContext(
     backgroundColor: widget.backgroundColor ?? themeData.backgroundColor,
     border: widget.border ?? themeData.border,
     padding: widget.padding ?? themeData.padding,
+    scrollPadding: widget.scrollPadding ?? themeData.scrollPadding,
     width: widget.width ?? themeData.width,
   );
 }

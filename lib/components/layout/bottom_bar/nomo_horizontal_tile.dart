@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:nomo_ui_kit/components/bottom_bar/nomo_bottom_bar.dart';
+import 'package:nomo_ui_kit/components/layout/bottom_bar/nomo_bottom_bar.dart';
 import 'package:nomo_ui_kit/components/text/nomo_text.dart';
 import 'package:nomo_ui_kit/components/vertical_menu/nomo_vertical_menu.dart';
 import 'package:nomo_ui_kit/entities/menu_item.dart';
 
 class NomoHorizontalListTile extends StatefulWidget {
-
   const NomoHorizontalListTile({
-    required this.item, required this.theme, super.key,
+    required this.item,
+    required this.theme,
+    super.key,
     this.style,
     this.onTap,
     this.selected = false,

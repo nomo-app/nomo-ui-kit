@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:nomo_ui_kit/components/app_bar/layout/appbar_layout_delegate.dart';
+import 'package:nomo_ui_kit/components/layout/app_bar/layout/appbar_layout_delegate.dart';
 
 class AppBarLayoutRenderBox extends RenderBox
     with

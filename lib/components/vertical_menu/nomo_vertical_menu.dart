@@ -12,7 +12,6 @@ const kCurve = Curves.easeInOut;
 
 @NomoComponentThemeData('verticalMenuTheme')
 class NomoVerticalMenu extends StatelessWidget {
-
   const NomoVerticalMenu({
     required this.items,
     required this.selected,
@@ -52,19 +51,19 @@ class NomoVerticalMenu extends StatelessWidget {
   @NomoColorField(BorderRadius.all(Radius.circular(16)))
   final BorderRadius? borderRadius;
 
-  @NomoSizingField(16)
+  @NomoSizingField(16.0)
   final double? hPadding;
 
-  @NomoSizingField(8)
+  @NomoSizingField(8.0)
   final double? itemSpacing;
 
-  @NomoSizingField(8)
+  @NomoSizingField(8.0)
   final double? spacing;
 
-  @NomoSizingField(56)
+  @NomoSizingField(56.0)
   final double? height;
 
-  @NomoSizingField(28)
+  @NomoSizingField(28.0)
   final double? iconSize;
 
   @override

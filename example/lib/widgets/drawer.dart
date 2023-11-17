@@ -2,7 +2,7 @@ import 'package:example/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nomo_router/nomo_router.dart';
-import 'package:nomo_ui_kit/components/sider/nomo_sider.dart';
+import 'package:nomo_ui_kit/components/layout/sider/nomo_sider.dart';
 import 'package:nomo_ui_kit/components/text/nomo_text.dart';
 import 'package:nomo_ui_kit/components/vertical_menu/nomo_vertical_menu.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
@@ -32,23 +32,21 @@ class _DrawerExState extends State<DrawerEx> {
       child: NomoSider(
         width: 280,
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 16),
-            child: NomoVerticalMenu(
-              title: NomoText(
-                "Components",
-                style: context.typography.h2,
-              ),
-              style: context.typography.b1,
-              selected: current,
-              onTap: (item) {
-                NomoNavigator.of(context).push(RoutePath(name: item.path));
-                setState(() {});
-              },
-              iconSize: 22,
-              items: menuItems.toMenuItems,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 16),
+          child: NomoVerticalMenu(
+            title: NomoText(
+              "Components",
+              style: context.typography.h2,
             ),
+            style: context.typography.b1,
+            selected: current,
+            onTap: (item) {
+              NomoNavigator.of(context).push(RoutePath(name: item.path));
+              setState(() {});
+            },
+            iconSize: 22,
+            items: menuItems.toMenuItems,
           ),
         ),
       ),

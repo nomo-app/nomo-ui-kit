@@ -1,7 +1,6 @@
 part of nomo_theme;
 
 class NomoColors {
-
   const NomoColors({
     required this.brightness,
     required this.primary,
@@ -59,7 +58,6 @@ class NomoColors {
 }
 
 class NomoComponentColors {
-
   const NomoComponentColors._({
     this.outlineContainerTheme = const NomoOutlineContainerColorData(),
     this.appBarTheme = const NomoAppBarColorData(),
@@ -132,7 +130,10 @@ class NomoComponentColors {
   ) {
     return NomoComponentColors._(
       outlineContainerTheme: NomoOutlineContainerColorData.lerp(
-          a.outlineContainerTheme, b.outlineContainerTheme, t,),
+        a.outlineContainerTheme,
+        b.outlineContainerTheme,
+        t,
+      ),
       appBarTheme: NomoAppBarColorData.lerp(a.appBarTheme, b.appBarTheme, t),
       scaffoldTheme:
           NomoScaffoldColorData.lerp(a.scaffoldTheme, b.scaffoldTheme, t),
@@ -149,7 +150,6 @@ class NomoComponentColors {
 }
 
 class NomoColorThemeData {
-
   NomoColorThemeData({
     required this.colors,
     NomoComponentColors Function(NomoColors core) buildComponents =

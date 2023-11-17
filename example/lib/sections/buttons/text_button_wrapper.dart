@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nomo_ui_kit/components/button/button_const.dart';
 import 'package:nomo_ui_kit/components/button/nomo_button.dart';
+import 'package:nomo_ui_kit/components/layout/routebody/nomo_route_body.dart';
 import 'package:nomo_ui_kit/components/outline_container/nomo_outline_container.dart';
 import 'package:nomo_ui_kit/components/text/nomo_text.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
@@ -10,8 +11,8 @@ class TextButtonWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
+    return NomoRouteBody(builder: (context, route) {
+      return Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -125,8 +126,8 @@ class TextButtonWrapper extends StatelessWidget {
             ],
           ).toColumn(context),
         ],
-      ),
-    );
+      );
+    });
   }
 
   Widget dotRow(String text, BuildContext context) {

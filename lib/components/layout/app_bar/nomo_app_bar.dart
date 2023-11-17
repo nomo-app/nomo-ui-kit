@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nomo_ui_generator/annotations.dart';
-
-import 'package:nomo_ui_kit/components/app_bar/layout/appbar_layout_delegate.dart';
+import 'package:nomo_ui_kit/components/layout/app_bar/layout/appbar_layout_delegate.dart';
 import 'package:nomo_ui_kit/entities/nomo_decoration.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 
@@ -9,7 +8,6 @@ part 'nomo_app_bar.g.dart';
 
 @NomoComponentThemeData('appBarTheme')
 class NomoAppBar extends StatelessWidget {
-
   const NomoAppBar({
     super.key,
     this.title,
@@ -28,10 +26,10 @@ class NomoAppBar extends StatelessWidget {
   final Widget? trailling;
   final PreferredSizeWidget? bottom;
 
-  @NomoSizingField(16)
+  @NomoSizingField(16.0)
   final double? spacing;
 
-  @NomoSizingField(0)
+  @NomoSizingField(0.0)
   final double? topInset;
 
   @NomoColorField<BorderRadiusGeometry?>(null)
@@ -43,7 +41,7 @@ class NomoAppBar extends StatelessWidget {
   @NomoColorField(Colors.red)
   final Color? backgroundColor;
 
-  @NomoSizingField(2)
+  @NomoSizingField(2.0)
   final double? elevation;
 
   @override

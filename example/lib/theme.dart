@@ -2,10 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:nomo_ui_kit/components/app_bar/nomo_app_bar.dart';
+import 'package:nomo_ui_kit/components/layout/app_bar/nomo_app_bar.dart';
+import 'package:nomo_ui_kit/components/layout/scaffold/nomo_scaffold.dart';
+import 'package:nomo_ui_kit/components/layout/sider/nomo_sider.dart';
 import 'package:nomo_ui_kit/components/outline_container/nomo_outline_container.dart';
-import 'package:nomo_ui_kit/components/scaffold/nomo_scaffold.dart';
-import 'package:nomo_ui_kit/components/sider/nomo_sider.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 
 final typography = NomoTypographyTheme(
@@ -147,6 +147,19 @@ final sizingMedium = NomoSizingThemeData(
     fontSizeH2: 20,
     fontSizeH3: 22,
   ),
+  buildComponents: (core) {
+    return NomoComponentSizes.override(
+      sizes: core,
+      outlineContainerTheme: const NomoOutlineContainerSizingData(
+        padding: EdgeInsets.all(8),
+        spacing: 8,
+      ),
+      appBarTheme: const NomoAppBarSizingData(),
+      scaffoldTheme: const NomoScaffoldSizingData(
+        showSider: false,
+      ),
+    );
+  },
 );
 
 final sizingLarge = NomoSizingThemeData(
@@ -165,9 +178,6 @@ final sizingLarge = NomoSizingThemeData(
       siderTheme: const NomoSiderThemeData(
         padding: EdgeInsets.all(4),
         width: 200,
-      ),
-      scaffoldTheme: const NomoScaffoldSizingData(
-        padding: EdgeInsets.all(32),
       ),
     );
   },
