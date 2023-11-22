@@ -1,54 +1,41 @@
 import 'package:flutter/material.dart';
-import 'package:nomo_ui_kit/theme/nomo_theme.dart';
-
-import 'package:nomo_ui_kit/components/card/card_const.dart';
+import 'package:nomo_ui_kit/components/elevatedBox/elevatedBox.dart';
 
 class NomoCard extends StatelessWidget {
+  final Widget child;
+  final double elevation;
+  final Offset? offset;
+  final Color? shadowColor;
+  final BoxBorder? border;
+  final BorderRadiusGeometry? borderRadius;
+  final Color? backgroundColor;
+  final EdgeInsetsGeometry? padding;
 
   const NomoCard({
-    required this.child, super.key,
-    this.color,
-    this.elevation = CardConst.elevation,
+    required this.child,
+    super.key,
+    this.elevation = 1,
+    this.offset,
+    this.shadowColor,
+    this.border,
     this.borderRadius,
-    this.padding = CardConst.padding,
-    this.margin = EdgeInsets.zero,
-    this.offset = const Offset(0, 1),
-    this.width,
-    this.height,
-    this.onPressed,
-    this.decoration,
-    this.shape,
-  }) : assert(elevation < 10);
-  final Widget child;
-  final Color? color;
-  final double elevation;
-  final BorderRadius? borderRadius;
-  final EdgeInsetsGeometry padding;
-  final EdgeInsetsGeometry margin;
-  final VoidCallback? onPressed;
-  final double? width;
-  final double? height;
-  final Offset offset;
-  final Decoration? decoration;
-  final BoxShape? shape;
+    this.backgroundColor,
+    this.padding,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => onPressed?.call(),
-      child: Container(
-        decoration: decoration ??
-            context.theme.getCardDecoration(
-              color: color,
-              borderRadius: borderRadius,
-              elevation: elevation,
-              offset: offset,
-              shape: shape,
-            ),
-        width: width,
-        height: height,
-        padding: padding,
-        margin: margin,
+    return ElevatedBox(
+      border: border,
+      offset: offset,
+      elevation: elevation,
+      shadowColor: shadowColor,
+      decoration: BoxDecoration(
+        borderRadius: borderRadius,
+        color: backgroundColor,
+      ),
+      child: Padding(
+        padding: padding ?? EdgeInsets.zero,
         child: child,
       ),
     );

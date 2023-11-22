@@ -75,11 +75,9 @@ class DialogWrapper extends StatelessWidget {
             width: 20,
           ),
           NomoCard(
-            color: context.colors.background,
+            backgroundColor: context.colors.background,
             elevation: 3,
             borderRadius: const BorderRadius.all(Radius.circular(18.0)),
-            width: 300,
-            height: 300,
             child: Center(
               child: NomoText(
                 "Nomo Card",

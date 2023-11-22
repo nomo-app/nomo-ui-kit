@@ -92,10 +92,10 @@ class _NomoDropDownMenuState<T> extends State<NomoDropDownMenu<T>> {
     return CompositedTransformTarget(
       link: _layerLink,
       child: NomoCard(
-        onPressed: toogleExpanded,
-        decoration: widget.decoration,
-        width: widget.width,
-        height: widget.height,
+        // onPressed: toogleExpanded,
+        // decoration: widget.decoration,
+        // width: widget.width,
+        // height: widget.height,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

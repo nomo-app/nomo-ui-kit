@@ -69,3 +69,42 @@ extension RowToColumn on Row {
     }
   }
 }
+
+extension FlexUtil on List<Widget> {
+  List<Widget> spacingH(double spacing) {
+    return [
+      for (final w in this) ...[
+        w,
+        if (indexOf(w) != length - 1)
+          SizedBox(
+            width: spacing,
+          ),
+      ],
+    ];
+  }
+
+  List<Widget> spacingV(double spacing) {
+    return [
+      for (final w in this) ...[
+        w,
+        if (indexOf(w) != length - 1)
+          SizedBox(
+            height: spacing,
+          ),
+      ],
+    ];
+  }
+
+  List<Widget> spacing(double spacing) {
+    return [
+      for (final w in this) ...[
+        w,
+        if (indexOf(w) != length - 1)
+          SizedBox(
+            height: spacing,
+            width: spacing,
+          ),
+      ],
+    ];
+  }
+}

@@ -99,7 +99,7 @@ final dark = NomoColorThemeData(
       core: core,
       outlineContainerTheme: NomoOutlineContainerColorData(
         background: core.background.lighten(0.05),
-        border: Border.fromBorderSide(
+        border: const Border.fromBorderSide(
           BorderSide(
             color: Colors.white24,
           ),
@@ -148,6 +148,9 @@ final sizingSmall = NomoSizingThemeData(
       showBottomBar: true,
       showSider: false,
     ),
+    routeBodyTheme: const NomoRouteBodySizingData(
+      padding: EdgeInsets.all(16),
+    ),
   ),
 );
 
@@ -171,6 +174,9 @@ final sizingMedium = NomoSizingThemeData(
       scaffoldTheme: const NomoScaffoldSizingData(
         showSider: false,
       ),
+      routeBodyTheme: const NomoRouteBodySizingData(
+        padding: EdgeInsets.all(24),
+      ),
     );
   },
 );
@@ -191,6 +197,9 @@ final sizingLarge = NomoSizingThemeData(
       siderTheme: const NomoSiderThemeData(
         padding: EdgeInsets.all(4),
         width: 200,
+      ),
+      routeBodyTheme: const NomoRouteBodySizingData(
+        padding: EdgeInsets.all(32),
       ),
     );
   },
