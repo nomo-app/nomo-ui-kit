@@ -5,7 +5,7 @@ import 'package:nomo_ui_kit/entities/menu_item.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 import 'package:nomo_ui_kit/utils/layout_extensions.dart';
 
-part 'nomo_vertical_menu.g.dart';
+part 'nomo_vertical_menu.theme_data.g.dart';
 
 const kDuration = Duration(milliseconds: 200);
 const kCurve = Curves.easeInOut;

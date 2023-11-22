@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:nomo_ui_kit/components/button/nomo_button.dart';
 import 'package:nomo_ui_kit/components/text/nomo_text.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 
 class NomoDialog extends StatelessWidget {
-
   const NomoDialog({
-    required this.title, required this.actions, required this.content, super.key,
+    required this.title,
+    required this.actions,
+    required this.content,
+    super.key,
     this.showCloseButton = true,
     this.border,
-    this.closeButton,
     this.elevation = 2,
     this.borderRadius = const BorderRadius.all(
       Radius.circular(12),
@@ -33,7 +33,7 @@ class NomoDialog extends StatelessWidget {
   final double? elevation;
   final bool? showCloseButton;
   final double? widthRatio;
-  final NomoButton? closeButton;
+
   final EdgeInsetsGeometry margin;
   final EdgeInsetsGeometry? padding;
   final BorderRadiusGeometry? borderRadius;
@@ -54,82 +54,83 @@ class NomoDialog extends StatelessWidget {
       child: Column(
         children: [
           Expanded(
-              child: Center(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(maxWidth: maxWidth ?? width),
-              child: Material(
-                type: MaterialType.transparency,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: backgroundColor ?? context.colors.surface,
-                    borderRadius: borderRadius,
-                  ),
-                  width: width,
-                  margin: margin,
-                  padding: padding,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Stack(
-                        children: [
-                          Align(
-                            alignment: Alignment.topCenter,
-                            child: Container(
-                              constraints: BoxConstraints(
-                                maxWidth: rowWidth,
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 8),
-                                child: NomoText(
-                                  title,
-                                  style: titleStyle ??
-                                      context.theme.typographyTheme.h1,
+            child: Center(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(maxWidth: maxWidth ?? width),
+                child: Material(
+                  type: MaterialType.transparency,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: backgroundColor ?? context.colors.surface,
+                      borderRadius: borderRadius,
+                    ),
+                    width: width,
+                    margin: margin,
+                    padding: padding,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Stack(
+                          children: [
+                            Align(
+                              alignment: Alignment.topCenter,
+                              child: Container(
+                                constraints: BoxConstraints(
+                                  maxWidth: rowWidth,
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: 8),
+                                  child: NomoText(
+                                    title,
+                                    style: titleStyle ??
+                                        context.theme.typographyTheme.h1,
+                                  ),
                                 ),
                               ),
                             ),
+                            // if (showCloseButton!)
+                            //   Align(
+                            //     alignment: Alignment.topRight,
+                            //     child: SizedBox(
+                            //       width: 40,
+                            //       height: 40,
+                            //       child: closeButton ??
+                            //           NomoButton.icon(
+                            //             onPressed: Navigator.of(context).pop,
+                            //             borderRadius: BorderRadius.circular(100),
+                            //             icon: const Icon(
+                            //               Icons.close,
+                            //             ),
+                            //           ),
+                            //     ),
+                            //   ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        ConstrainedBox(
+                          constraints: BoxConstraints(
+                            maxHeight: maxHeight ??
+                                MediaQuery.of(context).size.height * 0.5,
                           ),
-                          if (showCloseButton!)
-                            Align(
-                              alignment: Alignment.topRight,
-                              child: SizedBox(
-                                width: 40,
-                                height: 40,
-                                child: closeButton ??
-                                    NomoButton.icon(
-                                      onPressed: Navigator.of(context).pop,
-                                      borderRadius: BorderRadius.circular(100),
-                                      icon: const Icon(
-                                        Icons.close,
-                                      ),
-                                    ),
-                              ),
-                            ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      ConstrainedBox(
-                        constraints: BoxConstraints(
-                          maxHeight: maxHeight ??
-                              MediaQuery.of(context).size.height * 0.5,
+                          child: content,
                         ),
-                        child: content,
-                      ),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      if (actions.isNotEmpty)
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: actions,
+                        const SizedBox(
+                          height: 16,
                         ),
-                    ],
+                        if (actions.isNotEmpty)
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: actions,
+                          ),
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-          ),),
+          ),
         ],
       ),
     );

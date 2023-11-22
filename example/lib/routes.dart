@@ -1,7 +1,5 @@
-import 'dart:async';
-
 import 'package:example/main.dart';
-import 'package:example/sections/buttons/text_button_wrapper.dart';
+import 'package:example/sections/button_section.dart';
 import 'package:example/sections/dialogs/dialog_wrapper.dart';
 import 'package:example/sections/modal_sheet_section.dart';
 import 'package:example/sections/text/text_widget.dart';
@@ -10,8 +8,7 @@ import 'package:example/widgets/drawer.dart';
 import 'package:example/widgets/sider.dart';
 import 'package:flutter/material.dart';
 import 'package:nomo_router/nomo_router.dart';
-import 'package:nomo_ui_kit/components/layout/app_bar/nomo_app_bar.dart';
-import 'package:nomo_ui_kit/components/layout/scaffold/nomo_scaffold.dart';
+import 'package:nomo_ui_kit/components/app/app.dart';
 import 'package:nomo_ui_kit/entities/menu_item.dart';
 
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
@@ -62,8 +59,9 @@ Widget Function(Widget nav) wrapper = (nav) {
                       onPressed: () {
                         NomoScaffold.of(context).openEndDrawer();
                       },
-                      icon: const Icon(
+                      icon: Icon(
                         Icons.menu,
+                        color: context.colorTheme.colors.foreground1,
                       ),
                     );
                   }),

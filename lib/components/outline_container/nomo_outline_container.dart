@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nomo_ui_generator/annotations.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 
-part 'nomo_outline_container.g.dart';
+part 'nomo_outline_container.theme_data.g.dart';
 
 @NomoComponentThemeData('outlineContainerTheme')
 
@@ -38,6 +38,7 @@ class NomoOutlineContainer extends StatelessWidget {
   @NomoSizingField(16.0)
   final double? spacing;
 
+  @NomoColorField<BoxBorder>(Border.fromBorderSide(BorderSide.none))
   final BoxBorder? border;
 
   final Widget child;
@@ -52,7 +53,7 @@ class NomoOutlineContainer extends StatelessWidget {
     final theme = getFromContext(context, this);
     return Container(
       decoration: BoxDecoration(
-        border: border,
+        border: theme.border,
         color: theme.background,
         shape: theme.shape,
         borderRadius: BorderRadius.circular(radius ?? 8),

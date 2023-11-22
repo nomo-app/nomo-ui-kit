@@ -212,10 +212,18 @@ class ComponentThemeDataGenerator
         continue;
       }
 
-      final isTypeNullable = type.getNullablePostfix(value).contains("?");
+      final nullAssertion =
+          type.getNullablePostfix(value).contains("?") ? "" : "!";
+
+      if (type == "double") {
+        buffer.writeln(
+          "$name: lerpDouble(a.$name, b.$name, t)$nullAssertion,",
+        );
+        continue;
+      }
 
       buffer.writeln(
-        "$name: $type.lerp(a.$name, b.$name, t)${isTypeNullable ? "" : "!"},",
+        "$name: $type.lerp(a.$name, b.$name, t)$nullAssertion,",
       );
     }
     buffer.writeln(");}");

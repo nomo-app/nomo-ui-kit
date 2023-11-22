@@ -1,0 +1,169 @@
+import 'dart:isolate';
+
+import 'package:analyzer/dart/element/element.dart';
+import 'package:build/build.dart';
+import 'package:build/src/builder/build_step.dart';
+import 'package:nomo_ui_generator/annotations.dart';
+import 'package:nomo_ui_generator/src/model_visitor.dart';
+import 'package:source_gen/source_gen.dart';
+
+class ThemeUtilGenerator extends GeneratorForAnnotation<NomoThemeUtils> {
+  @override
+  generateForAnnotatedElement(
+    Element element,
+    ConstantReader annotation,
+    BuildStep buildStep,
+  ) async {
+    final StringBuffer buffer = StringBuffer();
+
+    final visitor = ModelVisitor();
+
+    final coreType = annotation.read("coreType").stringValue;
+
+    element.visitChildren(visitor);
+
+    lerp(buffer, visitor);
+
+    overrideFactory(buffer, visitor, coreType);
+
+    defaultConstructor(buffer, visitor);
+
+    final out = buffer.toString();
+    return out;
+  }
+}
+
+void lerp(StringBuffer buffer, ModelVisitor visitor) {
+  final className = visitor.className;
+  final fields = visitor.fields;
+
+  buffer.writeln(
+      "$className lerp$className($className a, $className b, double t) {");
+  buffer.writeln("return $className._(");
+  fields.forEach((key, value) {
+    buffer.writeln("$key: $value.lerp(a.$key, b.$key, t,),");
+  });
+  buffer.writeln(");");
+  buffer.writeln("}");
+}
+
+void overrideFactory(
+    StringBuffer buffer, ModelVisitor visitor, String coreType) {
+  final className = visitor.className;
+  final fields = visitor.fields;
+
+  buffer.writeln("$className override$className({");
+  buffer.writeln("required $coreType core,");
+  fields.forEach((key, value) {
+    buffer.writeln("$value? $key,");
+  });
+  buffer.writeln("}) {");
+  buffer.writeln("final def = $className.defaultComponents(core);");
+  buffer.writeln("return $className._(");
+  fields.forEach((key, value) {
+    buffer.writeln("$key: $key ?? def.$key,");
+  });
+  buffer.writeln(");");
+  buffer.writeln("}");
+}
+
+void defaultConstructor(StringBuffer buffer, ModelVisitor visitor) {
+  final className = visitor.className;
+  final fields = visitor.fields;
+
+  buffer.writeln("$className defaultConstructor({");
+  fields.forEach((key, value) {
+    buffer.writeln("$value? $key,");
+  });
+  buffer.writeln("}) {");
+  buffer.writeln("return $className._(");
+  fields.forEach((key, value) {
+    buffer.writeln("$key: $key ?? const $value(),");
+  });
+  buffer.writeln(");");
+  buffer.writeln("}");
+}
+
+ // const NomoComponentColors._({
+  //   this.outlineContainerTheme = const NomoOutlineContainerColorData(),
+  //   this.appBarTheme = const NomoAppBarColorData(),
+  //   this.scaffoldTheme = const NomoScaffoldColorData(),
+  //   this.bottomBarTheme = const NomoBottomBarColorData(),
+  //   this.siderTheme = const NomoSiderColorData(),
+  //   this.verticalMenuTheme = const NomoVerticalMenuColorData(),
+  // });
+
+  // factory NomoComponentColors.override({
+  //   required NomoColors colors,
+  //   NomoOutlineContainerColorData? outlineContainerTheme,
+  //   NomoAppBarColorData? appBarTheme,
+  //   NomoScaffoldColorData? scaffoldTheme,
+  //   NomoBottomBarColorData? bottomBarTheme,
+  //   NomoSiderColorData? siderTheme,
+  //   NomoVerticalMenuColorData? verticalMenuTheme,
+  // }) {
+  //   final def = defaultComponents(colors);
+  //   return NomoComponentColors._(
+  //     outlineContainerTheme: outlineContainerTheme ?? def.outlineContainerTheme,
+  //     appBarTheme: appBarTheme ?? def.appBarTheme,
+  //     scaffoldTheme: scaffoldTheme ?? def.scaffoldTheme,
+  //     bottomBarTheme: bottomBarTheme ?? def.bottomBarTheme,
+  //     siderTheme: siderTheme ?? def.siderTheme,
+  //     verticalMenuTheme: verticalMenuTheme ?? def.verticalMenuTheme,
+  //   );
+  // }
+
+  // static NomoComponentColors defaultComponents(NomoColors core) =>
+  //     NomoComponentColors._(
+  //       outlineContainerTheme: NomoOutlineContainerThemeData(
+  //         foreground: core.foreground1,
+  //         background: core.background,
+  //       ),
+  //       appBarTheme: NomoAppBarColorData(
+  //         backgroundColor: core.background,
+  //       ),
+  //       scaffoldTheme: NomoScaffoldColorData(
+  //         backgroundColor: core.background,
+  //       ),
+  //       bottomBarTheme: NomoBottomBarColorData(
+  //         background: core.primaryContainer,
+  //         borderRadius: BorderRadius.circular(8),
+  //         foreground: core.foreground1,
+  //         selectedForeground: core.primary,
+  //       ),
+  //       siderTheme: NomoSiderColorData(
+  //         backgroundColor: core.background,
+  //       ),
+  //       verticalMenuTheme: NomoVerticalMenuColorData(
+  //         foreground: core.foreground1,
+  //         background: core.background,
+  //         selectedBackground: core.primary.lighten(0.25),
+  //         selectedForeground: core.primary,
+  //         borderRadius: BorderRadius.circular(6),
+  //       ),
+  //     );
+
+  // static NomoComponentColors lerp(
+  //   NomoComponentColors a,
+  //   NomoComponentColors b,
+  //   double t,
+  // ) {
+  //   return NomoComponentColors._(
+  //     outlineContainerTheme: NomoOutlineContainerColorData.lerp(
+  //       a.outlineContainerTheme,
+  //       b.outlineContainerTheme,
+  //       t,
+  //     ),
+  //     appBarTheme: NomoAppBarColorData.lerp(a.appBarTheme, b.appBarTheme, t),
+  //     scaffoldTheme:
+  //         NomoScaffoldColorData.lerp(a.scaffoldTheme, b.scaffoldTheme, t),
+  //     bottomBarTheme:
+  //         NomoBottomBarColorData.lerp(a.bottomBarTheme, b.bottomBarTheme, t),
+  //     siderTheme: NomoSiderColorData.lerp(a.siderTheme, b.siderTheme, t),
+  //     verticalMenuTheme: NomoVerticalMenuColorData.lerp(
+  //       a.verticalMenuTheme,
+  //       b.verticalMenuTheme,
+  //       t,
+  //     ),
+  //   );
+  // }

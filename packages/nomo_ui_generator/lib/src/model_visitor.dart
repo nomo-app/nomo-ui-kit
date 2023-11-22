@@ -70,7 +70,8 @@ class ModelVisitor extends SimpleElementVisitor {
       return;
     }
 
-    fields[element.name] = type;
+    fields[element.name] =
+        element.type.getDisplayString(withNullability: false);
   }
 }
 

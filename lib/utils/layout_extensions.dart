@@ -1,3 +1,4 @@
+// ignore_for_file: avoid_positional_boolean_parameters
 
 import 'package:flutter/widgets.dart';
 
@@ -8,6 +9,18 @@ extension LayoutExtensionWidget on Widget {
     }
 
     return this;
+  }
+
+  Widget wrapIfElse(
+    bool condition,
+    Widget Function(Widget) wrapper, {
+    required Widget Function(Widget) elseWrapper,
+  }) {
+    if (condition) {
+      return wrapper(this);
+    }
+
+    return elseWrapper(this);
   }
 }
 
@@ -39,5 +52,20 @@ extension DynamicArgumentExtension<T> on T {
       return this;
     }
     return elseValue;
+  }
+}
+
+extension RowToColumn on Row {
+  Flex toColumn(BuildContext context) {
+    if (MediaQuery.of(context).size.width > 1200) {
+      return Row(
+        children: children,
+      );
+    } else {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: children,
+      );
+    }
   }
 }

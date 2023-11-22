@@ -1,4 +1,18 @@
-part of nomo_theme;
+import 'package:nomo_ui_generator/annotations.dart';
+import 'package:nomo_ui_kit/components/app/app_bar/nomo_app_bar.dart';
+import 'package:nomo_ui_kit/components/app/bottom_bar/nomo_bottom_bar.dart';
+import 'package:nomo_ui_kit/components/app/routebody/nomo_route_body.dart';
+import 'package:nomo_ui_kit/components/app/scaffold/nomo_scaffold.dart';
+import 'package:nomo_ui_kit/components/app/sider/nomo_sider.dart';
+import 'package:nomo_ui_kit/components/buttons/link/nomo_link_button.dart';
+import 'package:nomo_ui_kit/components/buttons/primary/nomo_primary_button.dart';
+import 'package:nomo_ui_kit/components/buttons/secondary/nomo_secondary_button.dart';
+import 'package:nomo_ui_kit/components/buttons/text/nomo_text_button.dart';
+import 'package:nomo_ui_kit/components/outline_container/nomo_outline_container.dart';
+import 'package:nomo_ui_kit/components/vertical_menu/nomo_vertical_menu.dart';
+import 'package:nomo_ui_kit/theme/nomo_theme.dart';
+
+part 'nomo_sizing_theme.g.dart';
 
 class NomoSizes {
   const NomoSizes({
@@ -33,38 +47,8 @@ class NomoSizes {
   }
 }
 
+@NomoThemeUtils("NomoSizes")
 class NomoComponentSizes {
-  const NomoComponentSizes._({
-    this.outlineContainerTheme = const NomoOutlineContainerSizingData(),
-    this.appBarTheme = const NomoAppBarSizingData(),
-    this.scaffoldTheme = const NomoScaffoldSizingData(),
-    this.bottomBarTheme = const NomoBottomBarSizingData(),
-    this.siderTheme = const NomoSiderSizingData(),
-    this.verticalMenuTheme = const NomoVerticalMenuSizingData(),
-    this.routeBodyTheme = const NomoRouteBodySizingData(),
-  });
-
-  factory NomoComponentSizes.override({
-    required NomoSizes sizes,
-    NomoOutlineContainerSizingData? outlineContainerTheme,
-    NomoAppBarSizingData? appBarTheme,
-    NomoScaffoldSizingData? scaffoldTheme,
-    NomoBottomBarSizingData? bottomBarTheme,
-    NomoSiderSizingData? siderTheme,
-    NomoVerticalMenuSizingData? verticalMenuTheme,
-    NomoRouteBodySizingData? routeBodyTheme,
-  }) {
-    final def = defaultComponents(sizes);
-    return NomoComponentSizes._(
-      outlineContainerTheme: outlineContainerTheme ?? def.outlineContainerTheme,
-      appBarTheme: appBarTheme ?? def.appBarTheme,
-      scaffoldTheme: scaffoldTheme ?? def.scaffoldTheme,
-      bottomBarTheme: bottomBarTheme ?? def.bottomBarTheme,
-      siderTheme: siderTheme ?? def.siderTheme,
-      verticalMenuTheme: verticalMenuTheme ?? def.verticalMenuTheme,
-      routeBodyTheme: routeBodyTheme ?? def.routeBodyTheme,
-    );
-  }
   final NomoOutlineContainerSizingData outlineContainerTheme;
   final NomoAppBarSizingData appBarTheme;
   final NomoScaffoldSizingData scaffoldTheme;
@@ -72,54 +56,27 @@ class NomoComponentSizes {
   final NomoSiderSizingData siderTheme;
   final NomoVerticalMenuSizingData verticalMenuTheme;
   final NomoRouteBodySizingData routeBodyTheme;
+  final PrimaryNomoButtonSizingData primaryButtonTheme;
+  final SecondaryNomoButtonSizingData secondaryButtonTheme;
+  final NomoTextButtonSizingData textButtonTheme;
+  final NomoLinkButtonSizingData linkButtonTheme;
+
+  const NomoComponentSizes._({
+    required this.outlineContainerTheme,
+    required this.appBarTheme,
+    required this.scaffoldTheme,
+    required this.bottomBarTheme,
+    required this.siderTheme,
+    required this.verticalMenuTheme,
+    required this.routeBodyTheme,
+    required this.primaryButtonTheme,
+    required this.secondaryButtonTheme,
+    required this.textButtonTheme,
+    required this.linkButtonTheme,
+  });
 
   static NomoComponentSizes defaultComponents(NomoSizes core) =>
-      const NomoComponentSizes._(
-        outlineContainerTheme: NomoOutlineContainerSizingData(
-          spacing: 100,
-          padding: EdgeInsets.all(32),
-        ),
-        verticalMenuTheme: NomoVerticalMenuSizingData(
-          hPadding: 12,
-          height: 48,
-        ),
-        bottomBarTheme: NomoBottomBarSizingData(
-          iconSize: 24,
-        ),
-        routeBodyTheme: NomoRouteBodySizingData(
-          padding: EdgeInsets.all(16),
-        ),
-      );
-
-  static NomoComponentSizes lerp(
-    NomoComponentSizes a,
-    NomoComponentSizes b,
-    double t,
-  ) {
-    return NomoComponentSizes._(
-      outlineContainerTheme: NomoOutlineContainerSizingData.lerp(
-        a.outlineContainerTheme,
-        b.outlineContainerTheme,
-        t,
-      ),
-      appBarTheme: NomoAppBarSizingData.lerp(a.appBarTheme, b.appBarTheme, t),
-      scaffoldTheme: NomoScaffoldSizingData.lerp(
-        a.scaffoldTheme,
-        b.scaffoldTheme,
-        t,
-      ),
-      bottomBarTheme:
-          NomoBottomBarSizingData.lerp(a.bottomBarTheme, b.bottomBarTheme, t),
-      siderTheme: NomoSiderSizingData.lerp(a.siderTheme, b.siderTheme, t),
-      verticalMenuTheme: NomoVerticalMenuSizingData.lerp(
-        a.verticalMenuTheme,
-        b.verticalMenuTheme,
-        t,
-      ),
-      routeBodyTheme:
-          NomoRouteBodySizingData.lerp(a.routeBodyTheme, b.routeBodyTheme, t),
-    );
-  }
+      defaultConstructor();
 }
 
 class NomoSizingThemeData {
@@ -143,7 +100,7 @@ class NomoSizingThemeData {
   ) {
     return NomoSizingThemeData._(
       sizes: NomoSizes.lerp(a.sizes, b.sizes, t),
-      components: NomoComponentSizes.lerp(a.components, b.components, t),
+      components: lerpNomoComponentSizes(a.components, b.components, t),
     );
   }
 }

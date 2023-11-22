@@ -1,0 +1,143 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'nomo_text_button.dart';
+
+// **************************************************************************
+// ComponentThemeDataGenerator
+// **************************************************************************
+
+class NomoTextButtonColorDataNullable {
+  final Color? foregroundColor;
+  final BorderRadiusGeometry? borderRadius;
+  const NomoTextButtonColorDataNullable({
+    this.foregroundColor,
+    this.borderRadius,
+  });
+}
+
+class NomoTextButtonColorData implements NomoTextButtonColorDataNullable {
+  final Color foregroundColor;
+  final BorderRadiusGeometry borderRadius;
+  const NomoTextButtonColorData({
+    this.foregroundColor = Colors.black87,
+    this.borderRadius = const BorderRadius.all(Radius.circular(8)),
+  });
+  static NomoTextButtonColorData lerp(
+      NomoTextButtonColorData a, NomoTextButtonColorData b, double t) {
+    return NomoTextButtonColorData(
+      foregroundColor: Color.lerp(a.foregroundColor, b.foregroundColor, t)!,
+      borderRadius:
+          BorderRadiusGeometry.lerp(a.borderRadius, b.borderRadius, t)!,
+    );
+  }
+}
+
+class NomoTextButtonSizingDataNullable {
+  final EdgeInsetsGeometry? padding;
+  const NomoTextButtonSizingDataNullable({
+    this.padding,
+  });
+}
+
+class NomoTextButtonSizingData implements NomoTextButtonSizingDataNullable {
+  final EdgeInsetsGeometry padding;
+  const NomoTextButtonSizingData({
+    this.padding = const EdgeInsets.all(16),
+  });
+  static NomoTextButtonSizingData lerp(
+      NomoTextButtonSizingData a, NomoTextButtonSizingData b, double t) {
+    return NomoTextButtonSizingData(
+      padding: EdgeInsetsGeometry.lerp(a.padding, b.padding, t)!,
+    );
+  }
+}
+
+class NomoTextButtonThemeData
+    implements NomoTextButtonColorData, NomoTextButtonSizingData {
+  final Color foregroundColor;
+  final BorderRadiusGeometry borderRadius;
+  final EdgeInsetsGeometry padding;
+  const NomoTextButtonThemeData({
+    this.foregroundColor = Colors.black87,
+    this.borderRadius = const BorderRadius.all(Radius.circular(8)),
+    this.padding = const EdgeInsets.all(16),
+  });
+  factory NomoTextButtonThemeData.from(
+    NomoTextButtonColorData colors,
+    NomoTextButtonSizingData sizing,
+  ) {
+    return NomoTextButtonThemeData(
+      foregroundColor: colors.foregroundColor,
+      borderRadius: colors.borderRadius,
+      padding: sizing.padding,
+    );
+  }
+  NomoTextButtonThemeData override(
+      [NomoTextButtonThemeDataNullable? override]) {
+    return NomoTextButtonThemeData(
+      foregroundColor: override?.foregroundColor ?? foregroundColor,
+      borderRadius: override?.borderRadius ?? borderRadius,
+      padding: override?.padding ?? padding,
+    );
+  }
+}
+
+class NomoTextButtonThemeDataNullable
+    implements
+        NomoTextButtonColorDataNullable,
+        NomoTextButtonSizingDataNullable {
+  final Color? foregroundColor;
+  final BorderRadiusGeometry? borderRadius;
+  final EdgeInsetsGeometry? padding;
+  const NomoTextButtonThemeDataNullable({
+    this.foregroundColor,
+    this.borderRadius,
+    this.padding,
+  });
+}
+
+class NomoTextButtonThemeOverride extends InheritedWidget {
+  final NomoTextButtonThemeDataNullable data;
+  const NomoTextButtonThemeOverride({
+    required this.data,
+    required super.child,
+  });
+  static NomoTextButtonThemeDataNullable of(BuildContext context) {
+    final result = context
+        .dependOnInheritedWidgetOfExactType<NomoTextButtonThemeOverride>();
+    assert(result != null, 'No ThemeInfo found in context');
+    return result!.data;
+  }
+
+  static NomoTextButtonThemeDataNullable? maybeOf(BuildContext context) {
+    return context
+        .dependOnInheritedWidgetOfExactType<NomoTextButtonThemeOverride>()
+        ?.data;
+  }
+
+  @override
+  bool updateShouldNotify(NomoTextButtonThemeOverride oldWidget) {
+    return oldWidget.data != data;
+  }
+}
+
+NomoTextButtonThemeData getFromContext(
+  BuildContext context,
+  NomoTextButton widget,
+) {
+  final globalColorTheme =
+      NomoTheme.maybeOf(context)?.componentColors.textButtonTheme ??
+          NomoTextButtonColorData();
+  final globalSizingTheme =
+      NomoTheme.maybeOf(context)?.componentSizes.textButtonTheme ??
+          NomoTextButtonSizingData();
+  final themeOverride = NomoTextButtonThemeOverride.maybeOf(context);
+  final themeData =
+      NomoTextButtonThemeData.from(globalColorTheme, globalSizingTheme)
+          .override(themeOverride);
+  return NomoTextButtonThemeData(
+    foregroundColor: widget.foregroundColor ?? themeData.foregroundColor,
+    borderRadius: widget.borderRadius ?? themeData.borderRadius,
+    padding: widget.padding ?? themeData.padding,
+  );
+}

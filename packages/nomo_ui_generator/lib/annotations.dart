@@ -15,3 +15,9 @@ class NomoSizingField<T> {
 
   const NomoSizingField(this.value);
 }
+
+class NomoThemeUtils {
+  final String coreType;
+
+  const NomoThemeUtils(this.coreType);
+}

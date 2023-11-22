@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
-import 'package:nomo_ui_kit/components/button/button_const.dart';
-import 'package:nomo_ui_kit/components/button/nomo_button.dart';
 import 'package:nomo_ui_kit/components/card/nomo_card.dart';
 import 'package:nomo_ui_kit/components/dialog/nomo_dialog.dart';
 import 'package:nomo_ui_kit/components/dropdownmenu/drop_down_item.dart';
@@ -27,52 +25,52 @@ class DialogWrapper extends StatelessWidget {
       ),
       child: Row(
         children: [
-          NomoButton.text(
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (context) {
-                  return NomoDialog(
-                    showCloseButton: true,
-                    maxWidth: 600,
-                    title: "Nomo Dialog",
-                    content: Expanded(
-                      child: ListView.builder(
-                        itemCount: 10, // Number of items to generate
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            height: 60,
-                            color: context.colors.secondaryContainer,
-                            margin: const EdgeInsets.symmetric(vertical: 8.0),
-                            alignment: Alignment.center,
-                            child: Text(
-                              'Container ${index + 1}',
-                              style: const TextStyle(
-                                  color: Colors.white, fontSize: 18),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    actions: [
-                      Expanded(
-                        child: SizedBox(
-                          height: 50,
-                          child: NomoButton.text(
-                            onPressed: () => Navigator.pop(context),
-                            text: "Cancel",
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-                },
-              );
-            },
-            text: "Show Dialog",
-            size: ButtonSize.small,
-          ),
+          // NomoButton.text(
+          //   onPressed: () {
+          //     showDialog(
+          //       context: context,
+          //       builder: (context) {
+          //         return NomoDialog(
+          //           showCloseButton: true,
+          //           maxWidth: 600,
+          //           title: "Nomo Dialog",
+          //           content: Expanded(
+          //             child: ListView.builder(
+          //               itemCount: 10, // Number of items to generate
+          //               shrinkWrap: true,
+          //               itemBuilder: (context, index) {
+          //                 return Container(
+          //                   height: 60,
+          //                   color: context.colors.secondaryContainer,
+          //                   margin: const EdgeInsets.symmetric(vertical: 8.0),
+          //                   alignment: Alignment.center,
+          //                   child: Text(
+          //                     'Container ${index + 1}',
+          //                     style: const TextStyle(
+          //                         color: Colors.white, fontSize: 18),
+          //                   ),
+          //                 );
+          //               },
+          //             ),
+          //           ),
+          //           actions: [
+          //             Expanded(
+          //               child: SizedBox(
+          //                 height: 50,
+          //                 child: NomoButton.text(
+          //                   onPressed: () => Navigator.pop(context),
+          //                   text: "Cancel",
+          //                 ),
+          //               ),
+          //             ),
+          //           ],
+          //         );
+          //       },
+          //     );
+          //   },
+          //   text: "Show Dialog",
+          //   size: ButtonSize.small,
+          // ),
           const SizedBox(
             width: 20,
           ),
@@ -112,40 +110,40 @@ class DialogWrapper extends StatelessWidget {
             height: 40,
             width: 140,
           ),
-          NomoButton.text(
-              onPressed: () {
-                WoltModalSheet.show(
-                  context: context,
-                  pageListBuilder: (context) {
-                    return [
-                      page1(context, pageIndexNotifier),
-                      page2(context, pageIndexNotifier),
-                    ];
-                  },
-                  pageIndexNotifier: pageIndexNotifier,
-                  modalTypeBuilder: (context) {
-                    final size = MediaQuery.of(context).size.width;
-                    if (size < 800.0) {
-                      return WoltModalType.bottomSheet;
-                    } else {
-                      return WoltModalType.dialog;
-                    }
-                  },
-                  //   routeSettings: RouteSettings(name: 'modal_sheet'),
+          // NomoButton.text(
+          //     onPressed: () {
+          //       WoltModalSheet.show(
+          //         context: context,
+          //         pageListBuilder: (context) {
+          //           return [
+          //             page1(context, pageIndexNotifier),
+          //             page2(context, pageIndexNotifier),
+          //           ];
+          //         },
+          //         pageIndexNotifier: pageIndexNotifier,
+          //         modalTypeBuilder: (context) {
+          //           final size = MediaQuery.of(context).size.width;
+          //           if (size < 800.0) {
+          //             return WoltModalType.bottomSheet;
+          //           } else {
+          //             return WoltModalType.dialog;
+          //           }
+          //         },
+          //         //   routeSettings: RouteSettings(name: 'modal_sheet'),
 
-                  onModalDismissedWithBarrierTap: () {
-                    debugPrint('Closed modal sheet with barrier tap');
-                    Navigator.of(context).pop();
-                    pageIndexNotifier.value = 0;
-                  },
-                  maxDialogWidth: 560,
-                  minDialogWidth: 400,
-                  minPageHeight: 0.0,
-                  maxPageHeight: 0.9,
-                );
-              },
-              text: "Show Modal Sheet",
-              size: ButtonSize.small),
+          //         onModalDismissedWithBarrierTap: () {
+          //           debugPrint('Closed modal sheet with barrier tap');
+          //           Navigator.of(context).pop();
+          //           pageIndexNotifier.value = 0;
+          //         },
+          //         maxDialogWidth: 560,
+          //         minDialogWidth: 400,
+          //         minPageHeight: 0.0,
+          //         maxPageHeight: 0.9,
+          //       );
+          //     },
+          //     text: "Show Modal Sheet",
+          //     size: ButtonSize.small),
         ],
       ),
     );

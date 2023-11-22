@@ -4,9 +4,10 @@ import 'package:nomo_ui_kit/components/dropdownmenu/drop_down_item.dart';
 import 'package:nomo_ui_kit/components/text/nomo_text.dart';
 
 class NomoDropDownMenu<T> extends StatefulWidget {
-
   const NomoDropDownMenu({
-    required this.items, required this.onChanged, super.key,
+    required this.items,
+    required this.onChanged,
+    super.key,
     this.initailValue,
     this.width,
     this.height,
@@ -28,7 +29,7 @@ class NomoDropDownMenu<T> extends StatefulWidget {
   final BoxDecoration? decoration;
   final Color? iconColor;
   final TextStyle? textStyle;
-  final Function(dynamic) onChanged;
+  final void Function(T value) onChanged;
   final double? dropdownElevation;
   final ShapeBorder? dropDownShape;
   final Color? dropdownColor;
@@ -38,16 +39,15 @@ class NomoDropDownMenu<T> extends StatefulWidget {
   final TextOverflow? overflow;
 
   @override
-  State<NomoDropDownMenu> createState() => _NomoDropDownMenuState();
+  State<NomoDropDownMenu<T>> createState() => _NomoDropDownMenuState();
 }
 
 class _NomoDropDownMenuState<T> extends State<NomoDropDownMenu<T>> {
   bool _isExpanded = false;
-  late NomoDropdownItem _selectedItem;
+  late NomoDropdownItem<T> _selectedItem;
   double _turns = 0;
   final LayerLink _layerLink = LayerLink();
-  final ScrollController _scrollController =
-      ScrollController();
+  final ScrollController _scrollController = ScrollController();
   late OverlayEntry _overlayEntry;
 
   @override
@@ -77,11 +77,13 @@ class _NomoDropDownMenuState<T> extends State<NomoDropDownMenu<T>> {
     _overlayEntry.remove();
   }
 
-  void selectItem(NomoDropdownItem item) {
+  void selectItem(NomoDropdownItem<T> item) {
     setState(() {
       _selectedItem = item;
       _isExpanded = false;
-      widget.onChanged(item.value);
+      if (item.value != null) {
+        widget.onChanged(item.value!);
+      }
     });
   }
 
@@ -176,7 +178,9 @@ class _NomoDropDownMenuState<T> extends State<NomoDropDownMenu<T>> {
                               },
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 8, vertical: 8,),
+                                  horizontal: 8,
+                                  vertical: 8,
+                                ),
                                 child: NomoText(
                                   item.value.displayText,
                                   style: widget.textStyle ??

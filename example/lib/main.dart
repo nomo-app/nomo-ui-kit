@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:markdown_widget/markdown_widget.dart';
 import 'package:nomo_ui_kit/app/nomo_app.dart';
-import 'package:nomo_ui_kit/components/layout/routebody/nomo_route_body.dart';
+import 'package:nomo_ui_kit/components/app/routebody/nomo_route_body.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_web_plugins/url_strategy.dart';

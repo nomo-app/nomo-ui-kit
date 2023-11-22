@@ -1,4 +1,101 @@
-part of nomo_theme;
+import 'package:flutter/widgets.dart';
+import 'package:nomo_ui_generator/annotations.dart';
+import 'package:nomo_ui_kit/components/app/app_bar/nomo_app_bar.dart';
+import 'package:nomo_ui_kit/components/app/bottom_bar/nomo_bottom_bar.dart';
+import 'package:nomo_ui_kit/components/app/scaffold/nomo_scaffold.dart';
+import 'package:nomo_ui_kit/components/app/sider/nomo_sider.dart';
+import 'package:nomo_ui_kit/components/buttons/link/nomo_link_button.dart';
+import 'package:nomo_ui_kit/components/buttons/primary/nomo_primary_button.dart';
+import 'package:nomo_ui_kit/components/buttons/secondary/nomo_secondary_button.dart';
+import 'package:nomo_ui_kit/components/buttons/text/nomo_text_button.dart';
+import 'package:nomo_ui_kit/components/outline_container/nomo_outline_container.dart';
+import 'package:nomo_ui_kit/components/vertical_menu/nomo_vertical_menu.dart';
+import 'package:nomo_ui_kit/theme/nomo_theme.dart';
+
+part 'nomo_color_theme.g.dart';
+
+@NomoThemeUtils('NomoColors')
+class NomoComponentColors {
+  final NomoOutlineContainerColorData outlineContainerTheme;
+  final NomoAppBarColorData appBarTheme;
+  final NomoScaffoldColorData scaffoldTheme;
+  final NomoBottomBarColorData bottomBarTheme;
+  final NomoSiderColorData siderTheme;
+  final NomoVerticalMenuColorData verticalMenuTheme;
+  final PrimaryNomoButtonColorData primaryButtonTheme;
+  final SecondaryNomoButtonColorData secondaryButtonTheme;
+  final NomoTextButtonColorData textButtonTheme;
+  final NomoLinkButtonColorData linkButtonTheme;
+
+  const NomoComponentColors._({
+    required this.outlineContainerTheme,
+    required this.appBarTheme,
+    required this.scaffoldTheme,
+    required this.bottomBarTheme,
+    required this.siderTheme,
+    required this.verticalMenuTheme,
+    required this.primaryButtonTheme,
+    required this.secondaryButtonTheme,
+    required this.textButtonTheme,
+    required this.linkButtonTheme,
+  });
+
+  static NomoComponentColors defaultComponents(NomoColors core) =>
+      defaultConstructor(
+        outlineContainerTheme: NomoOutlineContainerThemeData(
+          foreground: core.foreground1,
+          background: core.background,
+        ),
+        appBarTheme: NomoAppBarColorData(
+          backgroundColor: core.background,
+        ),
+        scaffoldTheme: NomoScaffoldColorData(
+          backgroundColor: core.background,
+        ),
+        bottomBarTheme: NomoBottomBarColorData(
+          background: core.primaryContainer,
+          borderRadius: BorderRadius.circular(8),
+          foreground: core.foreground1,
+          selectedForeground: core.primary,
+        ),
+        siderTheme: NomoSiderColorData(
+          backgroundColor: core.background,
+        ),
+        verticalMenuTheme: NomoVerticalMenuColorData(
+          foreground: core.foreground1,
+          background: core.background,
+          selectedBackground: core.primary.lighten(0.25),
+          selectedForeground: core.primary,
+          borderRadius: BorderRadius.circular(6),
+        ),
+      );
+}
+
+class NomoColorThemeData {
+  NomoColorThemeData({
+    required this.colors,
+    NomoComponentColors Function(NomoColors core) buildComponents =
+        NomoComponentColors.defaultComponents,
+  }) : components = buildComponents.call(colors);
+
+  NomoColorThemeData._({
+    required this.colors,
+    required this.components,
+  });
+
+  factory NomoColorThemeData.lerp(
+    NomoColorThemeData a,
+    NomoColorThemeData b,
+    double t,
+  ) {
+    return NomoColorThemeData._(
+      colors: NomoColors.lerp(a.colors, b.colors, t),
+      components: lerpNomoComponentColors(a.components, b.components, t),
+    );
+  }
+  final NomoColors colors;
+  final NomoComponentColors components;
+}
 
 class NomoColors {
   const NomoColors({
@@ -36,7 +133,7 @@ class NomoColors {
   final Color foreground2;
   final Color foreground3;
 
-  static NomoColors lerp(NomoColors a, NomoColors b, double t) {
+  factory NomoColors.lerp(NomoColors a, NomoColors b, double t) {
     return NomoColors(
       brightness: t < 0.5 ? a.brightness : b.brightness,
       primary: Color.lerp(a.primary, b.primary, t)!,
@@ -55,156 +152,4 @@ class NomoColors {
       foreground3: Color.lerp(a.foreground3, b.foreground3, t)!,
     );
   }
-}
-
-class NomoComponentColors {
-  const NomoComponentColors._({
-    this.outlineContainerTheme = const NomoOutlineContainerColorData(),
-    this.appBarTheme = const NomoAppBarColorData(),
-    this.scaffoldTheme = const NomoScaffoldColorData(),
-    this.bottomBarTheme = const NomoBottomBarColorData(),
-    this.siderTheme = const NomoSiderColorData(),
-    this.verticalMenuTheme = const NomoVerticalMenuColorData(),
-  });
-
-  factory NomoComponentColors.override({
-    required NomoColors colors,
-    NomoOutlineContainerColorData? outlineContainerTheme,
-    NomoAppBarColorData? appBarTheme,
-    NomoScaffoldColorData? scaffoldTheme,
-    NomoBottomBarColorData? bottomBarTheme,
-    NomoSiderColorData? siderTheme,
-    NomoVerticalMenuColorData? verticalMenuTheme,
-  }) {
-    final def = defaultComponents(colors);
-    return NomoComponentColors._(
-      outlineContainerTheme: outlineContainerTheme ?? def.outlineContainerTheme,
-      appBarTheme: appBarTheme ?? def.appBarTheme,
-      scaffoldTheme: scaffoldTheme ?? def.scaffoldTheme,
-      bottomBarTheme: bottomBarTheme ?? def.bottomBarTheme,
-      siderTheme: siderTheme ?? def.siderTheme,
-      verticalMenuTheme: verticalMenuTheme ?? def.verticalMenuTheme,
-    );
-  }
-  final NomoOutlineContainerColorData outlineContainerTheme;
-  final NomoAppBarColorData appBarTheme;
-  final NomoScaffoldColorData scaffoldTheme;
-  final NomoBottomBarColorData bottomBarTheme;
-  final NomoSiderColorData siderTheme;
-  final NomoVerticalMenuColorData verticalMenuTheme;
-
-  static NomoComponentColors defaultComponents(NomoColors core) =>
-      NomoComponentColors._(
-        outlineContainerTheme: NomoOutlineContainerThemeData(
-          foreground: core.foreground1,
-          background: core.background,
-        ),
-        appBarTheme: NomoAppBarColorData(
-          backgroundColor: core.background,
-        ),
-        scaffoldTheme: NomoScaffoldColorData(
-          backgroundColor: core.background,
-        ),
-        bottomBarTheme: NomoBottomBarColorData(
-          background: core.primaryContainer,
-          borderRadius: BorderRadius.circular(8),
-          foreground: core.foreground1,
-          selectedForeground: core.primary,
-        ),
-        siderTheme: NomoSiderColorData(
-          backgroundColor: core.background,
-        ),
-        verticalMenuTheme: NomoVerticalMenuColorData(
-          foreground: core.foreground1,
-          background: core.background,
-          selectedBackground: core.primary.lighten(0.25),
-          selectedForeground: core.primary,
-          borderRadius: BorderRadius.circular(6),
-        ),
-      );
-
-  static NomoComponentColors lerp(
-    NomoComponentColors a,
-    NomoComponentColors b,
-    double t,
-  ) {
-    return NomoComponentColors._(
-      outlineContainerTheme: NomoOutlineContainerColorData.lerp(
-        a.outlineContainerTheme,
-        b.outlineContainerTheme,
-        t,
-      ),
-      appBarTheme: NomoAppBarColorData.lerp(a.appBarTheme, b.appBarTheme, t),
-      scaffoldTheme:
-          NomoScaffoldColorData.lerp(a.scaffoldTheme, b.scaffoldTheme, t),
-      bottomBarTheme:
-          NomoBottomBarColorData.lerp(a.bottomBarTheme, b.bottomBarTheme, t),
-      siderTheme: NomoSiderColorData.lerp(a.siderTheme, b.siderTheme, t),
-      verticalMenuTheme: NomoVerticalMenuColorData.lerp(
-        a.verticalMenuTheme,
-        b.verticalMenuTheme,
-        t,
-      ),
-    );
-  }
-}
-
-class NomoColorThemeData {
-  NomoColorThemeData({
-    required this.colors,
-    NomoComponentColors Function(NomoColors core) buildComponents =
-        NomoComponentColors.defaultComponents,
-  }) : components = buildComponents.call(colors);
-
-  NomoColorThemeData._({
-    required this.colors,
-    required this.components,
-  });
-
-  factory NomoColorThemeData.lerp(
-    NomoColorThemeData a,
-    NomoColorThemeData b,
-    double t,
-  ) {
-    return NomoColorThemeData._(
-      colors: NomoColors.lerp(a.colors, b.colors, t),
-      components: NomoComponentColors.lerp(a.components, b.components, t),
-    );
-  }
-  final NomoColors colors;
-  final NomoComponentColors components;
-
-  ///
-  /// We still need to use the material theme for some widgets.
-  /// This should not be used for any custom widgets.
-  ///
-  ThemeData get materialTheme {
-    return ThemeData.from(
-      colorScheme: ColorScheme(
-        background: colors.background,
-        primary: colors.primary,
-        secondary: colors.secondary,
-        surface: colors.surface,
-        error: colors.error,
-        onPrimary: colors.onPrimary,
-        onSecondary: colors.onSecondary,
-        onError: Colors.white,
-        brightness: colors.brightness,
-        onBackground: colors.foreground2,
-        onSurface: colors.foreground1,
-      ),
-    );
-  }
-
-  // void setSystemUiOverlayStyle() => SystemChrome.setSystemUIOverlayStyle(
-  //       SystemUiOverlayStyle(
-  //         statusBarColor: Colors.transparent,
-  //         statusBarIconBrightness: brightness.opposite,
-  //         systemNavigationBarColor: background,
-  //         systemNavigationBarIconBrightness: brightness.opposite,
-  //         statusBarBrightness: brightness,
-  //       ),
-  //     );
-
-  // void precacheAssets() => prechacheLottieAssets(type);
 }

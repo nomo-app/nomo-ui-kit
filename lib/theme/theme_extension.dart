@@ -62,7 +62,9 @@ extension ThemeContextExtension on BuildContext {
 ///
 extension ThemeUtil on NomoThemeData {
   BoxDecoration getCardDecoration({
-    required double elevation, required Offset offset, Color? color,
+    required double elevation,
+    required Offset offset,
+    Color? color,
     BorderRadius? borderRadius,
     BoxShape? shape,
   }) {
@@ -95,7 +97,7 @@ extension ThemeUtil on NomoThemeData {
 ///
 extension ColorUtils on Color {
   Color darken([double amount = .1]) {
-    assert(amount >= 0 && amount <= 1);
+    assert(amount >= 0 && amount <= 1, 'Amount must be between 0 and 1');
 
     final hsl = HSLColor.fromColor(this);
     final hslDark = hsl.withLightness(
@@ -106,7 +108,7 @@ extension ColorUtils on Color {
   }
 
   Color lighten([double amount = .1]) {
-    assert(amount >= 0 && amount <= 1);
+    assert(amount >= 0 && amount <= 1, 'Amount must be between 0 and 1');
 
     final hsl = HSLColor.fromColor(this);
     final hslLight = hsl.withLightness(
@@ -131,4 +133,6 @@ extension BrightnessUtils on Brightness {
 
 extension IfUtils<T> on T {
   T? ifElseNull(bool condition) => condition ? this : null;
+
+  T ifElse(bool condition, {required T other}) => condition ? this : other;
 }

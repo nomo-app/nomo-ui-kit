@@ -9,4 +9,6 @@ linter:
   rules:
     public_member_api_docs: false
     prefer_int_literals: false
+    sort_constructors_first: false
+    
 

@@ -1,20 +1,11 @@
 library nomo_theme;
 
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:nomo_ui_kit/components/layout/app_bar/nomo_app_bar.dart';
-import 'package:nomo_ui_kit/components/layout/bottom_bar/nomo_bottom_bar.dart';
-import 'package:nomo_ui_kit/components/layout/routebody/nomo_route_body.dart';
-import 'package:nomo_ui_kit/components/layout/scaffold/nomo_scaffold.dart';
-import 'package:nomo_ui_kit/components/layout/sider/nomo_sider.dart';
-import 'package:nomo_ui_kit/components/outline_container/nomo_outline_container.dart';
-import 'package:nomo_ui_kit/components/vertical_menu/nomo_vertical_menu.dart';
+import 'package:nomo_ui_kit/theme/sub/nomo_color_theme.dart';
+import 'package:nomo_ui_kit/theme/sub/nomo_sizing_theme.dart';
 
 export 'dart:ui';
 
-part 'sub/nomo_color_theme.dart';
-part 'sub/nomo_sizing_theme.dart';
 part 'sub/nomo_typography_theme.dart';
 part 'theme_extension.dart';
 

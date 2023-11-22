@@ -1,11 +1,13 @@
 import 'package:flutter/widgets.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
+import 'package:nomo_ui_kit/theme/sub/nomo_sizing_theme.dart';
 import 'package:nomo_ui_kit/theme/theme_provider.dart';
 
 class MetricReactor extends StatefulWidget {
-
   const MetricReactor({
-    required this.child, required this.sizingThemeBuilder, super.key,
+    required this.child,
+    required this.sizingThemeBuilder,
+    super.key,
   });
   final Widget child;
   final NomoSizingThemeData Function(double) sizingThemeBuilder;

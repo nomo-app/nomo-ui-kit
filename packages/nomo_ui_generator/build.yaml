@@ -3,9 +3,21 @@ builders:
   theme_data_builder:
     import: "package:nomo_ui_generator/builder.dart"
     builder_factories: ["themeDataBuilder"]
-    build_extensions: {".dart": ["theme_data.g.part"]}
+    build_extensions: {".dart": ["theme_data.g.dart"]}
+    auto_apply: dependents
+    build_to: source
+    applies_builders: ["source_gen|combining_builder"]
+    runs_before: ["theme_utils_builder"]
+    
+  theme_utils_builder:
+    import: "package:nomo_ui_generator/util_builder.dart"
+    builder_factories: ["themeUtilsBuilder"]
+    build_extensions: {".dart": ["theme_utils.g.part"]}
     auto_apply: dependents
     build_to: cache
     applies_builders: ["source_gen|combining_builder"]
+    required_inputs: ["theme_data.g.dart"]
+   
+    
 
 

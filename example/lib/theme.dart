@@ -2,19 +2,20 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:nomo_ui_kit/components/layout/app_bar/nomo_app_bar.dart';
-import 'package:nomo_ui_kit/components/layout/scaffold/nomo_scaffold.dart';
-import 'package:nomo_ui_kit/components/layout/sider/nomo_sider.dart';
+import 'package:nomo_ui_kit/components/app/app.dart';
+import 'package:nomo_ui_kit/components/buttons/primary/nomo_primary_button.dart';
 import 'package:nomo_ui_kit/components/outline_container/nomo_outline_container.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
+import 'package:nomo_ui_kit/theme/sub/nomo_color_theme.dart';
+import 'package:nomo_ui_kit/theme/sub/nomo_sizing_theme.dart';
 
 final typography = NomoTypographyTheme(
   b1: GoogleFonts.roboto(),
   b2: GoogleFonts.roboto(),
   b3: GoogleFonts.roboto(),
-  h1: GoogleFonts.playfairDisplay(),
-  h2: GoogleFonts.playfairDisplay(),
-  h3: GoogleFonts.playfairDisplay(),
+  h1: GoogleFonts.nunito(),
+  h2: GoogleFonts.nunito(),
+  h3: GoogleFonts.nunito(),
 );
 
 enum ColorMode {
@@ -67,11 +68,10 @@ final light = NomoColorThemeData(
     brightness: Brightness.light,
   ),
   buildComponents: (core) {
-    return NomoComponentColors.override(
-      colors: core,
-      outlineContainerTheme: NomoOutlineContainerThemeData(
-        foreground: Colors.cyan,
-        background: core.secondary,
+    return overrideNomoComponentColors(
+      core: core,
+      outlineContainerTheme: NomoOutlineContainerColorData(
+        background: core.background.darken(0.05),
       ),
     );
   },
@@ -94,6 +94,19 @@ final dark = NomoColorThemeData(
     foreground3: Color(0xFAFFFFFF),
     brightness: Brightness.dark,
   ),
+  buildComponents: (core) {
+    return overrideNomoComponentColors(
+      core: core,
+      outlineContainerTheme: NomoOutlineContainerColorData(
+        background: core.background.lighten(0.05),
+        border: Border.fromBorderSide(
+          BorderSide(
+            color: Colors.white24,
+          ),
+        ),
+      ),
+    );
+  },
 );
 
 final avinoc = NomoColorThemeData(
@@ -124,8 +137,8 @@ final sizingSmall = NomoSizingThemeData(
     fontSizeH2: 18,
     fontSizeH3: 20,
   ),
-  buildComponents: (core) => NomoComponentSizes.override(
-    sizes: core,
+  buildComponents: (core) => overrideNomoComponentSizes(
+    core: core,
     outlineContainerTheme: const NomoOutlineContainerSizingData(
       padding: EdgeInsets.all(4),
       spacing: 4,
@@ -148,8 +161,8 @@ final sizingMedium = NomoSizingThemeData(
     fontSizeH3: 22,
   ),
   buildComponents: (core) {
-    return NomoComponentSizes.override(
-      sizes: core,
+    return overrideNomoComponentSizes(
+      core: core,
       outlineContainerTheme: const NomoOutlineContainerSizingData(
         padding: EdgeInsets.all(8),
         spacing: 8,
@@ -173,8 +186,8 @@ final sizingLarge = NomoSizingThemeData(
     fontSizeH3: 24,
   ),
   buildComponents: (core) {
-    return NomoComponentSizes.override(
-      sizes: core,
+    return overrideNomoComponentSizes(
+      core: core,
       siderTheme: const NomoSiderThemeData(
         padding: EdgeInsets.all(4),
         width: 200,

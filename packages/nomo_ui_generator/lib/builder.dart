@@ -6,4 +6,4 @@ import 'package:source_gen/source_gen.dart';
 import 'src/theme_data_generator.dart';
 
 Builder themeDataBuilder(BuilderOptions options) =>
-    SharedPartBuilder([ComponentThemeDataGenerator()], 'theme_data');
+    PartBuilder([ComponentThemeDataGenerator()], '.theme_data.g.dart');

@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:nomo_ui_kit/app/nomo_app.dart';
+import 'package:nomo_ui_kit/components/text/nomo_text.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 import 'package:nomo_ui_kit/theme/theme_provider.dart';
 
@@ -16,9 +17,10 @@ class NomoThemeDataTween extends Tween<NomoThemeData> {
 }
 
 class ThemeAnimator extends StatefulWidget {
-
   const ThemeAnimator({
-    required this.notifier, required this.child, super.key,
+    required this.notifier,
+    required this.child,
+    super.key,
   });
   final ThemeNotifier notifier;
   final Widget child;
@@ -45,7 +47,13 @@ class _ThemeAnimatorState extends State<ThemeAnimator> {
           tween: NomoThemeDataTween(begin: lastTheme, end: nextTheme),
           duration: kThemeChangeDuration,
           curve: kThemeChangeCurve,
-          builder: (_, theme, child) => NomoTheme(value: theme, child: child!),
+          builder: (_, theme, child) => NomoTheme(
+            value: theme,
+            child: NomoDefaultTextStyle(
+              style: theme.typographyTheme.b1,
+              child: child!,
+            ),
+          ),
           onEnd: () => lastTheme = nextTheme,
           child: widget.child,
         );

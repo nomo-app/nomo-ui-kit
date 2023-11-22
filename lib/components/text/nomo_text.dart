@@ -53,8 +53,8 @@ class NomoText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var style = (this.style ?? context.typography.b1).copyWith(
-      color: color,
+    var style = (this.style ?? NomoDefaultTextStyle.of(context)).copyWith(
+      color: color ?? NomoTextTheme.maybeOf(context)?.color,
       fontWeight: fontWeight,
     );
 
@@ -173,4 +173,51 @@ Size calculateTextSize({required String text, required TextStyle? style}) {
   )..layout();
 
   return textPainter.size;
+}
+
+class NomoDefaultTextStyle extends InheritedWidget {
+  final TextStyle style;
+
+  const NomoDefaultTextStyle({
+    required this.style,
+    required super.child,
+    super.key,
+  });
+
+  static TextStyle of(BuildContext context) {
+    final result =
+        context.dependOnInheritedWidgetOfExactType<NomoDefaultTextStyle>();
+    assert(result != null, 'No NomoDefaultTextStyle found in context');
+    return result!.style;
+  }
+
+  static TextStyle? maybeOf(BuildContext context) {
+    final result =
+        context.dependOnInheritedWidgetOfExactType<NomoDefaultTextStyle>();
+    return result?.style;
+  }
+
+  @override
+  bool updateShouldNotify(NomoDefaultTextStyle oldWidget) {
+    return true;
+  }
+}
+
+class NomoTextTheme extends InheritedWidget {
+  final Color color;
+
+  const NomoTextTheme({
+    required this.color,
+    required super.child,
+    super.key,
+  });
+
+  static NomoTextTheme? maybeOf(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<NomoTextTheme>();
+  }
+
+  @override
+  bool updateShouldNotify(NomoTextTheme oldWidget) {
+    return true;
+  }
 }
