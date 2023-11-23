@@ -1,7 +1,5 @@
-import 'package:example/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:nomo_ui_kit/components/app/routebody/nomo_route_body.dart';
-import 'package:nomo_ui_kit/components/buttons/base/nomo_button.dart';
 import 'package:nomo_ui_kit/components/buttons/link/nomo_link_button.dart';
 import 'package:nomo_ui_kit/components/buttons/primary/nomo_primary_button.dart';
 import 'package:nomo_ui_kit/components/buttons/secondary/nomo_secondary_button.dart';

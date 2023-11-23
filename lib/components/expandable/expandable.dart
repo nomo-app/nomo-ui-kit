@@ -1,5 +1,4 @@
 import 'dart:math' show pi;
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:nomo_ui_generator/annotations.dart';
@@ -207,7 +206,7 @@ class _ExpandableState extends State<Expandable> with TickerProviderStateMixin {
                         ),
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
             );

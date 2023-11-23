@@ -49,7 +49,7 @@ class NomoSizes {
   }
 }
 
-@NomoThemeUtils("NomoSizes")
+@NomoThemeUtils('NomoSizes')
 class NomoComponentSizes {
   final NomoOutlineContainerSizingData outlineContainerTheme;
   final NomoAppBarSizingData appBarTheme;

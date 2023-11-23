@@ -16,10 +16,10 @@ class ModalSheetSection extends StatelessWidget {
           ElevatedButton(
             onPressed: () {
               NomoNavigator.of(context).push(
-                RoutePath(name: '/modalSheet/sheet1'),
+                const RoutePath(name: '/modalSheet/sheet1'),
               );
             },
-            child: Text("Show Modal Sheet"),
+            child: const Text("Show Modal Sheet"),
           ),
         ],
       ),

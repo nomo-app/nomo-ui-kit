@@ -82,7 +82,7 @@ class _NomoDropDownMenuState<T> extends State<NomoDropDownMenu<T>> {
       _selectedItem = item;
       _isExpanded = false;
       if (item.value != null) {
-        widget.onChanged(item.value!);
+        widget.onChanged(item.value as T);
       }
     });
   }

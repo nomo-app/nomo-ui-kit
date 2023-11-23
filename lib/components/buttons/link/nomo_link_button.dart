@@ -7,7 +7,7 @@ import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 
 part 'nomo_link_button.theme_data.g.dart';
 
-@NomoComponentThemeData("linkButtonTheme")
+@NomoComponentThemeData('linkButtonTheme')
 class NomoLinkButton extends StatefulWidget with NomoButtonMixin {
   final String text;
   final TextStyle? textStyle;
