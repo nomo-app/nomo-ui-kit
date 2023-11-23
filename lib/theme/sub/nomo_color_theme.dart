@@ -76,6 +76,9 @@ class NomoComponentColors {
           selectedForeground: core.primary,
           borderRadius: BorderRadius.circular(6),
         ),
+        expandableTheme: ExpandableColorData(
+          iconColor: core.foreground1,
+        ),
       );
 }
 

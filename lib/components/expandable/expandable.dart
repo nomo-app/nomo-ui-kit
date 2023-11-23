@@ -48,6 +48,8 @@ class Expandable extends StatefulWidget {
   final Color? splashColor;
   @NomoColorField<Color?>(null)
   final Color? hoverColor;
+  @NomoColorField<Color?>(null)
+  final Color? iconColor;
 
   const Expandable({
     required this.title,
@@ -71,6 +73,7 @@ class Expandable extends StatefulWidget {
     this.highlightColor,
     this.hoverColor,
     this.splashColor,
+    this.iconColor,
   });
 
   @override
@@ -180,6 +183,7 @@ class _ExpandableState extends State<Expandable> with TickerProviderStateMixin {
                                 child: Icon(
                                   widget.expandIcon,
                                   size: theme.iconSize,
+                                  color: theme.iconColor,
                                 ),
                               ),
                             ),

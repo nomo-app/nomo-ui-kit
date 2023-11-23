@@ -14,6 +14,7 @@ class ExpandableColorDataNullable {
   final Color? focusColor;
   final Color? splashColor;
   final Color? hoverColor;
+  final Color? iconColor;
   const ExpandableColorDataNullable({
     this.titlePadding,
     this.childrenPadding,
@@ -22,6 +23,7 @@ class ExpandableColorDataNullable {
     this.focusColor,
     this.splashColor,
     this.hoverColor,
+    this.iconColor,
   });
 }
 
@@ -33,6 +35,7 @@ class ExpandableColorData implements ExpandableColorDataNullable {
   final Color? focusColor;
   final Color? splashColor;
   final Color? hoverColor;
+  final Color? iconColor;
   const ExpandableColorData({
     this.titlePadding =
         const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
@@ -42,6 +45,7 @@ class ExpandableColorData implements ExpandableColorDataNullable {
     this.focusColor = null,
     this.splashColor = null,
     this.hoverColor = null,
+    this.iconColor = null,
   });
   static ExpandableColorData lerp(
       ExpandableColorData a, ExpandableColorData b, double t) {
@@ -54,6 +58,7 @@ class ExpandableColorData implements ExpandableColorDataNullable {
       focusColor: Color.lerp(a.focusColor, b.focusColor, t),
       splashColor: Color.lerp(a.splashColor, b.splashColor, t),
       hoverColor: Color.lerp(a.hoverColor, b.hoverColor, t),
+      iconColor: Color.lerp(a.iconColor, b.iconColor, t),
     );
   }
 }
@@ -86,6 +91,7 @@ class ExpandableThemeData implements ExpandableColorData, ExpandableSizingData {
   final Color? focusColor;
   final Color? splashColor;
   final Color? hoverColor;
+  final Color? iconColor;
   final double iconSize;
   const ExpandableThemeData({
     this.titlePadding =
@@ -96,6 +102,7 @@ class ExpandableThemeData implements ExpandableColorData, ExpandableSizingData {
     this.focusColor = null,
     this.splashColor = null,
     this.hoverColor = null,
+    this.iconColor = null,
     this.iconSize = 28.0,
   });
   factory ExpandableThemeData.from(
@@ -110,6 +117,7 @@ class ExpandableThemeData implements ExpandableColorData, ExpandableSizingData {
       focusColor: colors.focusColor,
       splashColor: colors.splashColor,
       hoverColor: colors.hoverColor,
+      iconColor: colors.iconColor,
       iconSize: sizing.iconSize,
     );
   }
@@ -122,6 +130,7 @@ class ExpandableThemeData implements ExpandableColorData, ExpandableSizingData {
       focusColor: override?.focusColor ?? focusColor,
       splashColor: override?.splashColor ?? splashColor,
       hoverColor: override?.hoverColor ?? hoverColor,
+      iconColor: override?.iconColor ?? iconColor,
       iconSize: override?.iconSize ?? iconSize,
     );
   }
@@ -136,6 +145,7 @@ class ExpandableThemeDataNullable
   final Color? focusColor;
   final Color? splashColor;
   final Color? hoverColor;
+  final Color? iconColor;
   final double? iconSize;
   const ExpandableThemeDataNullable({
     this.titlePadding,
@@ -145,6 +155,7 @@ class ExpandableThemeDataNullable
     this.focusColor,
     this.splashColor,
     this.hoverColor,
+    this.iconColor,
     this.iconSize,
   });
 }
@@ -196,6 +207,7 @@ ExpandableThemeData getFromContext(
     focusColor: widget.focusColor ?? themeData.focusColor,
     splashColor: widget.splashColor ?? themeData.splashColor,
     hoverColor: widget.hoverColor ?? themeData.hoverColor,
+    iconColor: widget.iconColor ?? themeData.iconColor,
     iconSize: widget.iconSize ?? themeData.iconSize,
   );
 }
