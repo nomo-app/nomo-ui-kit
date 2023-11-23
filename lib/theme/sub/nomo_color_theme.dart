@@ -8,6 +8,7 @@ import 'package:nomo_ui_kit/components/buttons/link/nomo_link_button.dart';
 import 'package:nomo_ui_kit/components/buttons/primary/nomo_primary_button.dart';
 import 'package:nomo_ui_kit/components/buttons/secondary/nomo_secondary_button.dart';
 import 'package:nomo_ui_kit/components/buttons/text/nomo_text_button.dart';
+import 'package:nomo_ui_kit/components/expandable/expandable.dart';
 import 'package:nomo_ui_kit/components/loading/loading.dart';
 import 'package:nomo_ui_kit/components/loading/shimmer/shimmer.dart';
 import 'package:nomo_ui_kit/components/outline_container/nomo_outline_container.dart';
@@ -30,6 +31,7 @@ class NomoComponentColors {
   final NomoLinkButtonColorData linkButtonTheme;
   final LoadingColorData loadingTheme;
   final ShimmerColorData shimmerTheme;
+  final ExpandableColorData expandableTheme;
 
   const NomoComponentColors._({
     required this.outlineContainerTheme,
@@ -44,6 +46,7 @@ class NomoComponentColors {
     required this.linkButtonTheme,
     required this.loadingTheme,
     required this.shimmerTheme,
+    required this.expandableTheme,
   });
 
   static NomoComponentColors defaultComponents(NomoColors core) => defaultConstructor(

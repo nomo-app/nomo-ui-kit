@@ -113,6 +113,12 @@ class _NomoButtonState extends State<NomoButton> with SingleTickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
+    final borderRadius = switch (widget.borderRadius) {
+      final BorderRadiusGeometry borderRadius => borderRadius.resolve(Directionality.of(context)),
+      null when widget.shape == BoxShape.circle => BorderRadius.circular(1E3),
+      null => null,
+    };
+
     return Padding(
       padding: widget.margin ?? EdgeInsets.zero,
       child: SizedBox(
@@ -160,12 +166,7 @@ class _NomoButtonState extends State<NomoButton> with SingleTickerProviderStateM
               onExit: (_) => _controller.reverse(),
               child: InkWell(
                 onTap: widget.onPressed,
-                borderRadius: widget.borderRadius?.resolve(Directionality.of(context)).ifElse(
-                      widget.shape != BoxShape.circle,
-                      other: BorderRadius.circular(
-                        max(widget.width ?? 0, widget.height ?? 0),
-                      ),
-                    ),
+                borderRadius: borderRadius,
                 hoverColor: widget.backgroundColor
                     ?.darken(0.05)
                     .ifElse(

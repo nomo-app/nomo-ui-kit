@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:nomo_ui_kit/components/app/app.dart';
 import 'package:nomo_ui_kit/components/layout/dynamic_row/dynamic_row.dart';
 import 'package:nomo_ui_kit/components/loading/loading.dart';
