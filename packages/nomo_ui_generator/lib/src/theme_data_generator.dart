@@ -9,8 +9,7 @@ import 'package:source_gen/source_gen.dart';
 
 import '../annotations.dart';
 
-class ComponentThemeDataGenerator
-    extends GeneratorForAnnotation<NomoComponentThemeData> {
+class ComponentThemeDataGenerator extends GeneratorForAnnotation<NomoComponentThemeData> {
   @override
   Future<String> generateForAnnotatedElement(
     Element element,
@@ -21,6 +20,9 @@ class ComponentThemeDataGenerator
 
     final visitor = ModelVisitor();
     element.visitChildren(visitor);
+
+    buffer.writeln(
+        "// ignore_for_file: prefer_constructors_over_static_methods,avoid_unused_constructor_parameters, require_trailing_commas, avoid_init_to_null, use_named_constants ");
 
     final _className = element.name;
     if (_className == null) throw Exception("Class name is null");
@@ -117,8 +119,7 @@ class ComponentThemeDataGenerator
         colorDataClassName: colorDataClassName,
         sizingDataClassName: sizingDataClassName,
         themeName: themeName,
-        overrideThemeInheritedWidgetClassName:
-            themeOverrideInheritedWidgetClassName,
+        overrideThemeInheritedWidgetClassName: themeOverrideInheritedWidgetClassName,
         colorFields: visitor.colorFields,
         sizingFields: visitor.sizingFields,
       ),
@@ -175,7 +176,7 @@ class ComponentThemeDataGenerator
     for (var colorfieldEntry in colorFields.entries) {
       final (type, value) = colorfieldEntry.value;
       final name = colorfieldEntry.key;
-
+      buffer.writeln("@override");
       buffer.writeln("final ${type.getNullablePostfix(value)} $name;");
     }
 
@@ -212,8 +213,7 @@ class ComponentThemeDataGenerator
         continue;
       }
 
-      final nullAssertion =
-          type.getNullablePostfix(value).contains("?") ? "" : "!";
+      final nullAssertion = type.getNullablePostfix(value).contains("?") ? "" : "!";
 
       if (type == "double") {
         buffer.writeln(
@@ -244,8 +244,10 @@ class ComponentThemeDataGenerator
     buffer.writeln("final $themeDataClassName data;");
 
     buffer.writeln("const $className({");
+
     buffer.writeln("required this.data,");
     buffer.writeln("required super.child,");
+    buffer.writeln("super.key");
     buffer.writeln("});");
 
     buffer.writeln('''static $themeDataClassName of(BuildContext context) {
@@ -323,7 +325,7 @@ class ComponentThemeDataGenerator
       final (type, value) = colorfieldEntry.value;
 
       final name = colorfieldEntry.key;
-
+      buffer.writeln("@override");
       buffer.writeln("final ${type.getNullablePostfix(value)} $name;");
     }
 
@@ -360,8 +362,7 @@ class ComponentThemeDataGenerator
         continue;
       }
 
-      final nullAssertion =
-          type.getNullablePostfix(value).contains("?") ? "" : "!";
+      final nullAssertion = type.getNullablePostfix(value).contains("?") ? "" : "!";
 
       if (type == "double") {
         buffer.writeln(
@@ -396,8 +397,7 @@ class ComponentThemeDataGenerator
   }) {
     final buffer = StringBuffer();
 
-    buffer.writeln(
-        "class $className implements $colordataClassName, $sizingdataClassName{");
+    buffer.writeln("class $className implements $colordataClassName, $sizingdataClassName{");
 
     /// Fields
     final fields = {...colorFields, ...sizingFields};
@@ -405,7 +405,7 @@ class ComponentThemeDataGenerator
     for (final field in fields.entries) {
       final (type, value) = field.value;
       final name = field.key;
-
+      buffer.writeln("@override");
       buffer.writeln("final ${type.getNullablePostfix(value)} $name;");
     }
 
@@ -439,7 +439,7 @@ class ComponentThemeDataGenerator
     buffer.writeln("}");
 
     /// Override
-    buffer.writeln("$className override([");
+    buffer.writeln("$className copyWith([");
     buffer.writeln("$themeDataClassNameNullable? override");
     buffer.writeln("]) {");
     buffer.writeln("return $className(");
@@ -467,8 +467,7 @@ String _getThemeDataNullableClass({
 }) {
   final buffer = StringBuffer();
 
-  buffer.writeln(
-      "class $className implements $colordataClassNameNullable, $sizingdataClassNameNullable{");
+  buffer.writeln("class $className implements $colordataClassNameNullable, $sizingdataClassNameNullable{");
 
   /// Fields
   final fields = {...colorFields, ...sizingFields};
@@ -476,7 +475,7 @@ String _getThemeDataNullableClass({
   for (final field in fields.entries) {
     final (type, _) = field.value;
     final name = field.key;
-
+    buffer.writeln("@override");
     buffer.writeln("final ${type}? $name;");
   }
 
@@ -516,22 +515,21 @@ String _getFromContext({
 
   if (colorFields.isNotEmpty) {
     buffer.writeln(
-        "final globalColorTheme = NomoTheme.maybeOf(context)?.componentColors.$themeName ?? $colorDataClassName();");
+        "final globalColorTheme = NomoTheme.maybeOf(context)?.componentColors.$themeName ?? const $colorDataClassName();");
   } else {
-    buffer.writeln("final globalColorTheme = $colorDataClassName();");
+    buffer.writeln("const globalColorTheme = $colorDataClassName();");
   }
   if (sizingFields.isNotEmpty) {
     buffer.writeln(
-        "final globalSizingTheme = NomoTheme.maybeOf(context)?.componentSizes.$themeName ?? $sizingDataClassName();");
+        "final globalSizingTheme = NomoTheme.maybeOf(context)?.componentSizes.$themeName ?? const $sizingDataClassName();");
   } else {
-    buffer.writeln("final globalSizingTheme = $sizingDataClassName();");
+    buffer.writeln("const globalSizingTheme = $sizingDataClassName();");
   }
 
-  buffer.writeln(
-      "final themeOverride = $overrideThemeInheritedWidgetClassName.maybeOf(context);");
+  buffer.writeln("final themeOverride = $overrideThemeInheritedWidgetClassName.maybeOf(context);");
 
   buffer.writeln(
-      "final themeData = $themeDataClassName.from(globalColorTheme, globalSizingTheme).override(themeOverride);");
+      "final themeData = $themeDataClassName.from(globalColorTheme, globalSizingTheme).copyWith(themeOverride);");
 
   buffer.writeln("return $themeDataClassName(");
   for (final name in [...colorFields.keys, ...sizingFields.keys]) {

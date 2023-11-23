@@ -6,6 +6,7 @@ part of 'nomo_primary_button.dart';
 // ComponentThemeDataGenerator
 // **************************************************************************
 
+// ignore_for_file: prefer_constructors_over_static_methods,avoid_unused_constructor_parameters, require_trailing_commas, avoid_init_to_null, use_named_constants
 class PrimaryNomoButtonColorDataNullable {
   final Color? backgroundColor;
   final Color? foregroundColor;
@@ -20,9 +21,13 @@ class PrimaryNomoButtonColorDataNullable {
 }
 
 class PrimaryNomoButtonColorData implements PrimaryNomoButtonColorDataNullable {
+  @override
   final Color backgroundColor;
+  @override
   final Color foregroundColor;
+  @override
   final double elevation;
+  @override
   final BorderRadiusGeometry borderRadius;
   const PrimaryNomoButtonColorData({
     this.backgroundColor = primaryColor,
@@ -51,6 +56,7 @@ class PrimaryNomoButtonSizingDataNullable {
 
 class PrimaryNomoButtonSizingData
     implements PrimaryNomoButtonSizingDataNullable {
+  @override
   final EdgeInsetsGeometry padding;
   const PrimaryNomoButtonSizingData({
     this.padding = const EdgeInsets.all(16),
@@ -65,10 +71,15 @@ class PrimaryNomoButtonSizingData
 
 class PrimaryNomoButtonThemeData
     implements PrimaryNomoButtonColorData, PrimaryNomoButtonSizingData {
+  @override
   final Color backgroundColor;
+  @override
   final Color foregroundColor;
+  @override
   final double elevation;
+  @override
   final BorderRadiusGeometry borderRadius;
+  @override
   final EdgeInsetsGeometry padding;
   const PrimaryNomoButtonThemeData({
     this.backgroundColor = primaryColor,
@@ -89,7 +100,7 @@ class PrimaryNomoButtonThemeData
       padding: sizing.padding,
     );
   }
-  PrimaryNomoButtonThemeData override(
+  PrimaryNomoButtonThemeData copyWith(
       [PrimaryNomoButtonThemeDataNullable? override]) {
     return PrimaryNomoButtonThemeData(
       backgroundColor: override?.backgroundColor ?? backgroundColor,
@@ -105,10 +116,15 @@ class PrimaryNomoButtonThemeDataNullable
     implements
         PrimaryNomoButtonColorDataNullable,
         PrimaryNomoButtonSizingDataNullable {
+  @override
   final Color? backgroundColor;
+  @override
   final Color? foregroundColor;
+  @override
   final double? elevation;
+  @override
   final BorderRadiusGeometry? borderRadius;
+  @override
   final EdgeInsetsGeometry? padding;
   const PrimaryNomoButtonThemeDataNullable({
     this.backgroundColor,
@@ -121,10 +137,8 @@ class PrimaryNomoButtonThemeDataNullable
 
 class PrimaryNomoButtonThemeOverride extends InheritedWidget {
   final PrimaryNomoButtonThemeDataNullable data;
-  const PrimaryNomoButtonThemeOverride({
-    required this.data,
-    required super.child,
-  });
+  const PrimaryNomoButtonThemeOverride(
+      {required this.data, required super.child, super.key});
   static PrimaryNomoButtonThemeDataNullable of(BuildContext context) {
     final result = context
         .dependOnInheritedWidgetOfExactType<PrimaryNomoButtonThemeOverride>();
@@ -150,14 +164,14 @@ PrimaryNomoButtonThemeData getFromContext(
 ) {
   final globalColorTheme =
       NomoTheme.maybeOf(context)?.componentColors.primaryButtonTheme ??
-          PrimaryNomoButtonColorData();
+          const PrimaryNomoButtonColorData();
   final globalSizingTheme =
       NomoTheme.maybeOf(context)?.componentSizes.primaryButtonTheme ??
-          PrimaryNomoButtonSizingData();
+          const PrimaryNomoButtonSizingData();
   final themeOverride = PrimaryNomoButtonThemeOverride.maybeOf(context);
   final themeData =
       PrimaryNomoButtonThemeData.from(globalColorTheme, globalSizingTheme)
-          .override(themeOverride);
+          .copyWith(themeOverride);
   return PrimaryNomoButtonThemeData(
     backgroundColor: widget.backgroundColor ?? themeData.backgroundColor,
     foregroundColor: widget.foregroundColor ?? themeData.foregroundColor,

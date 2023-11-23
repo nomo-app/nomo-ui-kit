@@ -1,13 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-// ignore_for_file: avoid_init_to_null
-
 part of 'nomo_sizing_theme.dart';
 
 // **************************************************************************
 // ThemeUtilGenerator
 // **************************************************************************
 
+// ignore_for_file: prefer_constructors_over_static_methods,avoid_unused_constructor_parameters, require_trailing_commas, avoid_init_to_null
 NomoComponentSizes lerpNomoComponentSizes(
     NomoComponentSizes a, NomoComponentSizes b, double t) {
   return NomoComponentSizes._(

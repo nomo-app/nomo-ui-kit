@@ -6,6 +6,7 @@ part of 'nomo_scaffold.dart';
 // ComponentThemeDataGenerator
 // **************************************************************************
 
+// ignore_for_file: prefer_constructors_over_static_methods,avoid_unused_constructor_parameters, require_trailing_commas, avoid_init_to_null, use_named_constants
 class NomoScaffoldColorDataNullable {
   final Color? backgroundColor;
   const NomoScaffoldColorDataNullable({
@@ -14,6 +15,7 @@ class NomoScaffoldColorDataNullable {
 }
 
 class NomoScaffoldColorData implements NomoScaffoldColorDataNullable {
+  @override
   final Color backgroundColor;
   const NomoScaffoldColorData({
     this.backgroundColor = Colors.white,
@@ -38,8 +40,11 @@ class NomoScaffoldSizingDataNullable {
 }
 
 class NomoScaffoldSizingData implements NomoScaffoldSizingDataNullable {
+  @override
   final EdgeInsetsGeometry padding;
+  @override
   final bool showBottomBar;
+  @override
   final bool showSider;
   const NomoScaffoldSizingData({
     this.padding = const EdgeInsets.all(0.0),
@@ -58,9 +63,13 @@ class NomoScaffoldSizingData implements NomoScaffoldSizingDataNullable {
 
 class NomoScaffoldThemeData
     implements NomoScaffoldColorData, NomoScaffoldSizingData {
+  @override
   final Color backgroundColor;
+  @override
   final EdgeInsetsGeometry padding;
+  @override
   final bool showBottomBar;
+  @override
   final bool showSider;
   const NomoScaffoldThemeData({
     this.backgroundColor = Colors.white,
@@ -79,7 +88,7 @@ class NomoScaffoldThemeData
       showSider: sizing.showSider,
     );
   }
-  NomoScaffoldThemeData override([NomoScaffoldThemeDataNullable? override]) {
+  NomoScaffoldThemeData copyWith([NomoScaffoldThemeDataNullable? override]) {
     return NomoScaffoldThemeData(
       backgroundColor: override?.backgroundColor ?? backgroundColor,
       padding: override?.padding ?? padding,
@@ -91,9 +100,13 @@ class NomoScaffoldThemeData
 
 class NomoScaffoldThemeDataNullable
     implements NomoScaffoldColorDataNullable, NomoScaffoldSizingDataNullable {
+  @override
   final Color? backgroundColor;
+  @override
   final EdgeInsetsGeometry? padding;
+  @override
   final bool? showBottomBar;
+  @override
   final bool? showSider;
   const NomoScaffoldThemeDataNullable({
     this.backgroundColor,
@@ -105,10 +118,8 @@ class NomoScaffoldThemeDataNullable
 
 class NomoScaffoldThemeOverride extends InheritedWidget {
   final NomoScaffoldThemeDataNullable data;
-  const NomoScaffoldThemeOverride({
-    required this.data,
-    required super.child,
-  });
+  const NomoScaffoldThemeOverride(
+      {required this.data, required super.child, super.key});
   static NomoScaffoldThemeDataNullable of(BuildContext context) {
     final result =
         context.dependOnInheritedWidgetOfExactType<NomoScaffoldThemeOverride>();
@@ -134,14 +145,14 @@ NomoScaffoldThemeData getFromContext(
 ) {
   final globalColorTheme =
       NomoTheme.maybeOf(context)?.componentColors.scaffoldTheme ??
-          NomoScaffoldColorData();
+          const NomoScaffoldColorData();
   final globalSizingTheme =
       NomoTheme.maybeOf(context)?.componentSizes.scaffoldTheme ??
-          NomoScaffoldSizingData();
+          const NomoScaffoldSizingData();
   final themeOverride = NomoScaffoldThemeOverride.maybeOf(context);
   final themeData =
       NomoScaffoldThemeData.from(globalColorTheme, globalSizingTheme)
-          .override(themeOverride);
+          .copyWith(themeOverride);
   return NomoScaffoldThemeData(
     backgroundColor: widget.backgroundColor ?? themeData.backgroundColor,
     padding: widget.padding ?? themeData.padding,

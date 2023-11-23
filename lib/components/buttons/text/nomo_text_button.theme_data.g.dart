@@ -6,6 +6,7 @@ part of 'nomo_text_button.dart';
 // ComponentThemeDataGenerator
 // **************************************************************************
 
+// ignore_for_file: prefer_constructors_over_static_methods,avoid_unused_constructor_parameters, require_trailing_commas, avoid_init_to_null, use_named_constants
 class NomoTextButtonColorDataNullable {
   final Color? foregroundColor;
   final BorderRadiusGeometry? borderRadius;
@@ -16,7 +17,9 @@ class NomoTextButtonColorDataNullable {
 }
 
 class NomoTextButtonColorData implements NomoTextButtonColorDataNullable {
+  @override
   final Color foregroundColor;
+  @override
   final BorderRadiusGeometry borderRadius;
   const NomoTextButtonColorData({
     this.foregroundColor = Colors.black87,
@@ -40,6 +43,7 @@ class NomoTextButtonSizingDataNullable {
 }
 
 class NomoTextButtonSizingData implements NomoTextButtonSizingDataNullable {
+  @override
   final EdgeInsetsGeometry padding;
   const NomoTextButtonSizingData({
     this.padding = const EdgeInsets.all(16),
@@ -54,8 +58,11 @@ class NomoTextButtonSizingData implements NomoTextButtonSizingDataNullable {
 
 class NomoTextButtonThemeData
     implements NomoTextButtonColorData, NomoTextButtonSizingData {
+  @override
   final Color foregroundColor;
+  @override
   final BorderRadiusGeometry borderRadius;
+  @override
   final EdgeInsetsGeometry padding;
   const NomoTextButtonThemeData({
     this.foregroundColor = Colors.black87,
@@ -72,7 +79,7 @@ class NomoTextButtonThemeData
       padding: sizing.padding,
     );
   }
-  NomoTextButtonThemeData override(
+  NomoTextButtonThemeData copyWith(
       [NomoTextButtonThemeDataNullable? override]) {
     return NomoTextButtonThemeData(
       foregroundColor: override?.foregroundColor ?? foregroundColor,
@@ -86,8 +93,11 @@ class NomoTextButtonThemeDataNullable
     implements
         NomoTextButtonColorDataNullable,
         NomoTextButtonSizingDataNullable {
+  @override
   final Color? foregroundColor;
+  @override
   final BorderRadiusGeometry? borderRadius;
+  @override
   final EdgeInsetsGeometry? padding;
   const NomoTextButtonThemeDataNullable({
     this.foregroundColor,
@@ -98,10 +108,8 @@ class NomoTextButtonThemeDataNullable
 
 class NomoTextButtonThemeOverride extends InheritedWidget {
   final NomoTextButtonThemeDataNullable data;
-  const NomoTextButtonThemeOverride({
-    required this.data,
-    required super.child,
-  });
+  const NomoTextButtonThemeOverride(
+      {required this.data, required super.child, super.key});
   static NomoTextButtonThemeDataNullable of(BuildContext context) {
     final result = context
         .dependOnInheritedWidgetOfExactType<NomoTextButtonThemeOverride>();
@@ -127,14 +135,14 @@ NomoTextButtonThemeData getFromContext(
 ) {
   final globalColorTheme =
       NomoTheme.maybeOf(context)?.componentColors.textButtonTheme ??
-          NomoTextButtonColorData();
+          const NomoTextButtonColorData();
   final globalSizingTheme =
       NomoTheme.maybeOf(context)?.componentSizes.textButtonTheme ??
-          NomoTextButtonSizingData();
+          const NomoTextButtonSizingData();
   final themeOverride = NomoTextButtonThemeOverride.maybeOf(context);
   final themeData =
       NomoTextButtonThemeData.from(globalColorTheme, globalSizingTheme)
-          .override(themeOverride);
+          .copyWith(themeOverride);
   return NomoTextButtonThemeData(
     foregroundColor: widget.foregroundColor ?? themeData.foregroundColor,
     borderRadius: widget.borderRadius ?? themeData.borderRadius,

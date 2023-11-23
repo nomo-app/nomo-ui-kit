@@ -12,5 +12,5 @@ linter:
     sort_constructors_first: false
     lines_longer_than_80_chars: false
     avoid_positional_boolean_parameters: false
-    
+  
 

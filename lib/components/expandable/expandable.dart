@@ -33,11 +33,11 @@ class Expandable extends StatefulWidget {
 
   /// Styles
   @NomoSizingField(28.0)
-  final double iconSize;
+  final double? iconSize;
   @NomoColorField(EdgeInsets.symmetric(horizontal: 8.0, vertical: 4))
-  final EdgeInsetsGeometry titlePadding;
+  final EdgeInsetsGeometry? titlePadding;
   @NomoColorField(EdgeInsets.symmetric(vertical: 4.0))
-  final EdgeInsetsGeometry childrenPadding;
+  final EdgeInsetsGeometry? childrenPadding;
   @NomoColorField(BorderRadius.all(Radius.circular(12)))
   final BorderRadius? borderRadius;
   @NomoColorField<Color?>(null)
@@ -62,13 +62,13 @@ class Expandable extends StatefulWidget {
     this.expandIcon = _kExpand,
     this.margin,
     this.expansionNotifier,
-    this.iconSize = 24.0,
+    this.iconSize,
     this.initiallyExpanded = false,
     this.onLongPress,
-    this.titlePadding = const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
-    this.childrenPadding = const EdgeInsets.symmetric(vertical: 4.0),
+    this.titlePadding,
+    this.childrenPadding,
     this.onExpansionChanged,
-    this.borderRadius = const BorderRadius.all(Radius.circular(12)),
+    this.borderRadius,
     this.focusColor,
     this.highlightColor,
     this.hoverColor,

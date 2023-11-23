@@ -6,6 +6,7 @@ part of 'nomo_link_button.dart';
 // ComponentThemeDataGenerator
 // **************************************************************************
 
+// ignore_for_file: prefer_constructors_over_static_methods,avoid_unused_constructor_parameters, require_trailing_commas, avoid_init_to_null, use_named_constants
 class NomoLinkButtonColorDataNullable {
   final Color? foregroundColor;
   final Color? tapDownColor;
@@ -16,7 +17,9 @@ class NomoLinkButtonColorDataNullable {
 }
 
 class NomoLinkButtonColorData implements NomoLinkButtonColorDataNullable {
+  @override
   final Color foregroundColor;
+  @override
   final Color tapDownColor;
   const NomoLinkButtonColorData({
     this.foregroundColor = const Color(0xFF1677ff),
@@ -41,7 +44,9 @@ class NomoLinkButtonSizingDataNullable {
 }
 
 class NomoLinkButtonSizingData implements NomoLinkButtonSizingDataNullable {
+  @override
   final EdgeInsetsGeometry padding;
+  @override
   final Color selectionColor;
   const NomoLinkButtonSizingData({
     this.padding = const EdgeInsets.all(16),
@@ -58,9 +63,13 @@ class NomoLinkButtonSizingData implements NomoLinkButtonSizingDataNullable {
 
 class NomoLinkButtonThemeData
     implements NomoLinkButtonColorData, NomoLinkButtonSizingData {
+  @override
   final Color foregroundColor;
+  @override
   final Color tapDownColor;
+  @override
   final EdgeInsetsGeometry padding;
+  @override
   final Color selectionColor;
   const NomoLinkButtonThemeData({
     this.foregroundColor = const Color(0xFF1677ff),
@@ -79,7 +88,7 @@ class NomoLinkButtonThemeData
       selectionColor: sizing.selectionColor,
     );
   }
-  NomoLinkButtonThemeData override(
+  NomoLinkButtonThemeData copyWith(
       [NomoLinkButtonThemeDataNullable? override]) {
     return NomoLinkButtonThemeData(
       foregroundColor: override?.foregroundColor ?? foregroundColor,
@@ -94,9 +103,13 @@ class NomoLinkButtonThemeDataNullable
     implements
         NomoLinkButtonColorDataNullable,
         NomoLinkButtonSizingDataNullable {
+  @override
   final Color? foregroundColor;
+  @override
   final Color? tapDownColor;
+  @override
   final EdgeInsetsGeometry? padding;
+  @override
   final Color? selectionColor;
   const NomoLinkButtonThemeDataNullable({
     this.foregroundColor,
@@ -108,10 +121,8 @@ class NomoLinkButtonThemeDataNullable
 
 class NomoLinkButtonThemeOverride extends InheritedWidget {
   final NomoLinkButtonThemeDataNullable data;
-  const NomoLinkButtonThemeOverride({
-    required this.data,
-    required super.child,
-  });
+  const NomoLinkButtonThemeOverride(
+      {required this.data, required super.child, super.key});
   static NomoLinkButtonThemeDataNullable of(BuildContext context) {
     final result = context
         .dependOnInheritedWidgetOfExactType<NomoLinkButtonThemeOverride>();
@@ -137,14 +148,14 @@ NomoLinkButtonThemeData getFromContext(
 ) {
   final globalColorTheme =
       NomoTheme.maybeOf(context)?.componentColors.linkButtonTheme ??
-          NomoLinkButtonColorData();
+          const NomoLinkButtonColorData();
   final globalSizingTheme =
       NomoTheme.maybeOf(context)?.componentSizes.linkButtonTheme ??
-          NomoLinkButtonSizingData();
+          const NomoLinkButtonSizingData();
   final themeOverride = NomoLinkButtonThemeOverride.maybeOf(context);
   final themeData =
       NomoLinkButtonThemeData.from(globalColorTheme, globalSizingTheme)
-          .override(themeOverride);
+          .copyWith(themeOverride);
   return NomoLinkButtonThemeData(
     foregroundColor: widget.foregroundColor ?? themeData.foregroundColor,
     tapDownColor: widget.tapDownColor ?? themeData.tapDownColor,

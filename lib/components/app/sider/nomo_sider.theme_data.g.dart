@@ -6,6 +6,7 @@ part of 'nomo_sider.dart';
 // ComponentThemeDataGenerator
 // **************************************************************************
 
+// ignore_for_file: prefer_constructors_over_static_methods,avoid_unused_constructor_parameters, require_trailing_commas, avoid_init_to_null, use_named_constants
 class NomoSiderColorDataNullable {
   final Color? backgroundColor;
   final Border? border;
@@ -16,7 +17,9 @@ class NomoSiderColorDataNullable {
 }
 
 class NomoSiderColorData implements NomoSiderColorDataNullable {
+  @override
   final Color backgroundColor;
+  @override
   final Border border;
   const NomoSiderColorData({
     this.backgroundColor = primaryColor,
@@ -43,8 +46,11 @@ class NomoSiderSizingDataNullable {
 }
 
 class NomoSiderSizingData implements NomoSiderSizingDataNullable {
+  @override
   final EdgeInsetsGeometry padding;
+  @override
   final double scrollPadding;
+  @override
   final double width;
   const NomoSiderSizingData({
     this.padding = const EdgeInsets.all(16),
@@ -62,10 +68,15 @@ class NomoSiderSizingData implements NomoSiderSizingDataNullable {
 }
 
 class NomoSiderThemeData implements NomoSiderColorData, NomoSiderSizingData {
+  @override
   final Color backgroundColor;
+  @override
   final Border border;
+  @override
   final EdgeInsetsGeometry padding;
+  @override
   final double scrollPadding;
+  @override
   final double width;
   const NomoSiderThemeData({
     this.backgroundColor = primaryColor,
@@ -86,7 +97,7 @@ class NomoSiderThemeData implements NomoSiderColorData, NomoSiderSizingData {
       width: sizing.width,
     );
   }
-  NomoSiderThemeData override([NomoSiderThemeDataNullable? override]) {
+  NomoSiderThemeData copyWith([NomoSiderThemeDataNullable? override]) {
     return NomoSiderThemeData(
       backgroundColor: override?.backgroundColor ?? backgroundColor,
       border: override?.border ?? border,
@@ -99,10 +110,15 @@ class NomoSiderThemeData implements NomoSiderColorData, NomoSiderSizingData {
 
 class NomoSiderThemeDataNullable
     implements NomoSiderColorDataNullable, NomoSiderSizingDataNullable {
+  @override
   final Color? backgroundColor;
+  @override
   final Border? border;
+  @override
   final EdgeInsetsGeometry? padding;
+  @override
   final double? scrollPadding;
+  @override
   final double? width;
   const NomoSiderThemeDataNullable({
     this.backgroundColor,
@@ -115,10 +131,8 @@ class NomoSiderThemeDataNullable
 
 class NomoSiderThemeOverride extends InheritedWidget {
   final NomoSiderThemeDataNullable data;
-  const NomoSiderThemeOverride({
-    required this.data,
-    required super.child,
-  });
+  const NomoSiderThemeOverride(
+      {required this.data, required super.child, super.key});
   static NomoSiderThemeDataNullable of(BuildContext context) {
     final result =
         context.dependOnInheritedWidgetOfExactType<NomoSiderThemeOverride>();
@@ -144,13 +158,13 @@ NomoSiderThemeData getFromContext(
 ) {
   final globalColorTheme =
       NomoTheme.maybeOf(context)?.componentColors.siderTheme ??
-          NomoSiderColorData();
+          const NomoSiderColorData();
   final globalSizingTheme =
       NomoTheme.maybeOf(context)?.componentSizes.siderTheme ??
-          NomoSiderSizingData();
+          const NomoSiderSizingData();
   final themeOverride = NomoSiderThemeOverride.maybeOf(context);
   final themeData = NomoSiderThemeData.from(globalColorTheme, globalSizingTheme)
-      .override(themeOverride);
+      .copyWith(themeOverride);
   return NomoSiderThemeData(
     backgroundColor: widget.backgroundColor ?? themeData.backgroundColor,
     border: widget.border ?? themeData.border,

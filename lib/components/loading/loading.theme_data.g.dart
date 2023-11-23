@@ -6,6 +6,7 @@ part of 'loading.dart';
 // ComponentThemeDataGenerator
 // **************************************************************************
 
+// ignore_for_file: prefer_constructors_over_static_methods,avoid_unused_constructor_parameters, require_trailing_commas, avoid_init_to_null, use_named_constants
 class LoadingColorDataNullable {
   final Color? color;
   final double? strokeWidth;
@@ -16,7 +17,9 @@ class LoadingColorDataNullable {
 }
 
 class LoadingColorData implements LoadingColorDataNullable {
+  @override
   final Color color;
+  @override
   final double strokeWidth;
   const LoadingColorData({
     this.color = primaryColor,
@@ -44,7 +47,9 @@ class LoadingSizingData implements LoadingSizingDataNullable {
 }
 
 class LoadingThemeData implements LoadingColorData, LoadingSizingData {
+  @override
   final Color color;
+  @override
   final double strokeWidth;
   const LoadingThemeData({
     this.color = primaryColor,
@@ -59,7 +64,7 @@ class LoadingThemeData implements LoadingColorData, LoadingSizingData {
       strokeWidth: colors.strokeWidth,
     );
   }
-  LoadingThemeData override([LoadingThemeDataNullable? override]) {
+  LoadingThemeData copyWith([LoadingThemeDataNullable? override]) {
     return LoadingThemeData(
       color: override?.color ?? color,
       strokeWidth: override?.strokeWidth ?? strokeWidth,
@@ -69,7 +74,9 @@ class LoadingThemeData implements LoadingColorData, LoadingSizingData {
 
 class LoadingThemeDataNullable
     implements LoadingColorDataNullable, LoadingSizingDataNullable {
+  @override
   final Color? color;
+  @override
   final double? strokeWidth;
   const LoadingThemeDataNullable({
     this.color,
@@ -79,10 +86,8 @@ class LoadingThemeDataNullable
 
 class LoadingThemeOverride extends InheritedWidget {
   final LoadingThemeDataNullable data;
-  const LoadingThemeOverride({
-    required this.data,
-    required super.child,
-  });
+  const LoadingThemeOverride(
+      {required this.data, required super.child, super.key});
   static LoadingThemeDataNullable of(BuildContext context) {
     final result =
         context.dependOnInheritedWidgetOfExactType<LoadingThemeOverride>();
@@ -108,11 +113,11 @@ LoadingThemeData getFromContext(
 ) {
   final globalColorTheme =
       NomoTheme.maybeOf(context)?.componentColors.loadingTheme ??
-          LoadingColorData();
-  final globalSizingTheme = LoadingSizingData();
+          const LoadingColorData();
+  const globalSizingTheme = LoadingSizingData();
   final themeOverride = LoadingThemeOverride.maybeOf(context);
   final themeData = LoadingThemeData.from(globalColorTheme, globalSizingTheme)
-      .override(themeOverride);
+      .copyWith(themeOverride);
   return LoadingThemeData(
     color: widget.color ?? themeData.color,
     strokeWidth: widget.strokeWidth ?? themeData.strokeWidth,

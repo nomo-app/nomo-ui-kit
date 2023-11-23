@@ -6,6 +6,7 @@ part of 'nomo_app_bar.dart';
 // ComponentThemeDataGenerator
 // **************************************************************************
 
+// ignore_for_file: prefer_constructors_over_static_methods,avoid_unused_constructor_parameters, require_trailing_commas, avoid_init_to_null, use_named_constants
 class NomoAppBarColorDataNullable {
   final BorderRadiusGeometry? borderRadius;
   final Color? backgroundColor;
@@ -16,7 +17,9 @@ class NomoAppBarColorDataNullable {
 }
 
 class NomoAppBarColorData implements NomoAppBarColorDataNullable {
+  @override
   final BorderRadiusGeometry? borderRadius;
+  @override
   final Color backgroundColor;
   const NomoAppBarColorData({
     this.borderRadius = null,
@@ -46,9 +49,13 @@ class NomoAppBarSizingDataNullable {
 }
 
 class NomoAppBarSizingData implements NomoAppBarSizingDataNullable {
+  @override
   final double spacing;
+  @override
   final double topInset;
+  @override
   final double height;
+  @override
   final double elevation;
   const NomoAppBarSizingData({
     this.spacing = 16.0,
@@ -68,11 +75,17 @@ class NomoAppBarSizingData implements NomoAppBarSizingDataNullable {
 }
 
 class NomoAppBarThemeData implements NomoAppBarColorData, NomoAppBarSizingData {
+  @override
   final BorderRadiusGeometry? borderRadius;
+  @override
   final Color backgroundColor;
+  @override
   final double spacing;
+  @override
   final double topInset;
+  @override
   final double height;
+  @override
   final double elevation;
   const NomoAppBarThemeData({
     this.borderRadius = null,
@@ -95,7 +108,7 @@ class NomoAppBarThemeData implements NomoAppBarColorData, NomoAppBarSizingData {
       elevation: sizing.elevation,
     );
   }
-  NomoAppBarThemeData override([NomoAppBarThemeDataNullable? override]) {
+  NomoAppBarThemeData copyWith([NomoAppBarThemeDataNullable? override]) {
     return NomoAppBarThemeData(
       borderRadius: override?.borderRadius ?? borderRadius,
       backgroundColor: override?.backgroundColor ?? backgroundColor,
@@ -109,11 +122,17 @@ class NomoAppBarThemeData implements NomoAppBarColorData, NomoAppBarSizingData {
 
 class NomoAppBarThemeDataNullable
     implements NomoAppBarColorDataNullable, NomoAppBarSizingDataNullable {
+  @override
   final BorderRadiusGeometry? borderRadius;
+  @override
   final Color? backgroundColor;
+  @override
   final double? spacing;
+  @override
   final double? topInset;
+  @override
   final double? height;
+  @override
   final double? elevation;
   const NomoAppBarThemeDataNullable({
     this.borderRadius,
@@ -127,10 +146,8 @@ class NomoAppBarThemeDataNullable
 
 class NomoAppBarThemeOverride extends InheritedWidget {
   final NomoAppBarThemeDataNullable data;
-  const NomoAppBarThemeOverride({
-    required this.data,
-    required super.child,
-  });
+  const NomoAppBarThemeOverride(
+      {required this.data, required super.child, super.key});
   static NomoAppBarThemeDataNullable of(BuildContext context) {
     final result =
         context.dependOnInheritedWidgetOfExactType<NomoAppBarThemeOverride>();
@@ -156,14 +173,14 @@ NomoAppBarThemeData getFromContext(
 ) {
   final globalColorTheme =
       NomoTheme.maybeOf(context)?.componentColors.appBarTheme ??
-          NomoAppBarColorData();
+          const NomoAppBarColorData();
   final globalSizingTheme =
       NomoTheme.maybeOf(context)?.componentSizes.appBarTheme ??
-          NomoAppBarSizingData();
+          const NomoAppBarSizingData();
   final themeOverride = NomoAppBarThemeOverride.maybeOf(context);
   final themeData =
       NomoAppBarThemeData.from(globalColorTheme, globalSizingTheme)
-          .override(themeOverride);
+          .copyWith(themeOverride);
   return NomoAppBarThemeData(
     borderRadius: widget.borderRadius ?? themeData.borderRadius,
     backgroundColor: widget.backgroundColor ?? themeData.backgroundColor,

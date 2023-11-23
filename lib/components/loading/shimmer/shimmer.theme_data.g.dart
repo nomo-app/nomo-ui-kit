@@ -6,6 +6,7 @@ part of 'shimmer.dart';
 // ComponentThemeDataGenerator
 // **************************************************************************
 
+// ignore_for_file: prefer_constructors_over_static_methods,avoid_unused_constructor_parameters, require_trailing_commas, avoid_init_to_null, use_named_constants
 class ShimmerColorDataNullable {
   final LinearGradient? gradient;
   const ShimmerColorDataNullable({
@@ -14,6 +15,7 @@ class ShimmerColorDataNullable {
 }
 
 class ShimmerColorData implements ShimmerColorDataNullable {
+  @override
   final LinearGradient gradient;
   const ShimmerColorData({
     this.gradient = const LinearGradient(
@@ -43,6 +45,7 @@ class ShimmerSizingData implements ShimmerSizingDataNullable {
 }
 
 class ShimmerThemeData implements ShimmerColorData, ShimmerSizingData {
+  @override
   final LinearGradient gradient;
   const ShimmerThemeData({
     this.gradient = const LinearGradient(
@@ -59,7 +62,7 @@ class ShimmerThemeData implements ShimmerColorData, ShimmerSizingData {
       gradient: colors.gradient,
     );
   }
-  ShimmerThemeData override([ShimmerThemeDataNullable? override]) {
+  ShimmerThemeData copyWith([ShimmerThemeDataNullable? override]) {
     return ShimmerThemeData(
       gradient: override?.gradient ?? gradient,
     );
@@ -68,6 +71,7 @@ class ShimmerThemeData implements ShimmerColorData, ShimmerSizingData {
 
 class ShimmerThemeDataNullable
     implements ShimmerColorDataNullable, ShimmerSizingDataNullable {
+  @override
   final LinearGradient? gradient;
   const ShimmerThemeDataNullable({
     this.gradient,
@@ -76,10 +80,8 @@ class ShimmerThemeDataNullable
 
 class ShimmerThemeOverride extends InheritedWidget {
   final ShimmerThemeDataNullable data;
-  const ShimmerThemeOverride({
-    required this.data,
-    required super.child,
-  });
+  const ShimmerThemeOverride(
+      {required this.data, required super.child, super.key});
   static ShimmerThemeDataNullable of(BuildContext context) {
     final result =
         context.dependOnInheritedWidgetOfExactType<ShimmerThemeOverride>();
@@ -105,11 +107,11 @@ ShimmerThemeData getFromContext(
 ) {
   final globalColorTheme =
       NomoTheme.maybeOf(context)?.componentColors.shimmerTheme ??
-          ShimmerColorData();
-  final globalSizingTheme = ShimmerSizingData();
+          const ShimmerColorData();
+  const globalSizingTheme = ShimmerSizingData();
   final themeOverride = ShimmerThemeOverride.maybeOf(context);
   final themeData = ShimmerThemeData.from(globalColorTheme, globalSizingTheme)
-      .override(themeOverride);
+      .copyWith(themeOverride);
   return ShimmerThemeData(
     gradient: widget.gradient ?? themeData.gradient,
   );

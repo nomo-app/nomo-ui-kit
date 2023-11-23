@@ -6,6 +6,7 @@ part of 'nomo_outline_container.dart';
 // ComponentThemeDataGenerator
 // **************************************************************************
 
+// ignore_for_file: prefer_constructors_over_static_methods,avoid_unused_constructor_parameters, require_trailing_commas, avoid_init_to_null, use_named_constants
 class NomoOutlineContainerColorDataNullable {
   final Color? foreground;
   final Color? background;
@@ -21,9 +22,13 @@ class NomoOutlineContainerColorDataNullable {
 
 class NomoOutlineContainerColorData
     implements NomoOutlineContainerColorDataNullable {
+  @override
   final Color foreground;
+  @override
   final Color background;
+  @override
   final BoxShape shape;
+  @override
   final BoxBorder border;
   const NomoOutlineContainerColorData({
     this.foreground = Colors.black,
@@ -53,7 +58,9 @@ class NomoOutlineContainerSizingDataNullable {
 
 class NomoOutlineContainerSizingData
     implements NomoOutlineContainerSizingDataNullable {
+  @override
   final EdgeInsetsGeometry padding;
+  @override
   final double spacing;
   const NomoOutlineContainerSizingData({
     this.padding = const EdgeInsets.all(16),
@@ -70,11 +77,17 @@ class NomoOutlineContainerSizingData
 
 class NomoOutlineContainerThemeData
     implements NomoOutlineContainerColorData, NomoOutlineContainerSizingData {
+  @override
   final Color foreground;
+  @override
   final Color background;
+  @override
   final BoxShape shape;
+  @override
   final BoxBorder border;
+  @override
   final EdgeInsetsGeometry padding;
+  @override
   final double spacing;
   const NomoOutlineContainerThemeData({
     this.foreground = Colors.black,
@@ -97,7 +110,7 @@ class NomoOutlineContainerThemeData
       spacing: sizing.spacing,
     );
   }
-  NomoOutlineContainerThemeData override(
+  NomoOutlineContainerThemeData copyWith(
       [NomoOutlineContainerThemeDataNullable? override]) {
     return NomoOutlineContainerThemeData(
       foreground: override?.foreground ?? foreground,
@@ -114,11 +127,17 @@ class NomoOutlineContainerThemeDataNullable
     implements
         NomoOutlineContainerColorDataNullable,
         NomoOutlineContainerSizingDataNullable {
+  @override
   final Color? foreground;
+  @override
   final Color? background;
+  @override
   final BoxShape? shape;
+  @override
   final BoxBorder? border;
+  @override
   final EdgeInsetsGeometry? padding;
+  @override
   final double? spacing;
   const NomoOutlineContainerThemeDataNullable({
     this.foreground,
@@ -132,10 +151,8 @@ class NomoOutlineContainerThemeDataNullable
 
 class NomoOutlineContainerThemeOverride extends InheritedWidget {
   final NomoOutlineContainerThemeDataNullable data;
-  const NomoOutlineContainerThemeOverride({
-    required this.data,
-    required super.child,
-  });
+  const NomoOutlineContainerThemeOverride(
+      {required this.data, required super.child, super.key});
   static NomoOutlineContainerThemeDataNullable of(BuildContext context) {
     final result = context.dependOnInheritedWidgetOfExactType<
         NomoOutlineContainerThemeOverride>();
@@ -161,14 +178,14 @@ NomoOutlineContainerThemeData getFromContext(
 ) {
   final globalColorTheme =
       NomoTheme.maybeOf(context)?.componentColors.outlineContainerTheme ??
-          NomoOutlineContainerColorData();
+          const NomoOutlineContainerColorData();
   final globalSizingTheme =
       NomoTheme.maybeOf(context)?.componentSizes.outlineContainerTheme ??
-          NomoOutlineContainerSizingData();
+          const NomoOutlineContainerSizingData();
   final themeOverride = NomoOutlineContainerThemeOverride.maybeOf(context);
   final themeData =
       NomoOutlineContainerThemeData.from(globalColorTheme, globalSizingTheme)
-          .override(themeOverride);
+          .copyWith(themeOverride);
   return NomoOutlineContainerThemeData(
     foreground: widget.foreground ?? themeData.foreground,
     background: widget.background ?? themeData.background,

@@ -6,6 +6,7 @@ part of 'nomo_bottom_bar.dart';
 // ComponentThemeDataGenerator
 // **************************************************************************
 
+// ignore_for_file: prefer_constructors_over_static_methods,avoid_unused_constructor_parameters, require_trailing_commas, avoid_init_to_null, use_named_constants
 class NomoBottomBarColorDataNullable {
   final Color? foreground;
   final Color? background;
@@ -20,9 +21,13 @@ class NomoBottomBarColorDataNullable {
 }
 
 class NomoBottomBarColorData implements NomoBottomBarColorDataNullable {
+  @override
   final Color foreground;
+  @override
   final Color background;
+  @override
   final Color selectedForeground;
+  @override
   final BorderRadius borderRadius;
   const NomoBottomBarColorData({
     this.foreground = Colors.black,
@@ -58,10 +63,15 @@ class NomoBottomBarSizingDataNullable {
 }
 
 class NomoBottomBarSizingData implements NomoBottomBarSizingDataNullable {
+  @override
   final double height;
+  @override
   final double spacing;
+  @override
   final double iconSize;
+  @override
   final EdgeInsetsGeometry padding;
+  @override
   final EdgeInsetsGeometry itemPadding;
   const NomoBottomBarSizingData({
     this.height = 56.0,
@@ -84,14 +94,23 @@ class NomoBottomBarSizingData implements NomoBottomBarSizingDataNullable {
 
 class NomoBottomBarThemeData
     implements NomoBottomBarColorData, NomoBottomBarSizingData {
+  @override
   final Color foreground;
+  @override
   final Color background;
+  @override
   final Color selectedForeground;
+  @override
   final BorderRadius borderRadius;
+  @override
   final double height;
+  @override
   final double spacing;
+  @override
   final double iconSize;
+  @override
   final EdgeInsetsGeometry padding;
+  @override
   final EdgeInsetsGeometry itemPadding;
   const NomoBottomBarThemeData({
     this.foreground = Colors.black,
@@ -120,7 +139,7 @@ class NomoBottomBarThemeData
       itemPadding: sizing.itemPadding,
     );
   }
-  NomoBottomBarThemeData override([NomoBottomBarThemeDataNullable? override]) {
+  NomoBottomBarThemeData copyWith([NomoBottomBarThemeDataNullable? override]) {
     return NomoBottomBarThemeData(
       foreground: override?.foreground ?? foreground,
       background: override?.background ?? background,
@@ -137,14 +156,23 @@ class NomoBottomBarThemeData
 
 class NomoBottomBarThemeDataNullable
     implements NomoBottomBarColorDataNullable, NomoBottomBarSizingDataNullable {
+  @override
   final Color? foreground;
+  @override
   final Color? background;
+  @override
   final Color? selectedForeground;
+  @override
   final BorderRadius? borderRadius;
+  @override
   final double? height;
+  @override
   final double? spacing;
+  @override
   final double? iconSize;
+  @override
   final EdgeInsetsGeometry? padding;
+  @override
   final EdgeInsetsGeometry? itemPadding;
   const NomoBottomBarThemeDataNullable({
     this.foreground,
@@ -161,10 +189,8 @@ class NomoBottomBarThemeDataNullable
 
 class NomoBottomBarThemeOverride extends InheritedWidget {
   final NomoBottomBarThemeDataNullable data;
-  const NomoBottomBarThemeOverride({
-    required this.data,
-    required super.child,
-  });
+  const NomoBottomBarThemeOverride(
+      {required this.data, required super.child, super.key});
   static NomoBottomBarThemeDataNullable of(BuildContext context) {
     final result = context
         .dependOnInheritedWidgetOfExactType<NomoBottomBarThemeOverride>();
@@ -190,14 +216,14 @@ NomoBottomBarThemeData getFromContext(
 ) {
   final globalColorTheme =
       NomoTheme.maybeOf(context)?.componentColors.bottomBarTheme ??
-          NomoBottomBarColorData();
+          const NomoBottomBarColorData();
   final globalSizingTheme =
       NomoTheme.maybeOf(context)?.componentSizes.bottomBarTheme ??
-          NomoBottomBarSizingData();
+          const NomoBottomBarSizingData();
   final themeOverride = NomoBottomBarThemeOverride.maybeOf(context);
   final themeData =
       NomoBottomBarThemeData.from(globalColorTheme, globalSizingTheme)
-          .override(themeOverride);
+          .copyWith(themeOverride);
   return NomoBottomBarThemeData(
     foreground: widget.foreground ?? themeData.foreground,
     background: widget.background ?? themeData.background,

@@ -6,6 +6,7 @@ part of 'nomo_vertical_menu.dart';
 // ComponentThemeDataGenerator
 // **************************************************************************
 
+// ignore_for_file: prefer_constructors_over_static_methods,avoid_unused_constructor_parameters, require_trailing_commas, avoid_init_to_null, use_named_constants
 class NomoVerticalMenuColorDataNullable {
   final Color? foreground;
   final Color? background;
@@ -22,10 +23,15 @@ class NomoVerticalMenuColorDataNullable {
 }
 
 class NomoVerticalMenuColorData implements NomoVerticalMenuColorDataNullable {
+  @override
   final Color foreground;
+  @override
   final Color background;
+  @override
   final Color selectedBackground;
+  @override
   final Color selectedForeground;
+  @override
   final BorderRadius borderRadius;
   const NomoVerticalMenuColorData({
     this.foreground = Colors.black,
@@ -64,10 +70,15 @@ class NomoVerticalMenuSizingDataNullable {
 }
 
 class NomoVerticalMenuSizingData implements NomoVerticalMenuSizingDataNullable {
+  @override
   final double hPadding;
+  @override
   final double itemSpacing;
+  @override
   final double spacing;
+  @override
   final double height;
+  @override
   final double iconSize;
   const NomoVerticalMenuSizingData({
     this.hPadding = 16.0,
@@ -90,15 +101,25 @@ class NomoVerticalMenuSizingData implements NomoVerticalMenuSizingDataNullable {
 
 class NomoVerticalMenuThemeData
     implements NomoVerticalMenuColorData, NomoVerticalMenuSizingData {
+  @override
   final Color foreground;
+  @override
   final Color background;
+  @override
   final Color selectedBackground;
+  @override
   final Color selectedForeground;
+  @override
   final BorderRadius borderRadius;
+  @override
   final double hPadding;
+  @override
   final double itemSpacing;
+  @override
   final double spacing;
+  @override
   final double height;
+  @override
   final double iconSize;
   const NomoVerticalMenuThemeData({
     this.foreground = Colors.black,
@@ -129,7 +150,7 @@ class NomoVerticalMenuThemeData
       iconSize: sizing.iconSize,
     );
   }
-  NomoVerticalMenuThemeData override(
+  NomoVerticalMenuThemeData copyWith(
       [NomoVerticalMenuThemeDataNullable? override]) {
     return NomoVerticalMenuThemeData(
       foreground: override?.foreground ?? foreground,
@@ -150,15 +171,25 @@ class NomoVerticalMenuThemeDataNullable
     implements
         NomoVerticalMenuColorDataNullable,
         NomoVerticalMenuSizingDataNullable {
+  @override
   final Color? foreground;
+  @override
   final Color? background;
+  @override
   final Color? selectedBackground;
+  @override
   final Color? selectedForeground;
+  @override
   final BorderRadius? borderRadius;
+  @override
   final double? hPadding;
+  @override
   final double? itemSpacing;
+  @override
   final double? spacing;
+  @override
   final double? height;
+  @override
   final double? iconSize;
   const NomoVerticalMenuThemeDataNullable({
     this.foreground,
@@ -176,10 +207,8 @@ class NomoVerticalMenuThemeDataNullable
 
 class NomoVerticalMenuThemeOverride extends InheritedWidget {
   final NomoVerticalMenuThemeDataNullable data;
-  const NomoVerticalMenuThemeOverride({
-    required this.data,
-    required super.child,
-  });
+  const NomoVerticalMenuThemeOverride(
+      {required this.data, required super.child, super.key});
   static NomoVerticalMenuThemeDataNullable of(BuildContext context) {
     final result = context
         .dependOnInheritedWidgetOfExactType<NomoVerticalMenuThemeOverride>();
@@ -205,14 +234,14 @@ NomoVerticalMenuThemeData getFromContext(
 ) {
   final globalColorTheme =
       NomoTheme.maybeOf(context)?.componentColors.verticalMenuTheme ??
-          NomoVerticalMenuColorData();
+          const NomoVerticalMenuColorData();
   final globalSizingTheme =
       NomoTheme.maybeOf(context)?.componentSizes.verticalMenuTheme ??
-          NomoVerticalMenuSizingData();
+          const NomoVerticalMenuSizingData();
   final themeOverride = NomoVerticalMenuThemeOverride.maybeOf(context);
   final themeData =
       NomoVerticalMenuThemeData.from(globalColorTheme, globalSizingTheme)
-          .override(themeOverride);
+          .copyWith(themeOverride);
   return NomoVerticalMenuThemeData(
     foreground: widget.foreground ?? themeData.foreground,
     background: widget.background ?? themeData.background,

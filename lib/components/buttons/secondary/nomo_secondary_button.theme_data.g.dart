@@ -6,6 +6,7 @@ part of 'nomo_secondary_button.dart';
 // ComponentThemeDataGenerator
 // **************************************************************************
 
+// ignore_for_file: prefer_constructors_over_static_methods,avoid_unused_constructor_parameters, require_trailing_commas, avoid_init_to_null, use_named_constants
 class SecondaryNomoButtonColorDataNullable {
   final Color? backgroundColor;
   final Color? foregroundColor;
@@ -25,11 +26,17 @@ class SecondaryNomoButtonColorDataNullable {
 
 class SecondaryNomoButtonColorData
     implements SecondaryNomoButtonColorDataNullable {
+  @override
   final Color backgroundColor;
+  @override
   final Color foregroundColor;
+  @override
   final double elevation;
+  @override
   final Color selectionColor;
+  @override
   final Border border;
+  @override
   final BorderRadiusGeometry borderRadius;
   const SecondaryNomoButtonColorData({
     this.backgroundColor = Colors.white,
@@ -63,6 +70,7 @@ class SecondaryNomoButtonSizingDataNullable {
 
 class SecondaryNomoButtonSizingData
     implements SecondaryNomoButtonSizingDataNullable {
+  @override
   final EdgeInsetsGeometry padding;
   const SecondaryNomoButtonSizingData({
     this.padding = const EdgeInsets.all(16),
@@ -77,12 +85,19 @@ class SecondaryNomoButtonSizingData
 
 class SecondaryNomoButtonThemeData
     implements SecondaryNomoButtonColorData, SecondaryNomoButtonSizingData {
+  @override
   final Color backgroundColor;
+  @override
   final Color foregroundColor;
+  @override
   final double elevation;
+  @override
   final Color selectionColor;
+  @override
   final Border border;
+  @override
   final BorderRadiusGeometry borderRadius;
+  @override
   final EdgeInsetsGeometry padding;
   const SecondaryNomoButtonThemeData({
     this.backgroundColor = Colors.white,
@@ -108,7 +123,7 @@ class SecondaryNomoButtonThemeData
       padding: sizing.padding,
     );
   }
-  SecondaryNomoButtonThemeData override(
+  SecondaryNomoButtonThemeData copyWith(
       [SecondaryNomoButtonThemeDataNullable? override]) {
     return SecondaryNomoButtonThemeData(
       backgroundColor: override?.backgroundColor ?? backgroundColor,
@@ -126,12 +141,19 @@ class SecondaryNomoButtonThemeDataNullable
     implements
         SecondaryNomoButtonColorDataNullable,
         SecondaryNomoButtonSizingDataNullable {
+  @override
   final Color? backgroundColor;
+  @override
   final Color? foregroundColor;
+  @override
   final double? elevation;
+  @override
   final Color? selectionColor;
+  @override
   final Border? border;
+  @override
   final BorderRadiusGeometry? borderRadius;
+  @override
   final EdgeInsetsGeometry? padding;
   const SecondaryNomoButtonThemeDataNullable({
     this.backgroundColor,
@@ -146,10 +168,8 @@ class SecondaryNomoButtonThemeDataNullable
 
 class SecondaryNomoButtonThemeOverride extends InheritedWidget {
   final SecondaryNomoButtonThemeDataNullable data;
-  const SecondaryNomoButtonThemeOverride({
-    required this.data,
-    required super.child,
-  });
+  const SecondaryNomoButtonThemeOverride(
+      {required this.data, required super.child, super.key});
   static SecondaryNomoButtonThemeDataNullable of(BuildContext context) {
     final result = context
         .dependOnInheritedWidgetOfExactType<SecondaryNomoButtonThemeOverride>();
@@ -175,14 +195,14 @@ SecondaryNomoButtonThemeData getFromContext(
 ) {
   final globalColorTheme =
       NomoTheme.maybeOf(context)?.componentColors.secondaryButtonTheme ??
-          SecondaryNomoButtonColorData();
+          const SecondaryNomoButtonColorData();
   final globalSizingTheme =
       NomoTheme.maybeOf(context)?.componentSizes.secondaryButtonTheme ??
-          SecondaryNomoButtonSizingData();
+          const SecondaryNomoButtonSizingData();
   final themeOverride = SecondaryNomoButtonThemeOverride.maybeOf(context);
   final themeData =
       SecondaryNomoButtonThemeData.from(globalColorTheme, globalSizingTheme)
-          .override(themeOverride);
+          .copyWith(themeOverride);
   return SecondaryNomoButtonThemeData(
     backgroundColor: widget.backgroundColor ?? themeData.backgroundColor,
     foregroundColor: widget.foregroundColor ?? themeData.foregroundColor,

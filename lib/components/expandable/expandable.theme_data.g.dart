@@ -6,6 +6,7 @@ part of 'expandable.dart';
 // ComponentThemeDataGenerator
 // **************************************************************************
 
+// ignore_for_file: prefer_constructors_over_static_methods,avoid_unused_constructor_parameters, require_trailing_commas, avoid_init_to_null, use_named_constants
 class ExpandableColorDataNullable {
   final EdgeInsetsGeometry? titlePadding;
   final EdgeInsetsGeometry? childrenPadding;
@@ -28,13 +29,21 @@ class ExpandableColorDataNullable {
 }
 
 class ExpandableColorData implements ExpandableColorDataNullable {
+  @override
   final EdgeInsetsGeometry titlePadding;
+  @override
   final EdgeInsetsGeometry childrenPadding;
+  @override
   final BorderRadius borderRadius;
+  @override
   final Color? highlightColor;
+  @override
   final Color? focusColor;
+  @override
   final Color? splashColor;
+  @override
   final Color? hoverColor;
+  @override
   final Color? iconColor;
   const ExpandableColorData({
     this.titlePadding =
@@ -71,6 +80,7 @@ class ExpandableSizingDataNullable {
 }
 
 class ExpandableSizingData implements ExpandableSizingDataNullable {
+  @override
   final double iconSize;
   const ExpandableSizingData({
     this.iconSize = 28.0,
@@ -84,14 +94,23 @@ class ExpandableSizingData implements ExpandableSizingDataNullable {
 }
 
 class ExpandableThemeData implements ExpandableColorData, ExpandableSizingData {
+  @override
   final EdgeInsetsGeometry titlePadding;
+  @override
   final EdgeInsetsGeometry childrenPadding;
+  @override
   final BorderRadius borderRadius;
+  @override
   final Color? highlightColor;
+  @override
   final Color? focusColor;
+  @override
   final Color? splashColor;
+  @override
   final Color? hoverColor;
+  @override
   final Color? iconColor;
+  @override
   final double iconSize;
   const ExpandableThemeData({
     this.titlePadding =
@@ -121,7 +140,7 @@ class ExpandableThemeData implements ExpandableColorData, ExpandableSizingData {
       iconSize: sizing.iconSize,
     );
   }
-  ExpandableThemeData override([ExpandableThemeDataNullable? override]) {
+  ExpandableThemeData copyWith([ExpandableThemeDataNullable? override]) {
     return ExpandableThemeData(
       titlePadding: override?.titlePadding ?? titlePadding,
       childrenPadding: override?.childrenPadding ?? childrenPadding,
@@ -138,14 +157,23 @@ class ExpandableThemeData implements ExpandableColorData, ExpandableSizingData {
 
 class ExpandableThemeDataNullable
     implements ExpandableColorDataNullable, ExpandableSizingDataNullable {
+  @override
   final EdgeInsetsGeometry? titlePadding;
+  @override
   final EdgeInsetsGeometry? childrenPadding;
+  @override
   final BorderRadius? borderRadius;
+  @override
   final Color? highlightColor;
+  @override
   final Color? focusColor;
+  @override
   final Color? splashColor;
+  @override
   final Color? hoverColor;
+  @override
   final Color? iconColor;
+  @override
   final double? iconSize;
   const ExpandableThemeDataNullable({
     this.titlePadding,
@@ -162,10 +190,8 @@ class ExpandableThemeDataNullable
 
 class ExpandableThemeOverride extends InheritedWidget {
   final ExpandableThemeDataNullable data;
-  const ExpandableThemeOverride({
-    required this.data,
-    required super.child,
-  });
+  const ExpandableThemeOverride(
+      {required this.data, required super.child, super.key});
   static ExpandableThemeDataNullable of(BuildContext context) {
     final result =
         context.dependOnInheritedWidgetOfExactType<ExpandableThemeOverride>();
@@ -191,14 +217,14 @@ ExpandableThemeData getFromContext(
 ) {
   final globalColorTheme =
       NomoTheme.maybeOf(context)?.componentColors.expandableTheme ??
-          ExpandableColorData();
+          const ExpandableColorData();
   final globalSizingTheme =
       NomoTheme.maybeOf(context)?.componentSizes.expandableTheme ??
-          ExpandableSizingData();
+          const ExpandableSizingData();
   final themeOverride = ExpandableThemeOverride.maybeOf(context);
   final themeData =
       ExpandableThemeData.from(globalColorTheme, globalSizingTheme)
-          .override(themeOverride);
+          .copyWith(themeOverride);
   return ExpandableThemeData(
     titlePadding: widget.titlePadding ?? themeData.titlePadding,
     childrenPadding: widget.childrenPadding ?? themeData.childrenPadding,
