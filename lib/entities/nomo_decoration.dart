@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class NomoDecoration extends BoxDecoration {
-
   NomoDecoration({
     super.color,
     super.borderRadius,

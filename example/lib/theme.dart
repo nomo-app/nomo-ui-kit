@@ -61,11 +61,12 @@ final light = NomoColorThemeData(
     background: Color(0xFFF5F5F5),
     surface: Colors.white,
     error: Colors.redAccent,
-    disabledColor: Color(0xFFE0E0E0),
+    disabled: Color(0xFFE0E0E0),
     foreground1: Color(0xCF000000),
     foreground2: Color(0xDF000000),
     foreground3: Color(0xEF000000),
     brightness: Brightness.light,
+    onDisabled: Colors.grey,
   ),
   buildComponents: (core) {
     return overrideNomoComponentColors(
@@ -88,11 +89,12 @@ final dark = NomoColorThemeData(
     background: Color(0xff293138),
     surface: Color(0xff2e363c),
     error: Colors.redAccent,
-    disabledColor: Color(0xFFE0E0E0),
+    disabled: Color(0xFFE0E0E0),
     foreground1: Color(0xEAFFFFFF),
     foreground2: Color(0xF0FFFFFF),
     foreground3: Color(0xFAFFFFFF),
     brightness: Brightness.dark,
+    onDisabled: Colors.grey,
   ),
   buildComponents: (core) {
     return overrideNomoComponentColors(
@@ -120,11 +122,12 @@ final avinoc = NomoColorThemeData(
     background: Color(0xff272F4A),
     surface: Color(0xFF101d42),
     error: Colors.redAccent,
-    disabledColor: Color(0xFFE0E0E0),
+    disabled: Color(0xFFE0E0E0),
     foreground1: Color(0xEAFFFFFF),
     foreground2: Color(0xF0FFFFFF),
     foreground3: Color(0xFAFFFFFF),
     brightness: Brightness.dark,
+    onDisabled: Colors.grey,
   ),
 );
 

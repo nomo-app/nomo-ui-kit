@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 
 sealed class NomoMenuItem {
-
   const NomoMenuItem({required this.title, required this.path});
   final String title;
   final String path;
@@ -26,7 +25,6 @@ final class NomoMenuTextItem extends NomoMenuItem {
 }
 
 final class NomoMenuIconItem extends NomoMenuItem {
-
   const NomoMenuIconItem({
     required super.title,
     required super.path,
@@ -36,7 +34,6 @@ final class NomoMenuIconItem extends NomoMenuItem {
 }
 
 final class NomoMenuImageItem extends NomoMenuItem {
-
   const NomoMenuImageItem({
     required super.title,
     required super.path,

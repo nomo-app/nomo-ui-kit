@@ -8,6 +8,8 @@ import 'package:nomo_ui_kit/components/buttons/link/nomo_link_button.dart';
 import 'package:nomo_ui_kit/components/buttons/primary/nomo_primary_button.dart';
 import 'package:nomo_ui_kit/components/buttons/secondary/nomo_secondary_button.dart';
 import 'package:nomo_ui_kit/components/buttons/text/nomo_text_button.dart';
+import 'package:nomo_ui_kit/components/loading/loading.dart';
+import 'package:nomo_ui_kit/components/loading/shimmer/shimmer.dart';
 import 'package:nomo_ui_kit/components/outline_container/nomo_outline_container.dart';
 import 'package:nomo_ui_kit/components/vertical_menu/nomo_vertical_menu.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
@@ -26,6 +28,8 @@ class NomoComponentColors {
   final SecondaryNomoButtonColorData secondaryButtonTheme;
   final NomoTextButtonColorData textButtonTheme;
   final NomoLinkButtonColorData linkButtonTheme;
+  final LoadingColorData loadingTheme;
+  final ShimmerColorData shimmerTheme;
 
   const NomoComponentColors._({
     required this.outlineContainerTheme,
@@ -38,10 +42,11 @@ class NomoComponentColors {
     required this.secondaryButtonTheme,
     required this.textButtonTheme,
     required this.linkButtonTheme,
+    required this.loadingTheme,
+    required this.shimmerTheme,
   });
 
-  static NomoComponentColors defaultComponents(NomoColors core) =>
-      defaultConstructor(
+  static NomoComponentColors defaultComponents(NomoColors core) => defaultConstructor(
         outlineContainerTheme: NomoOutlineContainerThemeData(
           foreground: core.foreground1,
           background: core.background,
@@ -74,8 +79,7 @@ class NomoComponentColors {
 class NomoColorThemeData {
   NomoColorThemeData({
     required this.colors,
-    NomoComponentColors Function(NomoColors core) buildComponents =
-        NomoComponentColors.defaultComponents,
+    NomoComponentColors Function(NomoColors core) buildComponents = NomoComponentColors.defaultComponents,
   }) : components = buildComponents.call(colors);
 
   NomoColorThemeData._({
@@ -98,6 +102,22 @@ class NomoColorThemeData {
 }
 
 class NomoColors {
+  final Color primary;
+  final Brightness brightness;
+  final Color onPrimary;
+  final Color primaryContainer;
+  final Color secondary;
+  final Color onSecondary;
+  final Color secondaryContainer;
+  final Color background;
+  final Color surface;
+  final Color error;
+  final Color disabled;
+  final Color onDisabled;
+  final Color foreground1;
+  final Color foreground2;
+  final Color foreground3;
+
   const NomoColors({
     required this.brightness,
     required this.primary,
@@ -109,29 +129,12 @@ class NomoColors {
     required this.background,
     required this.surface,
     required this.error,
-    required this.disabledColor,
+    required this.disabled,
     required this.foreground1,
     required this.foreground2,
     required this.foreground3,
+    required this.onDisabled,
   });
-  final Brightness brightness;
-
-  /// Primary color
-  final Color primary;
-
-  /// Color on primary
-  final Color onPrimary;
-  final Color primaryContainer;
-  final Color secondary;
-  final Color onSecondary;
-  final Color secondaryContainer;
-  final Color background;
-  final Color surface;
-  final Color error;
-  final Color disabledColor;
-  final Color foreground1;
-  final Color foreground2;
-  final Color foreground3;
 
   factory NomoColors.lerp(NomoColors a, NomoColors b, double t) {
     return NomoColors(
@@ -141,15 +144,15 @@ class NomoColors {
       primaryContainer: Color.lerp(a.primaryContainer, b.primaryContainer, t)!,
       secondary: Color.lerp(a.secondary, b.secondary, t)!,
       onSecondary: Color.lerp(a.onSecondary, b.onSecondary, t)!,
-      secondaryContainer:
-          Color.lerp(a.secondaryContainer, b.secondaryContainer, t)!,
+      secondaryContainer: Color.lerp(a.secondaryContainer, b.secondaryContainer, t)!,
       background: Color.lerp(a.background, b.background, t)!,
       surface: Color.lerp(a.surface, b.surface, t)!,
       error: Color.lerp(a.error, b.error, t)!,
-      disabledColor: Color.lerp(a.disabledColor, b.disabledColor, t)!,
+      disabled: Color.lerp(a.disabled, b.disabled, t)!,
       foreground1: Color.lerp(a.foreground1, b.foreground1, t)!,
       foreground2: Color.lerp(a.foreground2, b.foreground2, t)!,
       foreground3: Color.lerp(a.foreground3, b.foreground3, t)!,
+      onDisabled: Color.lerp(a.onDisabled, b.onDisabled, t)!,
     );
   }
 }

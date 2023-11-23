@@ -11,6 +11,7 @@ import 'package:nomo_ui_kit/components/outline_container/nomo_outline_container.
 import 'package:nomo_ui_kit/components/text/nomo_text.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 import 'package:nomo_ui_kit/utils/layout_extensions.dart';
+import 'package:nomo_ui_kit/utils/multi_wrapper.dart';
 
 class TextButtonWrapper extends StatelessWidget {
   const TextButtonWrapper({super.key});
@@ -18,183 +19,242 @@ class TextButtonWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return NomoRouteBody(builder: (context, route) {
-      return Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          NomoText(
-            "Nomo Button",
-            style: context.typography.h3,
-            fontWeight: FontWeight.bold,
-            minFontSize: 28,
-          ),
-          12.vSpacing,
-          NomoText(
-            "To trigger an operation.",
-            style: context.typography.b1,
-          ),
-          36.vSpacing,
-          NomoText(
-            "When to use",
-            style: context.typography.h2,
-            fontWeight: FontWeight.bold,
-          ),
-          12.vSpacing,
-          NomoText(
-            "A button means an operation (or a series of operations). Clicking a button will trigger corresponding business logic.",
-            style: context.typography.b1,
-          ),
-          12.vSpacing,
-          NomoText(
-            "In Nomo UI Kit, we provide 2 types of buttons: text button and icon button.",
-            style: context.typography.b1,
-          ),
-          NomoText(
-            "There are 3 pre defined sizes for buttons:",
-            style: context.theme.typographyTheme.b1,
-          ),
-          const SizedBox(
-            height: 12,
-          ),
-          dotRow("ButtonSize.small", context),
-          dotRow("ButtonSize.medium", context),
-          dotRow("ButtonSize.large", context),
-          const SizedBox(
-            height: 12,
-          ),
-          36.vSpacing,
-          NomoText("Examples", style: context.typography.h2),
-          12.vSpacing,
-          NomoOutlineContainer(
-            child: PrimaryNomoButtonThemeOverride(
-              data: PrimaryNomoButtonThemeDataNullable(
-                elevation: 2,
-                borderRadius: BorderRadius.circular(16),
+      return MultiWrapper(
+        wrappers: [
+          (child) {
+            return NomoOutlineContainerThemeOverride(
+              data: const NomoOutlineContainerThemeDataNullable(
+                padding: EdgeInsets.all(32),
               ),
-              child: DynamicRow(
-                hSpacing: 16,
-                children: [
-                  PrimaryNomoButton(
-                    foregroundColor: primaryColor.lighten(0.5),
-                    text: "Primary",
-                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                    onPressed: () {},
-                    textStyle: context.typography.h1,
-                  ),
-                  PrimaryNomoButton(
-                    foregroundColor: primaryColor.lighten(0.5),
-                    text: "Primary with Icon",
-                    height: 48,
-                    padding: EdgeInsets.symmetric(horizontal: 16),
-                    onPressed: () {},
-                    textStyle: context.typography.h1,
-                    icon: Icons.textsms,
-                    spacing: 8,
-                  ),
-                  PrimaryNomoButton(
-                    foregroundColor: primaryColor.lighten(0.5),
-                    onPressed: () {},
-                    textStyle: context.typography.h1,
-                    icon: Icons.textsms,
-                    shape: BoxShape.circle,
-                    height: 48,
-                    width: 48,
-                  ),
-                  PrimaryNomoButton(
-                    foregroundColor: primaryColor.lighten(0.4),
-                    onPressed: () {},
-                    textStyle: context.typography.h1,
-                    icon: Icons.textsms,
-                    height: 48,
-                    width: 48,
-                  ),
-                ],
-              ),
-            ),
-          ),
-          24.vSpacing,
-          NomoOutlineContainer(
-            child: SecondaryNomoButtonThemeOverride(
-              data: SecondaryNomoButtonThemeDataNullable(
-                elevation: 0,
-                backgroundColor: Colors.white12,
-                border: Border.all(
-                  color: context.colors.foreground1,
-                  width: 2,
-                ),
-                foregroundColor: context.colors.foreground1,
-              ),
-              child: DynamicRow(
-                hSpacing: 16,
-                children: [
-                  SecondaryNomoButton(
-                    text: "Secondary",
-                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                    onPressed: () {},
-                    textStyle: context.typography.h1,
-                  ),
-                  SecondaryNomoButton(
-                    text: "Secondary with Icon",
-                    height: 48,
-                    padding: EdgeInsets.symmetric(horizontal: 16),
-                    onPressed: () {},
-                    textStyle: context.typography.h1,
-                    icon: Icons.ac_unit,
-                    spacing: 8,
-                  ),
-                  SecondaryNomoButton(
-                    onPressed: () {},
-                    textStyle: context.typography.h1,
-                    icon: Icons.dashboard_customize,
-                    shape: BoxShape.circle,
-                    height: 48,
-                    width: 48,
-                  ),
-                  SecondaryNomoButton(
-                    onPressed: () {},
-                    textStyle: context.typography.h1,
-                    icon: Icons.access_alarm_outlined,
-                    height: 48,
-                    width: 48,
-                  ),
-                ],
-              ),
-            ),
-          ),
-          24.vSpacing,
-          NomoOutlineContainer(
-            child: SecondaryNomoButtonThemeOverride(
-              data: SecondaryNomoButtonThemeDataNullable(
-                elevation: 0,
-                backgroundColor: Colors.white12,
-                border: Border.all(
-                  color: context.colors.foreground1,
-                  width: 2,
-                ),
-                foregroundColor: context.colors.foreground1,
-              ),
-              child: DynamicRow(
-                hSpacing: 16,
-                children: [
-                  NomoTextButton(
-                    text: "Text Button",
-                    onPressed: () {},
-                    textStyle: context.typography.h1,
-                    padding: EdgeInsets.all(16),
-                    foregroundColor: Colors.black,
-                  ),
-                  NomoLinkButton(
-                    text: "Link Button",
-                    height: 48,
-                    onPressed: () {},
-                    textStyle: context.typography.h1,
-                  ),
-                ],
-              ),
-            ),
-          ),
-          24.vSpacing,
+              child: child,
+            );
+          }
         ],
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            NomoText(
+              "Nomo Button",
+              style: context.typography.h3,
+              fontWeight: FontWeight.bold,
+              minFontSize: 28,
+            ),
+            12.vSpacing,
+            NomoText(
+              "To trigger an operation.",
+              style: context.typography.b1,
+            ),
+            36.vSpacing,
+            NomoText(
+              "When to use",
+              style: context.typography.h2,
+              fontWeight: FontWeight.bold,
+            ),
+            12.vSpacing,
+            NomoText(
+              "A button means an operation (or a series of operations). Clicking a button will trigger corresponding business logic.",
+              style: context.typography.b1,
+            ),
+            12.vSpacing,
+            NomoText(
+              "In Nomo UI Kit, we provide 2 types of buttons: text button and icon button.",
+              style: context.typography.b1,
+            ),
+            36.vSpacing,
+            NomoText("Examples", style: context.typography.h2),
+            12.vSpacing,
+            NomoOutlineContainer(
+              child: PrimaryNomoButtonThemeOverride(
+                data: PrimaryNomoButtonThemeDataNullable(
+                  elevation: 2,
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: DynamicRow(
+                  hSpacing: 16,
+                  vSpacing: 16,
+                  children: [
+                    PrimaryNomoButton(
+                      foregroundColor: primaryColor.lighten(0.5),
+                      text: "Primary",
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      onPressed: () {},
+                      textStyle: context.typography.h1,
+                    ),
+                    PrimaryNomoButton(
+                      foregroundColor: primaryColor.lighten(0.5),
+                      text: "Primary with Icon",
+                      height: 48,
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      onPressed: () {},
+                      textStyle: context.typography.h1,
+                      icon: Icons.textsms,
+                      spacing: 8,
+                    ),
+                    PrimaryNomoButton(
+                      foregroundColor: primaryColor.lighten(0.5),
+                      onPressed: () {},
+                      textStyle: context.typography.h1,
+                      icon: Icons.textsms,
+                      shape: BoxShape.circle,
+                      height: 48,
+                      width: 48,
+                    ),
+                    PrimaryNomoButton(
+                      foregroundColor: primaryColor.lighten(0.4),
+                      onPressed: () {},
+                      textStyle: context.typography.h1,
+                      icon: Icons.textsms,
+                      height: 48,
+                      width: 48,
+                    ),
+                    PrimaryNomoButton(
+                      foregroundColor: primaryColor.lighten(0.5),
+                      text: "Danger Primary",
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      onPressed: () {},
+                      textStyle: context.typography.h1,
+                      type: ActionType.danger,
+                    ),
+                    PrimaryNomoButton(
+                      foregroundColor: primaryColor.lighten(0.5),
+                      text: "Disabled Primary",
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      onPressed: () {},
+                      textStyle: context.typography.h1,
+                      type: ActionType.disabled,
+                    ),
+                    PrimaryNomoButton(
+                      foregroundColor: primaryColor.lighten(0.5),
+                      text: "NonInteractive Primary",
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      onPressed: () {},
+                      textStyle: context.typography.h1,
+                      type: ActionType.nonInteractive,
+                    ),
+                    PrimaryNomoButton(
+                      foregroundColor: primaryColor.lighten(0.5),
+                      text: "Loading Primary",
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      height: 48,
+                      onPressed: () {},
+                      textStyle: context.typography.h1,
+                      type: ActionType.loading,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            24.vSpacing,
+            NomoOutlineContainer(
+              child: SecondaryNomoButtonThemeOverride(
+                data: SecondaryNomoButtonThemeDataNullable(
+                  elevation: 0,
+                  backgroundColor: Colors.white12,
+                  border: Border.all(
+                    color: context.colors.foreground1,
+                    width: 2,
+                  ),
+                  foregroundColor: context.colors.foreground1,
+                ),
+                child: DynamicRow(
+                  hSpacing: 16,
+                  vSpacing: 16,
+                  children: [
+                    SecondaryNomoButton(
+                      text: "Secondary",
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      onPressed: () {},
+                      textStyle: context.typography.h1,
+                    ),
+                    SecondaryNomoButton(
+                      text: "Secondary with Icon",
+                      height: 48,
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      onPressed: () {},
+                      textStyle: context.typography.h1,
+                      icon: Icons.ac_unit,
+                      spacing: 8,
+                    ),
+                    SecondaryNomoButton(
+                      onPressed: () {},
+                      textStyle: context.typography.h1,
+                      icon: Icons.dashboard_customize,
+                      shape: BoxShape.circle,
+                      height: 48,
+                      width: 48,
+                    ),
+                    SecondaryNomoButton(
+                      onPressed: () {},
+                      textStyle: context.typography.h1,
+                      icon: Icons.access_alarm_outlined,
+                      height: 48,
+                      width: 48,
+                    ),
+                    SecondaryNomoButton(
+                      onPressed: () {},
+                      textStyle: context.typography.h1,
+                      backgroundColor: context.colors.error.lighten(0.25),
+                      icon: Icons.access_alarm_outlined,
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      text: "Danger Secondary",
+                      type: ActionType.danger,
+                    ),
+                    SecondaryNomoButton(
+                      onPressed: () {},
+                      textStyle: context.typography.h1,
+                      icon: Icons.access_alarm_outlined,
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      text: "Disabled Secondary",
+                      type: ActionType.disabled,
+                    ),
+                    SecondaryNomoButton(
+                      onPressed: () {},
+                      textStyle: context.typography.h1,
+                      icon: Icons.access_alarm_outlined,
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      text: "NonInteractive Secondary",
+                      type: ActionType.nonInteractive,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            24.vSpacing,
+            NomoOutlineContainer(
+              child: SecondaryNomoButtonThemeOverride(
+                data: SecondaryNomoButtonThemeDataNullable(
+                  elevation: 0,
+                  backgroundColor: Colors.white12,
+                  border: Border.all(
+                    color: context.colors.foreground1,
+                    width: 2,
+                  ),
+                  foregroundColor: context.colors.foreground1,
+                ),
+                child: DynamicRow(
+                  hSpacing: 16,
+                  children: [
+                    NomoTextButton(
+                      text: "Text Button",
+                      onPressed: () {},
+                      textStyle: context.typography.h1,
+                      padding: const EdgeInsets.all(16),
+                      foregroundColor: context.colors.foreground1,
+                    ),
+                    NomoLinkButton(
+                      text: "Link Button",
+                      height: 48,
+                      onPressed: () {},
+                      textStyle: context.typography.h1,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            24.vSpacing,
+          ],
+        ),
       );
     });
   }

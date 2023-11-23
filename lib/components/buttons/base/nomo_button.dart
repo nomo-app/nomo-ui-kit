@@ -25,6 +25,7 @@ mixin NomoButtonMixin on Widget {
 class NomoButton extends StatefulWidget with NomoButtonMixin {
   final Widget child;
   final bool enableInkwellFeedback;
+  final MouseCursor cursor;
 
   @override
   final VoidCallback? onPressed;
@@ -70,14 +71,14 @@ class NomoButton extends StatefulWidget with NomoButtonMixin {
     this.selectionColor,
     this.foregroundColor,
     this.shape,
+    this.cursor = SystemMouseCursors.click,
   });
 
   @override
   State<NomoButton> createState() => _NomoButtonState();
 }
 
-class _NomoButtonState extends State<NomoButton>
-    with SingleTickerProviderStateMixin {
+class _NomoButtonState extends State<NomoButton> with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   late Animation<Color?> animation;
 
@@ -129,8 +130,7 @@ class _NomoButtonState extends State<NomoButton>
                       border: widget.border!.copyWithColor(animation.value),
                       decoration: BoxDecoration(
                         color: widget.backgroundColor,
-                        borderRadius: widget.borderRadius
-                            .ifElseNull(widget.shape != BoxShape.circle),
+                        borderRadius: widget.borderRadius.ifElseNull(widget.shape != BoxShape.circle),
                         shape: widget.shape ?? BoxShape.rectangle,
                       ),
                       child: child!,
@@ -143,12 +143,10 @@ class _NomoButtonState extends State<NomoButton>
               (child) {
                 return ElevatedBox(
                   elevation: widget.elevation,
-                  border: widget.border ??
-                      const Border.fromBorderSide(BorderSide.none),
+                  border: widget.border ?? const Border.fromBorderSide(BorderSide.none),
                   decoration: BoxDecoration(
                     color: widget.backgroundColor,
-                    borderRadius: widget.borderRadius
-                        .ifElseNull(widget.shape != BoxShape.circle),
+                    borderRadius: widget.borderRadius.ifElseNull(widget.shape != BoxShape.circle),
                     shape: widget.shape ?? BoxShape.rectangle,
                   ),
                   child: child,
@@ -162,9 +160,7 @@ class _NomoButtonState extends State<NomoButton>
               onExit: (_) => _controller.reverse(),
               child: InkWell(
                 onTap: widget.onPressed,
-                borderRadius: widget.borderRadius
-                    ?.resolve(Directionality.of(context))
-                    .ifElse(
+                borderRadius: widget.borderRadius?.resolve(Directionality.of(context)).ifElse(
                       widget.shape != BoxShape.circle,
                       other: BorderRadius.circular(
                         max(widget.width ?? 0, widget.height ?? 0),
@@ -194,7 +190,7 @@ class _NomoButtonState extends State<NomoButton>
                       widget.enableInkwellFeedback,
                       other: Colors.transparent,
                     ),
-                overlayColor: null,
+                mouseCursor: widget.cursor,
                 child: Padding(
                   padding: widget.padding ?? EdgeInsets.zero,
                   child: MultiWrapper(
@@ -224,8 +220,7 @@ class _NomoButtonState extends State<NomoButton>
                             child: child,
                           );
                         },
-                      if (widget.selectionColor == null &&
-                          widget.foregroundColor != null)
+                      if (widget.selectionColor == null && widget.foregroundColor != null)
                         (child) => NomoTextTheme(
                               color: widget.foregroundColor!,
                               child: IconTheme(
@@ -248,7 +243,7 @@ class _NomoButtonState extends State<NomoButton>
   }
 }
 
-extension on Border {
+extension BorderUtil on Border {
   Border copyWithColor(Color? color) {
     return Border(
       top: top.copyWith(color: color),

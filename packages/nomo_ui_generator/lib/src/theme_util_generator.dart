@@ -37,8 +37,7 @@ void lerp(StringBuffer buffer, ModelVisitor visitor) {
   final className = visitor.className;
   final fields = visitor.fields;
 
-  buffer.writeln(
-      "$className lerp$className($className a, $className b, double t) {");
+  buffer.writeln("$className lerp$className($className a, $className b, double t) {");
   buffer.writeln("return $className._(");
   fields.forEach((key, value) {
     buffer.writeln("$key: $value.lerp(a.$key, b.$key, t,),");
@@ -47,8 +46,7 @@ void lerp(StringBuffer buffer, ModelVisitor visitor) {
   buffer.writeln("}");
 }
 
-void overrideFactory(
-    StringBuffer buffer, ModelVisitor visitor, String coreType) {
+void overrideFactory(StringBuffer buffer, ModelVisitor visitor, String coreType) {
   final className = visitor.className;
   final fields = visitor.fields;
 
@@ -83,87 +81,3 @@ void defaultConstructor(StringBuffer buffer, ModelVisitor visitor) {
   buffer.writeln(");");
   buffer.writeln("}");
 }
-
- // const NomoComponentColors._({
-  //   this.outlineContainerTheme = const NomoOutlineContainerColorData(),
-  //   this.appBarTheme = const NomoAppBarColorData(),
-  //   this.scaffoldTheme = const NomoScaffoldColorData(),
-  //   this.bottomBarTheme = const NomoBottomBarColorData(),
-  //   this.siderTheme = const NomoSiderColorData(),
-  //   this.verticalMenuTheme = const NomoVerticalMenuColorData(),
-  // });
-
-  // factory NomoComponentColors.override({
-  //   required NomoColors colors,
-  //   NomoOutlineContainerColorData? outlineContainerTheme,
-  //   NomoAppBarColorData? appBarTheme,
-  //   NomoScaffoldColorData? scaffoldTheme,
-  //   NomoBottomBarColorData? bottomBarTheme,
-  //   NomoSiderColorData? siderTheme,
-  //   NomoVerticalMenuColorData? verticalMenuTheme,
-  // }) {
-  //   final def = defaultComponents(colors);
-  //   return NomoComponentColors._(
-  //     outlineContainerTheme: outlineContainerTheme ?? def.outlineContainerTheme,
-  //     appBarTheme: appBarTheme ?? def.appBarTheme,
-  //     scaffoldTheme: scaffoldTheme ?? def.scaffoldTheme,
-  //     bottomBarTheme: bottomBarTheme ?? def.bottomBarTheme,
-  //     siderTheme: siderTheme ?? def.siderTheme,
-  //     verticalMenuTheme: verticalMenuTheme ?? def.verticalMenuTheme,
-  //   );
-  // }
-
-  // static NomoComponentColors defaultComponents(NomoColors core) =>
-  //     NomoComponentColors._(
-  //       outlineContainerTheme: NomoOutlineContainerThemeData(
-  //         foreground: core.foreground1,
-  //         background: core.background,
-  //       ),
-  //       appBarTheme: NomoAppBarColorData(
-  //         backgroundColor: core.background,
-  //       ),
-  //       scaffoldTheme: NomoScaffoldColorData(
-  //         backgroundColor: core.background,
-  //       ),
-  //       bottomBarTheme: NomoBottomBarColorData(
-  //         background: core.primaryContainer,
-  //         borderRadius: BorderRadius.circular(8),
-  //         foreground: core.foreground1,
-  //         selectedForeground: core.primary,
-  //       ),
-  //       siderTheme: NomoSiderColorData(
-  //         backgroundColor: core.background,
-  //       ),
-  //       verticalMenuTheme: NomoVerticalMenuColorData(
-  //         foreground: core.foreground1,
-  //         background: core.background,
-  //         selectedBackground: core.primary.lighten(0.25),
-  //         selectedForeground: core.primary,
-  //         borderRadius: BorderRadius.circular(6),
-  //       ),
-  //     );
-
-  // static NomoComponentColors lerp(
-  //   NomoComponentColors a,
-  //   NomoComponentColors b,
-  //   double t,
-  // ) {
-  //   return NomoComponentColors._(
-  //     outlineContainerTheme: NomoOutlineContainerColorData.lerp(
-  //       a.outlineContainerTheme,
-  //       b.outlineContainerTheme,
-  //       t,
-  //     ),
-  //     appBarTheme: NomoAppBarColorData.lerp(a.appBarTheme, b.appBarTheme, t),
-  //     scaffoldTheme:
-  //         NomoScaffoldColorData.lerp(a.scaffoldTheme, b.scaffoldTheme, t),
-  //     bottomBarTheme:
-  //         NomoBottomBarColorData.lerp(a.bottomBarTheme, b.bottomBarTheme, t),
-  //     siderTheme: NomoSiderColorData.lerp(a.siderTheme, b.siderTheme, t),
-  //     verticalMenuTheme: NomoVerticalMenuColorData.lerp(
-  //       a.verticalMenuTheme,
-  //       b.verticalMenuTheme,
-  //       t,
-  //     ),
-  //   );
-  // }

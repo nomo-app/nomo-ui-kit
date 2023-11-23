@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:nomo_ui_generator/annotations.dart';
 import 'package:nomo_ui_kit/components/app/app_bar/nomo_app_bar.dart';
 import 'package:nomo_ui_kit/components/app/bottom_bar/nomo_bottom_bar.dart';
@@ -75,15 +76,17 @@ class NomoComponentSizes {
     required this.linkButtonTheme,
   });
 
-  static NomoComponentSizes defaultComponents(NomoSizes core) =>
-      defaultConstructor();
+  static NomoComponentSizes defaultComponents(NomoSizes core) => defaultConstructor(
+        outlineContainerTheme: const NomoOutlineContainerSizingData(
+          padding: EdgeInsets.all(32),
+        ),
+      );
 }
 
 class NomoSizingThemeData {
   NomoSizingThemeData({
     required this.sizes,
-    NomoComponentSizes Function(NomoSizes core) buildComponents =
-        NomoComponentSizes.defaultComponents,
+    NomoComponentSizes Function(NomoSizes core) buildComponents = NomoComponentSizes.defaultComponents,
   }) : components = buildComponents(sizes);
 
   NomoSizingThemeData._({

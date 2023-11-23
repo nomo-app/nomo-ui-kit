@@ -5,9 +5,10 @@ import 'package:nomo_ui_kit/entities/menu_item.dart';
 import 'package:nomo_ui_kit/utils/layout_extensions.dart';
 
 class NomoVerticalListTile extends StatefulWidget {
-
   const NomoVerticalListTile({
-    required this.item, required this.theme, super.key,
+    required this.item,
+    required this.theme,
+    super.key,
     this.collapsed = false,
     this.style,
     this.onTap,

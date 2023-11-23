@@ -2,6 +2,7 @@ import 'package:example/main.dart';
 import 'package:example/sections/button_section.dart';
 import 'package:example/sections/card_section.dart';
 import 'package:example/sections/dialogs/dialog_wrapper.dart';
+import 'package:example/sections/loading_section.dart';
 import 'package:example/sections/modal_sheet_section.dart';
 import 'package:example/sections/text_section.dart';
 import 'package:example/theme.dart';
@@ -21,8 +22,7 @@ Widget Function(Widget nav) wrapper = (nav) {
       final themeProvider = ThemeProvider.of(context);
       return NomoScaffold(
         appBar: PreferredSize(
-          preferredSize:
-              Size.fromHeight(context.componentSizes.appBarTheme.height),
+          preferredSize: Size.fromHeight(context.componentSizes.appBarTheme.height),
           child: NomoAppBar(
             leading: Text(
               "Nomo UI Kit",
@@ -143,7 +143,7 @@ final routes = [
       MenuPageRouteInfo(
         name: "/loading",
         title: "Loading",
-        page: DialogWrapper(),
+        page: LoadingSection(),
       ),
       MenuPageRouteInfo(
         name: "/expandable",

@@ -1,7 +1,6 @@
 part of nomo_theme;
 
 class NomoTypographyTheme {
-
   const NomoTypographyTheme({
     required this.b1,
     required this.b2,

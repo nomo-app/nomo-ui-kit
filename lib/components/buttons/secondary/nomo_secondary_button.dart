@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nomo_ui_generator/annotations.dart';
 import 'package:nomo_ui_kit/components/buttons/base/nomo_button.dart';
+import 'package:nomo_ui_kit/components/buttons/primary/nomo_primary_button.dart';
 import 'package:nomo_ui_kit/components/text/nomo_text.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 
@@ -13,6 +14,7 @@ class SecondaryNomoButton extends StatelessWidget with NomoButtonMixin {
   final double? spacing;
   final TextStyle? textStyle;
   final double? iconSize;
+  final ActionType type;
 
   @override
   final VoidCallback? onPressed;
@@ -61,8 +63,9 @@ class SecondaryNomoButton extends StatelessWidget with NomoButtonMixin {
   const SecondaryNomoButton({
     super.key,
     this.text,
+    this.type = ActionType.def,
     this.icon,
-    this.spacing,
+    this.spacing = 12,
     this.backgroundColor,
     this.foregroundColor,
     this.elevation,
@@ -86,8 +89,15 @@ class SecondaryNomoButton extends StatelessWidget with NomoButtonMixin {
 
     return NomoButton(
       elevation: theme.elevation,
-      backgroundColor: theme.backgroundColor,
-      foregroundColor: theme.foregroundColor,
+      backgroundColor: switch (type) {
+        ActionType.disabled || ActionType.nonInteractive => context.colors.disabled,
+        _ => theme.backgroundColor,
+      },
+      foregroundColor: switch (type) {
+        ActionType.nonInteractive || ActionType.disabled => context.colors.onDisabled,
+        ActionType.danger => context.colors.error,
+        _ => theme.foregroundColor,
+      },
       shape: shape,
       margin: margin,
       width: width,
@@ -95,9 +105,21 @@ class SecondaryNomoButton extends StatelessWidget with NomoButtonMixin {
       border: theme.border,
       padding: padding,
       borderRadius: theme.borderRadius,
-      onPressed: onPressed,
+      onPressed: switch (type) {
+        ActionType.nonInteractive => null,
+        _ => onPressed,
+      },
+      cursor: switch (type) {
+        ActionType.nonInteractive => SystemMouseCursors.forbidden,
+        _ => SystemMouseCursors.click,
+      },
       enabled: enabled,
-      selectionColor: theme.selectionColor,
+      selectionColor: switch (type) {
+        ActionType.danger => context.colors.error.darken(),
+        ActionType.disabled => context.colors.onDisabled.darken(),
+        ActionType.nonInteractive => context.colors.onDisabled,
+        _ => theme.selectionColor,
+      },
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
