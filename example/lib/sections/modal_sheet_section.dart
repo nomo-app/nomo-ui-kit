@@ -34,8 +34,7 @@ class ModalSheet1 extends StatefulWidget {
   State<ModalSheet1> createState() => _ModalSheet1State();
 }
 
-class _ModalSheet1State extends State<ModalSheet1>
-    with TickerProviderStateMixin {
+class _ModalSheet1State extends State<ModalSheet1> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final routeInfo = RouteInfoProvider.of(context).route;

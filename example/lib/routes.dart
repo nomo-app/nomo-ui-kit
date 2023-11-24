@@ -1,8 +1,10 @@
 import 'package:example/main.dart';
 import 'package:example/sections/button_section.dart';
 import 'package:example/sections/card_section.dart';
+import 'package:example/sections/data_section.dart';
 import 'package:example/sections/dialogs/dialog_wrapper.dart';
 import 'package:example/sections/expandable_section.dart';
+import 'package:example/sections/icon_section.dart';
 import 'package:example/sections/loading_section.dart';
 import 'package:example/sections/modal_sheet_section.dart';
 import 'package:example/sections/text_section.dart';
@@ -110,6 +112,16 @@ final routes = [
         name: "/button",
         title: "Button",
         page: TextButtonWrapper(),
+      ),
+      MenuPageRouteInfo(
+        name: "/data",
+        title: "Data",
+        page: DataSection(),
+      ),
+      MenuPageRouteInfo(
+        name: "/icons",
+        title: "Icons",
+        page: IconSection(),
       ),
       MenuPageRouteInfo(
         name: "/dialogs",

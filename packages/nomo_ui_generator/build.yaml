@@ -17,6 +17,14 @@ builders:
     build_to: cache
     applies_builders: ["source_gen|combining_builder"]
     required_inputs: ["theme_data.g.dart"]
+  
+  reflection_builder:
+    import: "package:nomo_ui_generator/util_builder.dart"
+    builder_factories: ["reflectionBuilder"]
+    build_extensions: {".dart": ["reflection.g.part"]}
+    auto_apply: dependents
+    build_to: cache
+    applies_builders: ["source_gen|combining_builder"]
    
     
 

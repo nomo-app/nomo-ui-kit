@@ -12,84 +12,81 @@ class ExpandableSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return NomoRouteBody(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          NomoText(
-            "Expandable",
-            style: context.typography.h3,
-          ),
-          8.vSpacing,
-          NomoText(
-            "The Expandable Widget can be used to expand things",
-            style: context.typography.b1,
-          ),
-          32.vSpacing,
-          NomoOutlineContainer(
-            child: Column(
-              children: [
-                Expandable(
-                  title: Text(
-                    "Simple Expandable",
-                    style: context.typography.h1,
-                  ),
-                  children: [
-                    Container(
-                      height: 64,
-                      color: Colors.red,
-                    ),
-                    Container(
-                      height: 64,
-                      color: Colors.white,
-                    ),
-                    Container(
-                      height: 64,
-                      color: Colors.red,
-                    )
-                  ],
+      children: [
+        NomoText(
+          "Expandable",
+          style: context.typography.h3,
+        ),
+        8.vSpacing,
+        NomoText(
+          "The Expandable Widget can be used to expand things",
+          style: context.typography.b1,
+        ),
+        32.vSpacing,
+        NomoOutlineContainer(
+          child: Column(
+            children: [
+              Expandable(
+                title: Text(
+                  "Simple Expandable",
+                  style: context.typography.h1,
                 ),
-                Expandable(
-                  title: Text(
-                    "Nested Expandable",
-                    style: context.typography.h1,
+                children: [
+                  Container(
+                    height: 64,
+                    color: Colors.red,
                   ),
-                  children: [
-                    Expandable(
-                      margin: const EdgeInsets.symmetric(horizontal: 12),
-                      title: Text(
-                        "Child Expandable",
-                        style: context.typography.h1,
+                  Container(
+                    height: 64,
+                    color: Colors.white,
+                  ),
+                  Container(
+                    height: 64,
+                    color: Colors.red,
+                  )
+                ],
+              ),
+              Expandable(
+                title: Text(
+                  "Nested Expandable",
+                  style: context.typography.h1,
+                ),
+                children: [
+                  Expandable(
+                    margin: const EdgeInsets.symmetric(horizontal: 12),
+                    title: Text(
+                      "Child Expandable",
+                      style: context.typography.h1,
+                    ),
+                    children: [
+                      Container(
+                        height: 64,
+                        color: Colors.red,
                       ),
-                      children: [
-                        Container(
-                          height: 64,
-                          color: Colors.red,
-                        ),
-                        Container(
-                          height: 64,
-                          color: Colors.white,
-                        ),
-                        Container(
-                          height: 64,
-                          color: Colors.blue,
-                        )
-                      ],
-                    ),
-                    Container(
-                      height: 64,
-                      color: Colors.white,
-                    ),
-                    Container(
-                      height: 64,
-                      color: Colors.red,
-                    )
-                  ],
-                ),
-              ],
-            ),
+                      Container(
+                        height: 64,
+                        color: Colors.white,
+                      ),
+                      Container(
+                        height: 64,
+                        color: Colors.blue,
+                      )
+                    ],
+                  ),
+                  Container(
+                    height: 64,
+                    color: Colors.white,
+                  ),
+                  Container(
+                    height: 64,
+                    color: Colors.red,
+                  )
+                ],
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

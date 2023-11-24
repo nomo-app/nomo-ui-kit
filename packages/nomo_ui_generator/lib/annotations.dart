@@ -21,3 +21,7 @@ class NomoThemeUtils {
 
   const NomoThemeUtils(this.coreType);
 }
+
+class StaticFieldsList {
+  const StaticFieldsList();
+}

@@ -11,14 +11,13 @@ class TextSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return NomoRouteBody(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          NomoText(
-            "Typography",
-            style: context.typography.h3,
-          ),
-          16.vSpacing,
+      children: [
+        NomoText(
+          "Typography",
+          style: context.typography.h3,
+        ),
+        32.vSpacing,
+        ...[
           NomoText(
             "Heading 1",
             style: context.typography.h1,
@@ -43,8 +42,8 @@ class TextSection extends StatelessWidget {
             "Body 3",
             style: context.typography.b3,
           ),
-        ].spacingV(16),
-      ),
+        ].spacingV(16)
+      ],
     );
   }
 }

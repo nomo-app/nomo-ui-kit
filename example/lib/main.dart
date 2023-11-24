@@ -53,40 +53,41 @@ class HomePage extends StatelessWidget {
     );
 
     return NomoRouteBody(
-      scrollable: false,
-      child: FutureBuilder(
-        future: file,
-        builder: (context, snapshot) {
-          if (snapshot.data != null) {
-            return MarkdownWidget(
-              config: MarkdownConfig(
-                configs: [
-                  // TEXT config
-                  H1Config(style: context.typography.h1),
-                  H2Config(style: context.typography.h2),
-                  H3Config(style: context.typography.h3),
-                  H4Config(style: context.typography.b3),
-                  H5Config(style: context.typography.b2),
-                  H6Config(style: context.typography.b1),
-                  PConfig(textStyle: context.typography.b1),
-                  // CODE config
-                  CodeConfig(
-                    style: context.typography.b2,
-                  ),
-                  // BLOCKQUOTE config
-                  BlockquoteConfig(
-                    textColor: context.colors.foreground1,
-                  ),
-                ],
-              ),
-              data: snapshot.data as String,
-            );
-          }
+      builder: (context, route) => SingleChildScrollView(
+        controller: DefaultScrollController.of(context),
+        child: FutureBuilder(
+          future: file,
+          builder: (context, snapshot) {
+            if (snapshot.data != null) {
+              return MarkdownWidget(
+                shrinkWrap: true,
+                config: MarkdownConfig(
+                  configs: [
+                    // TEXT config
+                    H1Config(style: context.typography.h1),
+                    H2Config(style: context.typography.h2),
+                    H3Config(style: context.typography.h3),
+                    H4Config(style: context.typography.b3),
+                    H5Config(style: context.typography.b2),
+                    H6Config(style: context.typography.b1),
+                    PConfig(textStyle: context.typography.b1),
+                    // CODE config
+                    CodeConfig(
+                      style: context.typography.b2,
+                    ),
+                    // BLOCKQUOTE config
+                    BlockquoteConfig(
+                      textColor: context.colors.foreground1,
+                    ),
+                  ],
+                ),
+                data: snapshot.data as String,
+              );
+            }
 
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        },
+            return const Center(child: CircularProgressIndicator());
+          },
+        ),
       ),
     );
   }

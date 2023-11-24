@@ -86,7 +86,7 @@ class CustomRenderBox extends RenderBox
   @override
   void performLayout() {
     // Size and position all children here.
-    final constraints = this.constraints;
+    final constraints = this.constraints.copyWith(minWidth: 0);
     // final maxHeight = constraints.maxHeight;
     final maxWidth = constraints.maxWidth;
 

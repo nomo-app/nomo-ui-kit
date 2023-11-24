@@ -1,0 +1,77 @@
+import 'package:flutter/widgets.dart';
+
+/// [IconData] for a font awesome brand icon from a code point
+///
+/// Code points can be obtained from fontawesome.com
+class IconDataBrands extends IconData {
+  const IconDataBrands(super.codePoint)
+      : super(
+          fontFamily: 'FontAwesomeBrands',
+          fontPackage: 'nomo_ui_kit',
+        );
+}
+
+/// [IconData] for a font awesome solid icon from a code point
+///
+/// Code points can be obtained from fontawesome.com
+class IconDataSolid extends IconData {
+  const IconDataSolid(super.codePoint)
+      : super(
+          fontFamily: 'FontAwesomeSolid',
+          fontPackage: 'nomo_ui_kit',
+        );
+}
+
+/// [IconData] for a font awesome regular icon from a code point
+///
+/// Code points can be obtained from fontawesome.com
+class IconDataRegular extends IconData {
+  const IconDataRegular(super.codePoint)
+      : super(
+          fontFamily: 'FontAwesomeRegular',
+          fontPackage: 'nomo_ui_kit',
+        );
+}
+
+/// [IconData] for a font awesome light icon from a code point. Only works if
+/// light icons (font awesome pro) have been installed.
+///
+/// Code points can be obtained from fontawesome.com
+class IconDataLight extends IconData {
+  const IconDataLight(super.codePoint)
+      : super(
+          fontFamily: 'FontAwesomeLight',
+          fontPackage: 'nomo_ui_kit',
+        );
+}
+
+/// [IconData] for a font awesome duotone icon from a code point. Only works if
+/// duotone icons (font awesome pro) have been installed.
+///
+/// Code points can be obtained from fontawesome.com. Each duotone icon consists
+/// of a primary [codePoint] and a [secondary].
+class IconDataDuotone extends IconData {
+  /// Secondary glyph of the duotone icon
+  ///
+  /// Due to tree-shaking restraints [secondary] cannot be the codepoint itself,
+  /// but has to be an [IconData] object.
+  final IconData? secondary;
+
+  const IconDataDuotone(super.codePoint, {this.secondary})
+      : super(
+          fontFamily: 'FontAwesomeDuotone',
+          fontPackage: 'nomo_ui_kit',
+        );
+}
+
+/// [IconData] for a font awesome thin icon from a code point. Only works if
+/// thin icons (font awesome pro, v6+) have been installed.
+///
+/// Code points can be obtained from fontawesome.com
+class IconDataThin extends IconData {
+  const IconDataThin(super.codePoint)
+      : super(
+          fontFamily: 'FontAwesomeThin',
+          fontPackage: 'nomo_ui_kit',
+        );
+}

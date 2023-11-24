@@ -2,24 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:nomo_router/nomo_router.dart';
 import 'package:nomo_ui_generator/annotations.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
+import 'package:nomo_ui_kit/utils/layout_extensions.dart';
 
 part 'nomo_route_body.theme_data.g.dart';
 
-///
-/// A scrollable body for a route.
-///
-/// Either a [child] or a [builder] must be provided.
-///
-/// @param child The child widget to display in the body.
-///
-/// @param builder A builder function that returns a widget to display in the body. Provides the current route info.
-///
-/// @param scrollController A scroll controller to use for the body.
-///
 @NomoComponentThemeData('routeBodyTheme')
 class NomoRouteBody extends StatelessWidget {
-  final Widget Function(BuildContext context, NomoPage<dynamic> info)? builder;
   final Widget? child;
+  final Widget Function(BuildContext context, NomoPage<dynamic> route)? builder;
+  final List<Widget>? slivers;
+  final List<Widget> Function(BuildContext context, NomoPage<dynamic> route)? sliverBuilder;
+  final List<Widget>? children;
+  final List<Widget> Function(BuildContext context, NomoPage<dynamic> route)? childrenBuilder;
+
   final ScrollController? scrollController;
 
   @NomoSizingField(EdgeInsets.all(8))
@@ -31,8 +26,6 @@ class NomoRouteBody extends StatelessWidget {
   @NomoSizingField(Radius.circular(4))
   final Radius? scrollBarRadius;
 
-  final bool scrollable;
-
   const NomoRouteBody({
     this.child,
     super.key,
@@ -40,34 +33,169 @@ class NomoRouteBody extends StatelessWidget {
     this.padding,
     this.scrollBarThickness,
     this.scrollBarRadius,
-    this.scrollable = true,
+    this.children,
+    this.slivers,
     this.builder,
+    this.childrenBuilder,
+    this.sliverBuilder,
   }) : assert(
-          child != null || builder != null,
+          child != null ||
+              slivers != null ||
+              children != null ||
+              builder != null ||
+              sliverBuilder != null ||
+              childrenBuilder != null,
           'Either child or builder must be provided',
         );
 
   @override
   Widget build(BuildContext context) {
-    final routeInfo = RouteInfoProvider.of(context).route;
-    final controller = scrollController ?? ScrollController();
     final theme = getFromContext(context, this);
-    final _child = child ?? builder!(context, routeInfo);
-    if (!scrollable) {
-      return Padding(
-        padding: theme.padding,
-        child: _child,
-      );
-    }
+    final route = RouteInfoProvider.of(context).route;
+    final _scrollController = scrollController ?? ScrollController();
+
     return Scrollbar(
-      controller: controller,
-      thickness: theme.scrollBarThickness,
+      controller: _scrollController,
       radius: theme.scrollBarRadius,
-      child: SingleChildScrollView(
-        controller: controller,
-        padding: theme.padding,
-        child: _child,
+      thickness: theme.scrollBarThickness,
+      child: DefaultScrollController(
+        scrollController: _scrollController,
+        child: switch (this) {
+          _ when child != null => _ChildBody(
+              theme: theme,
+              child: child!,
+            ),
+          _ when builder != null => Builder(
+              builder: (context) => _ChildBody(
+                theme: theme,
+                child: builder!(context, route),
+              ),
+            ),
+          _ when slivers != null => _SliverBody(
+              theme: theme,
+              slivers: slivers!,
+            ),
+          _ when sliverBuilder != null => Builder(
+              builder: (context) => _SliverBody(
+                theme: theme,
+                slivers: sliverBuilder!(context, route),
+              ),
+            ),
+          _ when children != null => _ChildrenBody(
+              theme: theme,
+              children: children!,
+            ),
+          _ => Builder(
+              builder: (context) => _ChildrenBody(
+                theme: theme,
+                children: childrenBuilder!(context, route),
+              ),
+            ),
+        },
       ),
     );
   }
+}
+
+class _ChildrenBody extends StatelessWidget {
+  final NomoRouteBodyThemeData theme;
+  final List<Widget> children;
+
+  const _ChildrenBody({
+    required this.theme,
+    required this.children,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomScrollView(
+      controller: DefaultScrollController.of(context),
+      slivers: [
+        SliverPadding(
+          padding: theme.padding,
+          sliver: SliverList.builder(
+            itemBuilder: (context, index) => children[index],
+            itemCount: children.length,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _SliverBody extends StatelessWidget {
+  final NomoRouteBodyThemeData theme;
+  final List<Widget> slivers;
+
+  const _SliverBody({
+    required this.theme,
+    required this.slivers,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomScrollView(
+      controller: DefaultScrollController.of(context),
+      slivers: [
+        (theme.padding.vertical / 2).vSpacing.toBox,
+        for (final sliver in slivers)
+          SliverPadding(
+            padding: EdgeInsets.symmetric(horizontal: theme.padding.horizontal / 2),
+            sliver: sliver,
+          ),
+        (theme.padding.vertical / 2).vSpacing.toBox,
+      ],
+    );
+  }
+}
+
+class _ChildBody extends StatelessWidget {
+  final NomoRouteBodyThemeData theme;
+  final Widget child;
+
+  const _ChildBody({
+    required this.theme,
+    required this.child,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: theme.padding,
+      child: child,
+    );
+  }
+}
+
+class DefaultScrollController extends InheritedWidget {
+  const DefaultScrollController({
+    required super.child,
+    required this.scrollController,
+    super.key,
+  });
+
+  final ScrollController scrollController;
+
+  static ScrollController of(BuildContext context) {
+    final result = context.dependOnInheritedWidgetOfExactType<DefaultScrollController>();
+    assert(
+      result != null,
+      'No DefaultScrollController found in context. Make Sure there is NomoRouteBody above this widget in the tree',
+    );
+    return result!.scrollController;
+  }
+
+  @override
+  bool updateShouldNotify(DefaultScrollController oldWidget) {
+    return oldWidget.scrollController != scrollController;
+  }
+}
+
+extension SliverUtil on Widget {
+  Widget get toBox => SliverToBoxAdapter(
+        child: this,
+      );
 }
