@@ -10,6 +10,7 @@ import 'package:nomo_ui_kit/components/buttons/primary/nomo_primary_button.dart'
 import 'package:nomo_ui_kit/components/buttons/secondary/nomo_secondary_button.dart';
 import 'package:nomo_ui_kit/components/buttons/text/nomo_text_button.dart';
 import 'package:nomo_ui_kit/components/expandable/expandable.dart';
+import 'package:nomo_ui_kit/components/input/textInput/nomo_input.dart';
 import 'package:nomo_ui_kit/components/outline_container/nomo_outline_container.dart';
 import 'package:nomo_ui_kit/components/vertical_menu/nomo_vertical_menu.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
@@ -63,6 +64,7 @@ class NomoComponentSizes {
   final NomoTextButtonSizingData textButtonTheme;
   final NomoLinkButtonSizingData linkButtonTheme;
   final ExpandableSizingData expandableTheme;
+  final NomoInputSizingData inputTheme;
 
   const NomoComponentSizes._({
     required this.outlineContainerTheme,
@@ -77,6 +79,7 @@ class NomoComponentSizes {
     required this.textButtonTheme,
     required this.linkButtonTheme,
     required this.expandableTheme,
+    required this.inputTheme,
   });
 
   static NomoComponentSizes defaultComponents(NomoSizes core) => defaultConstructor(

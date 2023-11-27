@@ -58,40 +58,43 @@ class NomoRouteBody extends StatelessWidget {
       controller: _scrollController,
       radius: theme.scrollBarRadius,
       thickness: theme.scrollBarThickness,
-      child: DefaultScrollController(
-        scrollController: _scrollController,
-        child: switch (this) {
-          _ when child != null => _ChildBody(
-              theme: theme,
-              child: child!,
-            ),
-          _ when builder != null => Builder(
-              builder: (context) => _ChildBody(
+      child: ColoredBox(
+        color: context.colors.background,
+        child: DefaultScrollController(
+          scrollController: _scrollController,
+          child: switch (this) {
+            _ when child != null => _ChildBody(
                 theme: theme,
-                child: builder!(context, route),
+                child: child!,
               ),
-            ),
-          _ when slivers != null => _SliverBody(
-              theme: theme,
-              slivers: slivers!,
-            ),
-          _ when sliverBuilder != null => Builder(
-              builder: (context) => _SliverBody(
+            _ when builder != null => Builder(
+                builder: (context) => _ChildBody(
+                  theme: theme,
+                  child: builder!(context, route),
+                ),
+              ),
+            _ when slivers != null => _SliverBody(
                 theme: theme,
-                slivers: sliverBuilder!(context, route),
+                slivers: slivers!,
               ),
-            ),
-          _ when children != null => _ChildrenBody(
-              theme: theme,
-              children: children!,
-            ),
-          _ => Builder(
-              builder: (context) => _ChildrenBody(
+            _ when sliverBuilder != null => Builder(
+                builder: (context) => _SliverBody(
+                  theme: theme,
+                  slivers: sliverBuilder!(context, route),
+                ),
+              ),
+            _ when children != null => _ChildrenBody(
                 theme: theme,
-                children: childrenBuilder!(context, route),
+                children: children!,
               ),
-            ),
-        },
+            _ => Builder(
+                builder: (context) => _ChildrenBody(
+                  theme: theme,
+                  children: childrenBuilder!(context, route),
+                ),
+              ),
+          },
+        ),
       ),
     );
   }

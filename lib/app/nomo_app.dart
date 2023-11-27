@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:nomo_router/nomo_router.dart';
+import 'package:nomo_router/router/entities/transitions.dart';
 import 'package:nomo_ui_kit/app/animator.dart';
 import 'package:nomo_ui_kit/app/metric_reactor.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
@@ -21,8 +22,11 @@ class NomoApp extends StatefulWidget {
     super.key,
     this.localizationDelegate,
     this.currentLocale,
+    this.defaultPageTransistion =
+        const PageSharedAxisTransition(type: SharedAxisTransitionType.horizontal, fillColor: Colors.transparent),
   });
   final Iterable<RouteInfo> routes;
+  final PageTransition defaultPageTransistion;
   final LocalizationsDelegate? localizationDelegate;
   final Iterable<Locale> supportedLocales;
   final Locale? currentLocale;
@@ -60,13 +64,13 @@ class _NomoAppState extends State<NomoApp> {
           sizingThemeBuilder: widget.sizingThemeBuilder,
           child: NomoNavigator(
             delegate: delegate,
+            defaultTransistion: widget.defaultPageTransistion,
             child: ThemeAnimator(
               notifier: themeNotifier,
               child: WidgetsApp.router(
                 debugShowCheckedModeBanner: false,
                 localizationsDelegates: [
-                  if (widget.localizationDelegate != null)
-                    widget.localizationDelegate!,
+                  if (widget.localizationDelegate != null) widget.localizationDelegate!,
                   GlobalMaterialLocalizations.delegate,
                   GlobalCupertinoLocalizations.delegate,
                 ],
@@ -74,12 +78,12 @@ class _NomoAppState extends State<NomoApp> {
                 locale: widget.currentLocale,
                 color: widget.theme.colors.primary,
                 routerDelegate: delegate,
-                // routeInformationProvider: PlatformRouteInformationProvider(
-                //   initialRouteInformation: RouteInformation(
-                //     uri: WidgetsBinding
-                //         .instance.platformDispatcher.defaultRouteName.uri,
-                //   ),
-                // ),
+                routeInformationProvider: PlatformRouteInformationProvider(
+                  initialRouteInformation: RouteInformation(
+                    uri: Uri.parse("/input"), //WidgetsBinding
+                    //     .instance.platformDispatcher.defaultRouteName.uri,
+                  ),
+                ),
                 backButtonDispatcher: NomoBackButtonDispatcher(delegate),
                 routeInformationParser: const NomoRouteInformationParser(),
               ),

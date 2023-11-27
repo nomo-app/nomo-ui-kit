@@ -70,6 +70,11 @@ NomoComponentSizes lerpNomoComponentSizes(
       b.expandableTheme,
       t,
     ),
+    inputTheme: NomoInputSizingData.lerp(
+      a.inputTheme,
+      b.inputTheme,
+      t,
+    ),
   );
 }
 
@@ -87,6 +92,7 @@ NomoComponentSizes overrideNomoComponentSizes({
   NomoTextButtonSizingData? textButtonTheme,
   NomoLinkButtonSizingData? linkButtonTheme,
   ExpandableSizingData? expandableTheme,
+  NomoInputSizingData? inputTheme,
 }) {
   final def = NomoComponentSizes.defaultComponents(core);
   return NomoComponentSizes._(
@@ -102,6 +108,7 @@ NomoComponentSizes overrideNomoComponentSizes({
     textButtonTheme: textButtonTheme ?? def.textButtonTheme,
     linkButtonTheme: linkButtonTheme ?? def.linkButtonTheme,
     expandableTheme: expandableTheme ?? def.expandableTheme,
+    inputTheme: inputTheme ?? def.inputTheme,
   );
 }
 
@@ -118,6 +125,7 @@ NomoComponentSizes defaultConstructor({
   NomoTextButtonSizingData? textButtonTheme,
   NomoLinkButtonSizingData? linkButtonTheme,
   ExpandableSizingData? expandableTheme,
+  NomoInputSizingData? inputTheme,
 }) {
   return NomoComponentSizes._(
     outlineContainerTheme:
@@ -135,5 +143,6 @@ NomoComponentSizes defaultConstructor({
     textButtonTheme: textButtonTheme ?? const NomoTextButtonSizingData(),
     linkButtonTheme: linkButtonTheme ?? const NomoLinkButtonSizingData(),
     expandableTheme: expandableTheme ?? const ExpandableSizingData(),
+    inputTheme: inputTheme ?? const NomoInputSizingData(),
   );
 }
