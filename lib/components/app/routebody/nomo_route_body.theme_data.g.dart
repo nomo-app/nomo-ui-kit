@@ -53,8 +53,19 @@ class NomoRouteBodySizingData implements NomoRouteBodySizingDataNullable {
   }
 }
 
+class NomoRouteBodyConstantsNullable {
+  const NomoRouteBodyConstantsNullable();
+}
+
+class NomoRouteBodyConstants implements NomoRouteBodyConstantsNullable {
+  const NomoRouteBodyConstants();
+}
+
 class NomoRouteBodyThemeData
-    implements NomoRouteBodyColorData, NomoRouteBodySizingData {
+    implements
+        NomoRouteBodyColorData,
+        NomoRouteBodySizingData,
+        NomoRouteBodyConstants {
   @override
   final EdgeInsetsGeometry padding;
   @override
@@ -69,6 +80,7 @@ class NomoRouteBodyThemeData
   factory NomoRouteBodyThemeData.from(
     NomoRouteBodyColorData colors,
     NomoRouteBodySizingData sizing,
+    NomoRouteBodyConstants constants,
   ) {
     return NomoRouteBodyThemeData(
       padding: sizing.padding,
@@ -86,7 +98,10 @@ class NomoRouteBodyThemeData
 }
 
 class NomoRouteBodyThemeDataNullable
-    implements NomoRouteBodyColorDataNullable, NomoRouteBodySizingDataNullable {
+    implements
+        NomoRouteBodyColorDataNullable,
+        NomoRouteBodySizingDataNullable,
+        NomoRouteBodyConstantsNullable {
   @override
   final EdgeInsetsGeometry? padding;
   @override
@@ -131,10 +146,11 @@ NomoRouteBodyThemeData getFromContext(
   final globalSizingTheme =
       NomoTheme.maybeOf(context)?.componentSizes.routeBodyTheme ??
           const NomoRouteBodySizingData();
+  const globalConstants = NomoRouteBodyConstants();
   final themeOverride = NomoRouteBodyThemeOverride.maybeOf(context);
-  final themeData =
-      NomoRouteBodyThemeData.from(globalColorTheme, globalSizingTheme)
-          .copyWith(themeOverride);
+  final themeData = NomoRouteBodyThemeData.from(
+          globalColorTheme, globalSizingTheme, globalConstants)
+      .copyWith(themeOverride);
   return NomoRouteBodyThemeData(
     padding: widget.padding ?? themeData.padding,
     scrollBarThickness:

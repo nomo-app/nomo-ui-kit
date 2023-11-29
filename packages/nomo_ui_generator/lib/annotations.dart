@@ -16,6 +16,12 @@ class NomoSizingField<T> {
   const NomoSizingField(this.value);
 }
 
+class NomoConstant<T extends Object> {
+  final T value;
+
+  const NomoConstant(this.value);
+}
+
 class NomoThemeUtils {
   final String coreType;
 

@@ -93,7 +93,16 @@ class ExpandableSizingData implements ExpandableSizingDataNullable {
   }
 }
 
-class ExpandableThemeData implements ExpandableColorData, ExpandableSizingData {
+class ExpandableConstantsNullable {
+  const ExpandableConstantsNullable();
+}
+
+class ExpandableConstants implements ExpandableConstantsNullable {
+  const ExpandableConstants();
+}
+
+class ExpandableThemeData
+    implements ExpandableColorData, ExpandableSizingData, ExpandableConstants {
   @override
   final EdgeInsetsGeometry titlePadding;
   @override
@@ -127,6 +136,7 @@ class ExpandableThemeData implements ExpandableColorData, ExpandableSizingData {
   factory ExpandableThemeData.from(
     ExpandableColorData colors,
     ExpandableSizingData sizing,
+    ExpandableConstants constants,
   ) {
     return ExpandableThemeData(
       titlePadding: colors.titlePadding,
@@ -156,7 +166,10 @@ class ExpandableThemeData implements ExpandableColorData, ExpandableSizingData {
 }
 
 class ExpandableThemeDataNullable
-    implements ExpandableColorDataNullable, ExpandableSizingDataNullable {
+    implements
+        ExpandableColorDataNullable,
+        ExpandableSizingDataNullable,
+        ExpandableConstantsNullable {
   @override
   final EdgeInsetsGeometry? titlePadding;
   @override
@@ -221,10 +234,11 @@ ExpandableThemeData getFromContext(
   final globalSizingTheme =
       NomoTheme.maybeOf(context)?.componentSizes.expandableTheme ??
           const ExpandableSizingData();
+  const globalConstants = ExpandableConstants();
   final themeOverride = ExpandableThemeOverride.maybeOf(context);
-  final themeData =
-      ExpandableThemeData.from(globalColorTheme, globalSizingTheme)
-          .copyWith(themeOverride);
+  final themeData = ExpandableThemeData.from(
+          globalColorTheme, globalSizingTheme, globalConstants)
+      .copyWith(themeOverride);
   return ExpandableThemeData(
     titlePadding: widget.titlePadding ?? themeData.titlePadding,
     childrenPadding: widget.childrenPadding ?? themeData.childrenPadding,

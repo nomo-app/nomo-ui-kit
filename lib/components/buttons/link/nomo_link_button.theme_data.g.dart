@@ -61,8 +61,19 @@ class NomoLinkButtonSizingData implements NomoLinkButtonSizingDataNullable {
   }
 }
 
+class NomoLinkButtonConstantsNullable {
+  const NomoLinkButtonConstantsNullable();
+}
+
+class NomoLinkButtonConstants implements NomoLinkButtonConstantsNullable {
+  const NomoLinkButtonConstants();
+}
+
 class NomoLinkButtonThemeData
-    implements NomoLinkButtonColorData, NomoLinkButtonSizingData {
+    implements
+        NomoLinkButtonColorData,
+        NomoLinkButtonSizingData,
+        NomoLinkButtonConstants {
   @override
   final Color foregroundColor;
   @override
@@ -80,6 +91,7 @@ class NomoLinkButtonThemeData
   factory NomoLinkButtonThemeData.from(
     NomoLinkButtonColorData colors,
     NomoLinkButtonSizingData sizing,
+    NomoLinkButtonConstants constants,
   ) {
     return NomoLinkButtonThemeData(
       foregroundColor: colors.foregroundColor,
@@ -102,7 +114,8 @@ class NomoLinkButtonThemeData
 class NomoLinkButtonThemeDataNullable
     implements
         NomoLinkButtonColorDataNullable,
-        NomoLinkButtonSizingDataNullable {
+        NomoLinkButtonSizingDataNullable,
+        NomoLinkButtonConstantsNullable {
   @override
   final Color? foregroundColor;
   @override
@@ -152,10 +165,11 @@ NomoLinkButtonThemeData getFromContext(
   final globalSizingTheme =
       NomoTheme.maybeOf(context)?.componentSizes.linkButtonTheme ??
           const NomoLinkButtonSizingData();
+  const globalConstants = NomoLinkButtonConstants();
   final themeOverride = NomoLinkButtonThemeOverride.maybeOf(context);
-  final themeData =
-      NomoLinkButtonThemeData.from(globalColorTheme, globalSizingTheme)
-          .copyWith(themeOverride);
+  final themeData = NomoLinkButtonThemeData.from(
+          globalColorTheme, globalSizingTheme, globalConstants)
+      .copyWith(themeOverride);
   return NomoLinkButtonThemeData(
     foregroundColor: widget.foregroundColor ?? themeData.foregroundColor,
     tapDownColor: widget.tapDownColor ?? themeData.tapDownColor,

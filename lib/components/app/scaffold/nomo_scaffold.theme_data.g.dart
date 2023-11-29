@@ -61,8 +61,19 @@ class NomoScaffoldSizingData implements NomoScaffoldSizingDataNullable {
   }
 }
 
+class NomoScaffoldConstantsNullable {
+  const NomoScaffoldConstantsNullable();
+}
+
+class NomoScaffoldConstants implements NomoScaffoldConstantsNullable {
+  const NomoScaffoldConstants();
+}
+
 class NomoScaffoldThemeData
-    implements NomoScaffoldColorData, NomoScaffoldSizingData {
+    implements
+        NomoScaffoldColorData,
+        NomoScaffoldSizingData,
+        NomoScaffoldConstants {
   @override
   final Color backgroundColor;
   @override
@@ -80,6 +91,7 @@ class NomoScaffoldThemeData
   factory NomoScaffoldThemeData.from(
     NomoScaffoldColorData colors,
     NomoScaffoldSizingData sizing,
+    NomoScaffoldConstants constants,
   ) {
     return NomoScaffoldThemeData(
       backgroundColor: colors.backgroundColor,
@@ -99,7 +111,10 @@ class NomoScaffoldThemeData
 }
 
 class NomoScaffoldThemeDataNullable
-    implements NomoScaffoldColorDataNullable, NomoScaffoldSizingDataNullable {
+    implements
+        NomoScaffoldColorDataNullable,
+        NomoScaffoldSizingDataNullable,
+        NomoScaffoldConstantsNullable {
   @override
   final Color? backgroundColor;
   @override
@@ -149,10 +164,11 @@ NomoScaffoldThemeData getFromContext(
   final globalSizingTheme =
       NomoTheme.maybeOf(context)?.componentSizes.scaffoldTheme ??
           const NomoScaffoldSizingData();
+  const globalConstants = NomoScaffoldConstants();
   final themeOverride = NomoScaffoldThemeOverride.maybeOf(context);
-  final themeData =
-      NomoScaffoldThemeData.from(globalColorTheme, globalSizingTheme)
-          .copyWith(themeOverride);
+  final themeData = NomoScaffoldThemeData.from(
+          globalColorTheme, globalSizingTheme, globalConstants)
+      .copyWith(themeOverride);
   return NomoScaffoldThemeData(
     backgroundColor: widget.backgroundColor ?? themeData.backgroundColor,
     padding: widget.padding ?? themeData.padding,

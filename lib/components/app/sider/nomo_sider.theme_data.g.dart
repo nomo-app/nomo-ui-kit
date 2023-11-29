@@ -67,7 +67,16 @@ class NomoSiderSizingData implements NomoSiderSizingDataNullable {
   }
 }
 
-class NomoSiderThemeData implements NomoSiderColorData, NomoSiderSizingData {
+class NomoSiderConstantsNullable {
+  const NomoSiderConstantsNullable();
+}
+
+class NomoSiderConstants implements NomoSiderConstantsNullable {
+  const NomoSiderConstants();
+}
+
+class NomoSiderThemeData
+    implements NomoSiderColorData, NomoSiderSizingData, NomoSiderConstants {
   @override
   final Color backgroundColor;
   @override
@@ -88,6 +97,7 @@ class NomoSiderThemeData implements NomoSiderColorData, NomoSiderSizingData {
   factory NomoSiderThemeData.from(
     NomoSiderColorData colors,
     NomoSiderSizingData sizing,
+    NomoSiderConstants constants,
   ) {
     return NomoSiderThemeData(
       backgroundColor: colors.backgroundColor,
@@ -109,7 +119,10 @@ class NomoSiderThemeData implements NomoSiderColorData, NomoSiderSizingData {
 }
 
 class NomoSiderThemeDataNullable
-    implements NomoSiderColorDataNullable, NomoSiderSizingDataNullable {
+    implements
+        NomoSiderColorDataNullable,
+        NomoSiderSizingDataNullable,
+        NomoSiderConstantsNullable {
   @override
   final Color? backgroundColor;
   @override
@@ -162,8 +175,10 @@ NomoSiderThemeData getFromContext(
   final globalSizingTheme =
       NomoTheme.maybeOf(context)?.componentSizes.siderTheme ??
           const NomoSiderSizingData();
+  const globalConstants = NomoSiderConstants();
   final themeOverride = NomoSiderThemeOverride.maybeOf(context);
-  final themeData = NomoSiderThemeData.from(globalColorTheme, globalSizingTheme)
+  final themeData = NomoSiderThemeData.from(
+          globalColorTheme, globalSizingTheme, globalConstants)
       .copyWith(themeOverride);
   return NomoSiderThemeData(
     backgroundColor: widget.backgroundColor ?? themeData.backgroundColor,

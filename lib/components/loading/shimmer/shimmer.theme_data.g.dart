@@ -44,7 +44,16 @@ class ShimmerSizingData implements ShimmerSizingDataNullable {
   }
 }
 
-class ShimmerThemeData implements ShimmerColorData, ShimmerSizingData {
+class ShimmerConstantsNullable {
+  const ShimmerConstantsNullable();
+}
+
+class ShimmerConstants implements ShimmerConstantsNullable {
+  const ShimmerConstants();
+}
+
+class ShimmerThemeData
+    implements ShimmerColorData, ShimmerSizingData, ShimmerConstants {
   @override
   final LinearGradient gradient;
   const ShimmerThemeData({
@@ -57,6 +66,7 @@ class ShimmerThemeData implements ShimmerColorData, ShimmerSizingData {
   factory ShimmerThemeData.from(
     ShimmerColorData colors,
     ShimmerSizingData sizing,
+    ShimmerConstants constants,
   ) {
     return ShimmerThemeData(
       gradient: colors.gradient,
@@ -70,7 +80,10 @@ class ShimmerThemeData implements ShimmerColorData, ShimmerSizingData {
 }
 
 class ShimmerThemeDataNullable
-    implements ShimmerColorDataNullable, ShimmerSizingDataNullable {
+    implements
+        ShimmerColorDataNullable,
+        ShimmerSizingDataNullable,
+        ShimmerConstantsNullable {
   @override
   final LinearGradient? gradient;
   const ShimmerThemeDataNullable({
@@ -109,8 +122,10 @@ ShimmerThemeData getFromContext(
       NomoTheme.maybeOf(context)?.componentColors.shimmerTheme ??
           const ShimmerColorData();
   const globalSizingTheme = ShimmerSizingData();
+  const globalConstants = ShimmerConstants();
   final themeOverride = ShimmerThemeOverride.maybeOf(context);
-  final themeData = ShimmerThemeData.from(globalColorTheme, globalSizingTheme)
+  final themeData = ShimmerThemeData.from(
+          globalColorTheme, globalSizingTheme, globalConstants)
       .copyWith(themeOverride);
   return ShimmerThemeData(
     gradient: widget.gradient ?? themeData.gradient,

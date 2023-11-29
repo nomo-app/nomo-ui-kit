@@ -56,8 +56,19 @@ class NomoTextButtonSizingData implements NomoTextButtonSizingDataNullable {
   }
 }
 
+class NomoTextButtonConstantsNullable {
+  const NomoTextButtonConstantsNullable();
+}
+
+class NomoTextButtonConstants implements NomoTextButtonConstantsNullable {
+  const NomoTextButtonConstants();
+}
+
 class NomoTextButtonThemeData
-    implements NomoTextButtonColorData, NomoTextButtonSizingData {
+    implements
+        NomoTextButtonColorData,
+        NomoTextButtonSizingData,
+        NomoTextButtonConstants {
   @override
   final Color foregroundColor;
   @override
@@ -72,6 +83,7 @@ class NomoTextButtonThemeData
   factory NomoTextButtonThemeData.from(
     NomoTextButtonColorData colors,
     NomoTextButtonSizingData sizing,
+    NomoTextButtonConstants constants,
   ) {
     return NomoTextButtonThemeData(
       foregroundColor: colors.foregroundColor,
@@ -92,7 +104,8 @@ class NomoTextButtonThemeData
 class NomoTextButtonThemeDataNullable
     implements
         NomoTextButtonColorDataNullable,
-        NomoTextButtonSizingDataNullable {
+        NomoTextButtonSizingDataNullable,
+        NomoTextButtonConstantsNullable {
   @override
   final Color? foregroundColor;
   @override
@@ -139,10 +152,11 @@ NomoTextButtonThemeData getFromContext(
   final globalSizingTheme =
       NomoTheme.maybeOf(context)?.componentSizes.textButtonTheme ??
           const NomoTextButtonSizingData();
+  const globalConstants = NomoTextButtonConstants();
   final themeOverride = NomoTextButtonThemeOverride.maybeOf(context);
-  final themeData =
-      NomoTextButtonThemeData.from(globalColorTheme, globalSizingTheme)
-          .copyWith(themeOverride);
+  final themeData = NomoTextButtonThemeData.from(
+          globalColorTheme, globalSizingTheme, globalConstants)
+      .copyWith(themeOverride);
   return NomoTextButtonThemeData(
     foregroundColor: widget.foregroundColor ?? themeData.foregroundColor,
     borderRadius: widget.borderRadius ?? themeData.borderRadius,

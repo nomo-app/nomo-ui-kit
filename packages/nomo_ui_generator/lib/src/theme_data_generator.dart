@@ -71,6 +71,18 @@ class ComponentThemeDataGenerator extends GeneratorForAnnotation<NomoComponentTh
     );
 
     ///
+    /// Constants
+    ///
+
+    final contantsName = "${_className}Constants";
+    final contantsNameNullable = "${_className}ConstantsNullable";
+
+    buffer.write(_constantsNullable(className: contantsNameNullable, constants: visitor.constants));
+    buffer.write(
+      _constants(className: contantsName, constants: visitor.constants, classNameNullable: contantsNameNullable),
+    );
+
+    ///
     /// ThemeData
     ///
 
@@ -84,8 +96,10 @@ class ComponentThemeDataGenerator extends GeneratorForAnnotation<NomoComponentTh
         colordataClassName: colorDataClassName,
         sizingdataClassName: sizingDataClassName,
         themeDataClassNameNullable: themeDataNullableClassName,
+        constantClassName: contantsName,
         colorFields: visitor.colorFields,
         sizingFields: visitor.sizingFields,
+        constants: visitor.constants,
       ),
     );
 
@@ -94,8 +108,10 @@ class ComponentThemeDataGenerator extends GeneratorForAnnotation<NomoComponentTh
         className: themeDataNullableClassName,
         colordataClassNameNullable: colorDataClassNameNullable,
         sizingdataClassNameNullable: sizingDataClassNameNullable,
+        constantsName: contantsNameNullable,
         colorFields: visitor.colorFields,
         sizingFields: visitor.sizingFields,
+        constants: visitor.constants,
       ),
     );
 
@@ -122,6 +138,8 @@ class ComponentThemeDataGenerator extends GeneratorForAnnotation<NomoComponentTh
         overrideThemeInheritedWidgetClassName: themeOverrideInheritedWidgetClassName,
         colorFields: visitor.colorFields,
         sizingFields: visitor.sizingFields,
+        constants: visitor.constants,
+        constantsName: contantsName,
       ),
     );
 
@@ -392,15 +410,17 @@ class ComponentThemeDataGenerator extends GeneratorForAnnotation<NomoComponentTh
     required String colordataClassName,
     required String sizingdataClassName,
     required String themeDataClassNameNullable,
+    required String constantClassName,
     required Map<String, (String, String)> colorFields,
     required Map<String, (String, String)> sizingFields,
+    required Map<String, (String, String)> constants,
   }) {
     final buffer = StringBuffer();
 
-    buffer.writeln("class $className implements $colordataClassName, $sizingdataClassName{");
+    buffer.writeln("class $className implements $colordataClassName, $sizingdataClassName, $constantClassName{");
 
     /// Fields
-    final fields = {...colorFields, ...sizingFields};
+    final fields = {...colorFields, ...sizingFields, ...constants};
 
     for (final field in fields.entries) {
       final (type, value) = field.value;
@@ -427,6 +447,7 @@ class ComponentThemeDataGenerator extends GeneratorForAnnotation<NomoComponentTh
     buffer.writeln("factory $className.from(");
     buffer.writeln("$colordataClassName colors,");
     buffer.writeln("$sizingdataClassName sizing,");
+    buffer.writeln("$constantClassName constants,");
     buffer.writeln(") {");
     buffer.writeln("return $className(");
     for (final name in colorFields.keys) {
@@ -434,6 +455,9 @@ class ComponentThemeDataGenerator extends GeneratorForAnnotation<NomoComponentTh
     }
     for (final name in sizingFields.keys) {
       buffer.writeln("$name: sizing.$name,");
+    }
+    for (final name in constants.keys) {
+      buffer.writeln("$name: constants.$name,");
     }
     buffer.writeln(");");
     buffer.writeln("}");
@@ -443,7 +467,7 @@ class ComponentThemeDataGenerator extends GeneratorForAnnotation<NomoComponentTh
     buffer.writeln("$themeDataClassNameNullable? override");
     buffer.writeln("]) {");
     buffer.writeln("return $className(");
-    for (final name in [...colorFields.keys, ...sizingFields.keys]) {
+    for (final name in [...colorFields.keys, ...sizingFields.keys, ...constants.keys]) {
       buffer.writeln("$name: override?.$name ?? $name,");
     }
 
@@ -462,15 +486,18 @@ String _getThemeDataNullableClass({
   required String className,
   required String colordataClassNameNullable,
   required String sizingdataClassNameNullable,
+  required String constantsName,
   required Map<String, (String, String)> colorFields,
   required Map<String, (String, String)> sizingFields,
+  required Map<String, (String, String)> constants,
 }) {
   final buffer = StringBuffer();
 
-  buffer.writeln("class $className implements $colordataClassNameNullable, $sizingdataClassNameNullable{");
+  buffer.writeln(
+      "class $className implements $colordataClassNameNullable, $sizingdataClassNameNullable, $constantsName{");
 
   /// Fields
-  final fields = {...colorFields, ...sizingFields};
+  final fields = {...colorFields, ...sizingFields, ...constants};
 
   for (final field in fields.entries) {
     final (type, _) = field.value;
@@ -503,8 +530,10 @@ String _getFromContext({
   required String colorDataClassName,
   required String themeName,
   required String overrideThemeInheritedWidgetClassName,
+  required String constantsName,
   required Map<String, (String, String)> colorFields,
   required Map<String, (String, String)> sizingFields,
+  required Map<String, (String, String)> constants,
 }) {
   final buffer = StringBuffer();
 
@@ -526,19 +555,99 @@ String _getFromContext({
     buffer.writeln("const globalSizingTheme = $sizingDataClassName();");
   }
 
+  if (constants.isNotEmpty) {
+    buffer
+        .writeln("final globalConstants = NomoTheme.maybeOf(context)?.constants.$themeName ?? const $constantsName();");
+  } else {
+    buffer.writeln("const globalConstants = $constantsName();");
+  }
+
   buffer.writeln("final themeOverride = $overrideThemeInheritedWidgetClassName.maybeOf(context);");
 
   buffer.writeln(
-      "final themeData = $themeDataClassName.from(globalColorTheme, globalSizingTheme).copyWith(themeOverride);");
+      "final themeData = $themeDataClassName.from(globalColorTheme, globalSizingTheme, globalConstants).copyWith(themeOverride);");
 
   buffer.writeln("return $themeDataClassName(");
-  for (final name in [...colorFields.keys, ...sizingFields.keys]) {
+  for (final name in [...colorFields.keys, ...sizingFields.keys, ...constants.keys]) {
     buffer.writeln("$name: widget.$name ?? themeData.$name,");
   }
 
   buffer.writeln(");");
   buffer.writeln("}");
 
+  final content = buffer.toString();
+  buffer.clear();
+  return content;
+}
+
+///
+/// Constants
+///
+String _constantsNullable({
+  required String className,
+  required Map<String, (String, String)> constants,
+}) {
+  final buffer = StringBuffer();
+
+  buffer.writeln("class $className {");
+
+  for (var colorfieldEntry in constants.entries) {
+    final (type, _) = colorfieldEntry.value;
+    final name = colorfieldEntry.key;
+
+    buffer.writeln("final ${type}? $name;");
+  }
+
+  /// Constructor
+  buffer.writeln("const $className(");
+  if (constants.isNotEmpty) {
+    buffer.writeln("{");
+    for (var name in constants.keys) {
+      buffer.writeln("this.$name,");
+    }
+
+    buffer.writeln("}");
+  }
+  buffer.writeln(");");
+
+  buffer.writeln("}");
+  final content = buffer.toString();
+  buffer.clear();
+  return content;
+}
+
+String _constants({
+  required String className,
+  required String classNameNullable,
+  required Map<String, (String, String)> constants,
+}) {
+  final buffer = StringBuffer();
+
+  buffer.writeln("class $className implements $classNameNullable{");
+
+  for (var colorfieldEntry in constants.entries) {
+    final (type, value) = colorfieldEntry.value;
+
+    final name = colorfieldEntry.key;
+    buffer.writeln("@override");
+    buffer.writeln("final ${type.getNullablePostfix(value)} $name;");
+  }
+
+  /// Constructor
+  buffer.writeln("const $className(");
+  if (constants.isNotEmpty) {
+    buffer.writeln("{");
+    for (var colorfieldEntry in constants.entries) {
+      final (type, value) = colorfieldEntry.value;
+      final name = colorfieldEntry.key;
+      buffer.writeln("this.$name = ${(type, value).constPrefix} $value,");
+    }
+
+    buffer.writeln("}");
+  }
+  buffer.writeln(");");
+
+  buffer.writeln("}");
   final content = buffer.toString();
   buffer.clear();
   return content;

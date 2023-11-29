@@ -4,6 +4,7 @@ import 'package:collection/collection.dart';
 
 const colorField = "@NomoColorField";
 const sizingField = "@NomoSizingField";
+const constantField = "@NomoConstant";
 
 class ModelVisitor extends SimpleElementVisitor {
   String? className;
@@ -14,16 +15,15 @@ class ModelVisitor extends SimpleElementVisitor {
 
   Map<String, (String, String)> sizingFields = {};
 
+  Map<String, (String, String)> constants = {};
+
   @override
   visitConstructorElement(ConstructorElement element) {
     className = element.type.returnType.toString();
-
-    className = className?.replaceAll('Style', '');
   }
 
   @override
   visitFieldElement(FieldElement element) {
-    final type = element.type.toString().replaceAll('?', '');
     final colorFieldAnnotation = element.metadata.singleWhereOrNull(
       (annotation) => annotation.toSource().startsWith(colorField),
     );
@@ -37,11 +37,9 @@ class ModelVisitor extends SimpleElementVisitor {
         int last_i = typeString.lastIndexOf('>');
         final type = typeString.substring(first_i + 1, last_i).typeOverride;
 
-        final valueString =
-            colorFieldAnnotation.toSource().replaceAll(sizingField, '');
+        final valueString = colorFieldAnnotation.toSource().replaceAll(sizingField, '');
         first_i = valueString.indexOf('(');
-        final value =
-            valueString.substring(first_i + 1, valueString.length - 1);
+        final value = valueString.substring(first_i + 1, valueString.length - 1);
 
         colorFields[element.name] = (type, value);
       }
@@ -60,8 +58,7 @@ class ModelVisitor extends SimpleElementVisitor {
       int last_i = typeString.lastIndexOf('>');
       final type = typeString.substring(first_i + 1, last_i).typeOverride;
 
-      final valueString =
-          sizingFieldAnnotation.toSource().replaceAll(sizingField, '');
+      final valueString = sizingFieldAnnotation.toSource().replaceAll(sizingField, '');
       first_i = valueString.indexOf('(');
       final value = valueString.substring(first_i + 1, valueString.length - 1);
 
@@ -70,8 +67,27 @@ class ModelVisitor extends SimpleElementVisitor {
       return;
     }
 
-    fields[element.name] =
-        element.type.getDisplayString(withNullability: false);
+    final constantFieldAnnotation = element.metadata.singleWhereOrNull(
+      (annotation) => annotation.toSource().startsWith(constantField),
+    );
+
+    if (constantFieldAnnotation != null) {
+      final typeString = constantFieldAnnotation.element.toString();
+
+      int first_i = typeString.indexOf('<');
+      int last_i = typeString.lastIndexOf('>');
+      final type = typeString.substring(first_i + 1, last_i).typeOverride;
+
+      final valueString = constantFieldAnnotation.toSource().replaceAll(sizingField, '');
+      first_i = valueString.indexOf('(');
+      final value = valueString.substring(first_i + 1, valueString.length - 1);
+
+      constants[element.name] = (type, value);
+
+      return;
+    }
+
+    fields[element.name] = element.type.getDisplayString(withNullability: false);
   }
 }
 

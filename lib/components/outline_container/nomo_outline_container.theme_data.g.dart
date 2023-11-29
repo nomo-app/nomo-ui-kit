@@ -75,8 +75,20 @@ class NomoOutlineContainerSizingData
   }
 }
 
+class NomoOutlineContainerConstantsNullable {
+  const NomoOutlineContainerConstantsNullable();
+}
+
+class NomoOutlineContainerConstants
+    implements NomoOutlineContainerConstantsNullable {
+  const NomoOutlineContainerConstants();
+}
+
 class NomoOutlineContainerThemeData
-    implements NomoOutlineContainerColorData, NomoOutlineContainerSizingData {
+    implements
+        NomoOutlineContainerColorData,
+        NomoOutlineContainerSizingData,
+        NomoOutlineContainerConstants {
   @override
   final Color foreground;
   @override
@@ -100,6 +112,7 @@ class NomoOutlineContainerThemeData
   factory NomoOutlineContainerThemeData.from(
     NomoOutlineContainerColorData colors,
     NomoOutlineContainerSizingData sizing,
+    NomoOutlineContainerConstants constants,
   ) {
     return NomoOutlineContainerThemeData(
       foreground: colors.foreground,
@@ -126,7 +139,8 @@ class NomoOutlineContainerThemeData
 class NomoOutlineContainerThemeDataNullable
     implements
         NomoOutlineContainerColorDataNullable,
-        NomoOutlineContainerSizingDataNullable {
+        NomoOutlineContainerSizingDataNullable,
+        NomoOutlineContainerConstantsNullable {
   @override
   final Color? foreground;
   @override
@@ -182,10 +196,11 @@ NomoOutlineContainerThemeData getFromContext(
   final globalSizingTheme =
       NomoTheme.maybeOf(context)?.componentSizes.outlineContainerTheme ??
           const NomoOutlineContainerSizingData();
+  const globalConstants = NomoOutlineContainerConstants();
   final themeOverride = NomoOutlineContainerThemeOverride.maybeOf(context);
-  final themeData =
-      NomoOutlineContainerThemeData.from(globalColorTheme, globalSizingTheme)
-          .copyWith(themeOverride);
+  final themeData = NomoOutlineContainerThemeData.from(
+          globalColorTheme, globalSizingTheme, globalConstants)
+      .copyWith(themeOverride);
   return NomoOutlineContainerThemeData(
     foreground: widget.foreground ?? themeData.foreground,
     background: widget.background ?? themeData.background,

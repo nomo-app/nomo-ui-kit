@@ -3,9 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nomo_ui_kit/components/app/app.dart';
+import 'package:nomo_ui_kit/components/input/textInput/nomo_input.dart';
 import 'package:nomo_ui_kit/components/outline_container/nomo_outline_container.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 import 'package:nomo_ui_kit/theme/sub/nomo_color_theme.dart';
+import 'package:nomo_ui_kit/theme/sub/nomo_constants.dart';
 import 'package:nomo_ui_kit/theme/sub/nomo_sizing_theme.dart';
 
 final typography = NomoTypographyTheme(
@@ -15,6 +17,12 @@ final typography = NomoTypographyTheme(
   h1: GoogleFonts.nunito(),
   h2: GoogleFonts.nunito(),
   h3: GoogleFonts.nunito(),
+);
+
+const constants = NomoComponentConstants(
+  inputTheme: NomoInputConstants(
+    duration: Duration(milliseconds: 200),
+  ),
 );
 
 enum ColorMode {

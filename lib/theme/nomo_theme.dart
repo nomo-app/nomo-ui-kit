@@ -2,6 +2,7 @@ library nomo_theme;
 
 import 'package:flutter/material.dart';
 import 'package:nomo_ui_kit/theme/sub/nomo_color_theme.dart';
+import 'package:nomo_ui_kit/theme/sub/nomo_constants.dart';
 import 'package:nomo_ui_kit/theme/sub/nomo_sizing_theme.dart';
 
 export 'dart:ui';
@@ -16,6 +17,7 @@ class NomoThemeData {
   NomoThemeData({
     required this.colorTheme,
     required this.sizingTheme,
+    required this.constants,
     required NomoTypographyTheme textTheme,
   }) : typographyTheme = textTheme.copyWith(
           colors: colorTheme.colors,
@@ -24,6 +26,7 @@ class NomoThemeData {
   final NomoColorThemeData colorTheme;
   final NomoTypographyTheme typographyTheme;
   final NomoSizingThemeData sizingTheme;
+  final NomoComponentConstants constants;
 
   NomoColors get colors => colorTheme.colors;
   NomoComponentColors get componentColors => colorTheme.components;
@@ -36,6 +39,7 @@ class NomoThemeData {
       colorTheme: NomoColorThemeData.lerp(a.colorTheme, b.colorTheme, t),
       sizingTheme: NomoSizingThemeData.lerp(a.sizingTheme, b.sizingTheme, t),
       textTheme: t < 0.5 ? a.typographyTheme : b.typographyTheme,
+      constants: t < 0.5 ? a.constants : b.constants,
     );
   }
 
@@ -43,6 +47,7 @@ class NomoThemeData {
     NomoColorThemeData? colorTheme,
     NomoTypographyTheme? typographyTheme,
     NomoSizingThemeData? sizingTheme,
+    NomoComponentConstants? constants,
   }) {
     return NomoThemeData(
       colorTheme: colorTheme ?? this.colorTheme,
@@ -51,6 +56,7 @@ class NomoThemeData {
         sizes: sizingTheme?.sizes,
       ),
       sizingTheme: sizingTheme ?? this.sizingTheme,
+      constants: constants ?? this.constants,
     );
   }
 }

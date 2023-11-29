@@ -83,8 +83,20 @@ class SecondaryNomoButtonSizingData
   }
 }
 
+class SecondaryNomoButtonConstantsNullable {
+  const SecondaryNomoButtonConstantsNullable();
+}
+
+class SecondaryNomoButtonConstants
+    implements SecondaryNomoButtonConstantsNullable {
+  const SecondaryNomoButtonConstants();
+}
+
 class SecondaryNomoButtonThemeData
-    implements SecondaryNomoButtonColorData, SecondaryNomoButtonSizingData {
+    implements
+        SecondaryNomoButtonColorData,
+        SecondaryNomoButtonSizingData,
+        SecondaryNomoButtonConstants {
   @override
   final Color backgroundColor;
   @override
@@ -112,6 +124,7 @@ class SecondaryNomoButtonThemeData
   factory SecondaryNomoButtonThemeData.from(
     SecondaryNomoButtonColorData colors,
     SecondaryNomoButtonSizingData sizing,
+    SecondaryNomoButtonConstants constants,
   ) {
     return SecondaryNomoButtonThemeData(
       backgroundColor: colors.backgroundColor,
@@ -140,7 +153,8 @@ class SecondaryNomoButtonThemeData
 class SecondaryNomoButtonThemeDataNullable
     implements
         SecondaryNomoButtonColorDataNullable,
-        SecondaryNomoButtonSizingDataNullable {
+        SecondaryNomoButtonSizingDataNullable,
+        SecondaryNomoButtonConstantsNullable {
   @override
   final Color? backgroundColor;
   @override
@@ -199,10 +213,11 @@ SecondaryNomoButtonThemeData getFromContext(
   final globalSizingTheme =
       NomoTheme.maybeOf(context)?.componentSizes.secondaryButtonTheme ??
           const SecondaryNomoButtonSizingData();
+  const globalConstants = SecondaryNomoButtonConstants();
   final themeOverride = SecondaryNomoButtonThemeOverride.maybeOf(context);
-  final themeData =
-      SecondaryNomoButtonThemeData.from(globalColorTheme, globalSizingTheme)
-          .copyWith(themeOverride);
+  final themeData = SecondaryNomoButtonThemeData.from(
+          globalColorTheme, globalSizingTheme, globalConstants)
+      .copyWith(themeOverride);
   return SecondaryNomoButtonThemeData(
     backgroundColor: widget.backgroundColor ?? themeData.backgroundColor,
     foregroundColor: widget.foregroundColor ?? themeData.foregroundColor,

@@ -69,8 +69,19 @@ class PrimaryNomoButtonSizingData
   }
 }
 
+class PrimaryNomoButtonConstantsNullable {
+  const PrimaryNomoButtonConstantsNullable();
+}
+
+class PrimaryNomoButtonConstants implements PrimaryNomoButtonConstantsNullable {
+  const PrimaryNomoButtonConstants();
+}
+
 class PrimaryNomoButtonThemeData
-    implements PrimaryNomoButtonColorData, PrimaryNomoButtonSizingData {
+    implements
+        PrimaryNomoButtonColorData,
+        PrimaryNomoButtonSizingData,
+        PrimaryNomoButtonConstants {
   @override
   final Color backgroundColor;
   @override
@@ -91,6 +102,7 @@ class PrimaryNomoButtonThemeData
   factory PrimaryNomoButtonThemeData.from(
     PrimaryNomoButtonColorData colors,
     PrimaryNomoButtonSizingData sizing,
+    PrimaryNomoButtonConstants constants,
   ) {
     return PrimaryNomoButtonThemeData(
       backgroundColor: colors.backgroundColor,
@@ -115,7 +127,8 @@ class PrimaryNomoButtonThemeData
 class PrimaryNomoButtonThemeDataNullable
     implements
         PrimaryNomoButtonColorDataNullable,
-        PrimaryNomoButtonSizingDataNullable {
+        PrimaryNomoButtonSizingDataNullable,
+        PrimaryNomoButtonConstantsNullable {
   @override
   final Color? backgroundColor;
   @override
@@ -168,10 +181,11 @@ PrimaryNomoButtonThemeData getFromContext(
   final globalSizingTheme =
       NomoTheme.maybeOf(context)?.componentSizes.primaryButtonTheme ??
           const PrimaryNomoButtonSizingData();
+  const globalConstants = PrimaryNomoButtonConstants();
   final themeOverride = PrimaryNomoButtonThemeOverride.maybeOf(context);
-  final themeData =
-      PrimaryNomoButtonThemeData.from(globalColorTheme, globalSizingTheme)
-          .copyWith(themeOverride);
+  final themeData = PrimaryNomoButtonThemeData.from(
+          globalColorTheme, globalSizingTheme, globalConstants)
+      .copyWith(themeOverride);
   return PrimaryNomoButtonThemeData(
     backgroundColor: widget.backgroundColor ?? themeData.backgroundColor,
     foregroundColor: widget.foregroundColor ?? themeData.foregroundColor,

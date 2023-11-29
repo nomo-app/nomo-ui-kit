@@ -14,6 +14,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:nomo_ui_kit/components/text/nomo_text.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
+import 'package:nomo_ui_kit/utils/tweens.dart';
 
 export 'package:flutter/services.dart'
     show SmartDashesType, SmartQuotesType, TextCapitalization, TextInputAction, TextInputType;
@@ -150,10 +151,12 @@ class CupertinoInput extends StatefulWidget {
   ///  * [maxLength], which discusses the precise meaning of "number of
   ///    characters" and how it may differ from the intuitive meaning.
   const CupertinoInput({
-    required this.decorationAnimation,
+    required this.decorationTween,
     required this.placeholderStyle,
     required this.titleStyle,
     required this.usePlaceholderAsTitle,
+    required this.duration,
+    required this.curve,
     super.key,
     this.controller,
     this.focusNode,
@@ -254,7 +257,7 @@ class CupertinoInput extends StatefulWidget {
   ///
   /// Defaults to having a rounded rectangle grey border and can be null to have
   /// no box decoration.
-  final Animation<BoxDecoration> decorationAnimation;
+  final ValueNotifier<BoxDecorationTween?> decorationTween;
 
   /// Padding around the text entry area between the [prefix] and [suffix]
   /// or the clear button when [clearButtonMode] is not never.
@@ -283,6 +286,10 @@ class CupertinoInput extends StatefulWidget {
   final TextStyle placeholderStyle;
 
   final TextStyle titleStyle;
+
+  final Duration duration;
+
+  final Curve curve;
 
   /// An optional [Widget] to display before the text.
   final Widget? prefix;
@@ -618,7 +625,7 @@ class CupertinoInput extends StatefulWidget {
     properties.add(DiagnosticsProperty<TextEditingController>('controller', controller, defaultValue: null));
     properties.add(DiagnosticsProperty<FocusNode>('focusNode', focusNode, defaultValue: null));
     properties.add(DiagnosticsProperty<UndoHistoryController>('undoController', undoController, defaultValue: null));
-    properties.add(DiagnosticsProperty<Animation<BoxDecoration>>('decorationAnimation', decorationAnimation));
+    properties.add(DiagnosticsProperty<ValueNotifier<BoxDecorationTween?>>('decorationTween', decorationTween));
     properties.add(DiagnosticsProperty<EdgeInsetsGeometry>('padding', padding));
     properties.add(StringProperty('placeholder', placeholder));
     properties.add(DiagnosticsProperty<TextStyle>('placeholderStyle', placeholderStyle));
@@ -926,29 +933,12 @@ class _CupertinoInputState extends State<CupertinoInput>
         );
   }
 
-  bool _showClearButton(TextEditingValue text) {
-    return _shouldShowAttachment(
-      attachment: widget.clearButtonMode,
-      hasText: text.text.isNotEmpty,
-    );
-  }
-
   // True if any surrounding decoration widgets will be shown.
   bool get _hasDecoration {
     return widget.placeholder != null ||
         widget.clearButtonMode != OverlayVisibilityMode.never ||
         widget.prefix != null ||
         widget.suffix != null;
-  }
-
-  // Provide default behavior if widget.textAlignVertical is not set.
-  // CupertinoTextField has top alignment by default, unless it has decoration
-  // like a prefix or suffix, in which case it's aligned to the center.
-  TextAlignVertical get _textAlignVertical {
-    if (widget.textAlignVertical != null) {
-      return widget.textAlignVertical!;
-    }
-    return _hasDecoration ? TextAlignVertical.center : TextAlignVertical.top;
   }
 
   Widget _addTextDependentAttachments(
@@ -982,13 +972,13 @@ class _CupertinoInputState extends State<CupertinoInput>
                 children: <Widget>[
                   if (widget.placeholder != null && usePlaceholderAsTitle)
                     AnimatedPositioned(
-                      duration: Duration(milliseconds: 200),
+                      duration: widget.duration,
                       top: hasFocus || text.text.isNotEmpty ? 0 : 12,
                       child: Padding(
                         padding: widget.padding,
                         child: AnimatedNomoDefaultTextStyle(
                           style: hasFocus || text.text.isNotEmpty ? titleStyle : placeholderStyle,
-                          duration: Duration(milliseconds: 200),
+                          duration: widget.duration,
                           child: NomoText(
                             widget.placeholder!,
                             maxLines: widget.maxLines,
@@ -1208,14 +1198,26 @@ class _CupertinoInputState extends State<CupertinoInput>
       child: TextFieldTapRegion(
         child: IgnorePointer(
           ignoring: !enabled,
-          child: AnimatedBuilder(
-            animation: widget.decorationAnimation,
-            builder: (context, child) {
-              final decoration = widget.decorationAnimation.value;
-              return Container(
-                decoration: decoration,
-                color: !enabled ? disabledColor : null,
-                child: child,
+          child: ValueListenableBuilder(
+            valueListenable: widget.decorationTween,
+            builder: (context, decoration, child) {
+              if (decoration == null) {
+                return Container(
+                  color: !enabled ? disabledColor : null,
+                  child: child,
+                );
+              }
+              return TweenAnimationBuilder(
+                tween: decoration,
+                duration: widget.duration,
+                curve: widget.curve,
+                builder: (context, decoration, _) {
+                  return Container(
+                    decoration: decoration,
+                    color: !enabled ? disabledColor : null,
+                    child: child,
+                  );
+                },
               );
             },
             child: _selectionGestureDetectorBuilder.buildGestureDetector(

@@ -99,8 +99,19 @@ class NomoVerticalMenuSizingData implements NomoVerticalMenuSizingDataNullable {
   }
 }
 
+class NomoVerticalMenuConstantsNullable {
+  const NomoVerticalMenuConstantsNullable();
+}
+
+class NomoVerticalMenuConstants implements NomoVerticalMenuConstantsNullable {
+  const NomoVerticalMenuConstants();
+}
+
 class NomoVerticalMenuThemeData
-    implements NomoVerticalMenuColorData, NomoVerticalMenuSizingData {
+    implements
+        NomoVerticalMenuColorData,
+        NomoVerticalMenuSizingData,
+        NomoVerticalMenuConstants {
   @override
   final Color foreground;
   @override
@@ -136,6 +147,7 @@ class NomoVerticalMenuThemeData
   factory NomoVerticalMenuThemeData.from(
     NomoVerticalMenuColorData colors,
     NomoVerticalMenuSizingData sizing,
+    NomoVerticalMenuConstants constants,
   ) {
     return NomoVerticalMenuThemeData(
       foreground: colors.foreground,
@@ -170,7 +182,8 @@ class NomoVerticalMenuThemeData
 class NomoVerticalMenuThemeDataNullable
     implements
         NomoVerticalMenuColorDataNullable,
-        NomoVerticalMenuSizingDataNullable {
+        NomoVerticalMenuSizingDataNullable,
+        NomoVerticalMenuConstantsNullable {
   @override
   final Color? foreground;
   @override
@@ -238,10 +251,11 @@ NomoVerticalMenuThemeData getFromContext(
   final globalSizingTheme =
       NomoTheme.maybeOf(context)?.componentSizes.verticalMenuTheme ??
           const NomoVerticalMenuSizingData();
+  const globalConstants = NomoVerticalMenuConstants();
   final themeOverride = NomoVerticalMenuThemeOverride.maybeOf(context);
-  final themeData =
-      NomoVerticalMenuThemeData.from(globalColorTheme, globalSizingTheme)
-          .copyWith(themeOverride);
+  final themeData = NomoVerticalMenuThemeData.from(
+          globalColorTheme, globalSizingTheme, globalConstants)
+      .copyWith(themeOverride);
   return NomoVerticalMenuThemeData(
     foreground: widget.foreground ?? themeData.foreground,
     background: widget.background ?? themeData.background,

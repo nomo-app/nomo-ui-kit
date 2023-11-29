@@ -46,7 +46,16 @@ class LoadingSizingData implements LoadingSizingDataNullable {
   }
 }
 
-class LoadingThemeData implements LoadingColorData, LoadingSizingData {
+class LoadingConstantsNullable {
+  const LoadingConstantsNullable();
+}
+
+class LoadingConstants implements LoadingConstantsNullable {
+  const LoadingConstants();
+}
+
+class LoadingThemeData
+    implements LoadingColorData, LoadingSizingData, LoadingConstants {
   @override
   final Color color;
   @override
@@ -58,6 +67,7 @@ class LoadingThemeData implements LoadingColorData, LoadingSizingData {
   factory LoadingThemeData.from(
     LoadingColorData colors,
     LoadingSizingData sizing,
+    LoadingConstants constants,
   ) {
     return LoadingThemeData(
       color: colors.color,
@@ -73,7 +83,10 @@ class LoadingThemeData implements LoadingColorData, LoadingSizingData {
 }
 
 class LoadingThemeDataNullable
-    implements LoadingColorDataNullable, LoadingSizingDataNullable {
+    implements
+        LoadingColorDataNullable,
+        LoadingSizingDataNullable,
+        LoadingConstantsNullable {
   @override
   final Color? color;
   @override
@@ -115,8 +128,10 @@ LoadingThemeData getFromContext(
       NomoTheme.maybeOf(context)?.componentColors.loadingTheme ??
           const LoadingColorData();
   const globalSizingTheme = LoadingSizingData();
+  const globalConstants = LoadingConstants();
   final themeOverride = LoadingThemeOverride.maybeOf(context);
-  final themeData = LoadingThemeData.from(globalColorTheme, globalSizingTheme)
+  final themeData = LoadingThemeData.from(
+          globalColorTheme, globalSizingTheme, globalConstants)
       .copyWith(themeOverride);
   return LoadingThemeData(
     color: widget.color ?? themeData.color,

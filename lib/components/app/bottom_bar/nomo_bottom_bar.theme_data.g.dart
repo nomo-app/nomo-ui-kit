@@ -92,8 +92,19 @@ class NomoBottomBarSizingData implements NomoBottomBarSizingDataNullable {
   }
 }
 
+class NomoBottomBarConstantsNullable {
+  const NomoBottomBarConstantsNullable();
+}
+
+class NomoBottomBarConstants implements NomoBottomBarConstantsNullable {
+  const NomoBottomBarConstants();
+}
+
 class NomoBottomBarThemeData
-    implements NomoBottomBarColorData, NomoBottomBarSizingData {
+    implements
+        NomoBottomBarColorData,
+        NomoBottomBarSizingData,
+        NomoBottomBarConstants {
   @override
   final Color foreground;
   @override
@@ -126,6 +137,7 @@ class NomoBottomBarThemeData
   factory NomoBottomBarThemeData.from(
     NomoBottomBarColorData colors,
     NomoBottomBarSizingData sizing,
+    NomoBottomBarConstants constants,
   ) {
     return NomoBottomBarThemeData(
       foreground: colors.foreground,
@@ -155,7 +167,10 @@ class NomoBottomBarThemeData
 }
 
 class NomoBottomBarThemeDataNullable
-    implements NomoBottomBarColorDataNullable, NomoBottomBarSizingDataNullable {
+    implements
+        NomoBottomBarColorDataNullable,
+        NomoBottomBarSizingDataNullable,
+        NomoBottomBarConstantsNullable {
   @override
   final Color? foreground;
   @override
@@ -220,10 +235,11 @@ NomoBottomBarThemeData getFromContext(
   final globalSizingTheme =
       NomoTheme.maybeOf(context)?.componentSizes.bottomBarTheme ??
           const NomoBottomBarSizingData();
+  const globalConstants = NomoBottomBarConstants();
   final themeOverride = NomoBottomBarThemeOverride.maybeOf(context);
-  final themeData =
-      NomoBottomBarThemeData.from(globalColorTheme, globalSizingTheme)
-          .copyWith(themeOverride);
+  final themeData = NomoBottomBarThemeData.from(
+          globalColorTheme, globalSizingTheme, globalConstants)
+      .copyWith(themeOverride);
   return NomoBottomBarThemeData(
     foreground: widget.foreground ?? themeData.foreground,
     background: widget.background ?? themeData.background,

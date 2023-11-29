@@ -74,7 +74,16 @@ class NomoAppBarSizingData implements NomoAppBarSizingDataNullable {
   }
 }
 
-class NomoAppBarThemeData implements NomoAppBarColorData, NomoAppBarSizingData {
+class NomoAppBarConstantsNullable {
+  const NomoAppBarConstantsNullable();
+}
+
+class NomoAppBarConstants implements NomoAppBarConstantsNullable {
+  const NomoAppBarConstants();
+}
+
+class NomoAppBarThemeData
+    implements NomoAppBarColorData, NomoAppBarSizingData, NomoAppBarConstants {
   @override
   final BorderRadiusGeometry? borderRadius;
   @override
@@ -98,6 +107,7 @@ class NomoAppBarThemeData implements NomoAppBarColorData, NomoAppBarSizingData {
   factory NomoAppBarThemeData.from(
     NomoAppBarColorData colors,
     NomoAppBarSizingData sizing,
+    NomoAppBarConstants constants,
   ) {
     return NomoAppBarThemeData(
       borderRadius: colors.borderRadius,
@@ -121,7 +131,10 @@ class NomoAppBarThemeData implements NomoAppBarColorData, NomoAppBarSizingData {
 }
 
 class NomoAppBarThemeDataNullable
-    implements NomoAppBarColorDataNullable, NomoAppBarSizingDataNullable {
+    implements
+        NomoAppBarColorDataNullable,
+        NomoAppBarSizingDataNullable,
+        NomoAppBarConstantsNullable {
   @override
   final BorderRadiusGeometry? borderRadius;
   @override
@@ -177,10 +190,11 @@ NomoAppBarThemeData getFromContext(
   final globalSizingTheme =
       NomoTheme.maybeOf(context)?.componentSizes.appBarTheme ??
           const NomoAppBarSizingData();
+  const globalConstants = NomoAppBarConstants();
   final themeOverride = NomoAppBarThemeOverride.maybeOf(context);
-  final themeData =
-      NomoAppBarThemeData.from(globalColorTheme, globalSizingTheme)
-          .copyWith(themeOverride);
+  final themeData = NomoAppBarThemeData.from(
+          globalColorTheme, globalSizingTheme, globalConstants)
+      .copyWith(themeOverride);
   return NomoAppBarThemeData(
     borderRadius: widget.borderRadius ?? themeData.borderRadius,
     backgroundColor: widget.backgroundColor ?? themeData.backgroundColor,
