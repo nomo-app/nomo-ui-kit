@@ -344,14 +344,14 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
                 keyboardAppearance: context.colors.brightness,
                 keyboardType: widget.keyboardType,
                 style: widget.style ?? defaultTextStyle,
-                selectionControls: switch (PlatformInfo.isCupertino) {
-                  true when PlatformInfo.isDesktop => CupertinoDesktopTextSelectionControls(),
+                selectionControls: switch (PlatformInfo.I.isCupertino) {
+                  true when PlatformInfo.I.isCupertino => CupertinoDesktopTextSelectionControls(),
                   true => CupertinoTextSelectionControls(),
-                  false when PlatformInfo.isDesktop => DesktopTextSelectionControls(),
+                  false when PlatformInfo.I.isCupertino => DesktopTextSelectionControls(),
                   false => MaterialTextSelectionControls(),
                 },
                 contextMenuBuilder: (context, editableTextState) {
-                  return switch (PlatformInfo.isCupertino) {
+                  return switch (PlatformInfo.I.isCupertino) {
                     true => CupertinoAdaptiveTextSelectionToolbar.editableText(
                         editableTextState: editableTextState,
                       ),
