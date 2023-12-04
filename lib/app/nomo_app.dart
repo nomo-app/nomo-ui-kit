@@ -22,8 +22,7 @@ class NomoApp extends StatefulWidget {
     super.key,
     this.localizationDelegate,
     this.currentLocale,
-    this.defaultPageTransistion =
-        const PageSharedAxisTransition(type: SharedAxisTransitionType.horizontal, fillColor: Colors.transparent),
+    this.defaultPageTransistion = const PageFadeTransition(),
   });
   final Iterable<RouteInfo> routes;
   final PageTransition defaultPageTransistion;
