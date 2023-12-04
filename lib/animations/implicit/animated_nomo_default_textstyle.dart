@@ -5,7 +5,7 @@ import 'package:nomo_ui_kit/components/text/nomo_text.dart';
 class AnimatedNomoDefaultTextStyle extends ImplicitlyAnimatedWidget {
   /// Creates a widget that animates the default text style implicitly.
   ///
-  /// The [child], [style], [softWrap], [overflow], [curve], and [duration]
+  /// The [child], [style], [curve], and [duration]
   /// arguments must not be null.
   const AnimatedNomoDefaultTextStyle({
     required this.child,

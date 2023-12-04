@@ -30,7 +30,7 @@ class NomoScaffold extends StatefulWidget {
   final Widget? drawer;
   final Widget? endDrawer;
 
-  @NomoSizingField(EdgeInsets.all(0.0))
+  @NomoSizingField(EdgeInsets.zero)
   final EdgeInsetsGeometry? padding;
 
   @NomoColorField(Colors.white)
@@ -43,19 +43,13 @@ class NomoScaffold extends StatefulWidget {
   final bool? showSider;
 
   static ScaffoldState of(BuildContext context) {
-    final result = context
-        .findAncestorStateOfType<_NomoScaffoldState>()!
-        .scaffoldKey
-        .currentState!;
+    final result = context.findAncestorStateOfType<_NomoScaffoldState>()!.scaffoldKey.currentState!;
 
     return result;
   }
 
   static ScaffoldState? maybeOf(BuildContext context) {
-    final result = context
-        .findAncestorStateOfType<_NomoScaffoldState>()
-        ?.scaffoldKey
-        .currentState;
+    final result = context.findAncestorStateOfType<_NomoScaffoldState>()?.scaffoldKey.currentState;
 
     return result;
   }

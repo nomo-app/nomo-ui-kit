@@ -12,8 +12,6 @@ class DialogWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final pageIndexNotifier = ValueNotifier(0);
-
     return Container(
       width: MediaQuery.of(context).size.width,
       height: 500,
@@ -96,11 +94,8 @@ class DialogWrapper extends StatelessWidget {
             items: const [
               NomoDropdownItem<int>(displayText: "Item 1", value: 1),
               NomoDropdownItem<int>(
-                  displayText:
-                      "Item 2 is a very long item and it will fit insid the dropdown menu",
-                  value: 2),
-              NomoDropdownItem<int>(
-                  displayText: "Item 3 is kinda long", value: 3),
+                  displayText: "Item 2 is a very long item and it will fit insid the dropdown menu", value: 2),
+              NomoDropdownItem<int>(displayText: "Item 3 is kinda long", value: 3),
               NomoDropdownItem<int>(displayText: "Item 4", value: 4),
               NomoDropdownItem<int>(displayText: "Item 5", value: 5),
             ],
@@ -146,8 +141,7 @@ class DialogWrapper extends StatelessWidget {
     );
   }
 
-  WoltModalSheetPage page2(
-      BuildContext modalSheetContext, ValueNotifier<int> pageIndexNotifier) {
+  WoltModalSheetPage page2(BuildContext modalSheetContext, ValueNotifier<int> pageIndexNotifier) {
     return WoltModalSheetPage.withCustomSliverList(
       stickyActionBar: Padding(
         padding: const EdgeInsets.fromLTRB(50, 50 / 4, 50, 50),
@@ -200,8 +194,7 @@ class DialogWrapper extends StatelessWidget {
     );
   }
 
-  WoltModalSheetPage page1(
-      BuildContext modalSheetContext, ValueNotifier<int> pageIndexNotifier) {
+  WoltModalSheetPage page1(BuildContext modalSheetContext, ValueNotifier<int> pageIndexNotifier) {
     return WoltModalSheetPage.withSingleChild(
       hasSabGradient: false,
       stickyActionBar: Padding(
@@ -218,8 +211,7 @@ class DialogWrapper extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             ElevatedButton(
-              onPressed: () =>
-                  pageIndexNotifier.value = pageIndexNotifier.value + 1,
+              onPressed: () => pageIndexNotifier.value = pageIndexNotifier.value + 1,
               child: const SizedBox(
                 height: 20,
                 width: double.infinity,

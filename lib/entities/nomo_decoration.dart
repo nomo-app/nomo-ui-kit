@@ -10,7 +10,7 @@ class NomoDecoration extends BoxDecoration {
     super.image,
     super.shape,
     this.elevation = 0,
-    this.elevationOffset = const Offset(0, 0),
+    this.elevationOffset = Offset.zero,
     this.blurRadiusK = 2,
     this.spreadRadiusK = 0,
     this.shadowColor = Colors.black12,

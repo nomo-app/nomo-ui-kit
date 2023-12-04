@@ -14,5 +14,6 @@ linter:
     avoid_positional_boolean_parameters: false
     sort_pub_dependencies: false
     prefer_constructors_over_static_methods: false
+    no_leading_underscores_for_local_identifiers: false
   
 

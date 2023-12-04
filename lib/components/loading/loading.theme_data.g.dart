@@ -42,7 +42,7 @@ class LoadingSizingData implements LoadingSizingDataNullable {
   const LoadingSizingData();
   static LoadingSizingData lerp(
       LoadingSizingData a, LoadingSizingData b, double t) {
-    return LoadingSizingData();
+    return const LoadingSizingData();
   }
 }
 

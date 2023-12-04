@@ -1,4 +1,3 @@
-import 'package:animations/animations.dart';
 import 'package:example/main.dart';
 import 'package:example/sections/button_section.dart';
 import 'package:example/sections/card_section.dart';
@@ -15,7 +14,6 @@ import 'package:example/widgets/drawer.dart';
 import 'package:example/widgets/sider.dart';
 import 'package:flutter/material.dart';
 import 'package:nomo_router/nomo_router.dart';
-import 'package:nomo_router/router/entities/transitions.dart';
 import 'package:nomo_ui_kit/components/app/app.dart';
 import 'package:nomo_ui_kit/entities/menu_item.dart';
 

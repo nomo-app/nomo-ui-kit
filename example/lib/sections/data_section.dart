@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/widgets.dart';
 import 'package:nomo_ui_kit/components/app/app.dart';
 import 'package:nomo_ui_kit/components/data/nodata/no_data.dart';
@@ -25,7 +23,7 @@ class DataSection extends StatelessWidget {
           style: context.typography.b1,
         ),
         32.vSpacing,
-        NomoOutlineContainer(
+        const NomoOutlineContainer(
           child: NoData(),
         ),
       ],

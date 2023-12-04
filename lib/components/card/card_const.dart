@@ -12,5 +12,5 @@ class CardConst {
 
   //padding
   static const EdgeInsetsGeometry padding = EdgeInsets.all(8);
-  static const EdgeInsetsGeometry margin = EdgeInsets.all(0);
+  static const EdgeInsetsGeometry margin = EdgeInsets.zero;
 }

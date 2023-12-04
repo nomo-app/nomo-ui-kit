@@ -37,9 +37,6 @@ class ModalSheet1 extends StatefulWidget {
 class _ModalSheet1State extends State<ModalSheet1> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-    final routeInfo = RouteInfoProvider.of(context).route;
-    print(routeInfo);
-
     return Align(
       alignment: Alignment.bottomCenter,
       child: GestureDetector(

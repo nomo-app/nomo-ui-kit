@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:nomo_ui_kit/components/app/routebody/nomo_route_body.dart';
 import 'package:nomo_ui_kit/components/buttons/primary/nomo_primary_button.dart';
 import 'package:nomo_ui_kit/components/input/form/nomo_form.dart';
@@ -38,7 +37,7 @@ class _InputSectionState extends State<InputSection> {
     return NomoRouteBody(
       children: [
         Center(
-          child: Container(
+          child: SizedBox(
             width: 400,
             child: NomoInput(
               background: context.colors.background.darken(0.05),
@@ -81,6 +80,7 @@ class _InputSectionState extends State<InputSection> {
                     if (value.length < 3) {
                       return "Value to small";
                     }
+                    return null;
                   },
                   margin: const EdgeInsets.all(2),
                   trailling: PrimaryNomoButton(
@@ -144,6 +144,7 @@ class _InputSectionState extends State<InputSection> {
                   if (value.length < 10) {
                     return "Value to small";
                   }
+                  return null;
                 },
               ),
               const NomoInput(

@@ -216,7 +216,7 @@ class ComponentThemeDataGenerator extends GeneratorForAnnotation<NomoComponentTh
     buffer.writeln(
       "static $className lerp($className a, $className b, double t) {",
     );
-    buffer.writeln("return $className(");
+    buffer.writeln("return ${colorFields.entries.isEmpty ? 'const' : ''} $className(");
     for (final entry in colorFields.entries) {
       final name = entry.key;
       final type = entry.value.$1;
@@ -365,7 +365,7 @@ class ComponentThemeDataGenerator extends GeneratorForAnnotation<NomoComponentTh
     buffer.writeln(
       "static $className lerp($className a, $className b, double t) {",
     );
-    buffer.writeln("return $className(");
+    buffer.writeln("return ${sizingFields.entries.isEmpty ? 'const' : ''} $className(");
     for (final entry in sizingFields.entries) {
       final name = entry.key;
       final type = entry.value.$1;

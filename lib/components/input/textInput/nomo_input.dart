@@ -12,8 +12,6 @@ import 'package:nomo_ui_kit/utils/tweens.dart';
 
 part 'nomo_input.theme_data.g.dart';
 
-const _kDuration = Duration(milliseconds: 100);
-
 enum InputState {
   nonError,
   selected,

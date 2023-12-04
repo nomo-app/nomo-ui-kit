@@ -1,4 +1,4 @@
-part of nomo_theme;
+part of '../nomo_theme.dart';
 
 class NomoTypographyTheme {
   const NomoTypographyTheme({

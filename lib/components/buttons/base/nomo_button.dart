@@ -1,6 +1,5 @@
-
 import 'package:flutter/material.dart';
-import 'package:nomo_ui_kit/components/elevatedBox/elevatedBox.dart';
+import 'package:nomo_ui_kit/components/elevatedBox/elevated_box.dart';
 import 'package:nomo_ui_kit/components/text/nomo_text.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 import 'package:nomo_ui_kit/utils/multi_wrapper.dart';

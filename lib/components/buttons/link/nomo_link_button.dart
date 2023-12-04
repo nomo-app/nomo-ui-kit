@@ -36,7 +36,6 @@ class NomoLinkButton extends StatefulWidget with NomoButtonMixin {
   @NomoSizingField<Color>(Color(0xFF4096ff))
   final Color? selectionColor;
 
-  @override
   @NomoColorField<Color>(Color(0xFF0958d9))
   final Color? tapDownColor;
 
@@ -76,8 +75,7 @@ class NomoLinkButton extends StatefulWidget with NomoButtonMixin {
   State<NomoLinkButton> createState() => _NomoLinkButtonState();
 }
 
-class _NomoLinkButtonState extends State<NomoLinkButton>
-    with TickerProviderStateMixin {
+class _NomoLinkButtonState extends State<NomoLinkButton> with TickerProviderStateMixin {
   late final AnimationController _controller;
   late final AnimationController _controllerTapDown;
   late Animation<Color?> animation;

@@ -1,3 +1,5 @@
+// ignore_for_file: flutter_style_todos
+
 import 'package:flutter/widgets.dart';
 import 'package:nomo_ui_generator/annotations.dart';
 import 'package:nomo_ui_kit/icons/icon_data.dart';

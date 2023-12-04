@@ -15,7 +15,7 @@ class NomoRouteBodyColorData implements NomoRouteBodyColorDataNullable {
   const NomoRouteBodyColorData();
   static NomoRouteBodyColorData lerp(
       NomoRouteBodyColorData a, NomoRouteBodyColorData b, double t) {
-    return NomoRouteBodyColorData();
+    return const NomoRouteBodyColorData();
   }
 }
 

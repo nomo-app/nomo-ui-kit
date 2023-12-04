@@ -6,7 +6,7 @@ part of 'nomo_icons.dart';
 // ReflectionGenerator
 // **************************************************************************
 
-// ignore_for_file: prefer_constructors_over_static_methods,avoid_unused_constructor_parameters, require_trailing_commas, avoid_init_to_null
+// ignore_for_file: prefer_constructors_over_static_methods,avoid_unused_constructor_parameters, require_trailing_commas, avoid_init_to_null, deprecated_member_use_from_same_package
 const allIcons = {
   'zero': NomoIcons.zero,
   'one': NomoIcons.one,

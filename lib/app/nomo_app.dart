@@ -27,7 +27,7 @@ class NomoApp extends StatefulWidget {
   });
   final Iterable<RouteInfo> routes;
   final PageTransition defaultPageTransistion;
-  final LocalizationsDelegate? localizationDelegate;
+  final LocalizationsDelegate<dynamic>? localizationDelegate;
   final Iterable<Locale> supportedLocales;
   final Locale? currentLocale;
   final NomoThemeData theme;

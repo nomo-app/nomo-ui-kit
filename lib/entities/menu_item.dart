@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 
+@immutable
 sealed class NomoMenuItem {
   const NomoMenuItem({required this.title, required this.path});
   final String title;
@@ -11,10 +12,7 @@ sealed class NomoMenuItem {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is NomoMenuItem &&
-          runtimeType == other.runtimeType &&
-          title == other.title &&
-          path == other.path;
+      other is NomoMenuItem && runtimeType == other.runtimeType && title == other.title && path == other.path;
 }
 
 final class NomoMenuTextItem extends NomoMenuItem {

@@ -107,7 +107,6 @@ class _ChildrenBody extends StatelessWidget {
   const _ChildrenBody({
     required this.theme,
     required this.children,
-    super.key,
   });
 
   @override
@@ -134,7 +133,6 @@ class _SliverBody extends StatelessWidget {
   const _SliverBody({
     required this.theme,
     required this.slivers,
-    super.key,
   });
 
   @override
@@ -161,7 +159,6 @@ class _ChildBody extends StatelessWidget {
   const _ChildBody({
     required this.theme,
     required this.child,
-    super.key,
   });
 
   @override

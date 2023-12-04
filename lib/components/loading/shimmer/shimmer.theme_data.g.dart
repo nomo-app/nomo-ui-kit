@@ -40,7 +40,7 @@ class ShimmerSizingData implements ShimmerSizingDataNullable {
   const ShimmerSizingData();
   static ShimmerSizingData lerp(
       ShimmerSizingData a, ShimmerSizingData b, double t) {
-    return ShimmerSizingData();
+    return const ShimmerSizingData();
   }
 }
 

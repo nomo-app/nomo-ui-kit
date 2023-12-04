@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nomo_ui_kit/components/elevatedBox/elevatedBox.dart';
+import 'package:nomo_ui_kit/components/elevatedBox/elevated_box.dart';
 
 class NomoCard extends StatelessWidget {
   final Widget child;

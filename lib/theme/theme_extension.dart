@@ -1,4 +1,4 @@
-part of nomo_theme;
+part of 'nomo_theme.dart';
 
 ///
 /// This extension allows us to access the theme data from the context
@@ -123,8 +123,7 @@ extension ColorUtils on Color {
 }
 
 extension BrightnessUtils on Brightness {
-  Brightness get opposite =>
-      this == Brightness.light ? Brightness.dark : Brightness.light;
+  Brightness get opposite => this == Brightness.light ? Brightness.dark : Brightness.light;
 
   bool get isLight => this == Brightness.light;
 

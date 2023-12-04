@@ -101,11 +101,12 @@ class NomoText extends StatelessWidget {
           fontSize = decreaseFontSize(fontSize);
 
           style = style.copyWith(fontSize: fontSize);
-          textPainter.text = TextSpan(
-            text: text,
-            style: style,
-          );
-          textPainter.layout(maxWidth: maxWidth);
+          textPainter
+            ..text = TextSpan(
+              text: text,
+              style: style,
+            )
+            ..layout(maxWidth: maxWidth);
           lines = textPainter.computeLineMetrics();
           totalHeight = lines.fold(0.0, (prev, line) => prev + line.height);
         }
@@ -148,11 +149,12 @@ class NomoText extends StatelessWidget {
   while (totalHeight > maxHeight) {
     lineHeight += decrement;
     style0 = style0.copyWith(fontSize: lineHeight);
-    textPainter.text = TextSpan(
-      text: text,
-      style: style0,
-    );
-    textPainter.layout(maxWidth: maxWidth);
+    textPainter
+      ..text = TextSpan(
+        text: text,
+        style: style0,
+      )
+      ..layout(maxWidth: maxWidth);
     lines = textPainter.computeLineMetrics();
     totalHeight = lines.fold(0.0, (prev, line) => prev + line.height);
   }

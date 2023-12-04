@@ -47,7 +47,7 @@ class NomoScaffoldSizingData implements NomoScaffoldSizingDataNullable {
   @override
   final bool showSider;
   const NomoScaffoldSizingData({
-    this.padding = const EdgeInsets.all(0.0),
+    this.padding = EdgeInsets.zero,
     this.showBottomBar = false,
     this.showSider = true,
   });
@@ -84,7 +84,7 @@ class NomoScaffoldThemeData
   final bool showSider;
   const NomoScaffoldThemeData({
     this.backgroundColor = Colors.white,
-    this.padding = const EdgeInsets.all(0.0),
+    this.padding = EdgeInsets.zero,
     this.showBottomBar = false,
     this.showSider = true,
   });
