@@ -169,7 +169,7 @@ Size calculateTextSize({required String text, required TextStyle? style, double 
       style: style,
     ),
     textDirection: TextDirection.ltr,
-    textScaleFactor: textScaleFactor,
+    textScaler: TextScaler.linear(textScaleFactor),
   )..layout();
 
   return textPainter.size;
