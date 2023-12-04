@@ -5,13 +5,13 @@
 // ignore_for_file: prefer_asserts_with_message, cascade_invocations, comment_references
 
 import 'dart:ui' as ui show BoxHeightStyle, BoxWidthStyle;
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart' show defaultTargetPlatform;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:nomo_ui_kit/components/input/textInput/text_layout.dart';
 import 'package:nomo_ui_kit/components/text/nomo_text.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 import 'package:nomo_ui_kit/utils/tweens.dart';
@@ -901,117 +901,6 @@ class _CupertinoInputState extends State<CupertinoInput>
   @override
   bool get wantKeepAlive => _controller?.value.text.isNotEmpty ?? false;
 
-  bool _shouldShowAttachment({
-    required OverlayVisibilityMode attachment,
-    required bool hasText,
-  }) {
-    switch (attachment) {
-      case OverlayVisibilityMode.never:
-        return false;
-      case OverlayVisibilityMode.always:
-        return true;
-      case OverlayVisibilityMode.editing:
-        return hasText;
-      case OverlayVisibilityMode.notEditing:
-        return !hasText;
-    }
-  }
-
-  bool _showPrefixWidget(TextEditingValue text) {
-    return widget.prefix != null &&
-        _shouldShowAttachment(
-          attachment: widget.prefixMode,
-          hasText: text.text.isNotEmpty,
-        );
-  }
-
-  bool _showSuffixWidget(TextEditingValue text) {
-    return widget.suffix != null &&
-        _shouldShowAttachment(
-          attachment: widget.suffixMode,
-          hasText: text.text.isNotEmpty,
-        );
-  }
-
-  // True if any surrounding decoration widgets will be shown.
-  bool get _hasDecoration {
-    return widget.placeholder != null ||
-        widget.clearButtonMode != OverlayVisibilityMode.never ||
-        widget.prefix != null ||
-        widget.suffix != null;
-  }
-
-  Widget _addTextDependentAttachments(
-    Widget editableText,
-    TextStyle textStyle,
-    TextStyle placeholderStyle,
-    TextStyle titleStyle,
-    bool hasFocus,
-    bool usePlaceholderAsTitle,
-  ) {
-    // If there are no surrounding widgets, just return the core editable text
-    // part.
-    if (!_hasDecoration) {
-      return editableText;
-    }
-
-    // Otherwise, listen to the current state of the text entry.
-    return ValueListenableBuilder<TextEditingValue>(
-      valueListenable: _effectiveController,
-      child: editableText,
-      builder: (BuildContext context, TextEditingValue? text, Widget? child) {
-        return Row(
-          children: <Widget>[
-            // Insert a prefix at the front if the prefix visibility mode matches
-            // the current text state.
-            if (_showPrefixWidget(text!)) widget.prefix!,
-            // In the middle part, stack the placeholder on top of the main EditableText
-            // if needed.
-            Expanded(
-              child: Stack(
-                children: <Widget>[
-                  if (widget.placeholder != null && usePlaceholderAsTitle)
-                    AnimatedPositioned(
-                      duration: widget.duration,
-                      top: hasFocus || text.text.isNotEmpty ? 0 : 12,
-                      child: Padding(
-                        padding: widget.padding,
-                        child: AnimatedNomoDefaultTextStyle(
-                          style: hasFocus || text.text.isNotEmpty ? titleStyle : placeholderStyle,
-                          duration: widget.duration,
-                          child: NomoText(
-                            widget.placeholder!,
-                            maxLines: widget.maxLines,
-                            overflow: placeholderStyle.overflow ?? TextOverflow.ellipsis,
-                            textAlign: widget.textAlign,
-                          ),
-                        ),
-                      ),
-                    ),
-                  if (widget.placeholder != null && !usePlaceholderAsTitle && text.text.isEmpty)
-                    Padding(
-                      padding: widget.padding,
-                      child: NomoText(
-                        widget.placeholder!,
-                        maxLines: widget.maxLines,
-                        overflow: placeholderStyle.overflow ?? TextOverflow.ellipsis,
-                        textAlign: widget.textAlign,
-                        style: placeholderStyle,
-                      ),
-                    ),
-                  child!,
-                ],
-              ),
-            ),
-            // First add the explicit suffix if the suffix visibility mode matches.
-            if (_showSuffixWidget(text)) widget.suffix!
-            // Otherwise, try to show a clear button if its visibility mode matches.
-          ],
-        );
-      },
-    );
-  }
-
   // AutofillClient implementation start.
   @override
   String get autofillId => _editableText.autofillId;
@@ -1102,87 +991,82 @@ class _CupertinoInputState extends State<CupertinoInput>
       widget.spellCheckConfiguration,
     );
 
-    final Widget paddedEditable = Padding(
-      padding: widget.padding,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if (widget.placeholder != null && widget.usePlaceholderAsTitle)
-            SizedBox(
-              height: calculateTextSize(text: widget.placeholder!, style: widget.titleStyle).height,
-            ),
-          RepaintBoundary(
-            child: UnmanagedRestorationScope(
-              bucket: bucket,
-              child: EditableText(
-                key: editableTextKey,
-                controller: controller,
-                undoController: widget.undoController,
-                readOnly: widget.readOnly || !enabled,
+    final Widget paddedEditable = RepaintBoundary(
+      child: UnmanagedRestorationScope(
+        bucket: bucket,
+        child: EditableText(
+          key: editableTextKey,
+          controller: controller,
+          undoController: widget.undoController,
+          readOnly: widget.readOnly || !enabled,
 
-                showCursor: widget.showCursor,
-                showSelectionHandles: _showSelectionHandles,
-                focusNode: _effectiveFocusNode,
-                keyboardType: widget.keyboardType,
-                textInputAction: widget.textInputAction,
-                textCapitalization: widget.textCapitalization,
-                style: textStyle,
-                strutStyle: widget.strutStyle,
-                textAlign: widget.textAlign,
-                textDirection: widget.textDirection,
-                autofocus: widget.autofocus,
-                obscuringCharacter: widget.obscuringCharacter,
-                obscureText: widget.obscureText,
-                autocorrect: widget.autocorrect,
-                smartDashesType: widget.smartDashesType,
-                smartQuotesType: widget.smartQuotesType,
-                enableSuggestions: widget.enableSuggestions,
-                maxLines: widget.maxLines,
-                minLines: widget.minLines,
-                expands: widget.expands,
+          showCursor: widget.showCursor,
+          showSelectionHandles: _showSelectionHandles,
+          focusNode: _effectiveFocusNode,
+          keyboardType: widget.keyboardType,
+          textInputAction: widget.textInputAction,
+          textCapitalization: widget.textCapitalization,
+          style: textStyle,
+          strutStyle: widget.strutStyle,
+          textAlign: widget.textAlign,
+          textDirection: widget.textDirection,
+          autofocus: widget.autofocus,
+          obscuringCharacter: widget.obscuringCharacter,
+          obscureText: widget.obscureText,
+          autocorrect: widget.autocorrect,
+          smartDashesType: widget.smartDashesType,
+          smartQuotesType: widget.smartQuotesType,
+          enableSuggestions: widget.enableSuggestions,
+          maxLines: widget.maxLines,
+          minLines: widget.minLines,
+          expands: widget.expands,
 
-                magnifierConfiguration: widget.magnifierConfiguration ?? CupertinoInput._iosMagnifierConfiguration,
-                // Only show the selection highlight when the text field is focused.
-                selectionColor: _effectiveFocusNode.hasFocus ? selectionColor : null,
-                selectionControls: widget.selectionEnabled ? textSelectionControls : null,
-                onChanged: widget.onChanged,
-                onSelectionChanged: _handleSelectionChanged,
-                onEditingComplete: widget.onEditingComplete,
-                onSubmitted: widget.onSubmitted,
-                onTapOutside: widget.onTapOutside,
-                inputFormatters: formatters,
-                rendererIgnoresPointer: true,
-                cursorWidth: widget.cursorWidth,
-                cursorHeight: widget.cursorHeight,
-                cursorRadius: widget.cursorRadius,
-                cursorColor: cursorColor,
-                cursorOpacityAnimates: widget.cursorOpacityAnimates,
-                cursorOffset: cursorOffset,
-                paintCursorAboveText: true,
-                autocorrectionTextRectColor: selectionColor,
-                backgroundCursorColor: CupertinoDynamicColor.resolve(CupertinoColors.inactiveGray, context),
-                selectionHeightStyle: widget.selectionHeightStyle,
-                selectionWidthStyle: widget.selectionWidthStyle,
-                scrollPadding: widget.scrollPadding,
-                keyboardAppearance: keyboardAppearance,
-                dragStartBehavior: widget.dragStartBehavior,
-                scrollController: widget.scrollController,
-                scrollPhysics: widget.scrollPhysics,
-                enableInteractiveSelection: widget.enableInteractiveSelection,
-                autofillClient: this,
-                clipBehavior: widget.clipBehavior,
-                restorationId: 'editable',
-                scribbleEnabled: widget.scribbleEnabled,
-                enableIMEPersonalizedLearning: widget.enableIMEPersonalizedLearning,
-                contentInsertionConfiguration: widget.contentInsertionConfiguration,
-                contextMenuBuilder: widget.contextMenuBuilder,
-                spellCheckConfiguration: spellCheckConfiguration,
-              ),
-            ),
-          ),
-        ],
+          magnifierConfiguration: widget.magnifierConfiguration ?? CupertinoInput._iosMagnifierConfiguration,
+          // Only show the selection highlight when the text field is focused.
+          selectionColor: _effectiveFocusNode.hasFocus ? selectionColor : null,
+          selectionControls: widget.selectionEnabled ? textSelectionControls : null,
+          onChanged: widget.onChanged,
+          onSelectionChanged: _handleSelectionChanged,
+          onEditingComplete: widget.onEditingComplete,
+          onSubmitted: widget.onSubmitted,
+          onTapOutside: widget.onTapOutside,
+          inputFormatters: formatters,
+          rendererIgnoresPointer: true,
+          cursorWidth: widget.cursorWidth,
+          cursorHeight: widget.cursorHeight,
+          cursorRadius: widget.cursorRadius,
+          cursorColor: cursorColor,
+          cursorOpacityAnimates: widget.cursorOpacityAnimates,
+          cursorOffset: cursorOffset,
+          paintCursorAboveText: true,
+          autocorrectionTextRectColor: selectionColor,
+          backgroundCursorColor: CupertinoDynamicColor.resolve(CupertinoColors.inactiveGray, context),
+          selectionHeightStyle: widget.selectionHeightStyle,
+          selectionWidthStyle: widget.selectionWidthStyle,
+          scrollPadding: widget.scrollPadding,
+          keyboardAppearance: keyboardAppearance,
+          dragStartBehavior: widget.dragStartBehavior,
+          scrollController: widget.scrollController,
+          scrollPhysics: widget.scrollPhysics,
+          enableInteractiveSelection: widget.enableInteractiveSelection,
+          autofillClient: this,
+          clipBehavior: widget.clipBehavior,
+          restorationId: 'editable',
+          scribbleEnabled: widget.scribbleEnabled,
+          enableIMEPersonalizedLearning: widget.enableIMEPersonalizedLearning,
+          contentInsertionConfiguration: widget.contentInsertionConfiguration,
+          contextMenuBuilder: widget.contextMenuBuilder,
+          spellCheckConfiguration: spellCheckConfiguration,
+        ),
       ),
     );
+
+    final placeHolder = NomoText(
+      widget.placeholder ?? "",
+      maxLines: widget.maxLines,
+      overflow: widget.placeholderStyle.overflow ?? TextOverflow.ellipsis,
+      textAlign: widget.textAlign,
+    ).ifElseNull(widget.placeholder != null);
 
     return Semantics(
       enabled: enabled,
@@ -1212,9 +1096,10 @@ class _CupertinoInputState extends State<CupertinoInput>
                 duration: widget.duration,
                 curve: widget.curve,
                 builder: (context, decoration, _) {
-                  return Container(
-                    decoration: decoration,
-                    color: !enabled ? disabledColor : null,
+                  return DecoratedBox(
+                    decoration: decoration.copyWith(
+                      color: !enabled ? disabledColor : null,
+                    ),
                     child: child,
                   );
                 },
@@ -1222,13 +1107,22 @@ class _CupertinoInputState extends State<CupertinoInput>
             },
             child: _selectionGestureDetectorBuilder.buildGestureDetector(
               behavior: HitTestBehavior.translucent,
-              child: _addTextDependentAttachments(
-                paddedEditable,
-                textStyle,
-                widget.placeholderStyle,
-                widget.titleStyle,
-                _effectiveFocusNode.hasFocus,
-                widget.usePlaceholderAsTitle,
+              child: Padding(
+                padding: widget.padding,
+                child: _TextInputDependetAttachment(
+                  text: paddedEditable,
+                  controller: controller,
+                  focusNode: _effectiveFocusNode,
+                  usePlaceHolderAsTitle: widget.usePlaceholderAsTitle,
+                  leading: widget.prefix,
+                  trailling: widget.suffix,
+                  placeHolder: placeHolder,
+                  titleStyle: widget.titleStyle,
+                  placeHolderStyle: widget.placeholderStyle,
+                  padding: widget.padding,
+                  curve: widget.curve,
+                  duration: widget.duration,
+                ),
               ),
             ),
           ),
@@ -1238,56 +1132,130 @@ class _CupertinoInputState extends State<CupertinoInput>
   }
 }
 
-class AnimatedNomoDefaultTextStyle extends ImplicitlyAnimatedWidget {
-  /// Creates a widget that animates the default text style implicitly.
-  ///
-  /// The [child], [style], [softWrap], [overflow], [curve], and [duration]
-  /// arguments must not be null.
-  const AnimatedNomoDefaultTextStyle({
-    required this.child,
-    required this.style,
-    required super.duration,
-    super.key,
-    super.curve,
-    super.onEnd,
+class _TextInputDependetAttachment extends StatefulWidget {
+  final Widget text;
+  final TextEditingController controller;
+  final FocusNode focusNode;
+  final Widget? leading;
+  final Widget? trailling;
+  final bool usePlaceHolderAsTitle;
+  final Widget? placeHolder;
+  final TextStyle placeHolderStyle;
+  final TextStyle titleStyle;
+  final EdgeInsetsGeometry padding;
+  final Duration duration;
+  final Curve curve;
+
+  const _TextInputDependetAttachment({
+    required this.text,
+    required this.controller,
+    required this.focusNode,
+    required this.usePlaceHolderAsTitle,
+    required this.placeHolderStyle,
+    required this.titleStyle,
+    required this.padding,
+    required this.duration,
+    required this.curve,
+    this.trailling,
+    this.leading,
+    this.placeHolder,
   });
 
-  /// The widget below this widget in the tree.
-  ///
-  /// {@macro flutter.widgets.ProxyWidget.child}
-  final Widget child;
-
-  /// The target text style.
-  ///
-  /// The text style must not be null.
-  ///
-  /// When this property is changed, the style will be animated over [duration] time.
-  final TextStyle style;
-
   @override
-  AnimatedWidgetBaseState<AnimatedNomoDefaultTextStyle> createState() => _AnimatedDefaultTextStyleState();
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    style.debugFillProperties(properties);
-  }
+  State<_TextInputDependetAttachment> createState() => _TextInputDependetAttachmentState();
 }
 
-class _AnimatedDefaultTextStyleState extends AnimatedWidgetBaseState<AnimatedNomoDefaultTextStyle> {
-  TextStyleTween? _style;
+class _TextInputDependetAttachmentState extends State<_TextInputDependetAttachment>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController controller;
+  late final Animation<TextStyle> textStyleAnimation;
+
+  late final titleHeight = calculateTextSize(text: '', style: widget.titleStyle);
+  late final placHolderHeight = calculateTextSize(text: '', style: widget.placeHolderStyle);
 
   @override
-  void forEachTween(TweenVisitor<dynamic> visitor) {
-    _style =
-        visitor(_style, widget.style, (dynamic value) => TextStyleTween(begin: value as TextStyle)) as TextStyleTween?;
+  void initState() {
+    controller = AnimationController(
+      vsync: this,
+      duration: widget.duration,
+    );
+    textStyleAnimation = TextStyleTween(begin: widget.placeHolderStyle, end: widget.titleStyle).animate(
+      CurvedAnimation(
+        parent: controller,
+        curve: widget.curve,
+      ),
+    );
+
+    widget.focusNode.addListener(focusChanged);
+    widget.controller.addListener(focusChanged);
+    super.initState();
+  }
+
+  void focusChanged() {
+    final hasFocus = widget.focusNode.hasFocus;
+    final text = widget.controller.text;
+
+    if (hasFocus && text.isEmpty) {
+      controller.forward();
+    }
+
+    if (!hasFocus && text.isNotEmpty) {
+      controller.forward();
+    }
+
+    if (!hasFocus && text.isEmpty) {
+      controller.reverse();
+    }
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    widget.focusNode.removeListener(focusChanged);
+    widget.controller.removeListener(focusChanged);
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return NomoDefaultTextStyle(
-      style: _style!.evaluate(animation),
-      child: widget.child,
+    final padding = widget.padding.resolve(Directionality.of(context));
+    return ValueListenableBuilder(
+      valueListenable: controller,
+      builder: (context, val, child) {
+        final inverted = 1 - val;
+
+        return TextInputLayoutDelegate(
+          children: {
+            if (widget.leading != null)
+              TextLayoutItem.leading: Padding(
+                padding: EdgeInsets.only(right: padding.left),
+                child: widget.leading,
+              ),
+            if (widget.trailling != null)
+              TextLayoutItem.trailling: Padding(
+                padding: EdgeInsets.only(left: padding.right),
+                child: widget.trailling,
+              ),
+            TextLayoutItem.text: widget.text,
+            if (widget.placeHolder != null && !widget.usePlaceHolderAsTitle)
+              TextLayoutItem.placeHolder: Opacity(
+                opacity: inverted,
+                child: NomoDefaultTextStyle(
+                  style: widget.placeHolderStyle,
+                  child: widget.placeHolder!,
+                ),
+              )
+            else if (widget.placeHolder != null)
+              TextLayoutItem.placeHolder: NomoDefaultTextStyle(
+                style: textStyleAnimation.value,
+                child: widget.placeHolder!,
+              ),
+          },
+          placeHolderTitleHeight: widget.usePlaceHolderAsTitle ? titleHeight : null,
+          placeHolderHeight: placHolderHeight,
+          animation: inverted,
+        );
+      },
     );
   }
 }

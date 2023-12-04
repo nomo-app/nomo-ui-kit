@@ -78,12 +78,12 @@ class _NomoAppState extends State<NomoApp> {
                 locale: widget.currentLocale,
                 color: widget.theme.colors.primary,
                 routerDelegate: delegate,
-                routeInformationProvider: PlatformRouteInformationProvider(
-                  initialRouteInformation: RouteInformation(
-                    uri: Uri.parse("/input"), //WidgetsBinding
-                    //     .instance.platformDispatcher.defaultRouteName.uri,
-                  ),
-                ),
+                // routeInformationProvider: PlatformRouteInformationProvider(
+                //   initialRouteInformation: RouteInformation(
+                //     uri: Uri.parse("/input"), //WidgetsBinding
+                //     //     .instance.platformDispatcher.defaultRouteName.uri,
+                //   ),
+                // ),
                 backButtonDispatcher: NomoBackButtonDispatcher(delegate),
                 routeInformationParser: const NomoRouteInformationParser(),
               ),

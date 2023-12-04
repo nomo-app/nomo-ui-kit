@@ -65,7 +65,7 @@ class NomoInputColorData implements NomoInputColorDataNullable {
         color: Colors.redAccent,
         width: 2,
         strokeAlign: BorderSide.strokeAlignOutside)),
-    this.margin = const EdgeInsets.all(2),
+    this.margin = EdgeInsets.zero,
   });
   static NomoInputColorData lerp(
       NomoInputColorData a, NomoInputColorData b, double t) {
@@ -108,9 +108,11 @@ class NomoInputSizingData implements NomoInputSizingDataNullable {
 class NomoInputConstantsNullable {
   final Duration? duration;
   final Cubic? curve;
+  final double? titleSpacing;
   const NomoInputConstantsNullable({
     this.duration,
     this.curve,
+    this.titleSpacing,
   });
 }
 
@@ -119,9 +121,12 @@ class NomoInputConstants implements NomoInputConstantsNullable {
   final Duration duration;
   @override
   final Cubic curve;
+  @override
+  final double titleSpacing;
   const NomoInputConstants({
     this.duration = const Duration(milliseconds: 200),
     this.curve = Curves.easeInOut,
+    this.titleSpacing = 2.0,
   });
 }
 
@@ -149,6 +154,8 @@ class NomoInputThemeData
   final Duration duration;
   @override
   final Cubic curve;
+  @override
+  final double titleSpacing;
   const NomoInputThemeData({
     this.background = Colors.white,
     this.errorColor = Colors.redAccent,
@@ -169,10 +176,11 @@ class NomoInputThemeData
         color: Colors.redAccent,
         width: 2,
         strokeAlign: BorderSide.strokeAlignOutside)),
-    this.margin = const EdgeInsets.all(2),
+    this.margin = EdgeInsets.zero,
     this.padding = const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
     this.duration = const Duration(milliseconds: 200),
     this.curve = Curves.easeInOut,
+    this.titleSpacing = 2.0,
   });
   factory NomoInputThemeData.from(
     NomoInputColorData colors,
@@ -191,6 +199,7 @@ class NomoInputThemeData
       padding: sizing.padding,
       duration: constants.duration,
       curve: constants.curve,
+      titleSpacing: constants.titleSpacing,
     );
   }
   NomoInputThemeData copyWith([NomoInputThemeDataNullable? override]) {
@@ -206,6 +215,7 @@ class NomoInputThemeData
       padding: override?.padding ?? padding,
       duration: override?.duration ?? duration,
       curve: override?.curve ?? curve,
+      titleSpacing: override?.titleSpacing ?? titleSpacing,
     );
   }
 }
@@ -237,6 +247,8 @@ class NomoInputThemeDataNullable
   final Duration? duration;
   @override
   final Cubic? curve;
+  @override
+  final double? titleSpacing;
   const NomoInputThemeDataNullable({
     this.background,
     this.errorColor,
@@ -249,6 +261,7 @@ class NomoInputThemeDataNullable
     this.padding,
     this.duration,
     this.curve,
+    this.titleSpacing,
   });
 }
 
@@ -304,5 +317,6 @@ NomoInputThemeData getFromContext(
     padding: widget.padding ?? themeData.padding,
     duration: widget.duration ?? themeData.duration,
     curve: widget.curve ?? themeData.curve,
+    titleSpacing: widget.titleSpacing ?? themeData.titleSpacing,
   );
 }

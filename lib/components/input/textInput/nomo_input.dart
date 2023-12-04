@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nomo_ui_generator/annotations.dart';
 import 'package:nomo_ui_kit/components/input/cupertino_text_input.dart';
+import 'package:nomo_ui_kit/components/input/form/nomo_form.dart';
 import 'package:nomo_ui_kit/components/text/nomo_text.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
+import 'package:nomo_ui_kit/utils/layout_extensions.dart';
 import 'package:nomo_ui_kit/utils/platform_info.dart';
 import 'package:nomo_ui_kit/utils/tweens.dart';
 
@@ -29,6 +31,7 @@ class NomoInput extends StatefulWidget {
   final bool autoFocus;
   final TextInputType? keyboardType;
   final String? placeHolder;
+  final String? title;
   final TextStyle? placeHolderStyle;
   final TextStyle? titleStyle;
   final TextStyle? errorStyle;
@@ -39,6 +42,9 @@ class NomoInput extends StatefulWidget {
   final ValueNotifier<String>? valueNotifier;
   final ValueNotifier<String?>? errorNotifier;
   final String? Function(String value)? validator;
+  final String? formKey;
+  final bool autoValidate;
+  final double? height;
 
   @NomoColorField(Colors.white)
   final Color? background;
@@ -96,7 +102,7 @@ class NomoInput extends StatefulWidget {
   )
   final Border? selectedErrorBorder;
 
-  @NomoColorField(EdgeInsets.all(2))
+  @NomoColorField(EdgeInsets.zero)
   final EdgeInsets? margin;
 
   @NomoConstant(Duration(milliseconds: 200))
@@ -104,6 +110,9 @@ class NomoInput extends StatefulWidget {
 
   @NomoConstant<Cubic>(Curves.easeInOut)
   final Cubic? curve;
+
+  @NomoConstant(2.0)
+  final double? titleSpacing;
 
   const NomoInput({
     super.key,
@@ -113,13 +122,14 @@ class NomoInput extends StatefulWidget {
     this.leading,
     this.trailling,
     this.autoFocus = false,
+    this.title,
     this.keyboardType,
     this.inputFormatters,
     this.borderRadius,
     this.placeHolder,
     this.titleStyle,
     this.placeHolderStyle,
-    this.usePlaceholderAsTitle = true,
+    this.usePlaceholderAsTitle = false,
     this.maxLines,
     this.minLines,
     this.textInputAction,
@@ -135,7 +145,11 @@ class NomoInput extends StatefulWidget {
     this.margin,
     this.curve,
     this.duration,
-  });
+    this.formKey,
+    this.autoValidate = false,
+    this.titleSpacing,
+    this.height,
+  }) : assert(height == null || usePlaceholderAsTitle == false, 'Not supported please ask Thomas to implement');
 
   @override
   State<NomoInput> createState() => _NomoInputState();
@@ -150,7 +164,6 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
   late final ValueNotifier<BoxDecorationTween?> decorationNotifier;
   late final ValueNotifier<InputState> inputStateNotifier;
   late final TextEditingController textController;
-
   late final defaultDecoration = BoxDecoration(
     color: theme.background,
     borderRadius: theme.borderRadius,
@@ -159,6 +172,13 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
   late final selectedDecoration = defaultDecoration.copyWith(border: theme.selectedBorder);
   late final errorDecoration = defaultDecoration.copyWith(border: theme.errorBorder);
   late final selectedErrorDecoration = defaultDecoration.copyWith(border: theme.selectedErrorBorder);
+
+  ///
+  /// Form Logic
+  ///
+  bool get isInForm => widget.formKey != null;
+  late NomoFormValidator? formValidator;
+  late NomoFormValues? formValues;
 
   @override
   void initState() {
@@ -191,6 +211,13 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
     if (errorNotifer.value != null) {
       changeToState(InputState.error);
     }
+
+    ///
+    /// Form
+    ///
+    formValidator = isInForm ? NomoForm.of(context)?.validator : null
+      ?..addListener(formValidate);
+    formValues = isInForm ? NomoForm.of(context)?.values : null;
   }
 
   @override
@@ -202,6 +229,7 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
       ..removeListener(textControllerChanged)
       ..dispose();
     valueNotifier.removeListener(notifierChanged);
+
     if (widget.validator == null) {
       valueNotifier.dispose();
     }
@@ -210,6 +238,8 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
     if (widget.errorNotifier == null) {
       errorNotifer.dispose();
     }
+
+    formValidator?.removeListener(formValidate);
 
     super.dispose();
   }
@@ -227,21 +257,31 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
     if (valueNotifier.value == textController.text) return;
     valueNotifier.value = textController.text;
 
-    textChanged();
+    validate(false);
+    formValues?.updateField(widget.formKey!, textController.text);
   }
 
   void notifierChanged() {
     if (valueNotifier.value == textController.text) return;
     textController.text = valueNotifier.value;
 
-    textChanged();
+    validate(false);
+    formValues?.updateField(widget.formKey!, valueNotifier.value);
   }
 
-  void textChanged() {
-    if (widget.validator == null) return;
+  bool validate(bool fromForm) {
+    if (widget.validator == null) return true;
+    if (!fromForm && !widget.autoValidate) return true;
     final error = widget.validator!(textController.text);
 
     errorNotifer.value = error;
+
+    return error == null;
+  }
+
+  void formValidate() {
+    final valid = validate(true);
+    formValidator!.validateField(widget.formKey!, valid);
   }
 
   void errorChanged() {
@@ -288,24 +328,76 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
     return ValueListenableBuilder(
       valueListenable: errorNotifer,
       builder: (context, error, child) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            AnimatedSize(
-              duration: theme.duration,
-              curve: theme.curve,
-              alignment: Alignment.centerLeft,
-              child: AnimatedOpacity(
-                opacity: error == null ? 0 : 1,
+        return SizedBox(
+          height: widget.height,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: widget.height == null ? MainAxisSize.min : MainAxisSize.max,
+            children: [
+              if (widget.title != null)
+                NomoText(
+                  widget.title!,
+                  style: titleStyle,
+                ),
+              Padding(
+                padding: theme.margin,
+                child: CupertinoInput(
+                  usePlaceholderAsTitle: widget.usePlaceholderAsTitle,
+                  decorationTween: decorationNotifier,
+                  cursorColor: context.colors.primary,
+                  focusNode: focusNode,
+                  curve: theme.curve,
+                  duration: theme.duration,
+                  placeholder: widget.placeHolder,
+                  placeholderStyle: placeHolderStyle,
+                  titleStyle: titleStyle,
+                  minLines: widget.minLines,
+                  maxLines: widget.maxLines,
+                  textInputAction: widget.textInputAction,
+                  controller: textController,
+                  prefix: Padding(
+                    padding: EdgeInsets.only(left: theme.padding.horizontal / 2),
+                    child: widget.leading,
+                  ).ifElseNull(widget.leading != null),
+                  suffix: Padding(
+                    padding: EdgeInsets.only(right: theme.padding.horizontal / 2),
+                    child: widget.trailling,
+                  ).ifElseNull(widget.trailling != null),
+                  padding: theme.padding,
+                  inputFormatters: widget.inputFormatters,
+                  keyboardAppearance: context.colors.brightness,
+                  keyboardType: widget.keyboardType,
+                  style: widget.style ?? defaultTextStyle,
+                  selectionControls: switch (PlatformInfo.I.isCupertino) {
+                    true when PlatformInfo.I.isCupertino => CupertinoDesktopTextSelectionControls(),
+                    true => CupertinoTextSelectionControls(),
+                    false when PlatformInfo.I.isCupertino => DesktopTextSelectionControls(),
+                    false => MaterialTextSelectionControls(),
+                  },
+                  contextMenuBuilder: (context, editableTextState) {
+                    return switch (PlatformInfo.I.isCupertino) {
+                      true => CupertinoAdaptiveTextSelectionToolbar.editableText(
+                          editableTextState: editableTextState,
+                        ),
+                      false => AdaptiveTextSelectionToolbar.editableText(
+                          editableTextState: editableTextState,
+                        )
+                    };
+                  },
+                ),
+              ).wrapIf(widget.height != null, (child) => Expanded(child: child)),
+              AnimatedSize(
                 duration: theme.duration,
                 curve: theme.curve,
-                child: Offstage(
-                  offstage: error == null,
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 4),
+                alignment: Alignment.centerLeft,
+                child: AnimatedOpacity(
+                  opacity: error == null ? 0 : 1,
+                  duration: theme.duration,
+                  curve: theme.curve,
+                  child: Offstage(
+                    offstage: error == null,
+                    child: SizedBox(
+                      width: double.infinity,
                       child: NomoText(
                         error ?? '',
                         style: errorStyle,
@@ -314,55 +406,8 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
                   ),
                 ),
               ),
-            ),
-            Padding(
-              padding: theme.margin,
-              child: CupertinoInput(
-                usePlaceholderAsTitle: widget.usePlaceholderAsTitle,
-                decorationTween: decorationNotifier,
-                cursorColor: context.colors.primary,
-                focusNode: focusNode,
-                curve: theme.curve,
-                duration: theme.duration,
-                placeholder: widget.placeHolder,
-                placeholderStyle: placeHolderStyle,
-                titleStyle: titleStyle,
-                minLines: widget.minLines,
-                maxLines: widget.maxLines,
-                textInputAction: widget.textInputAction,
-                controller: textController,
-                prefix: Padding(
-                  padding: EdgeInsets.only(left: theme.padding.horizontal / 2),
-                  child: widget.leading,
-                ).ifElseNull(widget.leading != null),
-                suffix: Padding(
-                  padding: EdgeInsets.only(right: theme.padding.horizontal / 2),
-                  child: widget.trailling,
-                ).ifElseNull(widget.trailling != null),
-                padding: theme.padding,
-                inputFormatters: widget.inputFormatters,
-                keyboardAppearance: context.colors.brightness,
-                keyboardType: widget.keyboardType,
-                style: widget.style ?? defaultTextStyle,
-                selectionControls: switch (PlatformInfo.I.isCupertino) {
-                  true when PlatformInfo.I.isCupertino => CupertinoDesktopTextSelectionControls(),
-                  true => CupertinoTextSelectionControls(),
-                  false when PlatformInfo.I.isCupertino => DesktopTextSelectionControls(),
-                  false => MaterialTextSelectionControls(),
-                },
-                contextMenuBuilder: (context, editableTextState) {
-                  return switch (PlatformInfo.I.isCupertino) {
-                    true => CupertinoAdaptiveTextSelectionToolbar.editableText(
-                        editableTextState: editableTextState,
-                      ),
-                    false => AdaptiveTextSelectionToolbar.editableText(
-                        editableTextState: editableTextState,
-                      )
-                  };
-                },
-              ),
-            ),
-          ],
+            ],
+          ),
         );
       },
     );

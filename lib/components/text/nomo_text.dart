@@ -22,8 +22,7 @@ class NomoText extends StatelessWidget {
           'fontSizes must be a list of at least one value',
         ),
         assert(
-          (fitHeight != null && fontSizes == null && maxLines == null) ||
-              fitHeight == null,
+          (fitHeight != null && fontSizes == null && maxLines == null) || fitHeight == null,
           'Cant use FontSizes || maxLines with fitHeight',
         );
   final String text;
@@ -98,8 +97,7 @@ class NomoText extends StatelessWidget {
         var lines = textPainter.computeLineMetrics();
         var totalHeight = lines.fold(0.0, (prev, line) => prev + line.height);
 
-        while ((totalHeight > maxHeight || textPainter.didExceedMaxLines) &&
-            fontSize > minFontSize) {
+        while ((totalHeight > maxHeight || textPainter.didExceedMaxLines) && fontSize > minFontSize) {
           fontSize = decreaseFontSize(fontSize);
 
           style = style.copyWith(fontSize: fontSize);
@@ -162,13 +160,14 @@ class NomoText extends StatelessWidget {
   return (style0.fontSize!, lines.length);
 }
 
-Size calculateTextSize({required String text, required TextStyle? style}) {
+Size calculateTextSize({required String text, required TextStyle? style, double textScaleFactor = 1.0}) {
   final textPainter = TextPainter(
     text: TextSpan(
       text: text,
       style: style,
     ),
     textDirection: TextDirection.ltr,
+    textScaleFactor: textScaleFactor,
   )..layout();
 
   return textPainter.size;
@@ -184,15 +183,13 @@ class NomoDefaultTextStyle extends InheritedWidget {
   });
 
   static TextStyle of(BuildContext context) {
-    final result =
-        context.dependOnInheritedWidgetOfExactType<NomoDefaultTextStyle>();
+    final result = context.dependOnInheritedWidgetOfExactType<NomoDefaultTextStyle>();
     assert(result != null, 'No NomoDefaultTextStyle found in context');
     return result!.style;
   }
 
   static TextStyle? maybeOf(BuildContext context) {
-    final result =
-        context.dependOnInheritedWidgetOfExactType<NomoDefaultTextStyle>();
+    final result = context.dependOnInheritedWidgetOfExactType<NomoDefaultTextStyle>();
     return result?.style;
   }
 
