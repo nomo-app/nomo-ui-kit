@@ -18,6 +18,8 @@ class NomoText extends StatelessWidget {
     this.decreaseBy = 1,
     this.minFontSize = 6,
     this.opacity,
+    this.translate = true,
+    this.fontSize,
   })  : assert(
           fontSizes == null || fontSizes.length > 0,
           'fontSizes must be a list of at least one value',
@@ -40,6 +42,10 @@ class NomoText extends StatelessWidget {
   final double decreaseBy;
   final double minFontSize;
   final double? opacity;
+  final double? fontSize;
+
+  /// If true will look for the NomoTextTranslator InheritedWidget for translating the text
+  final bool translate;
 
   double decreaseFontSize(double fontSize) {
     if (fontSizes != null) {
@@ -54,10 +60,16 @@ class NomoText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textColor = (color ?? NomoTextTheme.maybeOf(context)?.color);
+    final translator = NomoTextTranslator.of(context);
+    final effectiveText =
+        translate && translator != null ? translator(text) : text;
+
+    final textColor =
+        color ?? this.style?.color ?? NomoTextTheme.maybeOf(context)?.color;
     var style = (this.style ?? NomoDefaultTextStyle.of(context)).copyWith(
       color: opacity == null ? textColor : textColor?.withOpacity(opacity!),
       fontWeight: fontWeight,
+      fontSize: fontSize,
     );
 
     return LayoutBuilder(
@@ -73,12 +85,12 @@ class NomoText extends StatelessWidget {
           final (size, lines) = findStyleForFitHeight(
             maxWidth: maxWidth,
             maxHeight: maxHeight,
-            text: text,
+            text: effectiveText,
             style: style,
           );
           style = style.copyWith(fontSize: size);
           return Text(
-            text,
+            effectiveText,
             style: style,
             maxLines: lines,
             overflow: overflow,
@@ -91,7 +103,7 @@ class NomoText extends StatelessWidget {
 
         final textPainter = TextPainter(
           text: TextSpan(
-            text: text,
+            text: effectiveText,
             style: style,
           ),
           textDirection: textDirection ?? TextDirection.ltr,
@@ -108,7 +120,7 @@ class NomoText extends StatelessWidget {
           style = style.copyWith(fontSize: fontSize);
           textPainter
             ..text = TextSpan(
-              text: text,
+              text: effectiveText,
               style: style,
             )
             ..layout(maxWidth: maxWidth);
@@ -117,7 +129,7 @@ class NomoText extends StatelessWidget {
         }
 
         return Text(
-          text,
+          effectiveText,
           style: style,
           maxLines: maxLines,
           overflow: overflow,
@@ -227,6 +239,27 @@ class NomoTextTheme extends InheritedWidget {
 
   @override
   bool updateShouldNotify(NomoTextTheme oldWidget) {
+    return true;
+  }
+}
+
+class NomoTextTranslator extends InheritedWidget {
+  const NomoTextTranslator({
+    required super.child,
+    required this.translator,
+    super.key,
+  });
+
+  final String Function(String text) translator;
+
+  static String Function(String text)? of(BuildContext context) {
+    return context
+        .dependOnInheritedWidgetOfExactType<NomoTextTranslator>()
+        ?.translator;
+  }
+
+  @override
+  bool updateShouldNotify(NomoTextTranslator oldWidget) {
     return true;
   }
 }

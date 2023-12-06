@@ -16,6 +16,8 @@ class SecondaryNomoButton extends StatelessWidget with NomoButtonMixin {
   final double? iconSize;
   final ActionType type;
   final Widget? child;
+  final bool? translate;
+  final Axis direction;
 
   @override
   final VoidCallback? onPressed;
@@ -83,12 +85,44 @@ class SecondaryNomoButton extends StatelessWidget with NomoButtonMixin {
     this.border,
     this.selectionColor,
     this.child,
+    this.translate,
+    this.direction = Axis.horizontal,
   }) : assert(child == null || (icon == null && text == null),
             'Either Specify child or text and icon');
 
   @override
   Widget build(BuildContext context) {
     final theme = getFromContext(context, this);
+
+    final effectiveChild = switch (direction) {
+      _ when child != null => child!,
+      Axis.horizontal => Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (icon != null) Icon(icon, size: iconSize),
+            if (icon != null && text != null) SizedBox(width: spacing),
+            if (text != null)
+              NomoText(
+                text!,
+                style: textStyle,
+                translate: translate ?? true,
+              ),
+          ],
+        ),
+      Axis.vertical => Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (icon != null) Icon(icon, size: iconSize),
+            if (icon != null && text != null) SizedBox(height: spacing),
+            if (text != null)
+              NomoText(
+                text!,
+                style: textStyle,
+                translate: translate ?? true,
+              ),
+          ],
+        ),
+    };
 
     return NomoButton(
       elevation: theme.elevation,
@@ -127,15 +161,7 @@ class SecondaryNomoButton extends StatelessWidget with NomoButtonMixin {
         ActionType.nonInteractive => context.colors.onDisabled,
         _ => theme.selectionColor,
       },
-      child: child ??
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              if (icon != null) Icon(icon, size: iconSize),
-              if (icon != null && text != null) SizedBox(width: spacing),
-              if (text != null) NomoText(text!, style: textStyle),
-            ],
-          ),
+      child: effectiveChild,
     );
   }
 }
