@@ -17,12 +17,14 @@ class NomoText extends StatelessWidget {
     this.fontSizes,
     this.decreaseBy = 1,
     this.minFontSize = 6,
+    this.opacity,
   })  : assert(
           fontSizes == null || fontSizes.length > 0,
           'fontSizes must be a list of at least one value',
         ),
         assert(
-          (fitHeight != null && fontSizes == null && maxLines == null) || fitHeight == null,
+          (fitHeight != null && fontSizes == null && maxLines == null) ||
+              fitHeight == null,
           'Cant use FontSizes || maxLines with fitHeight',
         );
   final String text;
@@ -37,6 +39,7 @@ class NomoText extends StatelessWidget {
   final List<double>? fontSizes;
   final double decreaseBy;
   final double minFontSize;
+  final double? opacity;
 
   double decreaseFontSize(double fontSize) {
     if (fontSizes != null) {
@@ -51,8 +54,9 @@ class NomoText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textColor = (color ?? NomoTextTheme.maybeOf(context)?.color);
     var style = (this.style ?? NomoDefaultTextStyle.of(context)).copyWith(
-      color: color ?? NomoTextTheme.maybeOf(context)?.color,
+      color: opacity == null ? textColor : textColor?.withOpacity(opacity!),
       fontWeight: fontWeight,
     );
 
@@ -97,7 +101,8 @@ class NomoText extends StatelessWidget {
         var lines = textPainter.computeLineMetrics();
         var totalHeight = lines.fold(0.0, (prev, line) => prev + line.height);
 
-        while ((totalHeight > maxHeight || textPainter.didExceedMaxLines) && fontSize > minFontSize) {
+        while ((totalHeight > maxHeight || textPainter.didExceedMaxLines) &&
+            fontSize > minFontSize) {
           fontSize = decreaseFontSize(fontSize);
 
           style = style.copyWith(fontSize: fontSize);
@@ -162,14 +167,18 @@ class NomoText extends StatelessWidget {
   return (style0.fontSize!, lines.length);
 }
 
-Size calculateTextSize({required String text, required TextStyle? style, double textScaleFactor = 1.0}) {
+Size calculateTextSize({
+  required String text,
+  required TextStyle? style,
+  double textScaleFactor = 1.0,
+}) {
   final textPainter = TextPainter(
     text: TextSpan(
       text: text,
       style: style,
     ),
     textDirection: TextDirection.ltr,
-    textScaler: TextScaler.linear(textScaleFactor),
+    //   textScaler: TextScaler.linear(textScaleFactor),
   )..layout();
 
   return textPainter.size;
@@ -185,13 +194,15 @@ class NomoDefaultTextStyle extends InheritedWidget {
   });
 
   static TextStyle of(BuildContext context) {
-    final result = context.dependOnInheritedWidgetOfExactType<NomoDefaultTextStyle>();
+    final result =
+        context.dependOnInheritedWidgetOfExactType<NomoDefaultTextStyle>();
     assert(result != null, 'No NomoDefaultTextStyle found in context');
     return result!.style;
   }
 
   static TextStyle? maybeOf(BuildContext context) {
-    final result = context.dependOnInheritedWidgetOfExactType<NomoDefaultTextStyle>();
+    final result =
+        context.dependOnInheritedWidgetOfExactType<NomoDefaultTextStyle>();
     return result?.style;
   }
 

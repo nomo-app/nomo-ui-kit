@@ -23,6 +23,7 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
   final TextStyle? textStyle;
   final double? iconSize;
   final ActionType type;
+  final Widget? child;
 
   @override
   final VoidCallback? onPressed;
@@ -81,7 +82,9 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
     this.textStyle,
     this.iconSize,
     this.shape,
-  });
+    this.child,
+  }) : assert(child == null || (icon == null && text == null),
+            'Either Specify child or text and icon');
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +94,9 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
       elevation: theme.elevation,
       backgroundColor: switch (type) {
         ActionType.danger => context.colors.error,
-        ActionType.disabled || ActionType.nonInteractive => context.colors.disabled,
+        ActionType.disabled ||
+        ActionType.nonInteractive =>
+          context.colors.disabled,
         _ => theme.backgroundColor,
       },
       foregroundColor: switch (type) {
@@ -113,24 +118,26 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
         _ => SystemMouseCursors.click,
       },
       enabled: enabled,
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if (type == ActionType.loading)
-            Loading(
-              size: switch (height) {
-                final double height => height / 3,
-                _ => 24,
-              },
-              color: foregroundColor,
-            )
-          else if (icon != null)
-            Icon(icon, size: iconSize),
-          if (icon != null && text != null) SizedBox(width: spacing),
-          if (text != null && type == ActionType.loading) SizedBox(width: spacing),
-          if (text != null) NomoText(text!, style: textStyle),
-        ],
-      ),
+      child: child ??
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (type == ActionType.loading)
+                Loading(
+                  size: switch (height) {
+                    final double height => height / 3,
+                    _ => 24,
+                  },
+                  color: foregroundColor,
+                )
+              else if (icon != null)
+                Icon(icon, size: iconSize),
+              if (icon != null && text != null) SizedBox(width: spacing),
+              if (text != null && type == ActionType.loading)
+                SizedBox(width: spacing),
+              if (text != null) NomoText(text!, style: textStyle),
+            ],
+          ),
     );
   }
 }
