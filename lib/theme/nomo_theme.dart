@@ -19,12 +19,12 @@ class NomoThemeData {
     required this.sizingTheme,
     required this.constants,
     required NomoTypographyTheme textTheme,
-  }) : typographyTheme = textTheme.copyWith(
+  }) : typography = textTheme.copyWith(
           colors: colorTheme.colors,
           sizes: sizingTheme.sizes,
         );
   final NomoColorThemeData colorTheme;
-  final NomoTypographyTheme typographyTheme;
+  final NomoTypographyTheme typography;
   final NomoSizingThemeData sizingTheme;
   final NomoComponentConstants constants;
 
@@ -38,7 +38,7 @@ class NomoThemeData {
     return NomoThemeData(
       colorTheme: NomoColorThemeData.lerp(a.colorTheme, b.colorTheme, t),
       sizingTheme: NomoSizingThemeData.lerp(a.sizingTheme, b.sizingTheme, t),
-      textTheme: t < 0.5 ? a.typographyTheme : b.typographyTheme,
+      textTheme: t < 0.5 ? a.typography : b.typography,
       constants: t < 0.5 ? a.constants : b.constants,
     );
   }
@@ -51,7 +51,7 @@ class NomoThemeData {
   }) {
     return NomoThemeData(
       colorTheme: colorTheme ?? this.colorTheme,
-      textTheme: (typographyTheme ?? this.typographyTheme).copyWith(
+      textTheme: (typographyTheme ?? this.typography).copyWith(
         colors: colorTheme?.colors,
         sizes: sizingTheme?.sizes,
       ),

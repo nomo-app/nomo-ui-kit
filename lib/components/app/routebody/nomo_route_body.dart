@@ -11,9 +11,11 @@ class NomoRouteBody extends StatelessWidget {
   final Widget? child;
   final Widget Function(BuildContext context, NomoPage<dynamic> route)? builder;
   final List<Widget>? slivers;
-  final List<Widget> Function(BuildContext context, NomoPage<dynamic> route)? sliverBuilder;
+  final List<Widget> Function(BuildContext context, NomoPage<dynamic> route)?
+      sliverBuilder;
   final List<Widget>? children;
-  final List<Widget> Function(BuildContext context, NomoPage<dynamic> route)? childrenBuilder;
+  final List<Widget> Function(BuildContext context, NomoPage<dynamic> route)?
+      childrenBuilder;
 
   final ScrollController? scrollController;
 
@@ -59,7 +61,7 @@ class NomoRouteBody extends StatelessWidget {
       radius: theme.scrollBarRadius,
       thickness: theme.scrollBarThickness,
       child: ColoredBox(
-        color: context.colors.background,
+        color: context.colors.background1,
         child: DefaultScrollController(
           scrollController: _scrollController,
           child: switch (this) {
@@ -143,7 +145,8 @@ class _SliverBody extends StatelessWidget {
         (theme.padding.vertical / 2).vSpacing.toBox,
         for (final sliver in slivers)
           SliverPadding(
-            padding: EdgeInsets.symmetric(horizontal: theme.padding.horizontal / 2),
+            padding:
+                EdgeInsets.symmetric(horizontal: theme.padding.horizontal / 2),
             sliver: sliver,
           ),
         (theme.padding.vertical / 2).vSpacing.toBox,
@@ -180,7 +183,8 @@ class DefaultScrollController extends InheritedWidget {
   final ScrollController scrollController;
 
   static ScrollController of(BuildContext context) {
-    final result = context.dependOnInheritedWidgetOfExactType<DefaultScrollController>();
+    final result =
+        context.dependOnInheritedWidgetOfExactType<DefaultScrollController>();
     assert(
       result != null,
       'No DefaultScrollController found in context. Make Sure there is NomoRouteBody above this widget in the tree',

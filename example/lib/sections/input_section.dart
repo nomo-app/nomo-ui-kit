@@ -40,7 +40,7 @@ class _InputSectionState extends State<InputSection> {
           child: SizedBox(
             width: 400,
             child: NomoInput(
-              background: context.colors.background.darken(0.05),
+              background: context.colors.background1.darken(0.05),
               keyboardType: TextInputType.number,
               style: context.typography.h1,
               leading: const Icon(Icons.search),
@@ -60,11 +60,13 @@ class _InputSectionState extends State<InputSection> {
             child: Column(
               children: [
                 NomoInput(
-                  background: context.colors.background.darken(0.05),
+                  background: context.colors.background1.darken(0.05),
                   keyboardType: TextInputType.number,
                   style: context.typography.b3,
-                  borderRadius: const BorderRadius.vertical(top: Radius.circular(12), bottom: Radius.circular(4)),
-                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
+                  borderRadius: const BorderRadius.vertical(
+                      top: Radius.circular(12), bottom: Radius.circular(4)),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
                   placeHolder: "Amount",
                   minLines: 1,
                   leading: Icon(
@@ -99,19 +101,21 @@ class _InputSectionState extends State<InputSection> {
                   children: [
                     Expanded(
                       child: NomoInput(
-                        background: context.colors.background.darken(0.05),
+                        background: context.colors.background1.darken(0.05),
                         keyboardType: TextInputType.number,
                         style: context.typography.b3,
-                        borderRadius: BorderRadius.circular(4).copyWith(bottomLeft: const Radius.circular(12)),
+                        borderRadius: BorderRadius.circular(4)
+                            .copyWith(bottomLeft: const Radius.circular(12)),
                         margin: const EdgeInsets.all(2),
                       ),
                     ),
                     Expanded(
                       child: NomoInput(
-                        background: context.colors.background.darken(0.05),
+                        background: context.colors.background1.darken(0.05),
                         keyboardType: TextInputType.number,
                         style: context.typography.b3,
-                        borderRadius: BorderRadius.circular(4).copyWith(bottomRight: const Radius.circular(12)),
+                        borderRadius: BorderRadius.circular(4)
+                            .copyWith(bottomRight: const Radius.circular(12)),
                         margin: const EdgeInsets.all(2),
                       ),
                     ),
@@ -136,7 +140,8 @@ class _InputSectionState extends State<InputSection> {
                 formKey: "input1",
                 placeHolder: "Input1",
                 usePlaceholderAsTitle: false,
-                placeHolderStyle: context.typography.b3.copyWith(color: context.colors.foreground1.withOpacity(0.5)),
+                placeHolderStyle: context.typography.b3.copyWith(
+                    color: context.colors.foreground1.withOpacity(0.5)),
                 titleStyle: context.typography.h1,
                 title: "Input1",
                 style: context.typography.b3,
@@ -193,7 +198,8 @@ class _InputSectionState extends State<InputSection> {
         ListenableBuilder(
           listenable: formValidator,
           builder: (context, child) {
-            return NomoText("${formValidator.values}   =>   ${formValidator.isValid}");
+            return NomoText(
+                "${formValidator.values}   =>   ${formValidator.isValid}");
           },
         ),
       ],

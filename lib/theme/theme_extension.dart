@@ -12,7 +12,7 @@ extension ThemeContextExtension on BuildContext {
 
   NomoColorThemeData get colorTheme => theme.colorTheme;
 
-  NomoTypographyTheme get typography => theme.typographyTheme;
+  NomoTypographyTheme get typography => theme.typography;
 
   NomoSizes get sizes => theme.sizes;
 
@@ -123,7 +123,8 @@ extension ColorUtils on Color {
 }
 
 extension BrightnessUtils on Brightness {
-  Brightness get opposite => this == Brightness.light ? Brightness.dark : Brightness.light;
+  Brightness get opposite =>
+      this == Brightness.light ? Brightness.dark : Brightness.light;
 
   bool get isLight => this == Brightness.light;
 

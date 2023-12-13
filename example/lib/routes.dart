@@ -26,7 +26,8 @@ Widget Function(Widget nav) wrapper = (nav) {
       final themeProvider = ThemeProvider.of(context);
       return NomoScaffold(
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(context.componentSizes.appBarTheme.height),
+          preferredSize:
+              Size.fromHeight(context.componentSizes.appBarTheme.height),
           child: NomoAppBar(
             leading: Text(
               "Nomo UI Kit",
@@ -183,32 +184,3 @@ final routes = [
 ].expanded.toList();
 
 final menuItems = routes.whereType<MenuRouteInfoMixin>().toList();
-
-extension MenuUtilList on Iterable<MenuRouteInfoMixin> {
-  List<NomoMenuItem> get toMenuItems {
-    return map((route) => route.toMenuItem).toList();
-  }
-}
-
-extension MenuUtil on MenuRouteInfoMixin {
-  NomoMenuItem get toMenuItem {
-    if (icon != null) {
-      return NomoMenuIconItem(
-        title: title,
-        icon: icon!,
-        path: name,
-      );
-    }
-    if (image != null) {
-      return NomoMenuImageItem(
-        title: title,
-        image: image!,
-        path: name,
-      );
-    }
-    return NomoMenuTextItem(
-      title: title,
-      path: name,
-    );
-  }
-}

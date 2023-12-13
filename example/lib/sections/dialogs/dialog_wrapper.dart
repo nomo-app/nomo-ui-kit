@@ -16,7 +16,7 @@ class DialogWrapper extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       height: 500,
       decoration: BoxDecoration(
-        color: context.colors.background,
+        color: context.colors.background1,
         borderRadius: BorderRadius.circular(8.0),
         border: Border.all(color: const Color(0xFF272626)),
       ),
@@ -72,7 +72,7 @@ class DialogWrapper extends StatelessWidget {
             width: 20,
           ),
           NomoCard(
-            backgroundColor: context.colors.background,
+            backgroundColor: context.colors.background1,
             elevation: 3,
             borderRadius: const BorderRadius.all(Radius.circular(18.0)),
             child: Center(

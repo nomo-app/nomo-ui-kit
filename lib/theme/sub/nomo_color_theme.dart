@@ -52,16 +52,17 @@ class NomoComponentColors {
     required this.inputTheme,
   });
 
-  static NomoComponentColors defaultComponents(NomoColors core) => defaultConstructor(
+  static NomoComponentColors defaultComponents(NomoColors core) =>
+      defaultConstructor(
         outlineContainerTheme: NomoOutlineContainerThemeData(
           foreground: core.foreground1,
-          background: core.background,
+          background: core.background1,
         ),
         appBarTheme: NomoAppBarColorData(
-          backgroundColor: core.background,
+          backgroundColor: core.background1,
         ),
         scaffoldTheme: NomoScaffoldColorData(
-          backgroundColor: core.background,
+          backgroundColor: core.background1,
         ),
         bottomBarTheme: NomoBottomBarColorData(
           background: core.primaryContainer,
@@ -70,11 +71,11 @@ class NomoComponentColors {
           selectedForeground: core.primary,
         ),
         siderTheme: NomoSiderColorData(
-          backgroundColor: core.background,
+          backgroundColor: core.background1,
         ),
         verticalMenuTheme: NomoVerticalMenuColorData(
           foreground: core.foreground1,
-          background: core.background,
+          background: core.background1,
           selectedBackground: core.primary.lighten(0.25),
           selectedForeground: core.primary,
           borderRadius: BorderRadius.circular(6),
@@ -88,7 +89,8 @@ class NomoComponentColors {
 class NomoColorThemeData {
   NomoColorThemeData({
     required this.colors,
-    NomoComponentColors Function(NomoColors core) buildComponents = NomoComponentColors.defaultComponents,
+    NomoComponentColors Function(NomoColors core) buildComponents =
+        NomoComponentColors.defaultComponents,
   }) : components = buildComponents.call(colors);
 
   NomoColorThemeData._({
@@ -118,7 +120,9 @@ class NomoColors {
   final Color secondary;
   final Color onSecondary;
   final Color secondaryContainer;
-  final Color background;
+  final Color background1;
+  final Color background2;
+  final Color background3;
   final Color surface;
   final Color error;
   final Color disabled;
@@ -135,7 +139,9 @@ class NomoColors {
     required this.secondary,
     required this.onSecondary,
     required this.secondaryContainer,
-    required this.background,
+    required this.background1,
+    required this.background2,
+    required this.background3,
     required this.surface,
     required this.error,
     required this.disabled,
@@ -153,8 +159,11 @@ class NomoColors {
       primaryContainer: Color.lerp(a.primaryContainer, b.primaryContainer, t)!,
       secondary: Color.lerp(a.secondary, b.secondary, t)!,
       onSecondary: Color.lerp(a.onSecondary, b.onSecondary, t)!,
-      secondaryContainer: Color.lerp(a.secondaryContainer, b.secondaryContainer, t)!,
-      background: Color.lerp(a.background, b.background, t)!,
+      secondaryContainer:
+          Color.lerp(a.secondaryContainer, b.secondaryContainer, t)!,
+      background1: Color.lerp(a.background1, b.background1, t)!,
+      background2: Color.lerp(a.background2, b.background2, t)!,
+      background3: Color.lerp(a.background3, b.background3, t)!,
       surface: Color.lerp(a.surface, b.surface, t)!,
       error: Color.lerp(a.error, b.error, t)!,
       disabled: Color.lerp(a.disabled, b.disabled, t)!,

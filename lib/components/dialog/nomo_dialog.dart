@@ -87,7 +87,7 @@ class NomoDialog extends StatelessWidget {
                                     child: NomoText(
                                       title!,
                                       style: titleStyle ??
-                                          context.theme.typographyTheme.h1,
+                                          context.theme.typography.h1,
                                     ),
                                   ),
                                 ),

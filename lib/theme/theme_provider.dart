@@ -25,6 +25,7 @@ class ThemeProvider extends InheritedWidget {
 
   void changeColorTheme(NomoColorThemeData mode) {
     _notifier.value = _notifier.value.copyWith(colorTheme: mode);
+    print("colorTheme: $colorTheme");
   }
 
   void changeSizingTheme(NomoSizingThemeData mode) {
