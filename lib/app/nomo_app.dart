@@ -4,14 +4,22 @@ import 'package:nomo_router/nomo_router.dart';
 import 'package:nomo_router/router/entities/transitions.dart';
 import 'package:nomo_ui_kit/app/animator.dart';
 import 'package:nomo_ui_kit/app/metric_reactor.dart';
+import 'package:nomo_ui_kit/components/loading/loading.dart';
+import 'package:nomo_ui_kit/components/text/nomo_text.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 import 'package:nomo_ui_kit/theme/sub/nomo_sizing_theme.dart';
 import 'package:nomo_ui_kit/theme/theme_provider.dart';
+import 'package:nomo_ui_kit/utils/layout_extensions.dart';
+import 'package:nomo_ui_kit/utils/multi_wrapper.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
 
 const kThemeChangeDuration = Duration(milliseconds: 400);
 const kThemeChangeCurve = Curves.easeInOut;
+final _scrollBehavior = const ScrollBehavior().copyWith(
+  scrollbars: false,
+  dragDevices: PointerDeviceKind.values.toSet(),
+);
 
 class NomoApp extends StatefulWidget {
   const NomoApp({
@@ -22,8 +30,12 @@ class NomoApp extends StatefulWidget {
     super.key,
     this.localizationDelegate,
     this.currentLocale,
-    this.defaultPageTransistion =
-        const PageSharedAxisTransition(type: SharedAxisTransitionType.horizontal, fillColor: Colors.transparent),
+    this.defaultPageTransistion = const PageFadeTransition(),
+    this.translator,
+    this.appWrapper,
+    this.navigatorObservers = const [],
+    this.nestedNavigatorObservers = const [],
+    this.home,
   });
   final Iterable<RouteInfo> routes;
   final PageTransition defaultPageTransistion;
@@ -32,6 +44,13 @@ class NomoApp extends StatefulWidget {
   final Locale? currentLocale;
   final NomoThemeData theme;
   final NomoSizingThemeData Function(double) sizingThemeBuilder;
+  final String Function(String value)? translator;
+  final Widget? home;
+  final List<NavigatorObserver> navigatorObservers;
+  final List<NavigatorObserver> nestedNavigatorObservers;
+
+  /// A Wrapper that can access the ThemeProvider and NomoNavigator
+  final Widget Function(BuildContext context, Widget app)? appWrapper;
 
   @override
   State<NomoApp> createState() => _NomoAppState();
@@ -44,7 +63,13 @@ class _NomoAppState extends State<NomoApp> {
   @override
   void initState() {
     themeNotifier = ThemeNotifier(widget.theme);
-    delegate = NomoRouterDelegate(rootNavigatorKey, routes: widget.routes);
+    delegate = NomoRouterDelegate(
+      rootNavigatorKey,
+      routes: widget.routes,
+      observers: widget.navigatorObservers,
+      nestedObservers: widget.nestedNavigatorObservers,
+      initial: widget.home,
+    );
     super.initState();
   }
 
@@ -56,37 +81,48 @@ class _NomoAppState extends State<NomoApp> {
 
   @override
   Widget build(BuildContext context) {
-    return ScrollConfiguration(
-      behavior: const ScrollBehavior().copyWith(scrollbars: false),
-      child: ThemeProvider(
-        notifier: themeNotifier,
-        child: MetricReactor(
-          sizingThemeBuilder: widget.sizingThemeBuilder,
-          child: NomoNavigator(
-            delegate: delegate,
-            defaultTransistion: widget.defaultPageTransistion,
-            child: ThemeAnimator(
-              notifier: themeNotifier,
-              child: WidgetsApp.router(
-                debugShowCheckedModeBanner: false,
-                localizationsDelegates: [
-                  if (widget.localizationDelegate != null) widget.localizationDelegate!,
-                  GlobalMaterialLocalizations.delegate,
-                  GlobalCupertinoLocalizations.delegate,
-                ],
-                supportedLocales: widget.supportedLocales,
-                locale: widget.currentLocale,
-                color: widget.theme.colors.primary,
-                routerDelegate: delegate,
-                // routeInformationProvider: PlatformRouteInformationProvider(
-                //   initialRouteInformation: RouteInformation(
-                //     uri: Uri.parse("/input"), //WidgetsBinding
-                //     //     .instance.platformDispatcher.defaultRouteName.uri,
-                //   ),
-                // ),
-                backButtonDispatcher: NomoBackButtonDispatcher(delegate),
-                routeInformationParser: const NomoRouteInformationParser(),
-              ),
+    final app = WidgetsApp.router(
+      debugShowCheckedModeBanner: false,
+      localizationsDelegates: [
+        if (widget.localizationDelegate != null) widget.localizationDelegate!,
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: widget.supportedLocales,
+      locale: widget.currentLocale,
+      color: widget.theme.colors.primary,
+      routerDelegate: delegate,
+      routeInformationProvider: PlatformRouteInformationProvider(
+        initialRouteInformation: RouteInformation(
+          uri: Uri.parse("/pint"), //WidgetsBinding
+          //     .instance.platformDispatcher.defaultRouteName.uri,
+        ),
+      ),
+      backButtonDispatcher: NomoBackButtonDispatcher(delegate),
+      routeInformationParser: const NomoRouteInformationParser(),
+    );
+
+    return MultiWrapper(
+      wrappers: [
+        (child) => ThemeProvider(notifier: themeNotifier, child: child),
+        (child) => ScrollConfiguration(behavior: _scrollBehavior, child: child),
+        if (widget.translator != null)
+          (child) =>
+              NomoTextTranslator(translator: widget.translator!, child: child),
+        (child) => NomoNavigator(
+              delegate: delegate,
+              defaultTransistion: widget.defaultPageTransistion,
+              child: child,
+            ),
+      ],
+      child: MetricReactor(
+        sizingThemeBuilder: widget.sizingThemeBuilder,
+        child: ThemeAnimator(
+          notifier: themeNotifier,
+          child: app.wrapIf(
+            widget.appWrapper != null,
+            (metricReactor) => Builder(
+              builder: (context) => widget.appWrapper!(context, metricReactor),
             ),
           ),
         ),

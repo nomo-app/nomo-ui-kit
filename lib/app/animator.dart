@@ -50,7 +50,7 @@ class _ThemeAnimatorState extends State<ThemeAnimator> {
           builder: (_, theme, child) => NomoTheme(
             value: theme,
             child: NomoDefaultTextStyle(
-              style: theme.typographyTheme.b1,
+              style: theme.typography.b1,
               child: child!,
             ),
           ),

@@ -16,13 +16,13 @@ class DialogWrapper extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       height: 500,
       decoration: BoxDecoration(
-        color: context.colors.background,
+        color: context.colors.background1,
         borderRadius: BorderRadius.circular(8.0),
         border: Border.all(color: const Color(0xFF272626)),
       ),
       child: Row(
         children: [
-          // NomoButton.text(
+          // PrimaryNomoButton(
           //   onPressed: () {
           //     showDialog(
           //       context: context,
@@ -54,7 +54,7 @@ class DialogWrapper extends StatelessWidget {
           //             Expanded(
           //               child: SizedBox(
           //                 height: 50,
-          //                 child: NomoButton.text(
+          //                 child: PrimaryNomoButton(
           //                   onPressed: () => Navigator.pop(context),
           //                   text: "Cancel",
           //                 ),
@@ -72,7 +72,7 @@ class DialogWrapper extends StatelessWidget {
             width: 20,
           ),
           NomoCard(
-            backgroundColor: context.colors.background,
+            backgroundColor: context.colors.background1,
             elevation: 3,
             borderRadius: const BorderRadius.all(Radius.circular(18.0)),
             child: Center(
@@ -94,15 +94,18 @@ class DialogWrapper extends StatelessWidget {
             items: const [
               NomoDropdownItem<int>(displayText: "Item 1", value: 1),
               NomoDropdownItem<int>(
-                  displayText: "Item 2 is a very long item and it will fit insid the dropdown menu", value: 2),
-              NomoDropdownItem<int>(displayText: "Item 3 is kinda long", value: 3),
+                  displayText:
+                      "Item 2 is a very long item and it will fit insid the dropdown menu",
+                  value: 2),
+              NomoDropdownItem<int>(
+                  displayText: "Item 3 is kinda long", value: 3),
               NomoDropdownItem<int>(displayText: "Item 4", value: 4),
               NomoDropdownItem<int>(displayText: "Item 5", value: 5),
             ],
             height: 40,
             width: 140,
           ),
-          // NomoButton.text(
+          // PrimaryNomoButton(
           //     onPressed: () {
           //       WoltModalSheet.show(
           //         context: context,
@@ -141,7 +144,8 @@ class DialogWrapper extends StatelessWidget {
     );
   }
 
-  WoltModalSheetPage page2(BuildContext modalSheetContext, ValueNotifier<int> pageIndexNotifier) {
+  WoltModalSheetPage page2(
+      BuildContext modalSheetContext, ValueNotifier<int> pageIndexNotifier) {
     return WoltModalSheetPage.withCustomSliverList(
       stickyActionBar: Padding(
         padding: const EdgeInsets.fromLTRB(50, 50 / 4, 50, 50),
@@ -194,7 +198,8 @@ class DialogWrapper extends StatelessWidget {
     );
   }
 
-  WoltModalSheetPage page1(BuildContext modalSheetContext, ValueNotifier<int> pageIndexNotifier) {
+  WoltModalSheetPage page1(
+      BuildContext modalSheetContext, ValueNotifier<int> pageIndexNotifier) {
     return WoltModalSheetPage.withSingleChild(
       hasSabGradient: false,
       stickyActionBar: Padding(
@@ -211,7 +216,8 @@ class DialogWrapper extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             ElevatedButton(
-              onPressed: () => pageIndexNotifier.value = pageIndexNotifier.value + 1,
+              onPressed: () =>
+                  pageIndexNotifier.value = pageIndexNotifier.value + 1,
               child: const SizedBox(
                 height: 20,
                 width: double.infinity,

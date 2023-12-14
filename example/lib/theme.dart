@@ -65,7 +65,9 @@ final light = NomoColorThemeData(
     secondary: secondary,
     onSecondary: Color(0xff000000),
     secondaryContainer: Color(0xffe6d0a3),
-    background: Color(0xFFF5F5F5),
+    background1: Color(0xFFF5F5F5),
+    background2: Color(0xFFE0E0E0),
+    background3: Color(0xFFBDBDBD),
     surface: Colors.white,
     error: Colors.redAccent,
     disabled: Color(0xFFE0E0E0),
@@ -79,7 +81,7 @@ final light = NomoColorThemeData(
     return overrideNomoComponentColors(
       core: core,
       outlineContainerTheme: NomoOutlineContainerColorData(
-        background: core.background.darken(0.05),
+        background: core.background1.darken(0.05),
       ),
     );
   },
@@ -93,7 +95,9 @@ final dark = NomoColorThemeData(
     secondary: secondary,
     onSecondary: Color(0xff000000),
     secondaryContainer: Color(0xffe6d0a3),
-    background: Color(0xff293138),
+    background1: Color(0xff293138),
+    background2: Color(0xff1e2428),
+    background3: Color(0xff13191d),
     surface: Color(0xff2e363c),
     error: Colors.redAccent,
     disabled: Color(0xFFE0E0E0),
@@ -107,7 +111,7 @@ final dark = NomoColorThemeData(
     return overrideNomoComponentColors(
       core: core,
       outlineContainerTheme: NomoOutlineContainerColorData(
-        background: core.background.lighten(0.05),
+        background: core.background1.lighten(0.05),
         border: const Border.fromBorderSide(
           BorderSide(
             color: Colors.white24,
@@ -126,7 +130,9 @@ final avinoc = NomoColorThemeData(
     secondary: Color(0xff2FAAA5),
     onSecondary: Color(0xff1C1C1C),
     secondaryContainer: Color(0xff1C1C1C),
-    background: Color(0xff272F4A),
+    background1: Color(0xff272F4A),
+    background2: Color(0xff1C1C1C),
+    background3: Color(0xff13191d),
     surface: Color(0xFF101d42),
     error: Colors.redAccent,
     disabled: Color(0xFFE0E0E0),

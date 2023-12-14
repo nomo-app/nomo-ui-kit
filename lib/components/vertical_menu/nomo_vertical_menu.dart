@@ -95,6 +95,7 @@ class NomoVerticalMenu extends StatelessWidget {
             ],
             ListView.separated(
               shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 final item = items[index];
                 return NomoVerticalListTile(

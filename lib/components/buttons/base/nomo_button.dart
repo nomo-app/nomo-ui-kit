@@ -76,16 +76,22 @@ class NomoButton extends StatefulWidget with NomoButtonMixin {
   State<NomoButton> createState() => _NomoButtonState();
 }
 
-class _NomoButtonState extends State<NomoButton> with SingleTickerProviderStateMixin {
+class _NomoButtonState extends State<NomoButton>
+    with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   late Animation<Color?> animation;
 
   @override
-  void didChangeDependencies() {
+  void initState() {
+    super.initState();
     _controller = AnimationController(
       duration: const Duration(milliseconds: 200),
       vsync: this,
     );
+  }
+
+  @override
+  void didChangeDependencies() {
     animation = ColorTween(
       begin: widget.foregroundColor,
       end: widget.selectionColor,
@@ -112,8 +118,9 @@ class _NomoButtonState extends State<NomoButton> with SingleTickerProviderStateM
   @override
   Widget build(BuildContext context) {
     final borderRadius = switch (widget.borderRadius) {
-      final BorderRadiusGeometry borderRadius => borderRadius.resolve(Directionality.of(context)),
-      null when widget.shape == BoxShape.circle => BorderRadius.circular(1E3),
+      _ when widget.shape == BoxShape.circle => BorderRadius.circular(1E3),
+      final BorderRadiusGeometry borderRadius =>
+        borderRadius.resolve(Directionality.of(context)),
       null => null,
     };
 
@@ -134,7 +141,8 @@ class _NomoButtonState extends State<NomoButton> with SingleTickerProviderStateM
                       border: widget.border!.copyWithColor(animation.value),
                       decoration: BoxDecoration(
                         color: widget.backgroundColor,
-                        borderRadius: widget.borderRadius.ifElseNull(widget.shape != BoxShape.circle),
+                        borderRadius: widget.borderRadius
+                            .ifElseNull(widget.shape != BoxShape.circle),
                         shape: widget.shape ?? BoxShape.rectangle,
                       ),
                       child: child!,
@@ -147,10 +155,12 @@ class _NomoButtonState extends State<NomoButton> with SingleTickerProviderStateM
               (child) {
                 return ElevatedBox(
                   elevation: widget.elevation,
-                  border: widget.border ?? const Border.fromBorderSide(BorderSide.none),
+                  border: widget.border ??
+                      const Border.fromBorderSide(BorderSide.none),
                   decoration: BoxDecoration(
                     color: widget.backgroundColor,
-                    borderRadius: widget.borderRadius.ifElseNull(widget.shape != BoxShape.circle),
+                    borderRadius: widget.borderRadius
+                        .ifElseNull(widget.shape != BoxShape.circle),
                     shape: widget.shape ?? BoxShape.rectangle,
                   ),
                   child: child,
@@ -219,7 +229,8 @@ class _NomoButtonState extends State<NomoButton> with SingleTickerProviderStateM
                             child: child,
                           );
                         },
-                      if (widget.selectionColor == null && widget.foregroundColor != null)
+                      if (widget.selectionColor == null &&
+                          widget.foregroundColor != null)
                         (child) => NomoTextTheme(
                               color: widget.foregroundColor!,
                               child: IconTheme(

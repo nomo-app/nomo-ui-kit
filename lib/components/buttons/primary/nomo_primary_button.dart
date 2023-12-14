@@ -15,6 +15,8 @@ enum ActionType {
   loading;
 }
 
+// TODO: Selected Elevation?
+
 @NomoComponentThemeData('primaryButtonTheme')
 class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
   final String? text;
@@ -23,6 +25,9 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
   final TextStyle? textStyle;
   final double? iconSize;
   final ActionType type;
+  final Widget? child;
+  final bool? translate;
+  final Axis direction;
 
   @override
   final VoidCallback? onPressed;
@@ -81,17 +86,75 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
     this.textStyle,
     this.iconSize,
     this.shape,
-  });
+    this.child,
+    this.translate,
+    this.direction = Axis.horizontal,
+  }) : assert(child == null || (icon == null && text == null),
+            'Either Specify child or text and icon');
 
   @override
   Widget build(BuildContext context) {
     final theme = getFromContext(context, this);
 
+    final effectiveChild = switch (direction) {
+      _ when child != null => child!,
+      Axis.horizontal => Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (type == ActionType.loading)
+              Loading(
+                size: switch (height) {
+                  final double height => height / 3,
+                  _ => 24,
+                },
+                color: foregroundColor,
+              )
+            else if (icon != null)
+              Icon(icon, size: iconSize),
+            if (icon != null && text != null) SizedBox(width: spacing),
+            if (text != null && type == ActionType.loading)
+              SizedBox(width: spacing),
+            if (text != null)
+              NomoText(
+                text!,
+                style: textStyle,
+                translate: translate ?? true,
+              ),
+          ],
+        ),
+      Axis.vertical => Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (type == ActionType.loading)
+              Loading(
+                size: switch (height) {
+                  final double height => height / 3,
+                  _ => 24,
+                },
+                color: foregroundColor,
+              )
+            else if (icon != null)
+              Icon(icon, size: iconSize),
+            if (icon != null && text != null) SizedBox(height: spacing),
+            if (text != null && type == ActionType.loading)
+              SizedBox(height: spacing),
+            if (text != null)
+              NomoText(
+                text!,
+                style: textStyle,
+                translate: translate ?? true,
+              ),
+          ],
+        ),
+    };
+
     return NomoButton(
       elevation: theme.elevation,
       backgroundColor: switch (type) {
         ActionType.danger => context.colors.error,
-        ActionType.disabled || ActionType.nonInteractive => context.colors.disabled,
+        ActionType.disabled ||
+        ActionType.nonInteractive =>
+          context.colors.disabled,
         _ => theme.backgroundColor,
       },
       foregroundColor: switch (type) {
@@ -113,24 +176,7 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
         _ => SystemMouseCursors.click,
       },
       enabled: enabled,
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if (type == ActionType.loading)
-            Loading(
-              size: switch (height) {
-                final double height => height / 3,
-                _ => 24,
-              },
-              color: foregroundColor,
-            )
-          else if (icon != null)
-            Icon(icon, size: iconSize),
-          if (icon != null && text != null) SizedBox(width: spacing),
-          if (text != null && type == ActionType.loading) SizedBox(width: spacing),
-          if (text != null) NomoText(text!, style: textStyle),
-        ],
-      ),
+      child: effectiveChild,
     );
   }
 }

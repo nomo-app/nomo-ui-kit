@@ -8,8 +8,10 @@ part 'nomo_text_button.theme_data.g.dart';
 
 @NomoComponentThemeData('textButtonTheme')
 class NomoTextButton extends StatelessWidget with NomoButtonMixin {
-  final String text;
+  final String? text;
   final TextStyle? textStyle;
+  final Widget? child;
+  final bool? translate;
 
   @override
   final VoidCallback? onPressed;
@@ -49,7 +51,7 @@ class NomoTextButton extends StatelessWidget with NomoButtonMixin {
   double? get elevation => null;
 
   const NomoTextButton({
-    required this.text,
+    this.text,
     super.key,
     this.foregroundColor,
     this.width,
@@ -61,7 +63,9 @@ class NomoTextButton extends StatelessWidget with NomoButtonMixin {
     this.borderRadius,
     this.textStyle,
     this.shape,
-  });
+    this.child,
+    this.translate,
+  }) : assert(child != null || text != null, 'Must specify child or text');
 
   @override
   Widget build(BuildContext context) {
@@ -76,10 +80,12 @@ class NomoTextButton extends StatelessWidget with NomoButtonMixin {
       borderRadius: theme.borderRadius,
       onPressed: onPressed,
       enabled: enabled,
-      child: NomoText(
-        text,
-        style: textStyle,
-      ),
+      child: child ??
+          NomoText(
+            text!,
+            style: textStyle,
+            translate: translate ?? true,
+          ),
     );
   }
 }

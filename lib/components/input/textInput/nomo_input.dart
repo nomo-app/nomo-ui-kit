@@ -147,7 +147,8 @@ class NomoInput extends StatefulWidget {
     this.autoValidate = false,
     this.titleSpacing,
     this.height,
-  }) : assert(height == null || usePlaceholderAsTitle == false, 'Not supported please ask Thomas to implement');
+  }) : assert(height == null || usePlaceholderAsTitle == false,
+            'Not supported please ask Thomas to implement');
 
   @override
   State<NomoInput> createState() => _NomoInputState();
@@ -167,9 +168,12 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
     borderRadius: theme.borderRadius,
     border: theme.border,
   );
-  late final selectedDecoration = defaultDecoration.copyWith(border: theme.selectedBorder);
-  late final errorDecoration = defaultDecoration.copyWith(border: theme.errorBorder);
-  late final selectedErrorDecoration = defaultDecoration.copyWith(border: theme.selectedErrorBorder);
+  late final selectedDecoration =
+      defaultDecoration.copyWith(border: theme.selectedBorder);
+  late final errorDecoration =
+      defaultDecoration.copyWith(border: theme.errorBorder);
+  late final selectedErrorDecoration =
+      defaultDecoration.copyWith(border: theme.selectedErrorBorder);
 
   ///
   /// Form Logic
@@ -188,7 +192,8 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
     errorNotifer = widget.errorNotifier ?? ValueNotifier(null)
       ..addListener(errorChanged);
     inputStateNotifier = ValueNotifier(InputState.nonError);
-    textController = TextEditingController(text: valueNotifier.value)..addListener(textControllerChanged);
+    textController = TextEditingController(text: valueNotifier.value)
+      ..addListener(textControllerChanged);
     focusNode = FocusNode()..addListener(focusChanged);
   }
 
@@ -296,10 +301,13 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
 
     final state = switch ((oldState, newState)) {
       (InputState.selected, InputState.error) => InputState.selectedWithError,
-      (InputState.selectedWithError, InputState.error) => InputState.selectedWithError,
+      (InputState.selectedWithError, InputState.error) =>
+        InputState.selectedWithError,
       (InputState.error, InputState.selected) => InputState.selectedWithError,
-      (InputState.selectedWithError, InputState.nonSelected) => InputState.error,
-      (InputState.selectedWithError, InputState.nonError) => InputState.selected,
+      (InputState.selectedWithError, InputState.nonSelected) =>
+        InputState.error,
+      (InputState.selectedWithError, InputState.nonError) =>
+        InputState.selected,
       (_, _) => newState,
     };
 
@@ -307,8 +315,11 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
 
     final decoration = switch (state) {
       InputState.error => oldDecoration?.add(errorDecoration),
-      InputState.selectedWithError => oldDecoration?.add(selectedErrorDecoration),
-      InputState.nonError || InputState.nonSelected => oldDecoration?.add(defaultDecoration),
+      InputState.selectedWithError =>
+        oldDecoration?.add(selectedErrorDecoration),
+      InputState.nonError ||
+      InputState.nonSelected =>
+        oldDecoration?.add(defaultDecoration),
       InputState.selected => oldDecoration?.add(selectedDecoration),
     };
 
@@ -319,9 +330,12 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final defaultTextStyle = NomoDefaultTextStyle.of(context);
-    final titleStyle = widget.titleStyle ?? defaultTextStyle.copyWith(color: context.colors.onDisabled);
-    final placeHolderStyle = widget.placeHolderStyle ?? defaultTextStyle.copyWith(color: context.colors.onDisabled);
-    final errorStyle = widget.errorStyle ?? defaultTextStyle.copyWith(color: context.colors.error);
+    final titleStyle = widget.titleStyle ??
+        defaultTextStyle.copyWith(color: context.colors.onDisabled);
+    final placeHolderStyle = widget.placeHolderStyle ??
+        defaultTextStyle.copyWith(color: context.colors.onDisabled);
+    final errorStyle = widget.errorStyle ??
+        defaultTextStyle.copyWith(color: context.colors.error);
 
     return ValueListenableBuilder(
       valueListenable: errorNotifer,
@@ -330,7 +344,8 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
           height: widget.height,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: widget.height == null ? MainAxisSize.min : MainAxisSize.max,
+            mainAxisSize:
+                widget.height == null ? MainAxisSize.min : MainAxisSize.max,
             children: [
               if (widget.title != null)
                 NomoText(
@@ -354,11 +369,13 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
                   textInputAction: widget.textInputAction,
                   controller: textController,
                   prefix: Padding(
-                    padding: EdgeInsets.only(left: theme.padding.horizontal / 2),
+                    padding:
+                        EdgeInsets.only(left: theme.padding.horizontal / 2),
                     child: widget.leading,
                   ).ifElseNull(widget.leading != null),
                   suffix: Padding(
-                    padding: EdgeInsets.only(right: theme.padding.horizontal / 2),
+                    padding:
+                        EdgeInsets.only(right: theme.padding.horizontal / 2),
                     child: widget.trailling,
                   ).ifElseNull(widget.trailling != null),
                   padding: theme.padding,
@@ -367,14 +384,17 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
                   keyboardType: widget.keyboardType,
                   style: widget.style ?? defaultTextStyle,
                   selectionControls: switch (PlatformInfo.I.isCupertino) {
-                    true when PlatformInfo.I.isCupertino => CupertinoDesktopTextSelectionControls(),
+                    true when PlatformInfo.I.isCupertino =>
+                      CupertinoDesktopTextSelectionControls(),
                     true => CupertinoTextSelectionControls(),
-                    false when PlatformInfo.I.isCupertino => DesktopTextSelectionControls(),
+                    false when PlatformInfo.I.isCupertino =>
+                      DesktopTextSelectionControls(),
                     false => MaterialTextSelectionControls(),
                   },
                   contextMenuBuilder: (context, editableTextState) {
                     return switch (PlatformInfo.I.isCupertino) {
-                      true => CupertinoAdaptiveTextSelectionToolbar.editableText(
+                      true =>
+                        CupertinoAdaptiveTextSelectionToolbar.editableText(
                           editableTextState: editableTextState,
                         ),
                       false => AdaptiveTextSelectionToolbar.editableText(
@@ -383,7 +403,8 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
                     };
                   },
                 ),
-              ).wrapIf(widget.height != null, (child) => Expanded(child: child)),
+              ).wrapIf(
+                  widget.height != null, (child) => Expanded(child: child)),
               AnimatedSize(
                 duration: theme.duration,
                 curve: theme.curve,

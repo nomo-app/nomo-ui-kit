@@ -10,6 +10,7 @@ class NomoCard extends StatelessWidget {
   final BorderRadiusGeometry? borderRadius;
   final Color? backgroundColor;
   final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? margin;
 
   const NomoCard({
     required this.child,
@@ -21,22 +22,26 @@ class NomoCard extends StatelessWidget {
     this.borderRadius,
     this.backgroundColor,
     this.padding,
+    this.margin,
   });
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedBox(
-      border: border,
-      offset: offset,
-      elevation: elevation,
-      shadowColor: shadowColor,
-      decoration: BoxDecoration(
-        borderRadius: borderRadius,
-        color: backgroundColor,
-      ),
-      child: Padding(
-        padding: padding ?? EdgeInsets.zero,
-        child: child,
+    return Padding(
+      padding: margin ?? EdgeInsets.zero,
+      child: ElevatedBox(
+        border: border,
+        offset: offset,
+        elevation: elevation,
+        shadowColor: shadowColor,
+        decoration: BoxDecoration(
+          borderRadius: borderRadius,
+          color: backgroundColor,
+        ),
+        child: Padding(
+          padding: padding ?? EdgeInsets.zero,
+          child: child,
+        ),
       ),
     );
   }

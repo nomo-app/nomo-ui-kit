@@ -4,9 +4,9 @@ import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 
 class NomoDialog extends StatelessWidget {
   const NomoDialog({
-    required this.title,
-    required this.actions,
+    this.actions,
     required this.content,
+    this.title,
     super.key,
     this.showCloseButton = true,
     this.border,
@@ -23,12 +23,14 @@ class NomoDialog extends StatelessWidget {
     this.maxWidth,
     this.maxHeight,
     this.backgroundColor,
-  });
-  final String title;
+    this.titleWidget,
+  }) : assert(titleWidget == null || title == null,
+            'title and titleWidget cannot be used together');
+  final String? title;
   final TextStyle? titleStyle;
   final Color? backgroundColor;
   final Widget content;
-  final List<Widget> actions;
+  final List<Widget>? actions;
   final BorderSide? border;
   final double? elevation;
   final bool? showCloseButton;
@@ -41,6 +43,7 @@ class NomoDialog extends StatelessWidget {
   final Color? closeButtonIconColor;
   final double? maxWidth;
   final double? maxHeight;
+  final Widget? titleWidget;
 
   @override
   Widget build(BuildContext context) {
@@ -72,22 +75,24 @@ class NomoDialog extends StatelessWidget {
                       children: [
                         Stack(
                           children: [
-                            Align(
-                              alignment: Alignment.topCenter,
-                              child: Container(
-                                constraints: BoxConstraints(
-                                  maxWidth: rowWidth,
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(top: 8),
-                                  child: NomoText(
-                                    title,
-                                    style: titleStyle ??
-                                        context.theme.typographyTheme.h1,
+                            if (title != null)
+                              Align(
+                                alignment: Alignment.topCenter,
+                                child: Container(
+                                  constraints: BoxConstraints(
+                                    maxWidth: rowWidth,
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 8),
+                                    child: NomoText(
+                                      title!,
+                                      style: titleStyle ??
+                                          context.theme.typography.h1,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
+                            if (titleWidget != null) titleWidget!,
                             // if (showCloseButton!)
                             //   Align(
                             //     alignment: Alignment.topRight,
@@ -119,10 +124,10 @@ class NomoDialog extends StatelessWidget {
                         const SizedBox(
                           height: 16,
                         ),
-                        if (actions.isNotEmpty)
+                        if (actions != null && actions!.isNotEmpty)
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
-                            children: actions,
+                            children: actions!,
                           ),
                       ],
                     ),

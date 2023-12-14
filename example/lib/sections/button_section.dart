@@ -72,7 +72,8 @@ class TextButtonWrapper extends StatelessWidget {
                   PrimaryNomoButton(
                     foregroundColor: primaryColor.lighten(0.5),
                     text: "Primary",
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 12),
                     onPressed: () {},
                     textStyle: context.typography.h1,
                   ),
@@ -106,7 +107,8 @@ class TextButtonWrapper extends StatelessWidget {
                   PrimaryNomoButton(
                     foregroundColor: primaryColor.lighten(0.5),
                     text: "Danger Primary",
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 12),
                     onPressed: () {},
                     textStyle: context.typography.h1,
                     type: ActionType.danger,
@@ -114,7 +116,8 @@ class TextButtonWrapper extends StatelessWidget {
                   PrimaryNomoButton(
                     foregroundColor: primaryColor.lighten(0.5),
                     text: "Disabled Primary",
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 12),
                     onPressed: () {},
                     textStyle: context.typography.h1,
                     type: ActionType.disabled,
@@ -122,7 +125,8 @@ class TextButtonWrapper extends StatelessWidget {
                   PrimaryNomoButton(
                     foregroundColor: primaryColor.lighten(0.5),
                     text: "NonInteractive Primary",
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 12),
                     onPressed: () {},
                     textStyle: context.typography.h1,
                     type: ActionType.nonInteractive,
@@ -158,7 +162,8 @@ class TextButtonWrapper extends StatelessWidget {
                 children: [
                   SecondaryNomoButton(
                     text: "Secondary",
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 12),
                     onPressed: () {},
                     textStyle: context.typography.h1,
                   ),
@@ -191,7 +196,8 @@ class TextButtonWrapper extends StatelessWidget {
                     textStyle: context.typography.h1,
                     backgroundColor: context.colors.error.lighten(0.25),
                     icon: Icons.access_alarm_outlined,
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 12),
                     text: "Danger Secondary",
                     type: ActionType.danger,
                   ),
@@ -199,7 +205,8 @@ class TextButtonWrapper extends StatelessWidget {
                     onPressed: () {},
                     textStyle: context.typography.h1,
                     icon: Icons.access_alarm_outlined,
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 12),
                     text: "Disabled Secondary",
                     type: ActionType.disabled,
                   ),
@@ -207,7 +214,8 @@ class TextButtonWrapper extends StatelessWidget {
                     onPressed: () {},
                     textStyle: context.typography.h1,
                     icon: Icons.access_alarm_outlined,
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 12),
                     text: "NonInteractive Secondary",
                     type: ActionType.nonInteractive,
                   ),
@@ -433,7 +441,7 @@ class TextButtonWrapper extends StatelessWidget {
 //       children: [
 //         Row(
 //           children: [
-//             NomoButton.text(
+//             PrimaryNomoButton(
 //               elevation: 0.0,
 //               border: const BorderSide(color: Color(0xFF272626)),
 //               size: ButtonSize.small,
@@ -441,13 +449,13 @@ class TextButtonWrapper extends StatelessWidget {
 //               text: "Search",
 //             ),
 //             const SizedBox(width: 16),
-//             NomoButton.text(
+//             PrimaryNomoButton(
 //               size: ButtonSize.medium,
 //               onPressed: () {},
 //               text: "Search",
 //             ),
 //             const SizedBox(width: 16),
-//             NomoButton.text(
+//             PrimaryNomoButton(
 //               color: Colors.red,
 //               textStyle: context.typography.h1.copyWith(
 //                 color: Colors.black,
@@ -461,21 +469,21 @@ class TextButtonWrapper extends StatelessWidget {
 //         const SizedBox(height: 16),
 //         Row(
 //           children: [
-//             NomoButton.text(
+//             PrimaryNomoButton(
 //               size: ButtonSize.small,
 //               borderRadius: BorderRadius.circular(12.0),
 //               onPressed: () {},
 //               text: "Search",
 //             ),
 //             const SizedBox(width: 16),
-//             NomoButton.text(
+//             PrimaryNomoButton(
 //               size: ButtonSize.medium,
 //               borderRadius: BorderRadius.circular(12.0),
 //               onPressed: () {},
 //               text: "Search",
 //             ),
 //             const SizedBox(width: 16),
-//             NomoButton.text(
+//             PrimaryNomoButton(
 //               size: ButtonSize.large,
 //               borderRadius: BorderRadius.circular(12.0),
 //               onPressed: () => {},
@@ -486,7 +494,7 @@ class TextButtonWrapper extends StatelessWidget {
 //         const SizedBox(height: 16),
 //         Row(
 //           children: [
-//             NomoButton.text(
+//             PrimaryNomoButton(
 //               size: ButtonSize.small,
 //               leading: const Icon(Icons.search),
 //               borderRadius: BorderRadius.circular(12.0),
@@ -494,7 +502,7 @@ class TextButtonWrapper extends StatelessWidget {
 //               text: "Search",
 //             ),
 //             const SizedBox(width: 16),
-//             NomoButton.text(
+//             PrimaryNomoButton(
 //               size: ButtonSize.medium,
 //               leading: const Icon(Icons.search),
 //               borderRadius: BorderRadius.circular(12.0),
@@ -503,7 +511,7 @@ class TextButtonWrapper extends StatelessWidget {
 //               trailing: const Icon(Icons.search),
 //             ),
 //             const SizedBox(width: 16),
-//             NomoButton.text(
+//             PrimaryNomoButton(
 //               size: ButtonSize.large,
 //               leading: const Icon(Icons.search),
 //               borderRadius: BorderRadius.circular(12.0),
@@ -515,7 +523,7 @@ class TextButtonWrapper extends StatelessWidget {
 //         const SizedBox(height: 16),
 //         Row(
 //           children: [
-//             NomoButton.text(
+//             PrimaryNomoButton(
 //               color: Colors.red,
 //               splashColor: Colors.green,
 //               textStyle: const TextStyle(color: Colors.white, fontSize: 16),
@@ -527,7 +535,7 @@ class TextButtonWrapper extends StatelessWidget {
 //               text: "Search",
 //             ),
 //             const SizedBox(width: 16),
-//             NomoButton.text(
+//             PrimaryNomoButton(
 //               isEnabled: false,
 //               size: ButtonSize.medium,
 //               color: Colors.green,
@@ -538,7 +546,7 @@ class TextButtonWrapper extends StatelessWidget {
 //               text: "Search",
 //             ),
 //             const SizedBox(width: 16),
-//             NomoButton.text(
+//             PrimaryNomoButton(
 //               highlightColor: Colors.green,
 //               color: Colors.blue,
 //               size: ButtonSize.large,
@@ -553,7 +561,7 @@ class TextButtonWrapper extends StatelessWidget {
 //         const SizedBox(height: 16),
 //         Row(
 //           children: [
-//             NomoButton.text(
+//             PrimaryNomoButton(
 //               isLoading: true,
 //               size: ButtonSize.small,
 //               elevation: 3.0,
@@ -563,7 +571,7 @@ class TextButtonWrapper extends StatelessWidget {
 //               text: "Search",
 //             ),
 //             const SizedBox(width: 16),
-//             NomoButton.text(
+//             PrimaryNomoButton(
 //               isLoading: true,
 //               size: ButtonSize.medium,
 //               elevation: 3.0,
@@ -573,7 +581,7 @@ class TextButtonWrapper extends StatelessWidget {
 //               text: "Search",
 //             ),
 //             const SizedBox(width: 16),
-//             NomoButton.text(
+//             PrimaryNomoButton(
 //               isLoading: true,
 //               size: ButtonSize.large,
 //               elevation: 3.0,
