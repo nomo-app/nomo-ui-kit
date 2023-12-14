@@ -10,7 +10,8 @@ enum TextLayoutItem {
   placeHolder,
 }
 
-class TextInputLayoutDelegate extends SlottedMultiChildRenderObjectWidget<TextLayoutItem, RenderBox> {
+class TextInputLayoutDelegate
+    extends SlottedMultiChildRenderObjectWidget<TextLayoutItem, RenderBox> {
   TextInputLayoutDelegate({
     required this.children,
     required this.placeHolderTitleHeight,
@@ -31,7 +32,8 @@ class TextInputLayoutDelegate extends SlottedMultiChildRenderObjectWidget<TextLa
   }
 
   @override
-  SlottedContainerRenderObjectMixin<TextLayoutItem, RenderBox> createRenderObject(
+  SlottedContainerRenderObjectMixin<TextLayoutItem, RenderBox>
+      createRenderObject(
     BuildContext context,
   ) {
     return TextInputLayoutRenderbox(
@@ -52,7 +54,9 @@ class TextInputLayoutDelegate extends SlottedMultiChildRenderObjectWidget<TextLa
 }
 
 class TextInputLayoutRenderbox extends RenderBox
-    with SlottedContainerRenderObjectMixin<TextLayoutItem, RenderBox>, DebugOverflowIndicatorMixin {
+    with
+        SlottedContainerRenderObjectMixin<TextLayoutItem, RenderBox>,
+        DebugOverflowIndicatorMixin {
   TextInputLayoutRenderbox({
     required this.items,
     required this.placeHolderTitleHeight,
@@ -103,13 +107,18 @@ class TextInputLayoutRenderbox extends RenderBox
     };
     intrinsicSizes[TextLayoutItem.text] = findIntrinsicSize(
       text,
-      maxWidth - intrinsicSizes[TextLayoutItem.trailling]!.width - intrinsicSizes[TextLayoutItem.leading]!.width,
+      maxWidth -
+          intrinsicSizes[TextLayoutItem.trailling]!.width -
+          intrinsicSizes[TextLayoutItem.leading]!.width,
     );
 
-    var maxHeight = constraints.maxHeight == double.infinity ? findMaxHeight(intrinsicSizes) : constraints.maxHeight;
+    var maxHeight = constraints.maxHeight == double.infinity
+        ? findMaxHeight(intrinsicSizes)
+        : constraints.maxHeight;
     final textMaxHeight = maxHeight;
     final textInset = placeHolderTitleHeight?.height ?? 0;
-    if (placeHolderTitleHeight != null && constraints.maxHeight == double.infinity) {
+    if (placeHolderTitleHeight != null &&
+        constraints.maxHeight == double.infinity) {
       maxHeight += placeHolderTitleHeight!.height;
     }
 
@@ -118,7 +127,8 @@ class TextInputLayoutRenderbox extends RenderBox
     ///
     final leadingSize = intrinsicSizes[TextLayoutItem.leading] ?? Size.zero;
     if (leading != null) {
-      final backButtonOffset = Offset(0, centerVertically(maxHeight, leadingSize));
+      final backButtonOffset =
+          Offset(0, centerVertically(maxHeight, leadingSize));
       (leading.parentData! as BoxParentData).offset = backButtonOffset;
     }
 
@@ -127,7 +137,8 @@ class TextInputLayoutRenderbox extends RenderBox
     ///
     final traillingSize = intrinsicSizes[TextLayoutItem.trailling] ?? Size.zero;
     if (tralling != null) {
-      final backButtonOffset = Offset(maxWidth - traillingSize.width, centerVertically(maxHeight, traillingSize));
+      final backButtonOffset = Offset(maxWidth - traillingSize.width,
+          centerVertically(maxHeight, traillingSize));
       (tralling.parentData! as BoxParentData).offset = backButtonOffset;
     }
 
@@ -136,19 +147,24 @@ class TextInputLayoutRenderbox extends RenderBox
     ///
     var textSize = intrinsicSizes[TextLayoutItem.text]!;
     text.layout(
-      BoxConstraints(maxWidth: maxWidth - leadingSize.width - traillingSize.width, maxHeight: textMaxHeight),
+      BoxConstraints(
+          maxWidth: maxWidth - leadingSize.width - traillingSize.width,
+          maxHeight: textMaxHeight),
       parentUsesSize: true,
     );
     textSize = text.size;
-    final textOffset = Offset(leadingSize.width, textInset + centerVertically(textMaxHeight, textSize));
+    final textOffset = Offset(leadingSize.width,
+        textInset + centerVertically(textMaxHeight, textSize));
     (text.parentData! as BoxParentData).offset = textOffset;
 
     ///
     /// Placeholder
     ///
     if (placeHolder != null) {
-      final placeHolderSize = intrinsicSizes[TextLayoutItem.placeHolder] ?? Size.zero;
-      final topInset = (placeHolderTitleHeight != null ? animation : 1) * centerVertically(maxHeight, placeHolderSize);
+      final placeHolderSize =
+          intrinsicSizes[TextLayoutItem.placeHolder] ?? Size.zero;
+      final topInset = (placeHolderTitleHeight != null ? animation : 1) *
+          centerVertically(maxHeight, placeHolderSize);
       placeHolder.layout(constraints);
       final placeHolderOffset = Offset(leadingSize.width, topInset);
       (placeHolder.parentData! as BoxParentData).offset = placeHolderOffset;
