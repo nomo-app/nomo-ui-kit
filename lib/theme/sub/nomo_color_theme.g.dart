@@ -80,6 +80,11 @@ NomoComponentColors lerpNomoComponentColors(
       b.inputTheme,
       t,
     ),
+    dialogTheme: NomoDialogColorData.lerp(
+      a.dialogTheme,
+      b.dialogTheme,
+      t,
+    ),
   );
 }
 
@@ -99,6 +104,7 @@ NomoComponentColors overrideNomoComponentColors({
   ShimmerColorData? shimmerTheme,
   ExpandableColorData? expandableTheme,
   NomoInputColorData? inputTheme,
+  NomoDialogColorData? dialogTheme,
 }) {
   final def = NomoComponentColors.defaultComponents(core);
   return NomoComponentColors._(
@@ -116,6 +122,7 @@ NomoComponentColors overrideNomoComponentColors({
     shimmerTheme: shimmerTheme ?? def.shimmerTheme,
     expandableTheme: expandableTheme ?? def.expandableTheme,
     inputTheme: inputTheme ?? def.inputTheme,
+    dialogTheme: dialogTheme ?? def.dialogTheme,
   );
 }
 
@@ -134,6 +141,7 @@ NomoComponentColors defaultConstructor({
   ShimmerColorData? shimmerTheme,
   ExpandableColorData? expandableTheme,
   NomoInputColorData? inputTheme,
+  NomoDialogColorData? dialogTheme,
 }) {
   return NomoComponentColors._(
     outlineContainerTheme:
@@ -153,5 +161,6 @@ NomoComponentColors defaultConstructor({
     shimmerTheme: shimmerTheme ?? const ShimmerColorData(),
     expandableTheme: expandableTheme ?? const ExpandableColorData(),
     inputTheme: inputTheme ?? const NomoInputColorData(),
+    dialogTheme: dialogTheme ?? const NomoDialogColorData(),
   );
 }

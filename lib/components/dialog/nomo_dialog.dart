@@ -1,56 +1,74 @@
 import 'package:flutter/material.dart';
+import 'package:nomo_ui_generator/annotations.dart';
+import 'package:nomo_ui_kit/components/app/app_bar/layout/appbar_layout_delegate.dart';
+import 'package:nomo_ui_kit/components/buttons/secondary/nomo_secondary_button.dart';
+import 'package:nomo_ui_kit/components/elevatedBox/elevated_box.dart';
 import 'package:nomo_ui_kit/components/text/nomo_text.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 
+part 'nomo_dialog.theme_data.g.dart';
+
+@NomoComponentThemeData('dialogTheme')
 class NomoDialog extends StatelessWidget {
   const NomoDialog({
-    this.actions,
     required this.content,
+    this.actions,
     this.title,
-    super.key,
     this.showCloseButton = true,
-    this.border,
     this.elevation = 2,
-    this.borderRadius = const BorderRadius.all(
-      Radius.circular(12),
-    ),
+    this.borderRadius,
     this.titleStyle,
-    this.widthRatio = 0.75,
-    this.padding = const EdgeInsets.all(12),
-    this.margin = const EdgeInsets.only(bottom: 16),
-    this.closeButtonColor,
-    this.closeButtonIconColor,
+    this.widthRatio,
+    this.padding,
+    this.margin,
     this.maxWidth,
-    this.maxHeight,
     this.backgroundColor,
     this.titleWidget,
-  }) : assert(titleWidget == null || title == null,
-            'title and titleWidget cannot be used together');
+    this.closeButton,
+    this.contentSpacing,
+    super.key,
+  }) : assert(
+          titleWidget == null || title == null,
+          'title and titleWidget cannot be used together',
+        );
+
   final String? title;
   final TextStyle? titleStyle;
-  final Color? backgroundColor;
   final Widget content;
-  final List<Widget>? actions;
-  final BorderSide? border;
-  final double? elevation;
   final bool? showCloseButton;
+  final List<Widget>? actions;
+  final double? maxWidth;
+  final Widget? titleWidget;
+  final Widget? closeButton;
+
+  @NomoSizingField(1.0)
+  final double? elevation;
+
+  @NomoSizingField<Widget>(SizedBox(height: 12))
+  final Widget? contentSpacing;
+
+  @NomoColorField(Colors.white)
+  final Color? backgroundColor;
+
+  @NomoSizingField(0.75)
   final double? widthRatio;
 
-  final EdgeInsetsGeometry margin;
+  @NomoSizingField(EdgeInsets.zero)
+  final EdgeInsetsGeometry? margin;
+
+  @NomoSizingField(EdgeInsets.all(12))
   final EdgeInsetsGeometry? padding;
+
+  @NomoSizingField<BorderRadiusGeometry>(BorderRadius.all(Radius.circular(12)))
   final BorderRadiusGeometry? borderRadius;
-  final Color? closeButtonColor;
-  final Color? closeButtonIconColor;
-  final double? maxWidth;
-  final double? maxHeight;
-  final Widget? titleWidget;
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width * widthRatio!;
-    final height = MediaQuery.of(context).size.height *
+    final theme = getFromContext(context, this);
+
+    final width = MediaQuery.of(context).size.width * theme.widthRatio;
+    final height = MediaQuery.of(context).size.height -
         MediaQuery.of(context).systemGestureInsets.top;
-    final rowWidth = width - padding!.horizontal - 100;
 
     return SizedBox(
       height: height,
@@ -60,76 +78,53 @@ class NomoDialog extends StatelessWidget {
             child: Center(
               child: ConstrainedBox(
                 constraints: BoxConstraints(maxWidth: maxWidth ?? width),
-                child: Material(
-                  type: MaterialType.transparency,
-                  child: Container(
+                child: Container(
+                  width: width,
+                  margin: theme.margin,
+                  child: ElevatedBox(
                     decoration: BoxDecoration(
-                      color: backgroundColor ?? context.colors.surface,
-                      borderRadius: borderRadius,
+                      color: theme.backgroundColor,
+                      borderRadius: theme.borderRadius,
                     ),
-                    width: width,
-                    margin: margin,
-                    padding: padding,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Stack(
-                          children: [
-                            if (title != null)
-                              Align(
-                                alignment: Alignment.topCenter,
-                                child: Container(
-                                  constraints: BoxConstraints(
-                                    maxWidth: rowWidth,
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(top: 8),
-                                    child: NomoText(
-                                      title!,
-                                      style: titleStyle ??
-                                          context.theme.typography.h1,
+                    elevation: theme.elevation,
+                    child: Padding(
+                      padding: theme.padding,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          AppBarLayoutDelegate(
+                            children: {
+                              if (title != null)
+                                AppBarItem.title: NomoText(
+                                  title!,
+                                  style: titleStyle,
+                                )
+                              else if (titleWidget != null)
+                                AppBarItem.title: titleWidget!,
+                              if (showCloseButton!)
+                                AppBarItem.actions: closeButton ??
+                                    SecondaryNomoButton(
+                                      border: const Border.fromBorderSide(
+                                        BorderSide.none,
+                                      ),
+                                      onPressed: Navigator.of(context).pop,
+                                      shape: BoxShape.circle,
+                                      icon: Icons.close,
+                                      padding: const EdgeInsets.all(8),
                                     ),
-                                  ),
-                                ),
-                              ),
-                            if (titleWidget != null) titleWidget!,
-                            // if (showCloseButton!)
-                            //   Align(
-                            //     alignment: Alignment.topRight,
-                            //     child: SizedBox(
-                            //       width: 40,
-                            //       height: 40,
-                            //       child: closeButton ??
-                            //           NomoButton.icon(
-                            //             onPressed: Navigator.of(context).pop,
-                            //             borderRadius: BorderRadius.circular(100),
-                            //             icon: const Icon(
-                            //               Icons.close,
-                            //             ),
-                            //           ),
-                            //     ),
-                            //   ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        ConstrainedBox(
-                          constraints: BoxConstraints(
-                            maxHeight: maxHeight ??
-                                MediaQuery.of(context).size.height * 0.5,
+                            },
                           ),
-                          child: content,
-                        ),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        if (actions != null && actions!.isNotEmpty)
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: actions!,
-                          ),
-                      ],
+                          theme.contentSpacing,
+                          content,
+                          theme.contentSpacing,
+                          if (actions != null && actions!.isNotEmpty)
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: actions!,
+                            ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

@@ -9,7 +9,8 @@ import 'package:source_gen/source_gen.dart';
 
 import '../annotations.dart';
 
-class ComponentThemeDataGenerator extends GeneratorForAnnotation<NomoComponentThemeData> {
+class ComponentThemeDataGenerator
+    extends GeneratorForAnnotation<NomoComponentThemeData> {
   @override
   Future<String> generateForAnnotatedElement(
     Element element,
@@ -77,9 +78,13 @@ class ComponentThemeDataGenerator extends GeneratorForAnnotation<NomoComponentTh
     final contantsName = "${_className}Constants";
     final contantsNameNullable = "${_className}ConstantsNullable";
 
-    buffer.write(_constantsNullable(className: contantsNameNullable, constants: visitor.constants));
+    buffer.write(_constantsNullable(
+        className: contantsNameNullable, constants: visitor.constants));
     buffer.write(
-      _constants(className: contantsName, constants: visitor.constants, classNameNullable: contantsNameNullable),
+      _constants(
+          className: contantsName,
+          constants: visitor.constants,
+          classNameNullable: contantsNameNullable),
     );
 
     ///
@@ -135,7 +140,8 @@ class ComponentThemeDataGenerator extends GeneratorForAnnotation<NomoComponentTh
         colorDataClassName: colorDataClassName,
         sizingDataClassName: sizingDataClassName,
         themeName: themeName,
-        overrideThemeInheritedWidgetClassName: themeOverrideInheritedWidgetClassName,
+        overrideThemeInheritedWidgetClassName:
+            themeOverrideInheritedWidgetClassName,
         colorFields: visitor.colorFields,
         sizingFields: visitor.sizingFields,
         constants: visitor.constants,
@@ -216,14 +222,17 @@ class ComponentThemeDataGenerator extends GeneratorForAnnotation<NomoComponentTh
     buffer.writeln(
       "static $className lerp($className a, $className b, double t) {",
     );
-    buffer.writeln("return ${colorFields.entries.isEmpty ? 'const' : ''} $className(");
+    buffer.writeln(
+        "return ${colorFields.entries.isEmpty ? 'const' : ''} $className(");
     for (final entry in colorFields.entries) {
       final name = entry.key;
       final type = entry.value.$1;
       final value = entry.value.$2;
 
       final dontUseLerp = switch (type) {
+        "bool" => true,
         "BoxShape" => true,
+        "Widget" => true,
         _ => false,
       };
       if (dontUseLerp) {
@@ -231,7 +240,8 @@ class ComponentThemeDataGenerator extends GeneratorForAnnotation<NomoComponentTh
         continue;
       }
 
-      final nullAssertion = type.getNullablePostfix(value).contains("?") ? "" : "!";
+      final nullAssertion =
+          type.getNullablePostfix(value).contains("?") ? "" : "!";
 
       if (type == "double") {
         buffer.writeln(
@@ -365,7 +375,8 @@ class ComponentThemeDataGenerator extends GeneratorForAnnotation<NomoComponentTh
     buffer.writeln(
       "static $className lerp($className a, $className b, double t) {",
     );
-    buffer.writeln("return ${sizingFields.entries.isEmpty ? 'const' : ''} $className(");
+    buffer.writeln(
+        "return ${sizingFields.entries.isEmpty ? 'const' : ''} $className(");
     for (final entry in sizingFields.entries) {
       final name = entry.key;
       final type = entry.value.$1;
@@ -373,6 +384,8 @@ class ComponentThemeDataGenerator extends GeneratorForAnnotation<NomoComponentTh
 
       final dontUseLerp = switch (type) {
         "bool" => true,
+        "BoxShape" => true,
+        "Widget" => true,
         _ => false,
       };
       if (dontUseLerp) {
@@ -380,7 +393,8 @@ class ComponentThemeDataGenerator extends GeneratorForAnnotation<NomoComponentTh
         continue;
       }
 
-      final nullAssertion = type.getNullablePostfix(value).contains("?") ? "" : "!";
+      final nullAssertion =
+          type.getNullablePostfix(value).contains("?") ? "" : "!";
 
       if (type == "double") {
         buffer.writeln(
@@ -417,7 +431,8 @@ class ComponentThemeDataGenerator extends GeneratorForAnnotation<NomoComponentTh
   }) {
     final buffer = StringBuffer();
 
-    buffer.writeln("class $className implements $colordataClassName, $sizingdataClassName, $constantClassName{");
+    buffer.writeln(
+        "class $className implements $colordataClassName, $sizingdataClassName, $constantClassName{");
 
     /// Fields
     final fields = {...colorFields, ...sizingFields, ...constants};
@@ -467,7 +482,11 @@ class ComponentThemeDataGenerator extends GeneratorForAnnotation<NomoComponentTh
     buffer.writeln("$themeDataClassNameNullable? override");
     buffer.writeln("]) {");
     buffer.writeln("return $className(");
-    for (final name in [...colorFields.keys, ...sizingFields.keys, ...constants.keys]) {
+    for (final name in [
+      ...colorFields.keys,
+      ...sizingFields.keys,
+      ...constants.keys
+    ]) {
       buffer.writeln("$name: override?.$name ?? $name,");
     }
 
@@ -556,19 +575,24 @@ String _getFromContext({
   }
 
   if (constants.isNotEmpty) {
-    buffer
-        .writeln("final globalConstants = NomoTheme.maybeOf(context)?.constants.$themeName ?? const $constantsName();");
+    buffer.writeln(
+        "final globalConstants = NomoTheme.maybeOf(context)?.constants.$themeName ?? const $constantsName();");
   } else {
     buffer.writeln("const globalConstants = $constantsName();");
   }
 
-  buffer.writeln("final themeOverride = $overrideThemeInheritedWidgetClassName.maybeOf(context);");
+  buffer.writeln(
+      "final themeOverride = $overrideThemeInheritedWidgetClassName.maybeOf(context);");
 
   buffer.writeln(
       "final themeData = $themeDataClassName.from(globalColorTheme, globalSizingTheme, globalConstants).copyWith(themeOverride);");
 
   buffer.writeln("return $themeDataClassName(");
-  for (final name in [...colorFields.keys, ...sizingFields.keys, ...constants.keys]) {
+  for (final name in [
+    ...colorFields.keys,
+    ...sizingFields.keys,
+    ...constants.keys
+  ]) {
     buffer.writeln("$name: widget.$name ?? themeData.$name,");
   }
 

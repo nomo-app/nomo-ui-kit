@@ -75,6 +75,11 @@ NomoComponentSizes lerpNomoComponentSizes(
       b.inputTheme,
       t,
     ),
+    dialogTheme: NomoDialogSizingData.lerp(
+      a.dialogTheme,
+      b.dialogTheme,
+      t,
+    ),
   );
 }
 
@@ -93,6 +98,7 @@ NomoComponentSizes overrideNomoComponentSizes({
   NomoLinkButtonSizingData? linkButtonTheme,
   ExpandableSizingData? expandableTheme,
   NomoInputSizingData? inputTheme,
+  NomoDialogSizingData? dialogTheme,
 }) {
   final def = NomoComponentSizes.defaultComponents(core);
   return NomoComponentSizes._(
@@ -109,6 +115,7 @@ NomoComponentSizes overrideNomoComponentSizes({
     linkButtonTheme: linkButtonTheme ?? def.linkButtonTheme,
     expandableTheme: expandableTheme ?? def.expandableTheme,
     inputTheme: inputTheme ?? def.inputTheme,
+    dialogTheme: dialogTheme ?? def.dialogTheme,
   );
 }
 
@@ -126,6 +133,7 @@ NomoComponentSizes defaultConstructor({
   NomoLinkButtonSizingData? linkButtonTheme,
   ExpandableSizingData? expandableTheme,
   NomoInputSizingData? inputTheme,
+  NomoDialogSizingData? dialogTheme,
 }) {
   return NomoComponentSizes._(
     outlineContainerTheme:
@@ -144,5 +152,6 @@ NomoComponentSizes defaultConstructor({
     linkButtonTheme: linkButtonTheme ?? const NomoLinkButtonSizingData(),
     expandableTheme: expandableTheme ?? const ExpandableSizingData(),
     inputTheme: inputTheme ?? const NomoInputSizingData(),
+    dialogTheme: dialogTheme ?? const NomoDialogSizingData(),
   );
 }

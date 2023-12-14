@@ -2,7 +2,7 @@ import 'package:example/main.dart';
 import 'package:example/sections/button_section.dart';
 import 'package:example/sections/card_section.dart';
 import 'package:example/sections/data_section.dart';
-import 'package:example/sections/dialogs/dialog_wrapper.dart';
+import 'package:example/sections/dialog_section.dart';
 import 'package:example/sections/expandable_section.dart';
 import 'package:example/sections/icon_section.dart';
 import 'package:example/sections/input_section.dart';
@@ -15,8 +15,6 @@ import 'package:example/widgets/sider.dart';
 import 'package:flutter/material.dart';
 import 'package:nomo_router/nomo_router.dart';
 import 'package:nomo_ui_kit/components/app/app.dart';
-import 'package:nomo_ui_kit/entities/menu_item.dart';
-
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 import 'package:nomo_ui_kit/theme/theme_provider.dart';
 
@@ -127,7 +125,7 @@ final routes = [
       MenuPageRouteInfo(
         name: "/dialogs",
         title: "Dialogs",
-        page: DialogWrapper(),
+        page: DialogSection(),
       ),
       MenuPageRouteInfo(
         name: "/input",
@@ -137,7 +135,7 @@ final routes = [
       MenuPageRouteInfo(
         name: "/dropdown",
         title: "Dropdown",
-        page: DialogWrapper(),
+        page: SizedBox(),
       ),
       MenuPageRouteInfo(
         name: "/card",
@@ -147,12 +145,12 @@ final routes = [
       MenuPageRouteInfo(
         name: "/list",
         title: "List",
-        page: DialogWrapper(),
+        page: InputSection(),
       ),
       MenuPageRouteInfo(
         name: "/grid",
         title: "Grid",
-        page: DialogWrapper(),
+        page: InputSection(),
       ),
       MenuPageRouteInfo(
         name: "/loading",
@@ -167,17 +165,17 @@ final routes = [
       MenuPageRouteInfo(
         name: "/tile",
         title: "Tile",
-        page: DialogWrapper(),
+        page: InputSection(),
       ),
       MenuPageRouteInfo(
         name: "/layout",
         title: "Layout",
-        page: DialogWrapper(),
+        page: InputSection(),
       ),
       MenuPageRouteInfo(
         name: "/menu",
         title: "Menu",
-        page: DialogWrapper(),
+        page: InputSection(),
       ),
     ],
   ),

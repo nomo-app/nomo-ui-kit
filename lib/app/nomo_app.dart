@@ -94,7 +94,7 @@ class _NomoAppState extends State<NomoApp> {
       routerDelegate: delegate,
       routeInformationProvider: PlatformRouteInformationProvider(
         initialRouteInformation: RouteInformation(
-          uri: Uri.parse("/pint"), //WidgetsBinding
+          uri: Uri.parse("/dialogs"), //WidgetsBinding
           //     .instance.platformDispatcher.defaultRouteName.uri,
         ),
       ),
