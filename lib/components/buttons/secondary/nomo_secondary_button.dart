@@ -31,6 +31,8 @@ class SecondaryNomoButton extends StatelessWidget with NomoButtonMixin {
   final EdgeInsetsGeometry? margin;
   @override
   final BoxShape? shape;
+  @override
+  final bool? expandToConstraints;
 
   ///
   /// Theme Fields
@@ -85,6 +87,7 @@ class SecondaryNomoButton extends StatelessWidget with NomoButtonMixin {
     this.border,
     this.selectionColor,
     this.child,
+    this.expandToConstraints,
     this.translate,
     this.direction = Axis.horizontal,
   }) : assert(child == null || (icon == null && text == null),
@@ -161,6 +164,7 @@ class SecondaryNomoButton extends StatelessWidget with NomoButtonMixin {
         ActionType.nonInteractive => context.colors.onDisabled,
         _ => theme.selectionColor,
       },
+      expandToConstraints: expandToConstraints,
       child: effectiveChild,
     );
   }

@@ -25,6 +25,8 @@ class NomoTextButton extends StatelessWidget with NomoButtonMixin {
   final EdgeInsetsGeometry? margin;
   @override
   final BoxShape? shape;
+  @override
+  final bool? expandToConstraints;
 
   ///
   /// Theme Fields
@@ -65,6 +67,7 @@ class NomoTextButton extends StatelessWidget with NomoButtonMixin {
     this.shape,
     this.child,
     this.translate,
+    this.expandToConstraints,
   }) : assert(child != null || text != null, 'Must specify child or text');
 
   @override
@@ -80,6 +83,7 @@ class NomoTextButton extends StatelessWidget with NomoButtonMixin {
       borderRadius: theme.borderRadius,
       onPressed: onPressed,
       enabled: enabled,
+      expandToConstraints: expandToConstraints,
       child: child ??
           NomoText(
             text!,

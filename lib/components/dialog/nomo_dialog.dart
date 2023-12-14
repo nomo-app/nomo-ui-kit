@@ -26,6 +26,7 @@ class NomoDialog extends StatelessWidget {
     this.titleWidget,
     this.closeButton,
     this.contentSpacing,
+    this.leading,
     super.key,
   }) : assert(
           titleWidget == null || title == null,
@@ -40,6 +41,7 @@ class NomoDialog extends StatelessWidget {
   final double? maxWidth;
   final Widget? titleWidget;
   final Widget? closeButton;
+  final Widget? leading;
 
   @NomoSizingField(1.0)
   final double? elevation;
@@ -95,6 +97,8 @@ class NomoDialog extends StatelessWidget {
                         children: [
                           AppBarLayoutDelegate(
                             children: {
+                              if (leading != null)
+                                AppBarItem.backButton: leading!,
                               if (title != null)
                                 AppBarItem.title: NomoText(
                                   title!,

@@ -41,6 +41,8 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
   final EdgeInsetsGeometry? margin;
   @override
   final BoxShape? shape;
+  @override
+  final bool? expandToConstraints;
 
   ///
   /// Theme Fields
@@ -87,6 +89,7 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
     this.iconSize,
     this.shape,
     this.child,
+    this.expandToConstraints,
     this.translate,
     this.direction = Axis.horizontal,
   }) : assert(child == null || (icon == null && text == null),
@@ -100,6 +103,7 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
       _ when child != null => child!,
       Axis.horizontal => Row(
           mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             if (type == ActionType.loading)
               Loading(
@@ -165,7 +169,7 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
       margin: margin,
       width: width,
       height: height,
-      padding: padding,
+      padding: theme.padding,
       borderRadius: theme.borderRadius,
       onPressed: switch (type) {
         ActionType.nonInteractive => null,
@@ -176,6 +180,7 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
         _ => SystemMouseCursors.click,
       },
       enabled: enabled,
+      expandToConstraints: expandToConstraints,
       child: effectiveChild,
     );
   }
