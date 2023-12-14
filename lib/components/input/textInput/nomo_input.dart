@@ -165,16 +165,16 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
   late final ValueNotifier<BoxDecorationTween?> decorationNotifier;
   late final ValueNotifier<InputState> inputStateNotifier;
   late final TextEditingController textController;
-  late final defaultDecoration = BoxDecoration(
+  late BoxDecoration defaultDecoration = BoxDecoration(
     color: theme.background,
     borderRadius: theme.borderRadius,
     border: theme.border,
   );
-  late final selectedDecoration =
+  late BoxDecoration selectedDecoration =
       defaultDecoration.copyWith(border: theme.selectedBorder);
-  late final errorDecoration =
+  late BoxDecoration errorDecoration =
       defaultDecoration.copyWith(border: theme.errorBorder);
-  late final selectedErrorDecoration =
+  late BoxDecoration selectedErrorDecoration =
       defaultDecoration.copyWith(border: theme.selectedErrorBorder);
 
   ///
@@ -197,6 +197,22 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
     textController = TextEditingController(text: valueNotifier.value)
       ..addListener(textControllerChanged);
     focusNode = FocusNode()..addListener(focusChanged);
+  }
+
+  @override
+  void didUpdateWidget(covariant NomoInput oldWidget) {
+    defaultDecoration = BoxDecoration(
+      color: theme.background,
+      borderRadius: theme.borderRadius,
+      border: theme.border,
+    );
+    selectedDecoration =
+        defaultDecoration.copyWith(border: theme.selectedBorder);
+    errorDecoration = defaultDecoration.copyWith(border: theme.errorBorder);
+    selectedErrorDecoration =
+        defaultDecoration.copyWith(border: theme.selectedErrorBorder);
+
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
