@@ -260,6 +260,6 @@ class NomoTextTranslator extends InheritedWidget {
 
   @override
   bool updateShouldNotify(NomoTextTranslator oldWidget) {
-    return true;
+    return false;
   }
 }
