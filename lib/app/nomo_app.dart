@@ -32,11 +32,10 @@ class NomoApp extends StatefulWidget {
     this.currentLocale,
     this.defaultPageTransistion = const PageFadeTransition(),
     this.translator,
-    this.splashScreen = const Center(child: Loading()),
-    this.future,
     this.appWrapper,
     this.navigatorObservers = const [],
     this.nestedNavigatorObservers = const [],
+    this.home,
   });
   final Iterable<RouteInfo> routes;
   final PageTransition defaultPageTransistion;
@@ -46,8 +45,7 @@ class NomoApp extends StatefulWidget {
   final NomoThemeData theme;
   final NomoSizingThemeData Function(double) sizingThemeBuilder;
   final String Function(String value)? translator;
-  final Widget splashScreen;
-  final Future<void>? future;
+  final Widget? home;
   final List<NavigatorObserver> navigatorObservers;
   final List<NavigatorObserver> nestedNavigatorObservers;
 
@@ -68,8 +66,9 @@ class _NomoAppState extends State<NomoApp> {
     delegate = NomoRouterDelegate(
       rootNavigatorKey,
       routes: widget.routes,
-      navigatorObservers: widget.navigatorObservers,
-      nestedNavigatorObservers: widget.nestedNavigatorObservers,
+      observers: widget.navigatorObservers,
+      nestedObservers: widget.nestedNavigatorObservers,
+      initial: widget.home,
     );
     super.initState();
   }
@@ -93,14 +92,12 @@ class _NomoAppState extends State<NomoApp> {
       locale: widget.currentLocale,
       color: widget.theme.colors.primary,
       routerDelegate: delegate,
-
-      // routeInformationProvider: PlatformRouteInformationProvider(
-      //   initialRouteInformation: RouteInformation(
-      //     uri: Uri.parse("/input"), //WidgetsBinding
-      //     //     .instance.platformDispatcher.defaultRouteName.uri,
-      //   ),
-      // ),
-
+      routeInformationProvider: PlatformRouteInformationProvider(
+        initialRouteInformation: RouteInformation(
+          uri: Uri.parse("/pint"), //WidgetsBinding
+          //     .instance.platformDispatcher.defaultRouteName.uri,
+        ),
+      ),
       backButtonDispatcher: NomoBackButtonDispatcher(delegate),
       routeInformationParser: const NomoRouteInformationParser(),
     );
@@ -122,19 +119,7 @@ class _NomoAppState extends State<NomoApp> {
         sizingThemeBuilder: widget.sizingThemeBuilder,
         child: ThemeAnimator(
           notifier: themeNotifier,
-          child: switch (widget.future) {
-            final Future<void> future => FutureBuilder(
-                future: future,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    return app;
-                  }
-                  return widget.splashScreen;
-                },
-              ),
-            _ => app,
-          }
-              .wrapIf(
+          child: app.wrapIf(
             widget.appWrapper != null,
             (metricReactor) => Builder(
               builder: (context) => widget.appWrapper!(context, metricReactor),
