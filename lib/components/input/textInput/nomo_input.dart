@@ -43,6 +43,7 @@ class NomoInput extends StatefulWidget {
   final String? formKey;
   final bool autoValidate;
   final double? height;
+  final TextAlign textAlign;
 
   @NomoColorField(Colors.white)
   final Color? background;
@@ -147,6 +148,7 @@ class NomoInput extends StatefulWidget {
     this.autoValidate = false,
     this.titleSpacing,
     this.height,
+    this.textAlign = TextAlign.start,
   }) : assert(height == null || usePlaceholderAsTitle == false,
             'Not supported please ask Thomas to implement');
 
@@ -368,6 +370,7 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
                   maxLines: widget.maxLines,
                   textInputAction: widget.textInputAction,
                   controller: textController,
+                  textAlign: widget.textAlign,
                   prefix: Padding(
                     padding:
                         EdgeInsets.only(left: theme.padding.horizontal / 2),
