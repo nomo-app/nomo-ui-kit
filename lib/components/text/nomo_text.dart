@@ -20,6 +20,7 @@ class NomoText extends StatelessWidget {
     this.opacity,
     this.translate = true,
     this.fontSize,
+    this.fit = false,
   })  : assert(
           fontSizes == null || fontSizes.length > 0,
           'fontSizes must be a list of at least one value',
@@ -43,6 +44,7 @@ class NomoText extends StatelessWidget {
   final double minFontSize;
   final double? opacity;
   final double? fontSize;
+  final bool fit;
 
   /// If true will look for the NomoTextTranslator InheritedWidget for translating the text
   final bool translate;
@@ -71,6 +73,17 @@ class NomoText extends StatelessWidget {
       fontWeight: fontWeight,
       fontSize: fontSize,
     );
+
+    if (!fit) {
+      return Text(
+        effectiveText,
+        style: style,
+        maxLines: maxLines,
+        overflow: overflow,
+        textAlign: textAlign,
+        textDirection: textDirection,
+      );
+    }
 
     return LayoutBuilder(
       builder: (context, constraints) {

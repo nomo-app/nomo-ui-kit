@@ -128,143 +128,155 @@ class _NomoButtonState extends State<NomoButton>
       null => null,
     };
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final maxWidth = constraints.maxWidth;
-        final effectiveWidth = switch (maxWidth) {
-          double.infinity => widget.width,
-          _ when widget.expandToConstraints ?? false => maxWidth,
-          _ => widget.width,
-        };
-
-        return Padding(
-          padding: widget.margin ?? EdgeInsets.zero,
-          child: SizedBox(
-            width: effectiveWidth,
-            height: widget.height,
-            child: MultiWrapper(
-              wrappers: [
-                if (widget.selectionColor != null && widget.border != null)
-                  (child) {
-                    return AnimatedBuilder(
-                      animation: animation,
-                      builder: (context, child) {
-                        return ElevatedBox(
-                          elevation: widget.elevation,
-                          border: widget.border!.copyWithColor(animation.value),
-                          decoration: BoxDecoration(
-                            color: widget.backgroundColor,
-                            borderRadius: widget.borderRadius
-                                .ifElseNull(widget.shape != BoxShape.circle),
-                            shape: widget.shape ?? BoxShape.rectangle,
-                          ),
-                          child: child!,
-                        );
-                      },
-                      child: child,
-                    );
-                  }
-                else
-                  (child) {
-                    return ElevatedBox(
-                      elevation: widget.elevation,
-                      border: widget.border ??
-                          const Border.fromBorderSide(BorderSide.none),
-                      decoration: BoxDecoration(
-                        color: widget.backgroundColor,
-                        borderRadius: widget.borderRadius
-                            .ifElseNull(widget.shape != BoxShape.circle),
-                        shape: widget.shape ?? BoxShape.rectangle,
-                      ),
-                      child: child,
-                    );
-                  },
-              ],
-              child: Material(
-                type: MaterialType.transparency,
-                child: MouseRegion(
-                  onEnter: (_) => _controller.forward(),
-                  onExit: (_) => _controller.reverse(),
-                  child: InkWell(
-                    onTap: widget.onPressed,
-                    borderRadius: borderRadius,
-                    hoverColor: widget.backgroundColor
-                        ?.darken(0.05)
-                        .ifElse(
-                          widget.selectionColor == null,
-                          other: Colors.transparent,
-                        )
-                        .ifElse(
-                          widget.enableInkwellFeedback,
-                          other: Colors.transparent,
-                        ),
-                    splashColor: Colors.black.withOpacity(0.06).ifElse(
-                          widget.enableInkwellFeedback,
-                          other: Colors.transparent,
-                        ),
-                    focusColor: widget.backgroundColor
-                        ?.darken(0.05)
-                        .ifElse(
-                          widget.selectionColor == null,
-                          other: Colors.black.withOpacity(0.06),
-                        )
-                        .ifElse(
-                          widget.enableInkwellFeedback,
-                          other: Colors.transparent,
-                        ),
-                    mouseCursor: widget.cursor,
-                    child: Padding(
-                      padding: widget.padding ?? EdgeInsets.zero,
-                      child: MultiWrapper(
-                        wrappers: [
-                          if (widget.width != null)
-                            (child) => Center(child: child),
-                          if (widget.height != null && widget.width == null)
-                            (child) => Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [child],
-                                ),
-                          if (widget.selectionColor != null)
-                            (child) {
-                              return AnimatedBuilder(
-                                animation: animation,
-                                builder: (context, child) {
-                                  final colorValue = animation.value!;
-                                  return NomoTextTheme(
-                                    color: colorValue,
-                                    child: IconTheme(
-                                      data: IconTheme.of(context).copyWith(
-                                        color: colorValue,
-                                      ),
-                                      child: child!,
-                                    ),
-                                  );
-                                },
-                                child: child,
-                              );
-                            },
-                          if (widget.selectionColor == null &&
-                              widget.foregroundColor != null)
-                            (child) => NomoTextTheme(
-                                  color: widget.foregroundColor!,
-                                  child: IconTheme(
-                                    data: IconTheme.of(context).copyWith(
-                                      color: widget.foregroundColor,
-                                    ),
-                                    child: child,
-                                  ),
-                                ),
-                        ],
-                        child: widget.child,
-                      ),
-                    ),
+    final child = MultiWrapper(
+      wrappers: [
+        if (widget.selectionColor != null && widget.border != null)
+          (child) {
+            return AnimatedBuilder(
+              animation: animation,
+              builder: (context, child) {
+                return ElevatedBox(
+                  elevation: widget.elevation,
+                  border: widget.border!.copyWithColor(animation.value),
+                  decoration: BoxDecoration(
+                    color: widget.backgroundColor,
+                    borderRadius: widget.borderRadius
+                        .ifElseNull(widget.shape != BoxShape.circle),
+                    shape: widget.shape ?? BoxShape.rectangle,
                   ),
+                  child: child!,
+                );
+              },
+              child: child,
+            );
+          }
+        else
+          (child) {
+            return ElevatedBox(
+              elevation: widget.elevation,
+              border:
+                  widget.border ?? const Border.fromBorderSide(BorderSide.none),
+              decoration: BoxDecoration(
+                color: widget.backgroundColor,
+                borderRadius: widget.borderRadius
+                    .ifElseNull(widget.shape != BoxShape.circle),
+                shape: widget.shape ?? BoxShape.rectangle,
+              ),
+              child: child,
+            );
+          },
+      ],
+      child: Material(
+        type: MaterialType.transparency,
+        child: MouseRegion(
+          onEnter: (_) => _controller.forward(),
+          onExit: (_) => _controller.reverse(),
+          child: InkWell(
+            onTap: widget.onPressed,
+            borderRadius: borderRadius,
+            hoverColor: widget.backgroundColor
+                ?.darken(0.05)
+                .ifElse(
+                  widget.selectionColor == null,
+                  other: Colors.transparent,
+                )
+                .ifElse(
+                  widget.enableInkwellFeedback,
+                  other: Colors.transparent,
                 ),
+            splashColor: Colors.black.withOpacity(0.06).ifElse(
+                  widget.enableInkwellFeedback,
+                  other: Colors.transparent,
+                ),
+            focusColor: widget.backgroundColor
+                ?.darken(0.05)
+                .ifElse(
+                  widget.selectionColor == null,
+                  other: Colors.black.withOpacity(0.06),
+                )
+                .ifElse(
+                  widget.enableInkwellFeedback,
+                  other: Colors.transparent,
+                ),
+            mouseCursor: widget.cursor,
+            child: Padding(
+              padding: widget.padding ?? EdgeInsets.zero,
+              child: MultiWrapper(
+                wrappers: [
+                  if (widget.width != null) (child) => Center(child: child),
+                  if (widget.height != null && widget.width == null)
+                    (child) => Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [child],
+                        ),
+                  if (widget.selectionColor != null)
+                    (child) {
+                      return AnimatedBuilder(
+                        animation: animation,
+                        builder: (context, child) {
+                          final colorValue = animation.value!;
+                          return NomoTextTheme(
+                            color: colorValue,
+                            child: IconTheme(
+                              data: IconTheme.of(context).copyWith(
+                                color: colorValue,
+                              ),
+                              child: child!,
+                            ),
+                          );
+                        },
+                        child: child,
+                      );
+                    },
+                  if (widget.selectionColor == null &&
+                      widget.foregroundColor != null)
+                    (child) => NomoTextTheme(
+                          color: widget.foregroundColor!,
+                          child: IconTheme(
+                            data: IconTheme.of(context).copyWith(
+                              color: widget.foregroundColor,
+                            ),
+                            child: child,
+                          ),
+                        ),
+                ],
+                child: widget.child,
               ),
             ),
           ),
-        );
-      },
+        ),
+      ),
+    );
+
+    if (widget.expandToConstraints != null && widget.expandToConstraints!) {
+      return LayoutBuilder(
+        builder: (context, constraints) {
+          final maxWidth = constraints.maxWidth;
+          final effectiveWidth = switch (maxWidth) {
+            double.infinity => widget.width,
+            _ when widget.expandToConstraints ?? false => maxWidth,
+            _ => widget.width,
+          };
+
+          return Padding(
+            padding: widget.margin ?? EdgeInsets.zero,
+            child: SizedBox(
+              width: effectiveWidth,
+              height: widget.height,
+              child: child,
+            ),
+          );
+        },
+      );
+    }
+
+    return Padding(
+      padding: widget.margin ?? EdgeInsets.zero,
+      child: SizedBox(
+        width: widget.width,
+        height: widget.height,
+        child: child,
+      ),
     );
   }
 }
