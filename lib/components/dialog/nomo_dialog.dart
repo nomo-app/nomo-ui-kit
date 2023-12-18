@@ -74,68 +74,63 @@ class NomoDialog extends StatelessWidget {
 
     return SizedBox(
       height: height,
-      child: Column(
-        children: [
-          Expanded(
-            child: Center(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(maxWidth: maxWidth ?? width),
-                child: Container(
-                  width: width,
-                  margin: theme.margin,
-                  child: ElevatedBox(
-                    decoration: BoxDecoration(
-                      color: theme.backgroundColor,
-                      borderRadius: theme.borderRadius,
-                    ),
-                    elevation: theme.elevation,
-                    child: Padding(
-                      padding: theme.padding,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          AppBarLayoutDelegate(
-                            children: {
-                              if (leading != null)
-                                AppBarItem.backButton: leading!,
-                              if (title != null)
-                                AppBarItem.title: NomoText(
-                                  title!,
-                                  style: titleStyle,
-                                )
-                              else if (titleWidget != null)
-                                AppBarItem.title: titleWidget!,
-                              if (showCloseButton!)
-                                AppBarItem.actions: closeButton ??
-                                    SecondaryNomoButton(
-                                      border: const Border.fromBorderSide(
-                                        BorderSide.none,
-                                      ),
-                                      onPressed: Navigator.of(context).pop,
-                                      shape: BoxShape.circle,
-                                      icon: Icons.close,
-                                      padding: const EdgeInsets.all(8),
-                                    ),
-                            },
-                          ),
-                          theme.contentSpacing,
-                          content,
-                          theme.contentSpacing,
-                          if (actions != null && actions!.isNotEmpty)
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: actions!,
-                            ),
-                        ],
+      child: Center(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: maxWidth ?? width),
+          child: Container(
+            width: width,
+            margin: theme.margin,
+            child: ElevatedBox(
+              decoration: BoxDecoration(
+                color: theme.backgroundColor,
+                borderRadius: theme.borderRadius,
+              ),
+              elevation: theme.elevation,
+              child: Padding(
+                padding: theme.padding,
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      AppBarLayoutDelegate(
+                        children: {
+                          if (leading != null) AppBarItem.backButton: leading!,
+                          if (title != null)
+                            AppBarItem.title: NomoText(
+                              title!,
+                              style: titleStyle,
+                            )
+                          else if (titleWidget != null)
+                            AppBarItem.title: titleWidget!,
+                          if (showCloseButton!)
+                            AppBarItem.actions: closeButton ??
+                                SecondaryNomoButton(
+                                  border: const Border.fromBorderSide(
+                                    BorderSide.none,
+                                  ),
+                                  onPressed: Navigator.of(context).pop,
+                                  shape: BoxShape.circle,
+                                  icon: Icons.close,
+                                  padding: const EdgeInsets.all(8),
+                                ),
+                        },
                       ),
-                    ),
+                      theme.contentSpacing,
+                      content,
+                      theme.contentSpacing,
+                      if (actions != null && actions!.isNotEmpty)
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: actions!,
+                        ),
+                    ],
                   ),
                 ),
               ),
             ),
           ),
-        ],
+        ),
       ),
     );
   }
