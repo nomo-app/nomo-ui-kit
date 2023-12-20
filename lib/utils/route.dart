@@ -13,19 +13,19 @@ extension MenuUtil on MenuRouteInfoMixin {
       return NomoMenuIconItem(
         title: title,
         icon: icon!,
-        path: name,
+        path: path,
       );
     }
     if (image != null) {
       return NomoMenuImageItem(
         title: title,
         image: image!,
-        path: name,
+        path: path,
       );
     }
     return NomoMenuTextItem(
       title: title,
-      path: name,
+      path: path,
     );
   }
 }

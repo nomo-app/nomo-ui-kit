@@ -1,4 +1,4 @@
-import 'package:example/routes.dart';
+import 'package:example/main.dart';
 import 'package:flutter/material.dart';
 import 'package:nomo_router/nomo_router.dart';
 import 'package:nomo_ui_kit/components/app/bottom_bar/nomo_bottom_bar.dart';
@@ -25,14 +25,14 @@ class _BottomBarState extends State<BottomBar> {
       style: context.typography.b1,
       selected: current,
       onTap: (item) {
-        NomoNavigator.of(context).push(RoutePath(name: item.path));
+        NomoNavigator.of(context).pushNamed(item.path);
         setState(() {});
       },
       title: NomoText(
         "Widgets",
         style: context.typography.b1,
       ),
-      items: menuItems.toMenuItems,
+      items: menuItems,
     );
   }
 }
