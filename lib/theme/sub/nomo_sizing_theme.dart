@@ -90,6 +90,9 @@ class NomoComponentSizes {
         outlineContainerTheme: const NomoOutlineContainerSizingData(
           padding: EdgeInsets.all(32),
         ),
+        primaryButtonTheme: const PrimaryNomoButtonSizingData(
+          padding: EdgeInsets.zero,
+        ),
       );
 }
 
