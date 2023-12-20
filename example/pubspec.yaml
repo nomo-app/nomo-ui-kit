@@ -34,6 +34,8 @@ dependencies:
     path: ../
   nomo_router:
     path: ../packages/nomo-router
+  route_gen:
+    path: ../packages/nomo-router/route_gen
   logger: ^1.4.0
   animations: ^2.0.7
   markdown_widget: ^2.3.1
@@ -54,6 +56,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  build_runner: any
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

@@ -3,22 +3,32 @@ import 'package:example/sections/button_section.dart';
 import 'package:example/sections/card_section.dart';
 import 'package:example/sections/data_section.dart';
 import 'package:example/sections/dialog_section.dart';
+import 'package:example/sections/dropdown_section.dart';
 import 'package:example/sections/expandable_section.dart';
+import 'package:example/sections/grid_section.dart';
 import 'package:example/sections/icon_section.dart';
 import 'package:example/sections/input_section.dart';
+import 'package:example/sections/layout_section.dart';
+import 'package:example/sections/list_section.dart';
 import 'package:example/sections/loading_section.dart';
+import 'package:example/sections/menu_section.dart';
 import 'package:example/sections/modal_sheet_section.dart';
 import 'package:example/sections/text_section.dart';
+import 'package:example/sections/tile_section.dart';
 import 'package:example/theme.dart';
 import 'package:example/widgets/drawer.dart';
 import 'package:example/widgets/sider.dart';
 import 'package:flutter/material.dart';
 import 'package:nomo_router/nomo_router.dart';
+import 'package:nomo_router/router/entities/route.dart';
 import 'package:nomo_ui_kit/components/app/app.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 import 'package:nomo_ui_kit/theme/theme_provider.dart';
+import 'package:route_gen/anotations.dart';
 
-Widget Function(Widget nav) wrapper = (nav) {
+part 'routes.g.dart';
+
+Widget wrapper(nav) {
   return Builder(
     builder: (context) {
       final themeProvider = ThemeProvider.of(context);
@@ -81,104 +91,103 @@ Widget Function(Widget nav) wrapper = (nav) {
       );
     },
   );
-};
+}
 
-final routes = [
+@AppRoutes()
+const _routes = [
   MenuNestedPageRouteInfo(
-    name: "/",
-    title: "Overview",
-    page: const HomePage(),
+    path: "/",
+    title: "Home",
+    page: HomePage,
     wrapper: wrapper,
-    children: const [
+    children: [
       MenuPageRouteInfo(
-        name: "/modalSheet",
+        path: "/modalSheet",
         title: "Modal Sheet",
-        page: ModalSheetSection(),
+        page: ModalSheetSection,
         children: [
           ModalRouteInfo(
-            name: "/sheet1",
-            page: ModalSheet1(),
+            path: "/sheet1",
+            page: ModalSheet1,
             useRootNavigator: true,
           ),
         ],
       ),
       MenuPageRouteInfo(
-        name: "/typography",
+        path: "/typography",
         title: "Typography",
-        page: TextSection(),
+        page: TextSection,
       ),
       MenuPageRouteInfo(
-        name: "/button",
+        path: "/button",
         title: "Button",
-        page: TextButtonWrapper(),
+        page: TextButtonWrapper,
       ),
       MenuPageRouteInfo(
-        name: "/data",
+        path: "/data",
         title: "Data",
-        page: DataSection(),
+        page: DataSection,
       ),
       MenuPageRouteInfo(
-        name: "/icons",
+        path: "/icons",
         title: "Icons",
-        page: IconSection(),
+        page: IconSection,
       ),
       MenuPageRouteInfo(
-        name: "/dialogs",
+        path: "/dialogs",
         title: "Dialogs",
-        page: DialogSection(),
+        page: DialogSection,
       ),
       MenuPageRouteInfo(
-        name: "/input",
+        path: "/input",
         title: "Input",
-        page: InputSection(),
+        page: InputSection,
       ),
       MenuPageRouteInfo(
-        name: "/dropdown",
+        path: "/dropdown",
         title: "Dropdown",
-        page: SizedBox(),
+        page: DropdownSection,
       ),
       MenuPageRouteInfo(
-        name: "/card",
+        path: "/card",
         title: "Card",
-        page: CardSection(),
+        page: CardSection,
       ),
       MenuPageRouteInfo(
-        name: "/list",
+        path: "/list",
         title: "List",
-        page: InputSection(),
+        page: ListSection,
       ),
       MenuPageRouteInfo(
-        name: "/grid",
+        path: "/grid",
         title: "Grid",
-        page: InputSection(),
+        page: GridSection,
       ),
       MenuPageRouteInfo(
-        name: "/loading",
+        path: "/loading",
         title: "Loading",
-        page: LoadingSection(),
+        page: LoadingSection,
       ),
       MenuPageRouteInfo(
-        name: "/expandable",
+        path: "/expandable",
         title: "Expandable",
-        page: ExpandableSection(),
+        page: ExpandableSection,
       ),
       MenuPageRouteInfo(
-        name: "/tile",
+        path: "/tile",
         title: "Tile",
-        page: InputSection(),
+        page: TileSection,
       ),
       MenuPageRouteInfo(
-        name: "/layout",
+        path: "/layout",
         title: "Layout",
-        page: InputSection(),
+        page: LayoutSection,
       ),
       MenuPageRouteInfo(
-        name: "/menu",
+        path: "/menu",
         title: "Menu",
-        page: InputSection(),
+        page: MenuSection,
       ),
     ],
   ),
-].expanded.toList();
-
-final menuItems = routes.whereType<MenuRouteInfoMixin>().toList();
+];

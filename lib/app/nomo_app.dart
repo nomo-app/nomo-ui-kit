@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:nomo_router/nomo_router.dart';
+import 'package:nomo_router/router/entities/route.dart';
 import 'package:nomo_router/router/entities/transitions.dart';
 import 'package:nomo_ui_kit/app/animator.dart';
 import 'package:nomo_ui_kit/app/metric_reactor.dart';
-import 'package:nomo_ui_kit/components/loading/loading.dart';
 import 'package:nomo_ui_kit/components/text/nomo_text.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 import 'package:nomo_ui_kit/theme/sub/nomo_sizing_theme.dart';
@@ -23,22 +23,28 @@ final _scrollBehavior = const ScrollBehavior().copyWith(
 
 class NomoApp extends StatefulWidget {
   const NomoApp({
-    required this.routes,
+    required this.appRouter,
     required this.supportedLocales,
     required this.theme,
     required this.sizingThemeBuilder,
     super.key,
     this.localizationDelegate,
     this.currentLocale,
-    this.defaultPageTransistion = const PageFadeTransition(),
+    this.defaultPageTransistion = const PageSharedAxisTransition(
+      type: SharedAxisTransitionType.horizontal,
+      fillColor: Colors.transparent,
+    ),
+    this.defaultModalTransistion = const PageFadeTransition(),
     this.translator,
     this.appWrapper,
     this.navigatorObservers = const [],
     this.nestedNavigatorObservers = const [],
     this.home,
   });
-  final Iterable<RouteInfo> routes;
+
+  final NomoAppRouter appRouter;
   final PageTransition defaultPageTransistion;
+  final PageTransition defaultModalTransistion;
   final LocalizationsDelegate<dynamic>? localizationDelegate;
   final Iterable<Locale> supportedLocales;
   final Locale? currentLocale;
@@ -59,13 +65,16 @@ class NomoApp extends StatefulWidget {
 class _NomoAppState extends State<NomoApp> {
   late final ThemeNotifier themeNotifier;
   late final NomoRouterDelegate delegate;
+  late final Uri initialUri;
 
   @override
   void initState() {
+    initialUri =
+        WidgetsBinding.instance.platformDispatcher.defaultRouteName.uri;
     themeNotifier = ThemeNotifier(widget.theme);
     delegate = NomoRouterDelegate(
       rootNavigatorKey,
-      routes: widget.routes,
+      appRouter: widget.appRouter,
       observers: widget.navigatorObservers,
       nestedObservers: widget.nestedNavigatorObservers,
       initial: widget.home,
@@ -93,10 +102,7 @@ class _NomoAppState extends State<NomoApp> {
       color: widget.theme.colors.primary,
       routerDelegate: delegate,
       routeInformationProvider: PlatformRouteInformationProvider(
-        initialRouteInformation: RouteInformation(
-          uri: Uri.parse("/dialogs"), //WidgetsBinding
-          //     .instance.platformDispatcher.defaultRouteName.uri,
-        ),
+        initialRouteInformation: RouteInformation(uri: initialUri),
       ),
       backButtonDispatcher: NomoBackButtonDispatcher(delegate),
       routeInformationParser: const NomoRouteInformationParser(),
@@ -112,6 +118,7 @@ class _NomoAppState extends State<NomoApp> {
         (child) => NomoNavigator(
               delegate: delegate,
               defaultTransistion: widget.defaultPageTransistion,
+              defaultModalTransistion: widget.defaultModalTransistion,
               child: child,
             ),
       ],

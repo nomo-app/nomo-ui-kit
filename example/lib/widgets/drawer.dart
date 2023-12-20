@@ -1,4 +1,4 @@
-import 'package:example/routes.dart';
+import 'package:example/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nomo_router/nomo_router.dart';
@@ -39,11 +39,11 @@ class DrawerEx extends StatelessWidget {
             style: context.typography.b1,
             selected: current,
             onTap: (item) {
-              NomoNavigator.of(context).push(RoutePath(name: item.path));
+              NomoNavigator.of(context).pushNamed(item.path);
               NomoScaffold.of(context).closeEndDrawer();
             },
             iconSize: 22,
-            items: menuItems.toMenuItems,
+            items: menuItems,
           ),
         ),
       ),
