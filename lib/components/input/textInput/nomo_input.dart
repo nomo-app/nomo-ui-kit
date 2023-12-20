@@ -44,6 +44,7 @@ class NomoInput extends StatefulWidget {
   final bool autoValidate;
   final double? height;
   final TextAlign textAlign;
+  final void Function(String value)? onChanged;
 
   @NomoColorField(Colors.white)
   final Color? background;
@@ -148,6 +149,7 @@ class NomoInput extends StatefulWidget {
     this.autoValidate = false,
     this.titleSpacing,
     this.height,
+    this.onChanged,
     this.textAlign = TextAlign.start,
   }) : assert(height == null || usePlaceholderAsTitle == false,
             'Not supported please ask Thomas to implement');
@@ -280,6 +282,8 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
 
     validate(false);
     formValues?.updateField(widget.formKey!, textController.text);
+
+    widget.onChanged?.call(textController.text);
   }
 
   void notifierChanged() {
@@ -288,6 +292,8 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
 
     validate(false);
     formValues?.updateField(widget.formKey!, valueNotifier.value);
+
+    widget.onChanged?.call(valueNotifier.value);
   }
 
   bool validate(bool fromForm) {

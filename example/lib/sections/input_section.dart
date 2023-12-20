@@ -50,6 +50,9 @@ class _InputSectionState extends State<InputSection> {
               placeHolderStyle: context.typography.b3,
               usePlaceholderAsTitle: true,
               padding: const EdgeInsets.all(2),
+              onChanged: (value) {
+                print("Value changed $value");
+              },
             ),
           ),
         ),
