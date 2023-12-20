@@ -113,6 +113,7 @@ class NomoDialog extends StatelessWidget {
                                   shape: BoxShape.circle,
                                   icon: Icons.close,
                                   padding: const EdgeInsets.all(8),
+                                  backgroundColor: theme.backgroundColor,
                                 ),
                         },
                       ),
