@@ -40,7 +40,11 @@ class NomoSizes {
 
   static NomoSizes lerp(NomoSizes a, NomoSizes b, double t) {
     return NomoSizes(
-      maxContentWidth: lerpDouble(a.maxContentWidth, b.maxContentWidth, t),
+      maxContentWidth: lerpDouble(
+        a.maxContentWidth ?? b.maxContentWidth,
+        b.maxContentWidth ?? a.maxContentWidth,
+        t,
+      ),
       fontSizeB1: lerpDouble(a.fontSizeB1, b.fontSizeB1, t)!,
       fontSizeB2: lerpDouble(a.fontSizeB2, b.fontSizeB2, t)!,
       fontSizeB3: lerpDouble(a.fontSizeB3, b.fontSizeB3, t)!,
@@ -98,6 +102,7 @@ class NomoComponentSizes {
 
 class NomoSizingThemeData {
   NomoSizingThemeData({
+    required this.key,
     required this.sizes,
     NomoComponentSizes Function(NomoSizes core) buildComponents =
         NomoComponentSizes.defaultComponents,
@@ -106,9 +111,19 @@ class NomoSizingThemeData {
   NomoSizingThemeData._({
     required this.sizes,
     required this.components,
+    required this.key,
   });
   final NomoSizes sizes;
   final NomoComponentSizes components;
+  final ValueKey key;
+
+  @override
+  int get hashCode => key.hashCode;
+
+  @override
+  bool operator ==(Object other) {
+    return other is NomoSizingThemeData && other.key == key;
+  }
 
   static NomoSizingThemeData lerp(
     NomoSizingThemeData a,
@@ -116,6 +131,7 @@ class NomoSizingThemeData {
     double t,
   ) {
     return NomoSizingThemeData._(
+      key: t < 0.5 ? a.key : b.key,
       sizes: NomoSizes.lerp(a.sizes, b.sizes, t),
       components: lerpNomoComponentSizes(a.components, b.components, t),
     );

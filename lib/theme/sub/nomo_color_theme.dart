@@ -92,6 +92,7 @@ class NomoComponentColors {
 class NomoColorThemeData {
   NomoColorThemeData({
     required this.colors,
+    required this.key,
     NomoComponentColors Function(NomoColors core) buildComponents =
         NomoComponentColors.defaultComponents,
   }) : components = buildComponents.call(colors);
@@ -99,6 +100,7 @@ class NomoColorThemeData {
   NomoColorThemeData._({
     required this.colors,
     required this.components,
+    required this.key,
   });
 
   factory NomoColorThemeData.lerp(
@@ -107,12 +109,22 @@ class NomoColorThemeData {
     double t,
   ) {
     return NomoColorThemeData._(
+      key: t < 0.5 ? a.key : b.key,
       colors: NomoColors.lerp(a.colors, b.colors, t),
       components: lerpNomoComponentColors(a.components, b.components, t),
     );
   }
   final NomoColors colors;
   final NomoComponentColors components;
+  final ValueKey key;
+
+  @override
+  int get hashCode => key.hashCode;
+
+  @override
+  bool operator ==(Object other) {
+    return other is NomoColorThemeData && other.key == key;
+  }
 }
 
 class NomoColors {
