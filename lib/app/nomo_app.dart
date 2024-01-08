@@ -30,10 +30,7 @@ class NomoApp extends StatefulWidget {
     super.key,
     this.localizationDelegate,
     this.currentLocale,
-    this.defaultPageTransistion = const PageSharedAxisTransition(
-      type: SharedAxisTransitionType.horizontal,
-      fillColor: Colors.transparent,
-    ),
+    this.defaultPageTransistion = const PageFadeTransition(),
     this.defaultModalTransistion = const PageFadeTransition(),
     this.translator,
     this.appWrapper,
@@ -65,12 +62,15 @@ class NomoApp extends StatefulWidget {
 class _NomoAppState extends State<NomoApp> {
   late final ThemeNotifier themeNotifier;
   late final NomoRouterDelegate delegate;
-  late final Uri initialUri;
+  late final PlatformRouteInformationProvider routeInformationProvider;
 
   @override
   void initState() {
-    initialUri =
-        WidgetsBinding.instance.platformDispatcher.defaultRouteName.uri;
+    routeInformationProvider = PlatformRouteInformationProvider(
+      initialRouteInformation: RouteInformation(
+        uri: WidgetsBinding.instance.platformDispatcher.defaultRouteName.uri,
+      ),
+    );
     themeNotifier = ThemeNotifier(widget.theme);
     delegate = NomoRouterDelegate(
       rootNavigatorKey,
@@ -101,9 +101,7 @@ class _NomoAppState extends State<NomoApp> {
       locale: widget.currentLocale,
       color: widget.theme.colors.primary,
       routerDelegate: delegate,
-      routeInformationProvider: PlatformRouteInformationProvider(
-        initialRouteInformation: RouteInformation(uri: initialUri),
-      ),
+      routeInformationProvider: routeInformationProvider,
       backButtonDispatcher: NomoBackButtonDispatcher(delegate),
       routeInformationParser: const NomoRouteInformationParser(),
     );
