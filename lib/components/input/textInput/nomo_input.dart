@@ -203,16 +203,21 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
 
   @override
   void didUpdateWidget(covariant NomoInput oldWidget) {
+    theme = getFromContext(context, widget);
+
     defaultDecoration = BoxDecoration(
       color: theme.background,
       borderRadius: theme.borderRadius,
       border: theme.border,
     );
+
     selectedDecoration =
         defaultDecoration.copyWith(border: theme.selectedBorder);
     errorDecoration = defaultDecoration.copyWith(border: theme.errorBorder);
     selectedErrorDecoration =
         defaultDecoration.copyWith(border: theme.selectedErrorBorder);
+
+    changeToState(inputStateNotifier.value);
 
     super.didUpdateWidget(oldWidget);
   }
