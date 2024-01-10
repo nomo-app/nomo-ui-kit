@@ -12,7 +12,7 @@ import 'package:nomo_ui_kit/theme/theme_provider.dart';
 import 'package:nomo_ui_kit/utils/layout_extensions.dart';
 import 'package:nomo_ui_kit/utils/multi_wrapper.dart';
 
-final rootNavigatorKey = GlobalKey<NavigatorState>();
+final nomoNavigatorKey = GlobalKey<NomoNavigatorState>();
 
 const kThemeChangeDuration = Duration(milliseconds: 400);
 const kThemeChangeCurve = Curves.easeInOut;
@@ -73,7 +73,7 @@ class _NomoAppState extends State<NomoApp> {
     );
     themeNotifier = ThemeNotifier(widget.theme);
     delegate = NomoRouterDelegate(
-      rootNavigatorKey,
+      nomoNavigatorKey,
       appRouter: widget.appRouter,
       observers: widget.navigatorObservers,
       nestedObservers: widget.nestedNavigatorObservers,

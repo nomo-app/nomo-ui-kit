@@ -58,6 +58,7 @@ extension ColorTypeExt on NomoColorThemeData {
 }
 
 final light = NomoColorThemeData(
+  key: const ValueKey('light'),
   colors: const NomoColors(
     primary: primaryColor,
     onPrimary: Colors.white,
@@ -88,6 +89,7 @@ final light = NomoColorThemeData(
 );
 
 final dark = NomoColorThemeData(
+  key: const ValueKey('dark'),
   colors: const NomoColors(
     primary: primaryColor,
     onPrimary: Colors.white,
@@ -123,6 +125,7 @@ final dark = NomoColorThemeData(
 );
 
 final avinoc = NomoColorThemeData(
+  key: const ValueKey('avinoc'),
   colors: const NomoColors(
     primary: Color(0xff2FAAA5),
     onPrimary: Colors.white,
@@ -145,6 +148,7 @@ final avinoc = NomoColorThemeData(
 );
 
 final sizingSmall = NomoSizingThemeData(
+  key: const ValueKey('small'),
   sizes: const NomoSizes(
     fontSizeB1: 10,
     fontSizeB2: 12,
@@ -171,6 +175,7 @@ final sizingSmall = NomoSizingThemeData(
 );
 
 final sizingMedium = NomoSizingThemeData(
+  key: const ValueKey('medium'),
   sizes: const NomoSizes(
     fontSizeB1: 12,
     fontSizeB2: 14,
@@ -198,6 +203,7 @@ final sizingMedium = NomoSizingThemeData(
 );
 
 final sizingLarge = NomoSizingThemeData(
+  key: const ValueKey('large'),
   sizes: const NomoSizes(
     maxContentWidth: 1000,
     fontSizeB1: 14,
