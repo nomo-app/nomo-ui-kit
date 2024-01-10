@@ -86,6 +86,9 @@ class NomoComponentColors {
         expandableTheme: ExpandableColorData(
           iconColor: core.foreground1,
         ),
+        dialogTheme: NomoDialogThemeData(
+          backgroundColor: core.surface,
+        ),
       );
 }
 
