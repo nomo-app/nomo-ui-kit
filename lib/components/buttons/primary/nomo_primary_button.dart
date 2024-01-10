@@ -98,6 +98,13 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
   @override
   Widget build(BuildContext context) {
     final theme = getFromContext(context, this);
+    final foregroundColor = switch (type) {
+      ActionType.nonInteractive ||
+      ActionType.disabled =>
+        context.colors.onDisabled,
+      _ => theme.foregroundColor,
+    };
+    final textStyle = this.textStyle?.copyWith(color: foregroundColor);
 
     final effectiveChild = switch (direction) {
       _ when child != null => child!,
@@ -161,10 +168,7 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
           context.colors.disabled,
         _ => theme.backgroundColor,
       },
-      foregroundColor: switch (type) {
-        ActionType.nonInteractive => context.colors.onDisabled,
-        _ => theme.foregroundColor,
-      },
+      foregroundColor: foregroundColor,
       shape: shape,
       margin: margin,
       width: width,

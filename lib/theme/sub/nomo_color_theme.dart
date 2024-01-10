@@ -89,6 +89,10 @@ class NomoComponentColors {
         dialogTheme: NomoDialogThemeData(
           backgroundColor: core.surface,
         ),
+        primaryButtonTheme: PrimaryNomoButtonThemeData(
+          backgroundColor: core.primary,
+          foregroundColor: core.onPrimary,
+        ),
       );
 }
 
