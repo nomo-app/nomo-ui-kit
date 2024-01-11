@@ -33,7 +33,7 @@ class _NomoHorizontalListTileState extends State<NomoHorizontalListTile>
     vsync: this,
   );
 
-  late final Animation<Color?> foreGroundAnimation;
+  late Animation<Color?> foreGroundAnimation;
 
   @override
   void initState() {
@@ -49,6 +49,15 @@ class _NomoHorizontalListTileState extends State<NomoHorizontalListTile>
   void dispose() {
     foregroundController.dispose();
     super.dispose();
+  }
+
+  @override
+  void didUpdateWidget(oldWidget) {
+    foreGroundAnimation = ColorTween(
+      begin: widget.theme.foreground,
+      end: widget.theme.selectedForeground,
+    ).animate(foregroundController);
+    super.didUpdateWidget(oldWidget);
   }
 
   @override

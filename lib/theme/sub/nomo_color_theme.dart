@@ -68,7 +68,7 @@ class NomoComponentColors {
           backgroundColor: core.background1,
         ),
         bottomBarTheme: NomoBottomBarColorData(
-          background: core.primaryContainer,
+          background: core.surface,
           borderRadius: BorderRadius.circular(8),
           foreground: core.foreground1,
           selectedForeground: core.primary,

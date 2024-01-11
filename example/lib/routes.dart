@@ -95,12 +95,14 @@ Widget wrapper(nav) {
 
 @AppRoutes()
 const _routes = [
-  MenuNestedPageRouteInfo(
-    path: "/",
-    title: "Home",
-    page: HomePage,
+  NestedPageRouteInfo(
     wrapper: wrapper,
     children: [
+      MenuPageRouteInfo(
+        path: "/",
+        title: "Home",
+        page: HomePage,
+      ),
       MenuPageRouteInfo(
         path: "/modalSheet",
         title: "Modal Sheet",

@@ -10,78 +10,196 @@ class AppRouter extends NomoAppRouter {
   AppRouter()
       : super(
           {
-            HomePageRoute.path: ([a]) => HomePageRoute(),
-            ModalSheetSectionRoute.path: ([a]) => ModalSheetSectionRoute(),
-            ModalSheet1Route.path: ([a]) => ModalSheet1Route(),
-            TextSectionRoute.path: ([a]) => TextSectionRoute(),
+            HomePageRoute.path: ([a]) {
+              final typedArgs = a as HomePageArguments?;
+              return HomePageRoute(
+                key: typedArgs?.key,
+              );
+            },
+            ModalSheetSectionRoute.path: ([a]) {
+              final typedArgs = a as ModalSheetSectionArguments?;
+              return ModalSheetSectionRoute(
+                key: typedArgs?.key,
+              );
+            },
+            ModalSheet1Route.path: ([a]) {
+              final typedArgs = a as ModalSheet1Arguments?;
+              return ModalSheet1Route(
+                key: typedArgs?.key,
+              );
+            },
+            TextSectionRoute.path: ([a]) {
+              final typedArgs = a as TextSectionArguments?;
+              return TextSectionRoute(
+                key: typedArgs?.key,
+              );
+            },
             TextButtonWrapperRoute.path: ([a]) => TextButtonWrapperRoute(),
-            DataSectionRoute.path: ([a]) => DataSectionRoute(),
-            IconSectionRoute.path: ([a]) => IconSectionRoute(),
-            DialogSectionRoute.path: ([a]) => DialogSectionRoute(),
-            InputSectionRoute.path: ([a]) => InputSectionRoute(),
-            DropdownSectionRoute.path: ([a]) => DropdownSectionRoute(),
-            CardSectionRoute.path: ([a]) => CardSectionRoute(),
-            ListSectionRoute.path: ([a]) => ListSectionRoute(),
-            GridSectionRoute.path: ([a]) => GridSectionRoute(),
-            LoadingSectionRoute.path: ([a]) => LoadingSectionRoute(),
-            ExpandableSectionRoute.path: ([a]) => ExpandableSectionRoute(),
-            TileSectionRoute.path: ([a]) => TileSectionRoute(),
-            LayoutSectionRoute.path: ([a]) => LayoutSectionRoute(),
-            MenuSectionRoute.path: ([a]) => MenuSectionRoute(),
+            DataSectionRoute.path: ([a]) {
+              final typedArgs = a as DataSectionArguments?;
+              return DataSectionRoute(
+                key: typedArgs?.key,
+              );
+            },
+            IconSectionRoute.path: ([a]) {
+              final typedArgs = a as IconSectionArguments?;
+              return IconSectionRoute(
+                key: typedArgs?.key,
+              );
+            },
+            DialogSectionRoute.path: ([a]) {
+              final typedArgs = a as DialogSectionArguments?;
+              return DialogSectionRoute(
+                key: typedArgs?.key,
+              );
+            },
+            InputSectionRoute.path: ([a]) {
+              final typedArgs = a as InputSectionArguments?;
+              return InputSectionRoute(
+                key: typedArgs?.key,
+              );
+            },
+            DropdownSectionRoute.path: ([a]) {
+              final typedArgs = a as DropdownSectionArguments?;
+              return DropdownSectionRoute(
+                key: typedArgs?.key,
+              );
+            },
+            CardSectionRoute.path: ([a]) {
+              final typedArgs = a as CardSectionArguments?;
+              return CardSectionRoute(
+                key: typedArgs?.key,
+              );
+            },
+            ListSectionRoute.path: ([a]) {
+              final typedArgs = a as ListSectionArguments?;
+              return ListSectionRoute(
+                key: typedArgs?.key,
+              );
+            },
+            GridSectionRoute.path: ([a]) {
+              final typedArgs = a as GridSectionArguments?;
+              return GridSectionRoute(
+                key: typedArgs?.key,
+              );
+            },
+            LoadingSectionRoute.path: ([a]) {
+              final typedArgs = a as LoadingSectionArguments?;
+              return LoadingSectionRoute(
+                key: typedArgs?.key,
+              );
+            },
+            ExpandableSectionRoute.path: ([a]) {
+              final typedArgs = a as ExpandableSectionArguments?;
+              return ExpandableSectionRoute(
+                key: typedArgs?.key,
+              );
+            },
+            TileSectionRoute.path: ([a]) {
+              final typedArgs = a as TileSectionArguments?;
+              return TileSectionRoute(
+                key: typedArgs?.key,
+              );
+            },
+            LayoutSectionRoute.path: ([a]) {
+              final typedArgs = a as LayoutSectionArguments?;
+              return LayoutSectionRoute(
+                key: typedArgs?.key,
+              );
+            },
+            MenuSectionRoute.path: ([a]) {
+              final typedArgs = a as MenuSectionArguments?;
+              return MenuSectionRoute(
+                key: typedArgs?.key,
+              );
+            },
           },
-          _routes.expanded.toList(),
+          _routes.expanded.where((r) => r is! NestedPageRouteInfo).toList(),
+          _routes.expanded.whereType<NestedPageRouteInfo>().toList(),
         );
 }
 
 class HomePageArguments {
-  const HomePageArguments();
+  final Key? key;
+  const HomePageArguments({
+    this.key,
+  });
 }
 
 class HomePageRoute extends AppRoute implements HomePageArguments {
-  HomePageRoute()
-      : super(
+  @override
+  final Key? key;
+  HomePageRoute({
+    this.key,
+  }) : super(
           name: '/',
-          page: HomePage(),
+          page: HomePage(
+            key: key,
+          ),
         );
   static String path = '/';
 }
 
 class ModalSheetSectionArguments {
-  const ModalSheetSectionArguments();
+  final Key? key;
+  const ModalSheetSectionArguments({
+    this.key,
+  });
 }
 
 class ModalSheetSectionRoute extends AppRoute
     implements ModalSheetSectionArguments {
-  ModalSheetSectionRoute()
-      : super(
+  @override
+  final Key? key;
+  ModalSheetSectionRoute({
+    this.key,
+  }) : super(
           name: '/modalSheet',
-          page: ModalSheetSection(),
+          page: ModalSheetSection(
+            key: key,
+          ),
         );
   static String path = '/modalSheet';
 }
 
 class ModalSheet1Arguments {
-  const ModalSheet1Arguments();
+  final Key? key;
+  const ModalSheet1Arguments({
+    this.key,
+  });
 }
 
 class ModalSheet1Route extends AppRoute implements ModalSheet1Arguments {
-  ModalSheet1Route()
-      : super(
-          name: '/sheet1',
-          page: ModalSheet1(),
+  @override
+  final Key? key;
+  ModalSheet1Route({
+    this.key,
+  }) : super(
+          name: '/modalSheet/sheet1',
+          page: ModalSheet1(
+            key: key,
+          ),
         );
-  static String path = '/sheet1';
+  static String path = '/modalSheet/sheet1';
 }
 
 class TextSectionArguments {
-  const TextSectionArguments();
+  final Key? key;
+  const TextSectionArguments({
+    this.key,
+  });
 }
 
 class TextSectionRoute extends AppRoute implements TextSectionArguments {
-  TextSectionRoute()
-      : super(
+  @override
+  final Key? key;
+  TextSectionRoute({
+    this.key,
+  }) : super(
           name: '/typography',
-          page: TextSection(),
+          page: TextSection(
+            key: key,
+          ),
         );
   static String path = '/typography';
 }
@@ -101,172 +219,276 @@ class TextButtonWrapperRoute extends AppRoute
 }
 
 class DataSectionArguments {
-  const DataSectionArguments();
+  final Key? key;
+  const DataSectionArguments({
+    this.key,
+  });
 }
 
 class DataSectionRoute extends AppRoute implements DataSectionArguments {
-  DataSectionRoute()
-      : super(
+  @override
+  final Key? key;
+  DataSectionRoute({
+    this.key,
+  }) : super(
           name: '/data',
-          page: DataSection(),
+          page: DataSection(
+            key: key,
+          ),
         );
   static String path = '/data';
 }
 
 class IconSectionArguments {
-  const IconSectionArguments();
+  final Key? key;
+  const IconSectionArguments({
+    this.key,
+  });
 }
 
 class IconSectionRoute extends AppRoute implements IconSectionArguments {
-  IconSectionRoute()
-      : super(
+  @override
+  final Key? key;
+  IconSectionRoute({
+    this.key,
+  }) : super(
           name: '/icons',
-          page: IconSection(),
+          page: IconSection(
+            key: key,
+          ),
         );
   static String path = '/icons';
 }
 
 class DialogSectionArguments {
-  const DialogSectionArguments();
+  final Key? key;
+  const DialogSectionArguments({
+    this.key,
+  });
 }
 
 class DialogSectionRoute extends AppRoute implements DialogSectionArguments {
-  DialogSectionRoute()
-      : super(
+  @override
+  final Key? key;
+  DialogSectionRoute({
+    this.key,
+  }) : super(
           name: '/dialogs',
-          page: DialogSection(),
+          page: DialogSection(
+            key: key,
+          ),
         );
   static String path = '/dialogs';
 }
 
 class InputSectionArguments {
-  const InputSectionArguments();
+  final Key? key;
+  const InputSectionArguments({
+    this.key,
+  });
 }
 
 class InputSectionRoute extends AppRoute implements InputSectionArguments {
-  InputSectionRoute()
-      : super(
+  @override
+  final Key? key;
+  InputSectionRoute({
+    this.key,
+  }) : super(
           name: '/input',
-          page: InputSection(),
+          page: InputSection(
+            key: key,
+          ),
         );
   static String path = '/input';
 }
 
 class DropdownSectionArguments {
-  const DropdownSectionArguments();
+  final Key? key;
+  const DropdownSectionArguments({
+    this.key,
+  });
 }
 
 class DropdownSectionRoute extends AppRoute
     implements DropdownSectionArguments {
-  DropdownSectionRoute()
-      : super(
+  @override
+  final Key? key;
+  DropdownSectionRoute({
+    this.key,
+  }) : super(
           name: '/dropdown',
-          page: DropdownSection(),
+          page: DropdownSection(
+            key: key,
+          ),
         );
   static String path = '/dropdown';
 }
 
 class CardSectionArguments {
-  const CardSectionArguments();
+  final Key? key;
+  const CardSectionArguments({
+    this.key,
+  });
 }
 
 class CardSectionRoute extends AppRoute implements CardSectionArguments {
-  CardSectionRoute()
-      : super(
+  @override
+  final Key? key;
+  CardSectionRoute({
+    this.key,
+  }) : super(
           name: '/card',
-          page: CardSection(),
+          page: CardSection(
+            key: key,
+          ),
         );
   static String path = '/card';
 }
 
 class ListSectionArguments {
-  const ListSectionArguments();
+  final Key? key;
+  const ListSectionArguments({
+    this.key,
+  });
 }
 
 class ListSectionRoute extends AppRoute implements ListSectionArguments {
-  ListSectionRoute()
-      : super(
+  @override
+  final Key? key;
+  ListSectionRoute({
+    this.key,
+  }) : super(
           name: '/list',
-          page: ListSection(),
+          page: ListSection(
+            key: key,
+          ),
         );
   static String path = '/list';
 }
 
 class GridSectionArguments {
-  const GridSectionArguments();
+  final Key? key;
+  const GridSectionArguments({
+    this.key,
+  });
 }
 
 class GridSectionRoute extends AppRoute implements GridSectionArguments {
-  GridSectionRoute()
-      : super(
+  @override
+  final Key? key;
+  GridSectionRoute({
+    this.key,
+  }) : super(
           name: '/grid',
-          page: GridSection(),
+          page: GridSection(
+            key: key,
+          ),
         );
   static String path = '/grid';
 }
 
 class LoadingSectionArguments {
-  const LoadingSectionArguments();
+  final Key? key;
+  const LoadingSectionArguments({
+    this.key,
+  });
 }
 
 class LoadingSectionRoute extends AppRoute implements LoadingSectionArguments {
-  LoadingSectionRoute()
-      : super(
+  @override
+  final Key? key;
+  LoadingSectionRoute({
+    this.key,
+  }) : super(
           name: '/loading',
-          page: LoadingSection(),
+          page: LoadingSection(
+            key: key,
+          ),
         );
   static String path = '/loading';
 }
 
 class ExpandableSectionArguments {
-  const ExpandableSectionArguments();
+  final Key? key;
+  const ExpandableSectionArguments({
+    this.key,
+  });
 }
 
 class ExpandableSectionRoute extends AppRoute
     implements ExpandableSectionArguments {
-  ExpandableSectionRoute()
-      : super(
+  @override
+  final Key? key;
+  ExpandableSectionRoute({
+    this.key,
+  }) : super(
           name: '/expandable',
-          page: ExpandableSection(),
+          page: ExpandableSection(
+            key: key,
+          ),
         );
   static String path = '/expandable';
 }
 
 class TileSectionArguments {
-  const TileSectionArguments();
+  final Key? key;
+  const TileSectionArguments({
+    this.key,
+  });
 }
 
 class TileSectionRoute extends AppRoute implements TileSectionArguments {
-  TileSectionRoute()
-      : super(
+  @override
+  final Key? key;
+  TileSectionRoute({
+    this.key,
+  }) : super(
           name: '/tile',
-          page: TileSection(),
+          page: TileSection(
+            key: key,
+          ),
         );
   static String path = '/tile';
 }
 
 class LayoutSectionArguments {
-  const LayoutSectionArguments();
+  final Key? key;
+  const LayoutSectionArguments({
+    this.key,
+  });
 }
 
 class LayoutSectionRoute extends AppRoute implements LayoutSectionArguments {
-  LayoutSectionRoute()
-      : super(
+  @override
+  final Key? key;
+  LayoutSectionRoute({
+    this.key,
+  }) : super(
           name: '/layout',
-          page: LayoutSection(),
+          page: LayoutSection(
+            key: key,
+          ),
         );
   static String path = '/layout';
 }
 
 class MenuSectionArguments {
-  const MenuSectionArguments();
+  final Key? key;
+  const MenuSectionArguments({
+    this.key,
+  });
 }
 
 class MenuSectionRoute extends AppRoute implements MenuSectionArguments {
-  MenuSectionRoute()
-      : super(
+  @override
+  final Key? key;
+  MenuSectionRoute({
+    this.key,
+  }) : super(
           name: '/menu',
-          page: MenuSection(),
+          page: MenuSection(
+            key: key,
+          ),
         );
   static String path = '/menu';
 }
