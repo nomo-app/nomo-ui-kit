@@ -12,8 +12,6 @@ import 'package:nomo_ui_kit/theme/theme_provider.dart';
 import 'package:nomo_ui_kit/utils/layout_extensions.dart';
 import 'package:nomo_ui_kit/utils/multi_wrapper.dart';
 
-final nomoNavigatorKey = GlobalKey<NomoNavigatorState>();
-
 const kThemeChangeDuration = Duration(milliseconds: 400);
 const kThemeChangeCurve = Curves.easeInOut;
 final _scrollBehavior = const ScrollBehavior().copyWith(
@@ -73,7 +71,6 @@ class _NomoAppState extends State<NomoApp> {
     );
     themeNotifier = ThemeNotifier(widget.theme);
     delegate = NomoRouterDelegate(
-      nomoNavigatorKey,
       appRouter: widget.appRouter,
       observers: widget.navigatorObservers,
       nestedObservers: widget.nestedNavigatorObservers,
