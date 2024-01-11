@@ -95,7 +95,7 @@ class NomoComponentSizes {
           padding: EdgeInsets.all(32),
         ),
         primaryButtonTheme: const PrimaryNomoButtonSizingData(
-          padding: EdgeInsets.zero,
+          padding: EdgeInsets.symmetric(vertical: 12),
         ),
       );
 }

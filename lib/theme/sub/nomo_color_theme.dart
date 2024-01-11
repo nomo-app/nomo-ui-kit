@@ -73,6 +73,10 @@ class NomoComponentColors {
           foreground: core.foreground1,
           selectedForeground: core.primary,
         ),
+        secondaryButtonTheme: SecondaryNomoButtonColorData(
+          foregroundColor: core.foreground1,
+          selectionColor: core.secondary,
+        ),
         siderTheme: NomoSiderColorData(
           backgroundColor: core.background1,
         ),
@@ -86,10 +90,10 @@ class NomoComponentColors {
         expandableTheme: ExpandableColorData(
           iconColor: core.foreground1,
         ),
-        dialogTheme: NomoDialogThemeData(
+        dialogTheme: NomoDialogColorData(
           backgroundColor: core.surface,
         ),
-        primaryButtonTheme: PrimaryNomoButtonThemeData(
+        primaryButtonTheme: PrimaryNomoButtonColorData(
           backgroundColor: core.primary,
           foregroundColor: core.onPrimary,
         ),
