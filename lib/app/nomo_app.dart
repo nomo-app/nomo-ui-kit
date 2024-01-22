@@ -35,6 +35,7 @@ class NomoApp extends StatefulWidget {
     this.navigatorObservers = const [],
     this.nestedNavigatorObservers = const [],
     this.home,
+    this.shouldPop,
   });
 
   final NomoAppRouter appRouter;
@@ -49,6 +50,7 @@ class NomoApp extends StatefulWidget {
   final Widget? home;
   final List<NavigatorObserver> navigatorObservers;
   final List<NavigatorObserver> nestedNavigatorObservers;
+  final Future<bool> Function()? shouldPop;
 
   /// A Wrapper that can access the ThemeProvider and NomoNavigator
   final Widget Function(BuildContext context, Widget app)? appWrapper;
@@ -61,6 +63,7 @@ class _NomoAppState extends State<NomoApp> {
   late final ThemeNotifier themeNotifier;
   late final NomoRouterDelegate delegate;
   late final PlatformRouteInformationProvider routeInformationProvider;
+  late final NomoBackButtonDispatcher backButtonDispatcher;
 
   @override
   void initState() {
@@ -76,6 +79,7 @@ class _NomoAppState extends State<NomoApp> {
       nestedObservers: widget.nestedNavigatorObservers,
       initial: widget.home,
     );
+    backButtonDispatcher = NomoBackButtonDispatcher(delegate, widget.shouldPop);
     super.initState();
   }
 
@@ -99,7 +103,7 @@ class _NomoAppState extends State<NomoApp> {
       color: widget.theme.colors.primary,
       routerDelegate: delegate,
       routeInformationProvider: routeInformationProvider,
-      backButtonDispatcher: NomoBackButtonDispatcher(delegate),
+      backButtonDispatcher: backButtonDispatcher,
       routeInformationParser: const NomoRouteInformationParser(),
     );
 
