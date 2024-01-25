@@ -53,6 +53,30 @@ class NomoSizes {
       fontSizeH3: lerpDouble(a.fontSizeH3, b.fontSizeH3, t)!,
     );
   }
+
+  factory NomoSizes.fromJson(Map<String, dynamic> json) {
+    return NomoSizes(
+      maxContentWidth: json['maxContentWidth'] as double?,
+      fontSizeB1: json['fontSizeB1'] as double,
+      fontSizeB2: json['fontSizeB2'] as double,
+      fontSizeB3: json['fontSizeB3'] as double,
+      fontSizeH1: json['fontSizeH1'] as double,
+      fontSizeH2: json['fontSizeH2'] as double,
+      fontSizeH3: json['fontSizeH3'] as double,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'maxContentWidth': maxContentWidth,
+      'fontSizeB1': fontSizeB1,
+      'fontSizeB2': fontSizeB2,
+      'fontSizeB3': fontSizeB3,
+      'fontSizeH1': fontSizeH1,
+      'fontSizeH2': fontSizeH2,
+      'fontSizeH3': fontSizeH3,
+    };
+  }
 }
 
 @NomoThemeUtils('NomoSizes')

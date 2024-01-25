@@ -199,4 +199,48 @@ class NomoColors {
       onDisabled: Color.lerp(a.onDisabled, b.onDisabled, t)!,
     );
   }
+
+  factory NomoColors.fromJson(Map<String, dynamic> json) {
+    return NomoColors(
+      primary: Color(json['primary'] as int),
+      brightness: Brightness.values[json['brightness'] as int],
+      onPrimary: Color(json['onPrimary'] as int),
+      primaryContainer: Color(json['primaryContainer'] as int),
+      secondary: Color(json['secondary'] as int),
+      onSecondary: Color(json['onSecondary'] as int),
+      secondaryContainer: Color(json['secondaryContainer'] as int),
+      background1: Color(json['background1'] as int),
+      background2: Color(json['background2'] as int),
+      background3: Color(json['background3'] as int),
+      surface: Color(json['surface'] as int),
+      error: Color(json['error'] as int),
+      disabled: Color(json['disabled'] as int),
+      onDisabled: Color(json['onDisabled'] as int),
+      foreground1: Color(json['foreground1'] as int),
+      foreground2: Color(json['foreground2'] as int),
+      foreground3: Color(json['foreground3'] as int),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'primary': primary.value,
+      'brightness': brightness.index,
+      'onPrimary': onPrimary.value,
+      'primaryContainer': primaryContainer.value,
+      'secondary': secondary.value,
+      'onSecondary': onSecondary.value,
+      'secondaryContainer': secondaryContainer.value,
+      'background1': background1.value,
+      'background2': background2.value,
+      'background3': background3.value,
+      'surface': surface.value,
+      'error': error.value,
+      'disabled': disabled.value,
+      'onDisabled': onDisabled.value,
+      'foreground1': foreground1.value,
+      'foreground2': foreground2.value,
+      'foreground3': foreground3.value,
+    };
+  }
 }
