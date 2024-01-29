@@ -16,6 +16,7 @@ import 'package:nomo_ui_kit/components/loading/shimmer/shimmer.dart';
 import 'package:nomo_ui_kit/components/outline_container/nomo_outline_container.dart';
 import 'package:nomo_ui_kit/components/vertical_menu/nomo_vertical_menu.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
+import 'package:nomo_ui_kit/utils/extensions.dart';
 
 part 'nomo_color_theme.g.dart';
 
@@ -202,45 +203,51 @@ class NomoColors {
 
   factory NomoColors.fromJson(Map<String, dynamic> json) {
     return NomoColors(
-      primary: Color(json['primary'] as int),
+      primary: Color(_parseColor(json['primary'])),
       brightness: Brightness.values[json['brightness'] as int],
-      onPrimary: Color(json['onPrimary'] as int),
-      primaryContainer: Color(json['primaryContainer'] as int),
-      secondary: Color(json['secondary'] as int),
-      onSecondary: Color(json['onSecondary'] as int),
-      secondaryContainer: Color(json['secondaryContainer'] as int),
-      background1: Color(json['background1'] as int),
-      background2: Color(json['background2'] as int),
-      background3: Color(json['background3'] as int),
-      surface: Color(json['surface'] as int),
-      error: Color(json['error'] as int),
-      disabled: Color(json['disabled'] as int),
-      onDisabled: Color(json['onDisabled'] as int),
-      foreground1: Color(json['foreground1'] as int),
-      foreground2: Color(json['foreground2'] as int),
-      foreground3: Color(json['foreground3'] as int),
+      onPrimary: Color(_parseColor(json['onPrimary'])),
+      primaryContainer: Color(_parseColor(json['primaryContainer'])),
+      secondary: Color(_parseColor(json['secondary'])),
+      onSecondary: Color(_parseColor(json['onSecondary'])),
+      secondaryContainer: Color(_parseColor(json['secondaryContainer'])),
+      background1: Color(_parseColor(json['background1'])),
+      background2: Color(_parseColor(json['background2'])),
+      background3: Color(_parseColor(json['background3'])),
+      surface: Color(_parseColor(json['surface'])),
+      error: Color(_parseColor(json['error'])),
+      disabled: Color(_parseColor(json['disabled'])),
+      onDisabled: Color(_parseColor(json['onDisabled'])),
+      foreground1: Color(_parseColor(json['foreground1'])),
+      foreground2: Color(_parseColor(json['foreground2'])),
+      foreground3: Color(_parseColor(json['foreground3'])),
     );
+  }
+  static int _parseColor(dynamic hexColor) {
+    if (hexColor is! String || hexColor.isEmpty) {
+      return 0xFFFFFFFF; // Default color in case of hexColor is no string
+    }
+    return int.parse(hexColor, radix: 16);
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'primary': primary.value,
+      'primary': primary.toHexColor(),
       'brightness': brightness.index,
-      'onPrimary': onPrimary.value,
-      'primaryContainer': primaryContainer.value,
-      'secondary': secondary.value,
-      'onSecondary': onSecondary.value,
-      'secondaryContainer': secondaryContainer.value,
-      'background1': background1.value,
-      'background2': background2.value,
-      'background3': background3.value,
-      'surface': surface.value,
-      'error': error.value,
-      'disabled': disabled.value,
-      'onDisabled': onDisabled.value,
-      'foreground1': foreground1.value,
-      'foreground2': foreground2.value,
-      'foreground3': foreground3.value,
+      'onPrimary': onPrimary..toHexColor(),
+      'primaryContainer': primaryContainer..toHexColor(),
+      'secondary': secondary..toHexColor(),
+      'onSecondary': onSecondary..toHexColor(),
+      'secondaryContainer': secondaryContainer..toHexColor(),
+      'background1': background1..toHexColor(),
+      'background2': background2..toHexColor(),
+      'background3': background3..toHexColor(),
+      'surface': surface..toHexColor(),
+      'error': error..toHexColor(),
+      'disabled': disabled..toHexColor(),
+      'onDisabled': onDisabled..toHexColor(),
+      'foreground1': foreground1..toHexColor(),
+      'foreground2': foreground2..toHexColor(),
+      'foreground3': foreground3..toHexColor(),
     };
   }
 }
