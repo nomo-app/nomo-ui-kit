@@ -226,7 +226,14 @@ class NomoColors {
     if (hexColor is! String || hexColor.isEmpty) {
       return 0xFFFFFFFF; // Default color in case of hexColor is no string
     }
-    return int.parse(hexColor, radix: 16);
+    final String color;
+    if (hexColor.startsWith('#')) {
+      color = hexColor.replaceFirst('#', '0xff');
+    } else {
+      color = hexColor;
+    }
+    final a = int.parse(color);
+    return a;
   }
 
   Map<String, dynamic> toJson() {
