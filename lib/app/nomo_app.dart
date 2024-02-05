@@ -36,6 +36,7 @@ class NomoApp extends StatefulWidget {
     this.nestedNavigatorObservers = const [],
     this.home,
     this.shouldPop,
+    this.willPop,
   });
 
   final NomoAppRouter appRouter;
@@ -51,6 +52,7 @@ class NomoApp extends StatefulWidget {
   final List<NavigatorObserver> navigatorObservers;
   final List<NavigatorObserver> nestedNavigatorObservers;
   final Future<bool> Function()? shouldPop;
+  final Future<bool> Function()? willPop;
 
   /// A Wrapper that can access the ThemeProvider and NomoNavigator
   final Widget Function(BuildContext context, Widget app)? appWrapper;
@@ -79,7 +81,11 @@ class _NomoAppState extends State<NomoApp> {
       nestedObservers: widget.nestedNavigatorObservers,
       initial: widget.home,
     );
-    backButtonDispatcher = NomoBackButtonDispatcher(delegate, widget.shouldPop);
+    backButtonDispatcher = NomoBackButtonDispatcher(
+      delegate,
+      widget.shouldPop,
+      widget.willPop,
+    );
     super.initState();
   }
 
