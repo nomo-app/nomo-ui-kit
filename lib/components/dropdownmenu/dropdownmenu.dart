@@ -21,6 +21,7 @@ class NomoDropDownMenu<T> extends StatefulWidget {
     this.minFontSize = 12,
     this.maxFontSize = double.infinity,
     this.overflow = TextOverflow.ellipsis,
+    this.padding,
   });
   final List<NomoDropdownItem<T>> items;
   final NomoDropdownItem<T>? initailValue;
@@ -37,6 +38,7 @@ class NomoDropDownMenu<T> extends StatefulWidget {
   final double? minFontSize;
   final double? maxFontSize;
   final TextOverflow? overflow;
+  final EdgeInsetsGeometry? padding;
 
   @override
   State<NomoDropDownMenu<T>> createState() => _NomoDropDownMenuState();
@@ -91,32 +93,40 @@ class _NomoDropDownMenuState<T> extends State<NomoDropDownMenu<T>> {
   Widget build(BuildContext context) {
     return CompositedTransformTarget(
       link: _layerLink,
-      child: NomoCard(
-        // onPressed: toogleExpanded,
-        // decoration: widget.decoration,
-        // width: widget.width,
-        // height: widget.height,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: NomoText(
-                overflow: widget.overflow,
-                _selectedItem.displayText,
-                style: widget.textStyle ?? const TextStyle(fontSize: 16),
-                //   minFontSize: widget.minFontSize!,
-                //     maxFontSize: widget.maxFontSize!,
+      child: Container(
+        decoration: widget.decoration,
+        height: widget.height,
+        width: widget.width,
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: toogleExpanded,
+            child: Padding(
+              padding: widget.padding ?? EdgeInsets.zero,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: NomoText(
+                      overflow: widget.overflow,
+                      _selectedItem.displayText,
+                      style: widget.textStyle,
+                      //   minFontSize: widget.minFontSize!,
+                      //     maxFontSize: widget.maxFontSize!,
+                    ),
+                  ),
+                  AnimatedRotation(
+                    turns: _turns,
+                    duration: const Duration(milliseconds: 200),
+                    child: Icon(
+                      Icons.keyboard_arrow_down,
+                      color: widget.iconColor ?? const Color(0xFF272626),
+                    ),
+                  ),
+                ],
               ),
             ),
-            AnimatedRotation(
-              turns: _turns,
-              duration: const Duration(milliseconds: 200),
-              child: Icon(
-                Icons.keyboard_arrow_down,
-                color: widget.iconColor ?? const Color(0xFF272626),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
@@ -167,7 +177,7 @@ class _NomoDropDownMenuState<T> extends State<NomoDropDownMenu<T>> {
                         thumbColor: Colors.grey,
                         controller: _scrollController,
                         child: ListView(
-                          padding: const EdgeInsets.all(1),
+                          padding: const EdgeInsets.symmetric(vertical: 8),
                           shrinkWrap: true,
                           controller: _scrollController,
                           children: widget.items.asMap().entries.map((item) {
@@ -179,12 +189,11 @@ class _NomoDropDownMenuState<T> extends State<NomoDropDownMenu<T>> {
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: 8,
-                                  vertical: 8,
+                                  vertical: 16,
                                 ),
                                 child: NomoText(
                                   item.value.displayText,
-                                  style: widget.textStyle ??
-                                      const TextStyle(fontSize: 14),
+                                  style: widget.textStyle,
                                 ),
                               ),
                             );

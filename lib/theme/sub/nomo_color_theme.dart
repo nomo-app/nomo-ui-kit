@@ -16,6 +16,7 @@ import 'package:nomo_ui_kit/components/loading/shimmer/shimmer.dart';
 import 'package:nomo_ui_kit/components/outline_container/nomo_outline_container.dart';
 import 'package:nomo_ui_kit/components/vertical_menu/nomo_vertical_menu.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
+import 'package:nomo_ui_kit/utils/extensions.dart';
 
 part 'nomo_color_theme.g.dart';
 
@@ -198,5 +199,62 @@ class NomoColors {
       foreground3: Color.lerp(a.foreground3, b.foreground3, t)!,
       onDisabled: Color.lerp(a.onDisabled, b.onDisabled, t)!,
     );
+  }
+
+  factory NomoColors.fromJson(Map<String, dynamic> json) {
+    return NomoColors(
+      primary: Color(_parseColor(json['primary'])),
+      brightness: Brightness.values[json['brightness'] as int],
+      onPrimary: Color(_parseColor(json['onPrimary'])),
+      primaryContainer: Color(_parseColor(json['primaryContainer'])),
+      secondary: Color(_parseColor(json['secondary'])),
+      onSecondary: Color(_parseColor(json['onSecondary'])),
+      secondaryContainer: Color(_parseColor(json['secondaryContainer'])),
+      background1: Color(_parseColor(json['background1'])),
+      background2: Color(_parseColor(json['background2'])),
+      background3: Color(_parseColor(json['background3'])),
+      surface: Color(_parseColor(json['surface'])),
+      error: Color(_parseColor(json['error'])),
+      disabled: Color(_parseColor(json['disabled'])),
+      onDisabled: Color(_parseColor(json['onDisabled'])),
+      foreground1: Color(_parseColor(json['foreground1'])),
+      foreground2: Color(_parseColor(json['foreground2'])),
+      foreground3: Color(_parseColor(json['foreground3'])),
+    );
+  }
+  static int _parseColor(dynamic hexColor) {
+    if (hexColor is! String || hexColor.isEmpty) {
+      return 0xFFFFFFFF; // Default color in case of hexColor is no string
+    }
+    final String color;
+    if (hexColor.startsWith('#')) {
+      color = hexColor.replaceFirst('#', '0xff');
+    } else {
+      color = hexColor;
+    }
+    final a = int.parse(color);
+    return a;
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'primary': primary.toHexColor(),
+      'brightness': brightness.index,
+      'onPrimary': onPrimary.toHexColor(),
+      'primaryContainer': primaryContainer.toHexColor(),
+      'secondary': secondary.toHexColor(),
+      'onSecondary': onSecondary.toHexColor(),
+      'secondaryContainer': secondaryContainer.toHexColor(),
+      'background1': background1.toHexColor(),
+      'background2': background2.toHexColor(),
+      'background3': background3.toHexColor(),
+      'surface': surface.toHexColor(),
+      'error': error.toHexColor(),
+      'disabled': disabled.toHexColor(),
+      'onDisabled': onDisabled.toHexColor(),
+      'foreground1': foreground1.toHexColor(),
+      'foreground2': foreground2.toHexColor(),
+      'foreground3': foreground3.toHexColor(),
+    };
   }
 }
