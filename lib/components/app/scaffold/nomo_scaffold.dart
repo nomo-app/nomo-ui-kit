@@ -43,13 +43,19 @@ class NomoScaffold extends StatefulWidget {
   final bool? showSider;
 
   static ScaffoldState of(BuildContext context) {
-    final result = context.findAncestorStateOfType<_NomoScaffoldState>()!.scaffoldKey.currentState!;
+    final result = context
+        .findAncestorStateOfType<_NomoScaffoldState>()!
+        .scaffoldKey
+        .currentState!;
 
     return result;
   }
 
   static ScaffoldState? maybeOf(BuildContext context) {
-    final result = context.findAncestorStateOfType<_NomoScaffoldState>()?.scaffoldKey.currentState;
+    final result = context
+        .findAncestorStateOfType<_NomoScaffoldState>()
+        ?.scaffoldKey
+        .currentState;
 
     return result;
   }
@@ -97,6 +103,7 @@ class _NomoScaffoldState extends State<NomoScaffold> {
         backgroundColor: theme.backgroundColor,
         drawer: widget.drawer,
         endDrawer: widget.endDrawer,
+        extendBody: true,
       ),
     );
   }

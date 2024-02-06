@@ -26,6 +26,9 @@ class NomoSizes {
     required this.fontSizeH1,
     required this.fontSizeH2,
     required this.fontSizeH3,
+    required this.spacing1,
+    required this.spacing2,
+    required this.spacing3,
     this.maxContentWidth,
   });
   final double? maxContentWidth;
@@ -37,6 +40,10 @@ class NomoSizes {
   final double fontSizeH1;
   final double fontSizeH2;
   final double fontSizeH3;
+
+  final double spacing1;
+  final double spacing2;
+  final double spacing3;
 
   static NomoSizes lerp(NomoSizes a, NomoSizes b, double t) {
     return NomoSizes(
@@ -51,7 +58,40 @@ class NomoSizes {
       fontSizeH1: lerpDouble(a.fontSizeH1, b.fontSizeH1, t)!,
       fontSizeH2: lerpDouble(a.fontSizeH2, b.fontSizeH2, t)!,
       fontSizeH3: lerpDouble(a.fontSizeH3, b.fontSizeH3, t)!,
+      spacing1: lerpDouble(a.spacing1, b.spacing1, t)!,
+      spacing2: lerpDouble(a.spacing2, b.spacing2, t)!,
+      spacing3: lerpDouble(a.spacing3, b.spacing3, t)!,
     );
+  }
+
+  factory NomoSizes.fromJson(Map<String, dynamic> json) {
+    return NomoSizes(
+      maxContentWidth: json['maxContentWidth'] as double?,
+      fontSizeB1: json['fontSizeB1'] as double,
+      fontSizeB2: json['fontSizeB2'] as double,
+      fontSizeB3: json['fontSizeB3'] as double,
+      fontSizeH1: json['fontSizeH1'] as double,
+      fontSizeH2: json['fontSizeH2'] as double,
+      fontSizeH3: json['fontSizeH3'] as double,
+      spacing1: json['spacing1'] as double,
+      spacing2: json['spacing2'] as double,
+      spacing3: json['spacing3'] as double,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'maxContentWidth': maxContentWidth,
+      'fontSizeB1': fontSizeB1,
+      'fontSizeB2': fontSizeB2,
+      'fontSizeB3': fontSizeB3,
+      'fontSizeH1': fontSizeH1,
+      'fontSizeH2': fontSizeH2,
+      'fontSizeH3': fontSizeH3,
+      'spacing1': spacing1,
+      'spacing2': spacing2,
+      'spacing3': spacing3,
+    };
   }
 }
 
