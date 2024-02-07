@@ -8,6 +8,7 @@ import 'package:nomo_ui_kit/components/buttons/link/nomo_link_button.dart';
 import 'package:nomo_ui_kit/components/buttons/primary/nomo_primary_button.dart';
 import 'package:nomo_ui_kit/components/buttons/secondary/nomo_secondary_button.dart';
 import 'package:nomo_ui_kit/components/buttons/text/nomo_text_button.dart';
+import 'package:nomo_ui_kit/components/card/nomo_card.dart';
 import 'package:nomo_ui_kit/components/dialog/nomo_dialog.dart';
 import 'package:nomo_ui_kit/components/expandable/expandable.dart';
 import 'package:nomo_ui_kit/components/input/textInput/nomo_input.dart';
@@ -37,6 +38,7 @@ class NomoComponentColors {
   final ExpandableColorData expandableTheme;
   final NomoInputColorData inputTheme;
   final NomoDialogColorData dialogTheme;
+  final NomoCardColorData cardTheme;
 
   const NomoComponentColors._({
     required this.outlineContainerTheme,
@@ -54,6 +56,7 @@ class NomoComponentColors {
     required this.expandableTheme,
     required this.inputTheme,
     required this.dialogTheme,
+    required this.cardTheme,
   });
 
   static NomoComponentColors defaultComponents(NomoColors core) =>
@@ -70,7 +73,7 @@ class NomoComponentColors {
         ),
         bottomBarTheme: NomoBottomBarColorData(
           background: core.surface,
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(12),
           foreground: core.foreground1,
           selectedForeground: core.primary,
         ),
@@ -84,9 +87,9 @@ class NomoComponentColors {
         verticalMenuTheme: NomoVerticalMenuColorData(
           foreground: core.foreground1,
           background: core.background1,
-          selectedBackground: core.primary.lighten(0.25),
-          selectedForeground: core.primary,
-          borderRadius: BorderRadius.circular(6),
+          selectedBackground: core.secondaryContainer,
+          selectedForeground: core.secondary,
+          borderRadius: BorderRadius.circular(12),
         ),
         expandableTheme: ExpandableColorData(
           iconColor: core.foreground1,
