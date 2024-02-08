@@ -103,7 +103,6 @@ class _NomoScaffoldState extends State<NomoScaffold> {
         backgroundColor: theme.backgroundColor,
         drawer: widget.drawer,
         endDrawer: widget.endDrawer,
-        extendBody: true,
       ),
     );
   }
