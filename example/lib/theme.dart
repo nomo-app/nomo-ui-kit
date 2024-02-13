@@ -156,6 +156,9 @@ final sizingSmall = NomoSizingThemeData(
     fontSizeH1: 16,
     fontSizeH2: 18,
     fontSizeH3: 20,
+    spacing1: 4,
+    spacing2: 6,
+    spacing3: 8,
   ),
   buildComponents: (core) => overrideNomoComponentSizes(
     core: core,
@@ -183,6 +186,9 @@ final sizingMedium = NomoSizingThemeData(
     fontSizeH1: 18,
     fontSizeH2: 20,
     fontSizeH3: 22,
+    spacing1: 4,
+    spacing2: 6,
+    spacing3: 8,
   ),
   buildComponents: (core) {
     return overrideNomoComponentSizes(
@@ -212,6 +218,9 @@ final sizingLarge = NomoSizingThemeData(
     fontSizeH1: 20,
     fontSizeH2: 22,
     fontSizeH3: 24,
+    spacing1: 8,
+    spacing2: 10,
+    spacing3: 12,
   ),
   buildComponents: (core) {
     return overrideNomoComponentSizes(
