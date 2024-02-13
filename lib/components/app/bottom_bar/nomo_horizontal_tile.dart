@@ -9,6 +9,7 @@ class NomoHorizontalListTile extends StatefulWidget {
     required this.item,
     required this.theme,
     this.widthFactor,
+    this.itemWidth,
     super.key,
     this.style,
     this.onTap,
@@ -18,6 +19,7 @@ class NomoHorizontalListTile extends StatefulWidget {
   final NomoBottomBarThemeData theme;
   final TextStyle? style;
   final double? widthFactor;
+  final double? itemWidth;
 
   final VoidCallback? onTap;
   final bool selected;
@@ -105,19 +107,22 @@ class _NomoHorizontalListTileState extends State<NomoHorizontalListTile>
               splashColor: Colors.white10,
               child: Padding(
                 padding: theme.itemPadding,
-                child: Center(
-                  widthFactor: widget.widthFactor,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      if (icon != null) icon,
-                      SizedBox(height: widget.theme.spacing),
-                      NomoText(
-                        widget.item.title,
-                        color: foreground,
-                        style: widget.style,
-                      ),
-                    ],
+                child: SizedBox(
+                  width: widget.itemWidth,
+                  child: Center(
+                    widthFactor: widget.widthFactor,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        if (icon != null) icon,
+                        SizedBox(height: widget.theme.spacing),
+                        NomoText(
+                          widget.item.title,
+                          color: foreground,
+                          style: widget.style,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
