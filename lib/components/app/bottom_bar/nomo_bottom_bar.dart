@@ -12,6 +12,7 @@ class NomoBottomBar extends StatelessWidget {
   const NomoBottomBar({
     required this.items,
     required this.selected,
+    this.widthFactor,
     super.key,
     this.height,
     this.style,
@@ -34,6 +35,7 @@ class NomoBottomBar extends StatelessWidget {
   final Widget? title;
   final void Function(NomoMenuItem item)? onTap;
   final NomoMenuItem? selected;
+  final double? widthFactor;
 
   @NomoSizingField(56.0)
   final double? height;
@@ -78,6 +80,7 @@ class NomoBottomBar extends StatelessWidget {
         children: [
           for (final item in items)
             NomoHorizontalListTile(
+              widthFactor: widthFactor,
               item: item,
               theme: theme,
               selected: item == selected,

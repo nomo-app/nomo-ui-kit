@@ -8,6 +8,7 @@ class NomoHorizontalListTile extends StatefulWidget {
   const NomoHorizontalListTile({
     required this.item,
     required this.theme,
+    this.widthFactor,
     super.key,
     this.style,
     this.onTap,
@@ -16,6 +17,7 @@ class NomoHorizontalListTile extends StatefulWidget {
   final NomoMenuItem item;
   final NomoBottomBarThemeData theme;
   final TextStyle? style;
+  final double? widthFactor;
 
   final VoidCallback? onTap;
   final bool selected;
@@ -104,6 +106,7 @@ class _NomoHorizontalListTileState extends State<NomoHorizontalListTile>
               child: Padding(
                 padding: theme.itemPadding,
                 child: Center(
+                  widthFactor: widget.widthFactor,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
