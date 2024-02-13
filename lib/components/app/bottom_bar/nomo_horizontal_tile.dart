@@ -105,24 +105,21 @@ class _NomoHorizontalListTileState extends State<NomoHorizontalListTile>
               borderRadius: theme.borderRadius,
               hoverColor: Colors.transparent,
               splashColor: Colors.white10,
-              child: Padding(
-                padding: theme.itemPadding,
-                child: SizedBox(
-                  width: widget.itemWidth,
-                  child: Center(
-                    widthFactor: widget.widthFactor,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        if (icon != null) icon,
-                        SizedBox(height: widget.theme.spacing),
-                        NomoText(
-                          widget.item.title,
-                          color: foreground,
-                          style: widget.style,
-                        ),
-                      ],
-                    ),
+              child: SizedBox(
+                width: widget.itemWidth,
+                child: Center(
+                  widthFactor: widget.widthFactor,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (icon != null) icon,
+                      SizedBox(height: widget.theme.spacing),
+                      NomoText(
+                        widget.item.title,
+                        color: foreground,
+                        style: widget.style,
+                      ),
+                    ],
                   ),
                 ),
               ),
