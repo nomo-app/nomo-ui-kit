@@ -181,6 +181,46 @@ class NomoColors {
     required this.onDisabled,
   });
 
+  NomoColors copyWith({
+    Brightness? brightness,
+    Color? primary,
+    Color? onPrimary,
+    Color? primaryContainer,
+    Color? secondary,
+    Color? onSecondary,
+    Color? secondaryContainer,
+    Color? background1,
+    Color? background2,
+    Color? background3,
+    Color? surface,
+    Color? error,
+    Color? disabled,
+    Color? onDisabled,
+    Color? foreground1,
+    Color? foreground2,
+    Color? foreground3,
+  }) {
+    return NomoColors(
+      brightness: brightness ?? this.brightness,
+      primary: primary ?? this.primary,
+      onPrimary: onPrimary ?? this.onPrimary,
+      primaryContainer: primaryContainer ?? this.primaryContainer,
+      secondary: secondary ?? this.secondary,
+      onSecondary: onSecondary ?? this.onSecondary,
+      secondaryContainer: secondaryContainer ?? this.secondaryContainer,
+      background1: background1 ?? this.background1,
+      background2: background2 ?? this.background2,
+      background3: background3 ?? this.background3,
+      surface: surface ?? this.surface,
+      error: error ?? this.error,
+      disabled: disabled ?? this.disabled,
+      onDisabled: onDisabled ?? this.onDisabled,
+      foreground1: foreground1 ?? this.foreground1,
+      foreground2: foreground2 ?? this.foreground2,
+      foreground3: foreground3 ?? this.foreground3,
+    );
+  }
+
   factory NomoColors.lerp(NomoColors a, NomoColors b, double t) {
     return NomoColors(
       brightness: t < 0.5 ? a.brightness : b.brightness,
