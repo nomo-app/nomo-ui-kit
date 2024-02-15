@@ -38,16 +38,16 @@ class ElevatedBox extends StatelessWidget {
 
 List<BoxShadow> getElevationShadow({
   required double elevation,
-  Color shadowColor = const Color(0x33000000),
-  Offset offset = Offset.zero,
+  Color? shadowColor,
+  Offset? offset,
 }) {
   return [
     if (elevation > 0)
       BoxShadow(
-        color: shadowColor,
+        color: shadowColor ?? const Color(0x33000000),
         spreadRadius: 0.25 * elevation,
         blurRadius: 0.5 * elevation,
-        offset: offset,
+        offset: offset ?? Offset.zero,
       ),
   ];
 }
