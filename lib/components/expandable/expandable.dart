@@ -88,8 +88,9 @@ class _ExpandableState extends State<Expandable> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    stateNotifier = widget.expansionNotifier ?? ValueNotifier(widget.initiallyExpanded)
-      ..addListener(onStateChanged);
+    stateNotifier =
+        widget.expansionNotifier ?? ValueNotifier(widget.initiallyExpanded)
+          ..addListener(onStateChanged);
 
     controller = AnimationController(
       vsync: this,
@@ -167,7 +168,10 @@ class _ExpandableState extends State<Expandable> with TickerProviderStateMixin {
                       splashColor: theme.splashColor,
                       hoverColor: theme.hoverColor,
                       focusColor: theme.focusColor,
-                      borderRadius: widget.borderRadius,
+                      borderRadius: widget.borderRadius ??
+                          widget.decoration?.borderRadius?.resolve(
+                            Directionality.of(context),
+                          ),
                       child: Padding(
                         padding: theme.titlePadding,
                         child: Row(
