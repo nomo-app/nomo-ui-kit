@@ -123,9 +123,11 @@ class _ExpandableState extends State<Expandable> with TickerProviderStateMixin {
   @override
   void dispose() {
     controller.dispose();
-    stateNotifier
-      ..removeListener(onStateChanged)
-      ..dispose();
+    stateNotifier.removeListener(onStateChanged);
+    if (widget.expansionNotifier == null) {
+      stateNotifier.dispose();
+    }
+
     super.dispose();
   }
 
