@@ -155,6 +155,7 @@ class _InputSectionState extends State<InputSection> {
                 titleStyle: context.typography.h1,
                 title: "Input1",
                 style: context.typography.b3,
+                margin: const EdgeInsets.symmetric(vertical: 4),
                 validator: (value) {
                   if (value.length < 10) {
                     return "Value to small";
