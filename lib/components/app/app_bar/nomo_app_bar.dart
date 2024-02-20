@@ -48,40 +48,51 @@ class NomoAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = getFromContext(context, this);
 
-    return Container(
-      margin: EdgeInsets.only(top: theme.topInset),
-      decoration: NomoDecoration(
-        color: theme.backgroundColor,
-        borderRadius: theme.borderRadius,
-        elevation: theme.elevation,
-      ),
-      height: theme.height,
-      child: Material(
-        color: Colors.transparent,
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: theme.spacing),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Expanded(
-                child: AppBarLayoutDelegate(
-                  children: {
-                    if (leading != null) AppBarItem.backButton: leading!,
-                    if (title != null) AppBarItem.title: title!,
-                    if (trailling != null) AppBarItem.actions: trailling!,
-                  },
-                ),
+    final topPadding = MediaQuery.of(context).padding.top;
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          height: topPadding,
+          color: theme.backgroundColor,
+        ),
+        Container(
+          margin: EdgeInsets.only(top: theme.topInset),
+          decoration: NomoDecoration(
+            color: theme.backgroundColor,
+            borderRadius: theme.borderRadius,
+            elevation: theme.elevation,
+          ),
+          height: theme.height,
+          child: Material(
+            color: Colors.transparent,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: theme.spacing),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Expanded(
+                    child: AppBarLayoutDelegate(
+                      children: {
+                        if (leading != null) AppBarItem.backButton: leading!,
+                        if (title != null) AppBarItem.title: title!,
+                        if (trailling != null) AppBarItem.actions: trailling!,
+                      },
+                    ),
+                  ),
+                  if (bottom != null)
+                    SizedBox(
+                      height: bottom!.preferredSize.height,
+                      child: bottom,
+                    ),
+                ],
               ),
-              if (bottom != null)
-                SizedBox(
-                  height: bottom!.preferredSize.height,
-                  child: bottom,
-                ),
-            ],
+            ),
           ),
         ),
-      ),
+      ],
     );
   }
 }
