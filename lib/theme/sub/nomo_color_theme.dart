@@ -101,6 +101,11 @@ class NomoComponentColors {
           backgroundColor: core.primary,
           foregroundColor: core.onPrimary,
         ),
+        inputTheme: NomoInputColorData(
+          background: core.background1.darken(0.05),
+          borderRadius: BorderRadius.circular(4),
+          errorColor: core.error,
+        ),
       );
 }
 

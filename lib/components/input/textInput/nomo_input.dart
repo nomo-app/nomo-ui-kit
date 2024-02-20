@@ -156,8 +156,10 @@ class NomoInput extends StatefulWidget {
     this.height,
     this.onChanged,
     this.textAlign = TextAlign.start,
-  }) : assert(height == null || usePlaceholderAsTitle == false,
-            'Not supported please ask Thomas to implement');
+  }) : assert(
+          height == null || usePlaceholderAsTitle == false,
+          'Not supported please ask Thomas to implement',
+        );
 
   @override
   State<NomoInput> createState() => _NomoInputState();
@@ -443,7 +445,9 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
                   },
                 ),
               ).wrapIf(
-                  widget.height != null, (child) => Expanded(child: child)),
+                widget.height != null,
+                (child) => Expanded(child: child),
+              ),
               AnimatedSize(
                 duration: theme.duration,
                 curve: theme.curve,

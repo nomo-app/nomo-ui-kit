@@ -801,6 +801,9 @@ class CupertinoInput extends StatefulWidget {
 class _CupertinoInputState extends State<CupertinoInput>
     with RestorationMixin, AutomaticKeepAliveClientMixin<CupertinoInput>
     implements TextSelectionGestureDetectorBuilderDelegate, AutofillClient {
+  late TextStyle placeHolderStyle;
+  late TextStyle titleStyle;
+
   final GlobalKey _clearGlobalKey = GlobalKey();
 
   RestorableTextEditingController? _controller;
@@ -844,6 +847,9 @@ class _CupertinoInputState extends State<CupertinoInput>
     }
     _effectiveFocusNode.canRequestFocus = widget.enabled ?? true;
     _effectiveFocusNode.addListener(_handleFocusChanged);
+
+    placeHolderStyle = widget.placeholderStyle;
+    titleStyle = widget.titleStyle;
   }
 
   @override
@@ -862,6 +868,9 @@ class _CupertinoInputState extends State<CupertinoInput>
       (widget.focusNode ?? _focusNode)?.addListener(_handleFocusChanged);
     }
     _effectiveFocusNode.canRequestFocus = widget.enabled ?? true;
+
+    placeHolderStyle = widget.placeholderStyle;
+    titleStyle = widget.titleStyle;
   }
 
   @override
@@ -1030,9 +1039,9 @@ class _CupertinoInputState extends State<CupertinoInput>
 
     final enabled = widget.enabled ?? true;
     final cursorOffset = Offset(
-        _iOSHorizontalCursorOffsetPixels /
-            MediaQuery.devicePixelRatioOf(context),
-        0);
+      _iOSHorizontalCursorOffsetPixels / MediaQuery.devicePixelRatioOf(context),
+      0,
+    );
     final formatters = <TextInputFormatter>[
       ...?widget.inputFormatters,
       if (widget.maxLength != null)
@@ -1152,7 +1161,7 @@ class _CupertinoInputState extends State<CupertinoInput>
     final placeHolder = NomoText(
       widget.placeholder ?? '',
       maxLines: widget.maxLines,
-      overflow: widget.placeholderStyle.overflow ?? TextOverflow.ellipsis,
+      overflow: placeHolderStyle.overflow ?? TextOverflow.ellipsis,
       textAlign: widget.textAlign,
     ).ifElseNull(widget.placeholder != null);
 
@@ -1209,8 +1218,8 @@ class _CupertinoInputState extends State<CupertinoInput>
                   leading: widget.prefix,
                   trailling: widget.suffix,
                   placeHolder: placeHolder,
-                  titleStyle: widget.titleStyle,
-                  placeHolderStyle: widget.placeholderStyle,
+                  titleStyle: titleStyle,
+                  placeHolderStyle: placeHolderStyle,
                   padding: widget.padding,
                   curve: widget.curve,
                   duration: widget.duration,
@@ -1265,7 +1274,7 @@ class _TextInputDependetAttachmentState
     extends State<_TextInputDependetAttachment>
     with SingleTickerProviderStateMixin {
   late final AnimationController controller;
-  late final Animation<TextStyle> textStyleAnimation;
+  late Animation<TextStyle> textStyleAnimation;
 
   late final titleHeight =
       calculateTextSize(text: '', style: widget.titleStyle);
@@ -1290,6 +1299,19 @@ class _TextInputDependetAttachmentState
     widget.focusNode.addListener(focusChanged);
     widget.controller.addListener(focusChanged);
     super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant _TextInputDependetAttachment oldWidget) {
+    textStyleAnimation =
+        TextStyleTween(begin: widget.placeHolderStyle, end: widget.titleStyle)
+            .animate(
+      CurvedAnimation(
+        parent: controller,
+        curve: widget.curve,
+      ),
+    );
+    super.didUpdateWidget(oldWidget);
   }
 
   void focusChanged() {

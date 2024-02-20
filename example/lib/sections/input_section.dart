@@ -43,11 +43,17 @@ class _InputSectionState extends State<InputSection> {
               background: context.colors.background1.darken(0.05),
               keyboardType: TextInputType.number,
               style: context.typography.h1,
-              leading: const Icon(Icons.search),
-              trailling: const Icon(Icons.abc),
+              leading: Icon(
+                Icons.search,
+                color: context.colors.foreground1,
+              ),
+              trailling: Icon(
+                Icons.abc,
+                color: context.colors.foreground1,
+              ),
               titleStyle: context.typography.b1,
               placeHolder: "Test",
-              placeHolderStyle: context.typography.b3,
+              placeHolderStyle: context.typography.b1,
               usePlaceholderAsTitle: true,
               padding: const EdgeInsets.all(2),
               onChanged: (value) {
@@ -156,7 +162,7 @@ class _InputSectionState extends State<InputSection> {
                   return null;
                 },
               ),
-              const NomoInput(
+              NomoInput(
                 formKey: "input2",
               ),
               SizedBox(
