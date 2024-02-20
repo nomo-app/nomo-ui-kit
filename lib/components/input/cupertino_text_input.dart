@@ -11,10 +11,10 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:nomo_ui_kit/components/input/textInput/nomo_input.dart';
 import 'package:nomo_ui_kit/components/input/textInput/text_layout.dart';
 import 'package:nomo_ui_kit/components/text/nomo_text.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
-import 'package:nomo_ui_kit/utils/tweens.dart';
 
 export 'package:flutter/services.dart'
     show
@@ -269,7 +269,7 @@ class CupertinoInput extends StatefulWidget {
   ///
   /// Defaults to having a rounded rectangle grey border and can be null to have
   /// no box decoration.
-  final ValueNotifier<BoxDecorationTween?> decorationTween;
+  final ValueNotifier<BoxDecorationTweenInfo?> decorationTween;
 
   /// Padding around the text entry area between the [prefix] and [suffix]
   /// or the clear button when [clearButtonMode] is not never.
@@ -643,7 +643,7 @@ class CupertinoInput extends StatefulWidget {
     properties.add(DiagnosticsProperty<UndoHistoryController>(
         'undoController', undoController,
         defaultValue: null));
-    properties.add(DiagnosticsProperty<ValueNotifier<BoxDecorationTween?>>(
+    properties.add(DiagnosticsProperty<ValueNotifier<BoxDecorationTweenInfo?>>(
         'decorationTween', decorationTween));
     properties.add(DiagnosticsProperty<EdgeInsetsGeometry>('padding', padding));
     properties.add(StringProperty('placeholder', placeholder));
@@ -1173,16 +1173,19 @@ class _CupertinoInputState extends State<CupertinoInput>
           ignoring: !enabled,
           child: ValueListenableBuilder(
             valueListenable: widget.decorationTween,
-            builder: (context, decoration, child) {
-              if (decoration == null) {
+            builder: (context, tween, child) {
+              final decoration = tween?.decoration;
+              if (tween == null || decoration == null) {
                 return Container(
                   color: !enabled ? disabled : null,
                   child: child,
                 );
               }
+              final duration =
+                  tween.shouldAnimate ? widget.duration : Duration.zero;
               return TweenAnimationBuilder(
                 tween: decoration,
-                duration: widget.duration,
+                duration: duration,
                 curve: widget.curve,
                 builder: (context, decoration, _) {
                   return DecoratedBox(

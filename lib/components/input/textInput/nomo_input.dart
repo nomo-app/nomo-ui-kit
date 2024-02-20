@@ -20,6 +20,11 @@ enum InputState {
   selectedWithError,
 }
 
+typedef BoxDecorationTweenInfo = ({
+  BoxDecorationTween? decoration,
+  bool shouldAnimate
+});
+
 @NomoComponentThemeData('inputTheme')
 class NomoInput extends StatefulWidget {
   final TextStyle? style;
@@ -164,7 +169,7 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
   late final FocusNode focusNode;
   late final ValueNotifier<String> valueNotifier;
   late final ValueNotifier<String?> errorNotifer;
-  late final ValueNotifier<BoxDecorationTween?> decorationNotifier;
+  late final ValueNotifier<BoxDecorationTweenInfo?> decorationNotifier;
   late final ValueNotifier<InputState> inputStateNotifier;
   late final TextEditingController textController;
   late BoxDecoration defaultDecoration = BoxDecoration(
@@ -227,9 +232,12 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
     super.didChangeDependencies();
     theme = getFromContext(context, widget);
 
-    decorationNotifier.value = BoxDecorationTween(
-      begin: defaultDecoration,
-      end: defaultDecoration,
+    decorationNotifier.value = (
+      decoration: BoxDecorationTween(
+        begin: defaultDecoration,
+        end: defaultDecoration,
+      ),
+      shouldAnimate: false,
     );
 
     if (widget.autoFocus && !focusNode.hasFocus) {
@@ -237,7 +245,7 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
     }
 
     if (errorNotifer.value != null) {
-      changeToState(InputState.error);
+      changeToState(InputState.error, shouldAnimate: false);
     }
 
     ///
@@ -325,7 +333,7 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
     changeToState(InputState.nonError);
   }
 
-  void changeToState(InputState newState) {
+  void changeToState(InputState newState, {bool shouldAnimate = true}) {
     final oldState = inputStateNotifier.value;
 
     final state = switch ((oldState, newState)) {
@@ -340,7 +348,7 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
       (_, _) => newState,
     };
 
-    final oldDecoration = decorationNotifier.value;
+    final oldDecoration = decorationNotifier.value?.decoration;
 
     final decoration = switch (state) {
       InputState.error => oldDecoration?.add(errorDecoration),
@@ -352,7 +360,8 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
       InputState.selected => oldDecoration?.add(selectedDecoration),
     };
 
-    decorationNotifier.value = decoration;
+    decorationNotifier.value =
+        (decoration: decoration, shouldAnimate: shouldAnimate);
     inputStateNotifier.value = state;
   }
 
