@@ -72,6 +72,7 @@ class _InputSectionState extends State<InputSection> {
                       const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
                   placeHolder: "Amount",
                   minLines: 1,
+                  textAlign: TextAlign.end,
                   leading: Icon(
                     NomoIcons.magnifyingGlass,
                     color: context.colors.foreground1,

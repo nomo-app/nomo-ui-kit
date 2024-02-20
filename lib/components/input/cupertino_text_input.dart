@@ -1211,6 +1211,7 @@ class _CupertinoInputState extends State<CupertinoInput>
                   padding: widget.padding,
                   curve: widget.curve,
                   duration: widget.duration,
+                  textAlign: widget.textAlign,
                 ),
               ),
             ),
@@ -1234,6 +1235,7 @@ class _TextInputDependetAttachment extends StatefulWidget {
   final EdgeInsetsGeometry padding;
   final Duration duration;
   final Curve curve;
+  final TextAlign textAlign;
 
   const _TextInputDependetAttachment({
     required this.text,
@@ -1245,6 +1247,7 @@ class _TextInputDependetAttachment extends StatefulWidget {
     required this.padding,
     required this.duration,
     required this.curve,
+    required this.textAlign,
     this.trailling,
     this.leading,
     this.placeHolder,
@@ -1350,6 +1353,7 @@ class _TextInputDependetAttachmentState
               widget.usePlaceHolderAsTitle ? titleHeight : null,
           placeHolderHeight: placHolderHeight,
           animation: inverted,
+          textAlign: widget.textAlign,
         );
       },
     );
