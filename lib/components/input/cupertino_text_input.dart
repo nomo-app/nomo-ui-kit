@@ -1278,8 +1278,6 @@ class _TextInputDependetAttachmentState
 
   late final titleHeight =
       calculateTextSize(text: '', style: widget.titleStyle);
-  late final placHolderHeight =
-      calculateTextSize(text: '', style: widget.placeHolderStyle);
 
   @override
   void initState() {
@@ -1376,7 +1374,6 @@ class _TextInputDependetAttachmentState
           },
           placeHolderTitleHeight:
               widget.usePlaceHolderAsTitle ? titleHeight : null,
-          placeHolderHeight: placHolderHeight,
           animation: inverted,
           textAlign: widget.textAlign,
         );

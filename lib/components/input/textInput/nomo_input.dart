@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -50,6 +52,7 @@ class NomoInput extends StatefulWidget {
   final double? height;
   final TextAlign textAlign;
   final void Function(String value)? onChanged;
+  final void Function()? onFocused;
 
   @NomoColorField(Colors.white)
   final Color? background;
@@ -68,7 +71,6 @@ class NomoInput extends StatefulWidget {
       BorderSide(
         color: Colors.transparent,
         width: 2,
-        strokeAlign: BorderSide.strokeAlignOutside,
       ),
     ),
   )
@@ -79,7 +81,6 @@ class NomoInput extends StatefulWidget {
       BorderSide(
         color: primaryColor,
         width: 2,
-        strokeAlign: BorderSide.strokeAlignOutside,
       ),
     ),
   )
@@ -90,7 +91,6 @@ class NomoInput extends StatefulWidget {
       BorderSide(
         color: Colors.red,
         width: 2,
-        strokeAlign: BorderSide.strokeAlignOutside,
       ),
     ),
   )
@@ -101,7 +101,6 @@ class NomoInput extends StatefulWidget {
       BorderSide(
         color: Colors.redAccent,
         width: 2,
-        strokeAlign: BorderSide.strokeAlignOutside,
       ),
     ),
   )
@@ -156,6 +155,7 @@ class NomoInput extends StatefulWidget {
     this.height,
     this.onChanged,
     this.textAlign = TextAlign.start,
+    this.onFocused,
   }) : assert(
           height == null || usePlaceholderAsTitle == false,
           'Not supported please ask Thomas to implement',
@@ -289,6 +289,8 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
     if (!focusNode.hasFocus) {
       changeToState(InputState.nonSelected);
     }
+
+    widget.onFocused?.call();
   }
 
   void textControllerChanged() {
@@ -377,78 +379,74 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
     final errorStyle = widget.errorStyle ??
         defaultTextStyle.copyWith(color: context.colors.error);
 
+    final edgeInsets = theme.padding.resolve(Directionality.of(context));
+
     return ValueListenableBuilder(
       valueListenable: errorNotifer,
       builder: (context, error, child) {
-        return SizedBox(
-          height: widget.height,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize:
-                widget.height == null ? MainAxisSize.min : MainAxisSize.max,
-            children: [
-              if (widget.title != null)
-                NomoText(
-                  widget.title!,
-                  style: titleStyle,
-                ),
-              Padding(
-                padding: theme.margin,
-                child: CupertinoInput(
-                  usePlaceholderAsTitle: widget.usePlaceholderAsTitle,
-                  decorationTween: decorationNotifier,
-                  cursorColor: context.colors.primary,
-                  focusNode: focusNode,
-                  curve: theme.curve,
-                  duration: theme.duration,
-                  placeholder: widget.placeHolder,
-                  placeholderStyle: placeHolderStyle,
-                  titleStyle: titleStyle,
-                  minLines: widget.minLines,
-                  maxLines: widget.maxLines,
-                  textInputAction: widget.textInputAction,
-                  controller: textController,
-                  textAlign: widget.textAlign,
-                  prefix: Padding(
-                    padding:
-                        EdgeInsets.only(left: theme.padding.horizontal / 2),
-                    child: widget.leading,
-                  ).ifElseNull(widget.leading != null),
-                  suffix: Padding(
-                    padding:
-                        EdgeInsets.only(right: theme.padding.horizontal / 2),
-                    child: widget.trailling,
-                  ).ifElseNull(widget.trailling != null),
-                  padding: theme.padding,
-                  inputFormatters: widget.inputFormatters,
-                  keyboardAppearance: context.colors.brightness,
-                  keyboardType: widget.keyboardType,
-                  style: widget.style ?? defaultTextStyle,
-                  selectionControls: switch (PlatformInfo.I.isCupertino) {
-                    true when PlatformInfo.I.isCupertino =>
-                      CupertinoDesktopTextSelectionControls(),
-                    true => CupertinoTextSelectionControls(),
-                    false when PlatformInfo.I.isCupertino =>
-                      DesktopTextSelectionControls(),
-                    false => MaterialTextSelectionControls(),
-                  },
-                  contextMenuBuilder: (context, editableTextState) {
-                    return switch (PlatformInfo.I.isCupertino) {
-                      true =>
-                        CupertinoAdaptiveTextSelectionToolbar.editableText(
-                          editableTextState: editableTextState,
-                        ),
-                      false => AdaptiveTextSelectionToolbar.editableText(
-                          editableTextState: editableTextState,
-                        )
-                    };
-                  },
-                ),
-              ).wrapIf(
-                widget.height != null,
-                (child) => Expanded(child: child),
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (widget.title != null)
+              NomoText(
+                widget.title!,
+                style: titleStyle,
               ),
-              AnimatedSize(
+            Container(
+              height: widget.height,
+              margin: theme.margin,
+              child: CupertinoInput(
+                usePlaceholderAsTitle: widget.usePlaceholderAsTitle,
+                decorationTween: decorationNotifier,
+                cursorColor: context.colors.primary,
+                focusNode: focusNode,
+                curve: theme.curve,
+                duration: theme.duration,
+                placeholder: widget.placeHolder,
+                placeholderStyle: placeHolderStyle,
+                titleStyle: titleStyle,
+                minLines: widget.minLines,
+                maxLines: widget.maxLines,
+                textInputAction: widget.textInputAction,
+                controller: textController,
+                textAlign: widget.textAlign,
+                prefix: Padding(
+                  padding: EdgeInsets.only(left: edgeInsets.left),
+                  child: widget.leading,
+                ).ifElseNull(widget.leading != null),
+                suffix: Padding(
+                  padding: EdgeInsets.only(right: edgeInsets.right),
+                  child: widget.trailling,
+                ).ifElseNull(widget.trailling != null),
+                padding: theme.padding,
+                inputFormatters: widget.inputFormatters,
+                keyboardAppearance: context.colors.brightness,
+                keyboardType: widget.keyboardType,
+                style: widget.style ?? defaultTextStyle,
+                selectionControls: switch (PlatformInfo.I.isCupertino) {
+                  true when PlatformInfo.I.isCupertino =>
+                    CupertinoDesktopTextSelectionControls(),
+                  true => CupertinoTextSelectionControls(),
+                  false when PlatformInfo.I.isCupertino =>
+                    DesktopTextSelectionControls(),
+                  false => MaterialTextSelectionControls(),
+                },
+                contextMenuBuilder: (context, editableTextState) {
+                  return switch (PlatformInfo.I.isCupertino) {
+                    true => CupertinoAdaptiveTextSelectionToolbar.editableText(
+                        editableTextState: editableTextState,
+                      ),
+                    false => AdaptiveTextSelectionToolbar.editableText(
+                        editableTextState: editableTextState,
+                      )
+                  };
+                },
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: edgeInsets.left),
+              child: AnimatedSize(
                 duration: theme.duration,
                 curve: theme.curve,
                 alignment: Alignment.centerLeft,
@@ -468,8 +466,8 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         );
       },
     );

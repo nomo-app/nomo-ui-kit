@@ -15,13 +15,11 @@ class TextInputLayoutDelegate
   TextInputLayoutDelegate({
     required this.children,
     required this.placeHolderTitleHeight,
-    required this.placeHolderHeight,
     required this.animation,
     required this.textAlign,
   }) : super(key: ValueKey(children.hashCode));
   final Map<TextLayoutItem, Widget> children;
   final Size? placeHolderTitleHeight;
-  final Size placeHolderHeight;
   final double animation;
   final TextAlign textAlign;
 
@@ -41,7 +39,6 @@ class TextInputLayoutDelegate
     return TextInputLayoutRenderbox(
       items: children.keys.toList(),
       placeHolderTitleHeight: placeHolderTitleHeight,
-      placeHolderHeight: placeHolderHeight,
       animation: animation,
       textAlign: textAlign,
     );
@@ -63,13 +60,11 @@ class TextInputLayoutRenderbox extends RenderBox
   TextInputLayoutRenderbox({
     required this.items,
     required this.placeHolderTitleHeight,
-    required this.placeHolderHeight,
     required this.animation,
     required this.textAlign,
   });
   final List<TextLayoutItem> items;
   final Size? placeHolderTitleHeight;
-  final Size placeHolderHeight;
   late Size contentSize;
   final double animation;
   final TextAlign textAlign;
@@ -108,10 +103,7 @@ class TextInputLayoutRenderbox extends RenderBox
     final intrinsicSizes = {
       TextLayoutItem.leading: findIntrinsicSize(leading, maxWidth),
       TextLayoutItem.trailling: findIntrinsicSize(tralling, maxWidth),
-      TextLayoutItem.placeHolder: Size(
-        findIntrinsicSize(placeHolder, maxWidth).width,
-        placeHolderHeight.height,
-      ),
+      TextLayoutItem.placeHolder: findIntrinsicSize(placeHolder, maxWidth),
     };
     intrinsicSizes[TextLayoutItem.text] = findIntrinsicSize(
       text,

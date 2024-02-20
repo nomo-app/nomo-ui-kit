@@ -36,6 +36,18 @@ class NomoAppBar extends StatelessWidget {
   final Color? backgroundColor;
   @NomoSizingField(2.0)
   final double? elevation;
+
+  PreferredSizeWidget asPreferedSizeWidget(BuildContext context) {
+    final theme = getFromContext(context, this);
+
+    final height = theme.height + MediaQuery.of(context).padding.top;
+
+    return PreferredSize(
+      preferredSize: Size.fromHeight(height),
+      child: this,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = getFromContext(context, this);

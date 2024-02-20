@@ -49,22 +49,14 @@ class NomoInputColorData implements NomoInputColorDataNullable {
     this.background = Colors.white,
     this.errorColor = Colors.redAccent,
     this.borderRadius = const BorderRadius.all(Radius.circular(8)),
-    this.border = const Border.fromBorderSide(BorderSide(
-        color: Colors.transparent,
-        width: 2,
-        strokeAlign: BorderSide.strokeAlignOutside)),
-    this.selectedBorder = const Border.fromBorderSide(BorderSide(
-        color: primaryColor,
-        width: 2,
-        strokeAlign: BorderSide.strokeAlignOutside)),
-    this.errorBorder = const Border.fromBorderSide(BorderSide(
-        color: Colors.red,
-        width: 2,
-        strokeAlign: BorderSide.strokeAlignOutside)),
-    this.selectedErrorBorder = const Border.fromBorderSide(BorderSide(
-        color: Colors.redAccent,
-        width: 2,
-        strokeAlign: BorderSide.strokeAlignOutside)),
+    this.border = const Border.fromBorderSide(
+        BorderSide(color: Colors.transparent, width: 2)),
+    this.selectedBorder =
+        const Border.fromBorderSide(BorderSide(color: primaryColor, width: 2)),
+    this.errorBorder =
+        const Border.fromBorderSide(BorderSide(color: Colors.red, width: 2)),
+    this.selectedErrorBorder = const Border.fromBorderSide(
+        BorderSide(color: Colors.redAccent, width: 2)),
     this.margin = EdgeInsets.zero,
   });
   static NomoInputColorData lerp(
@@ -160,22 +152,14 @@ class NomoInputThemeData
     this.background = Colors.white,
     this.errorColor = Colors.redAccent,
     this.borderRadius = const BorderRadius.all(Radius.circular(8)),
-    this.border = const Border.fromBorderSide(BorderSide(
-        color: Colors.transparent,
-        width: 2,
-        strokeAlign: BorderSide.strokeAlignOutside)),
-    this.selectedBorder = const Border.fromBorderSide(BorderSide(
-        color: primaryColor,
-        width: 2,
-        strokeAlign: BorderSide.strokeAlignOutside)),
-    this.errorBorder = const Border.fromBorderSide(BorderSide(
-        color: Colors.red,
-        width: 2,
-        strokeAlign: BorderSide.strokeAlignOutside)),
-    this.selectedErrorBorder = const Border.fromBorderSide(BorderSide(
-        color: Colors.redAccent,
-        width: 2,
-        strokeAlign: BorderSide.strokeAlignOutside)),
+    this.border = const Border.fromBorderSide(
+        BorderSide(color: Colors.transparent, width: 2)),
+    this.selectedBorder =
+        const Border.fromBorderSide(BorderSide(color: primaryColor, width: 2)),
+    this.errorBorder =
+        const Border.fromBorderSide(BorderSide(color: Colors.red, width: 2)),
+    this.selectedErrorBorder = const Border.fromBorderSide(
+        BorderSide(color: Colors.redAccent, width: 2)),
     this.margin = EdgeInsets.zero,
     this.padding = const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
     this.duration = const Duration(milliseconds: 200),

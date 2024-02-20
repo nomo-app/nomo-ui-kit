@@ -172,7 +172,7 @@ class _NomoButtonState extends State<NomoButton>
           onEnter: (_) => _controller.forward(),
           onExit: (_) => _controller.reverse(),
           child: InkWell(
-            onTap: widget.onPressed,
+            onTap: widget.enabled ?? true ? widget.onPressed : () {},
             borderRadius: borderRadius,
             hoverColor: widget.backgroundColor
                 ?.darken(0.05)

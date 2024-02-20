@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nomo_ui_generator/annotations.dart';
 import 'package:nomo_ui_kit/components/app/app_bar/nomo_app_bar.dart';
@@ -80,6 +81,7 @@ class NomoComponentColors {
         secondaryButtonTheme: SecondaryNomoButtonColorData(
           foregroundColor: core.foreground1,
           selectionColor: core.secondary,
+          backgroundColor: Colors.transparent,
         ),
         siderTheme: NomoSiderColorData(
           backgroundColor: core.background1,
