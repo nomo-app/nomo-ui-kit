@@ -95,7 +95,12 @@ class _NomoScaffoldState extends State<NomoScaffold> {
 
     return Scaffold(
       key: scaffoldKey,
-      body: SafeArea(child: body),
+      body: ColoredBox(
+        color: context.colors.surface,
+        child: SafeArea(
+          child: body,
+        ),
+      ),
       appBar: widget.appBar,
       bottomNavigationBar: bottomBar,
       bottomSheet: widget.bottomSheet,
