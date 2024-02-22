@@ -22,6 +22,7 @@ class NomoDropDownMenu<T> extends StatefulWidget {
     this.maxFontSize = double.infinity,
     this.overflow = TextOverflow.ellipsis,
     this.padding,
+    this.dropdownBorderColor,
   });
   final List<NomoDropdownItem<T>> items;
   final NomoDropdownItem<T>? initailValue;
@@ -39,6 +40,7 @@ class NomoDropDownMenu<T> extends StatefulWidget {
   final double? maxFontSize;
   final TextOverflow? overflow;
   final EdgeInsetsGeometry? padding;
+  final Color? dropdownBorderColor;
 
   @override
   State<NomoDropDownMenu<T>> createState() => _NomoDropDownMenuState();
@@ -73,7 +75,7 @@ class _NomoDropDownMenuState<T> extends State<NomoDropDownMenu<T>> {
 
   void closeOverlay() {
     setState(() {
-      _turns += 1 / 2;
+      _turns -= 1 / 2;
       _isExpanded = false;
     });
     _overlayEntry.remove();
@@ -157,6 +159,12 @@ class _NomoDropDownMenuState<T> extends State<NomoDropDownMenu<T>> {
                   child: Material(
                     shape: widget.dropDownShape ??
                         RoundedRectangleBorder(
+                          side: widget.dropdownBorderColor != null
+                              ? BorderSide(
+                                  color: widget.dropdownBorderColor!,
+                                  width: 2,
+                                )
+                              : BorderSide.none,
                           borderRadius: BorderRadius.circular(8),
                         ),
                     elevation: widget.dropdownElevation ?? 0,
