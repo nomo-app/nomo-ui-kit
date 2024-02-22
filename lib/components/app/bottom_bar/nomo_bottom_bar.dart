@@ -79,6 +79,7 @@ class NomoBottomBar extends StatelessWidget {
       padding: theme.padding,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           for (final item in items)
             NomoHorizontalListTile(

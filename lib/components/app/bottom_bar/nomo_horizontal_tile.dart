@@ -95,6 +95,8 @@ class _NomoHorizontalListTileState extends State<NomoHorizontalListTile>
             final NomoMenuImageItem imageItem => Image(
                 image: imageItem.image,
                 color: foreground,
+                width: theme.iconSize,
+                fit: BoxFit.contain,
               ),
             _ => null
           };
@@ -110,10 +112,9 @@ class _NomoHorizontalListTileState extends State<NomoHorizontalListTile>
                 child: Center(
                   widthFactor: widget.widthFactor,
                   child: Column(
-                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       if (icon != null) icon,
-                      SizedBox(height: widget.theme.spacing),
                       NomoText(
                         widget.item.title,
                         color: foreground,

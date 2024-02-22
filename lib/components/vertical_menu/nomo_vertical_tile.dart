@@ -124,6 +124,8 @@ class _NomoVerticalListTileState extends State<NomoVerticalListTile>
                 ),
               final NomoMenuImageItem imageItem => Image(
                   image: imageItem.image,
+                  width: theme.iconSize,
+                  fit: BoxFit.contain,
                   color: foreground,
                 ),
               _ => null
