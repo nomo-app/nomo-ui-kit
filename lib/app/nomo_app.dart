@@ -126,6 +126,9 @@ class _NomoAppState extends State<NomoApp> {
               defaultModalTransistion: widget.defaultModalTransistion,
               child: child,
             ),
+        (child) => ScaffoldMessenger(
+              child: child,
+            )
       ],
       child: MetricReactor(
         sizingThemeBuilder: widget.sizingThemeBuilder,
