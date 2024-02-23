@@ -21,6 +21,7 @@ class NomoText extends StatelessWidget {
     this.translate = true,
     this.fontSize,
     this.fit = false,
+    this.useInheritedTheme = false,
   })  : assert(
           fontSizes == null || fontSizes.length > 0,
           'fontSizes must be a list of at least one value',
@@ -45,6 +46,7 @@ class NomoText extends StatelessWidget {
   final double? opacity;
   final double? fontSize;
   final bool fit;
+  final bool useInheritedTheme;
 
   /// If true will look for the NomoTextTranslator InheritedWidget for translating the text
   final bool translate;
@@ -66,8 +68,10 @@ class NomoText extends StatelessWidget {
     final effectiveText =
         translate && translator != null ? translator(text) : text;
 
-    final textColor =
-        color ?? this.style?.color ?? NomoTextTheme.maybeOf(context)?.color;
+    final textColor = useInheritedTheme
+        ? color ?? NomoTextTheme.maybeOf(context)?.color ?? this.style?.color
+        : color ?? this.style?.color ?? NomoTextTheme.maybeOf(context)?.color;
+
     var style = (this.style ?? NomoDefaultTextStyle.of(context)).copyWith(
       color: opacity == null ? textColor : textColor?.withOpacity(opacity!),
       fontWeight: fontWeight,

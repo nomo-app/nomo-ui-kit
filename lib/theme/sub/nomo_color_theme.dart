@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nomo_ui_generator/annotations.dart';
 import 'package:nomo_ui_kit/components/app/app_bar/nomo_app_bar.dart';
@@ -8,6 +9,7 @@ import 'package:nomo_ui_kit/components/buttons/link/nomo_link_button.dart';
 import 'package:nomo_ui_kit/components/buttons/primary/nomo_primary_button.dart';
 import 'package:nomo_ui_kit/components/buttons/secondary/nomo_secondary_button.dart';
 import 'package:nomo_ui_kit/components/buttons/text/nomo_text_button.dart';
+import 'package:nomo_ui_kit/components/card/nomo_card.dart';
 import 'package:nomo_ui_kit/components/dialog/nomo_dialog.dart';
 import 'package:nomo_ui_kit/components/expandable/expandable.dart';
 import 'package:nomo_ui_kit/components/input/textInput/nomo_input.dart';
@@ -37,6 +39,7 @@ class NomoComponentColors {
   final ExpandableColorData expandableTheme;
   final NomoInputColorData inputTheme;
   final NomoDialogColorData dialogTheme;
+  final NomoCardColorData cardTheme;
 
   const NomoComponentColors._({
     required this.outlineContainerTheme,
@@ -54,6 +57,7 @@ class NomoComponentColors {
     required this.expandableTheme,
     required this.inputTheme,
     required this.dialogTheme,
+    required this.cardTheme,
   });
 
   static NomoComponentColors defaultComponents(NomoColors core) =>
@@ -70,13 +74,14 @@ class NomoComponentColors {
         ),
         bottomBarTheme: NomoBottomBarColorData(
           background: core.surface,
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(12),
           foreground: core.foreground1,
           selectedForeground: core.primary,
         ),
         secondaryButtonTheme: SecondaryNomoButtonColorData(
           foregroundColor: core.foreground1,
           selectionColor: core.secondary,
+          backgroundColor: Colors.transparent,
         ),
         siderTheme: NomoSiderColorData(
           backgroundColor: core.background1,
@@ -84,9 +89,9 @@ class NomoComponentColors {
         verticalMenuTheme: NomoVerticalMenuColorData(
           foreground: core.foreground1,
           background: core.background1,
-          selectedBackground: core.primary.lighten(0.25),
-          selectedForeground: core.primary,
-          borderRadius: BorderRadius.circular(6),
+          selectedBackground: core.secondaryContainer,
+          selectedForeground: core.secondary,
+          borderRadius: BorderRadius.circular(12),
         ),
         expandableTheme: ExpandableColorData(
           iconColor: core.foreground1,
@@ -97,6 +102,11 @@ class NomoComponentColors {
         primaryButtonTheme: PrimaryNomoButtonColorData(
           backgroundColor: core.primary,
           foregroundColor: core.onPrimary,
+        ),
+        inputTheme: NomoInputColorData(
+          background: core.background1.darken(0.05),
+          borderRadius: BorderRadius.circular(4),
+          errorColor: core.error,
         ),
       );
 }
@@ -177,6 +187,46 @@ class NomoColors {
     required this.foreground3,
     required this.onDisabled,
   });
+
+  NomoColors copyWith({
+    Brightness? brightness,
+    Color? primary,
+    Color? onPrimary,
+    Color? primaryContainer,
+    Color? secondary,
+    Color? onSecondary,
+    Color? secondaryContainer,
+    Color? background1,
+    Color? background2,
+    Color? background3,
+    Color? surface,
+    Color? error,
+    Color? disabled,
+    Color? onDisabled,
+    Color? foreground1,
+    Color? foreground2,
+    Color? foreground3,
+  }) {
+    return NomoColors(
+      brightness: brightness ?? this.brightness,
+      primary: primary ?? this.primary,
+      onPrimary: onPrimary ?? this.onPrimary,
+      primaryContainer: primaryContainer ?? this.primaryContainer,
+      secondary: secondary ?? this.secondary,
+      onSecondary: onSecondary ?? this.onSecondary,
+      secondaryContainer: secondaryContainer ?? this.secondaryContainer,
+      background1: background1 ?? this.background1,
+      background2: background2 ?? this.background2,
+      background3: background3 ?? this.background3,
+      surface: surface ?? this.surface,
+      error: error ?? this.error,
+      disabled: disabled ?? this.disabled,
+      onDisabled: onDisabled ?? this.onDisabled,
+      foreground1: foreground1 ?? this.foreground1,
+      foreground2: foreground2 ?? this.foreground2,
+      foreground3: foreground3 ?? this.foreground3,
+    );
+  }
 
   factory NomoColors.lerp(NomoColors a, NomoColors b, double t) {
     return NomoColors(

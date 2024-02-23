@@ -11,10 +11,10 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:nomo_ui_kit/components/input/textInput/nomo_input.dart';
 import 'package:nomo_ui_kit/components/input/textInput/text_layout.dart';
 import 'package:nomo_ui_kit/components/text/nomo_text.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
-import 'package:nomo_ui_kit/utils/tweens.dart';
 
 export 'package:flutter/services.dart'
     show
@@ -269,7 +269,7 @@ class CupertinoInput extends StatefulWidget {
   ///
   /// Defaults to having a rounded rectangle grey border and can be null to have
   /// no box decoration.
-  final ValueNotifier<BoxDecorationTween?> decorationTween;
+  final ValueNotifier<BoxDecorationTweenInfo?> decorationTween;
 
   /// Padding around the text entry area between the [prefix] and [suffix]
   /// or the clear button when [clearButtonMode] is not never.
@@ -643,7 +643,7 @@ class CupertinoInput extends StatefulWidget {
     properties.add(DiagnosticsProperty<UndoHistoryController>(
         'undoController', undoController,
         defaultValue: null));
-    properties.add(DiagnosticsProperty<ValueNotifier<BoxDecorationTween?>>(
+    properties.add(DiagnosticsProperty<ValueNotifier<BoxDecorationTweenInfo?>>(
         'decorationTween', decorationTween));
     properties.add(DiagnosticsProperty<EdgeInsetsGeometry>('padding', padding));
     properties.add(StringProperty('placeholder', placeholder));
@@ -801,6 +801,9 @@ class CupertinoInput extends StatefulWidget {
 class _CupertinoInputState extends State<CupertinoInput>
     with RestorationMixin, AutomaticKeepAliveClientMixin<CupertinoInput>
     implements TextSelectionGestureDetectorBuilderDelegate, AutofillClient {
+  late TextStyle placeHolderStyle;
+  late TextStyle titleStyle;
+
   final GlobalKey _clearGlobalKey = GlobalKey();
 
   RestorableTextEditingController? _controller;
@@ -844,6 +847,9 @@ class _CupertinoInputState extends State<CupertinoInput>
     }
     _effectiveFocusNode.canRequestFocus = widget.enabled ?? true;
     _effectiveFocusNode.addListener(_handleFocusChanged);
+
+    placeHolderStyle = widget.placeholderStyle;
+    titleStyle = widget.titleStyle;
   }
 
   @override
@@ -862,6 +868,9 @@ class _CupertinoInputState extends State<CupertinoInput>
       (widget.focusNode ?? _focusNode)?.addListener(_handleFocusChanged);
     }
     _effectiveFocusNode.canRequestFocus = widget.enabled ?? true;
+
+    placeHolderStyle = widget.placeholderStyle;
+    titleStyle = widget.titleStyle;
   }
 
   @override
@@ -1030,9 +1039,9 @@ class _CupertinoInputState extends State<CupertinoInput>
 
     final enabled = widget.enabled ?? true;
     final cursorOffset = Offset(
-        _iOSHorizontalCursorOffsetPixels /
-            MediaQuery.devicePixelRatioOf(context),
-        0);
+      _iOSHorizontalCursorOffsetPixels / MediaQuery.devicePixelRatioOf(context),
+      0,
+    );
     final formatters = <TextInputFormatter>[
       ...?widget.inputFormatters,
       if (widget.maxLength != null)
@@ -1152,7 +1161,7 @@ class _CupertinoInputState extends State<CupertinoInput>
     final placeHolder = NomoText(
       widget.placeholder ?? '',
       maxLines: widget.maxLines,
-      overflow: widget.placeholderStyle.overflow ?? TextOverflow.ellipsis,
+      overflow: placeHolderStyle.overflow ?? TextOverflow.ellipsis,
       textAlign: widget.textAlign,
     ).ifElseNull(widget.placeholder != null);
 
@@ -1173,16 +1182,19 @@ class _CupertinoInputState extends State<CupertinoInput>
           ignoring: !enabled,
           child: ValueListenableBuilder(
             valueListenable: widget.decorationTween,
-            builder: (context, decoration, child) {
-              if (decoration == null) {
+            builder: (context, tween, child) {
+              final decoration = tween?.decoration;
+              if (tween == null || decoration == null) {
                 return Container(
                   color: !enabled ? disabled : null,
                   child: child,
                 );
               }
+              final duration =
+                  tween.shouldAnimate ? widget.duration : Duration.zero;
               return TweenAnimationBuilder(
                 tween: decoration,
-                duration: widget.duration,
+                duration: duration,
                 curve: widget.curve,
                 builder: (context, decoration, _) {
                   return DecoratedBox(
@@ -1206,11 +1218,12 @@ class _CupertinoInputState extends State<CupertinoInput>
                   leading: widget.prefix,
                   trailling: widget.suffix,
                   placeHolder: placeHolder,
-                  titleStyle: widget.titleStyle,
-                  placeHolderStyle: widget.placeholderStyle,
+                  titleStyle: titleStyle,
+                  placeHolderStyle: placeHolderStyle,
                   padding: widget.padding,
                   curve: widget.curve,
                   duration: widget.duration,
+                  textAlign: widget.textAlign,
                 ),
               ),
             ),
@@ -1234,6 +1247,7 @@ class _TextInputDependetAttachment extends StatefulWidget {
   final EdgeInsetsGeometry padding;
   final Duration duration;
   final Curve curve;
+  final TextAlign textAlign;
 
   const _TextInputDependetAttachment({
     required this.text,
@@ -1245,6 +1259,7 @@ class _TextInputDependetAttachment extends StatefulWidget {
     required this.padding,
     required this.duration,
     required this.curve,
+    required this.textAlign,
     this.trailling,
     this.leading,
     this.placeHolder,
@@ -1259,12 +1274,10 @@ class _TextInputDependetAttachmentState
     extends State<_TextInputDependetAttachment>
     with SingleTickerProviderStateMixin {
   late final AnimationController controller;
-  late final Animation<TextStyle> textStyleAnimation;
+  late Animation<TextStyle> textStyleAnimation;
 
   late final titleHeight =
       calculateTextSize(text: '', style: widget.titleStyle);
-  late final placHolderHeight =
-      calculateTextSize(text: '', style: widget.placeHolderStyle);
 
   @override
   void initState() {
@@ -1284,6 +1297,19 @@ class _TextInputDependetAttachmentState
     widget.focusNode.addListener(focusChanged);
     widget.controller.addListener(focusChanged);
     super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant _TextInputDependetAttachment oldWidget) {
+    textStyleAnimation =
+        TextStyleTween(begin: widget.placeHolderStyle, end: widget.titleStyle)
+            .animate(
+      CurvedAnimation(
+        parent: controller,
+        curve: widget.curve,
+      ),
+    );
+    super.didUpdateWidget(oldWidget);
   }
 
   void focusChanged() {
@@ -1348,8 +1374,8 @@ class _TextInputDependetAttachmentState
           },
           placeHolderTitleHeight:
               widget.usePlaceHolderAsTitle ? titleHeight : null,
-          placeHolderHeight: placHolderHeight,
           animation: inverted,
+          textAlign: widget.textAlign,
         );
       },
     );

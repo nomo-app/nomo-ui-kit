@@ -93,18 +93,20 @@ class _NomoScaffoldState extends State<NomoScaffold> {
 
     final bottomBar = theme.showBottomBar ? widget.bottomBar : null;
 
-    return SafeArea(
-      child: Scaffold(
-        key: scaffoldKey,
-        body: body,
-        appBar: widget.appBar,
-        bottomNavigationBar: bottomBar,
-        bottomSheet: widget.bottomSheet,
-        backgroundColor: theme.backgroundColor,
-        drawer: widget.drawer,
-        endDrawer: widget.endDrawer,
-        extendBody: true,
+    return Scaffold(
+      key: scaffoldKey,
+      body: ColoredBox(
+        color: context.colors.surface,
+        child: SafeArea(
+          child: body,
+        ),
       ),
+      appBar: widget.appBar,
+      bottomNavigationBar: bottomBar,
+      bottomSheet: widget.bottomSheet,
+      backgroundColor: theme.backgroundColor,
+      drawer: widget.drawer,
+      endDrawer: widget.endDrawer,
     );
   }
 }

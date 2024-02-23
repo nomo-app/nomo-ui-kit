@@ -20,16 +20,11 @@ class ElevatedBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final shadows = [
-      if (elevation > 0)
-        BoxShadow(
-          color: shadowColor ?? const Color(0x33000000),
-          spreadRadius: 0.25 * elevation,
-          blurRadius: 0.5 * elevation,
-          offset: offset ?? Offset.zero,
-        ),
-      ...?decoration.boxShadow,
-    ];
+    final shadows = getElevationShadow(
+      elevation: elevation,
+      shadowColor: shadowColor,
+      offset: offset,
+    );
 
     return DecoratedBox(
       decoration: decoration.copyWith(
@@ -39,4 +34,20 @@ class ElevatedBox extends StatelessWidget {
       child: child,
     );
   }
+}
+
+List<BoxShadow> getElevationShadow({
+  required double elevation,
+  Color? shadowColor,
+  Offset? offset,
+}) {
+  return [
+    if (elevation > 0)
+      BoxShadow(
+        color: shadowColor ?? const Color(0x33000000),
+        spreadRadius: 0.25 * elevation,
+        blurRadius: 0.5 * elevation,
+        offset: offset ?? Offset.zero,
+      ),
+  ];
 }

@@ -109,6 +109,7 @@ class SecondaryNomoButton extends StatelessWidget with NomoButtonMixin {
                 text!,
                 style: textStyle,
                 translate: translate ?? true,
+                useInheritedTheme: true,
               ),
           ],
         ),
@@ -118,10 +119,13 @@ class SecondaryNomoButton extends StatelessWidget with NomoButtonMixin {
             if (icon != null) Icon(icon, size: iconSize),
             if (icon != null && text != null) SizedBox(height: spacing),
             if (text != null)
-              NomoText(
-                text!,
-                style: textStyle,
-                translate: translate ?? true,
+              Expanded(
+                child: NomoText(
+                  text!,
+                  style: textStyle,
+                  translate: translate ?? true,
+                  useInheritedTheme: true,
+                ),
               ),
           ],
         ),

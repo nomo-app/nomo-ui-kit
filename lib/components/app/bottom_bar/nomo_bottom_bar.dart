@@ -12,6 +12,8 @@ class NomoBottomBar extends StatelessWidget {
   const NomoBottomBar({
     required this.items,
     required this.selected,
+    this.itemWidth,
+    this.widthFactor,
     super.key,
     this.height,
     this.style,
@@ -34,6 +36,8 @@ class NomoBottomBar extends StatelessWidget {
   final Widget? title;
   final void Function(NomoMenuItem item)? onTap;
   final NomoMenuItem? selected;
+  final double? widthFactor;
+  final double? itemWidth;
 
   @NomoSizingField(56.0)
   final double? height;
@@ -75,9 +79,12 @@ class NomoBottomBar extends StatelessWidget {
       padding: theme.padding,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           for (final item in items)
             NomoHorizontalListTile(
+              itemWidth: itemWidth,
+              widthFactor: widthFactor,
               item: item,
               theme: theme,
               selected: item == selected,

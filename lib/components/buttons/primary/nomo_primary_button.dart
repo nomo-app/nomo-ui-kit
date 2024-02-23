@@ -104,7 +104,9 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
         context.colors.onDisabled,
       _ => theme.foregroundColor,
     };
-    final textStyle = this.textStyle?.copyWith(color: foregroundColor);
+    final textStyle = this
+        .textStyle
+        ?.copyWith(color: foregroundColor, fontWeight: FontWeight.bold);
 
     final effectiveChild = switch (direction) {
       _ when child != null => child!,
