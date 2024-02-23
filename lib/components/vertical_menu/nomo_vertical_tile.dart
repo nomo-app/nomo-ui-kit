@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nomo_ui_kit/components/text/nomo_text.dart';
 import 'package:nomo_ui_kit/components/vertical_menu/nomo_vertical_menu.dart';
 import 'package:nomo_ui_kit/entities/menu_item.dart';
@@ -122,9 +123,19 @@ class _NomoVerticalListTileState extends State<NomoVerticalListTile>
                   color: foreground,
                   size: theme.iconSize,
                 ),
-              final NomoMenuImageItem imageItem => Image(
-                  image: imageItem.image,
+              final NomoMenuImageItem imageItem
+                  when imageItem.imagePath.contains('svg') =>
+                SvgPicture.asset(
+                  imageItem.imagePath,
                   color: foreground,
+                  width: theme.iconSize,
+                  //colorFilter: ,
+                ),
+              final NomoMenuImageItem imageItem => Image.asset(
+                  imageItem.imagePath,
+                  color: foreground,
+                  width: theme.iconSize,
+                  fit: BoxFit.contain,
                 ),
               _ => null
             };

@@ -16,10 +16,10 @@ extension MenuUtil on MenuRouteInfoMixin {
         path: path,
       );
     }
-    if (image != null) {
+    if (imagePath != null) {
       return NomoMenuImageItem(
         title: title,
-        image: image!,
+        imagePath: imagePath!,
         path: path,
       );
     }

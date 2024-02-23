@@ -12,7 +12,10 @@ sealed class NomoMenuItem {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is NomoMenuItem && runtimeType == other.runtimeType && title == other.title && path == other.path;
+      other is NomoMenuItem &&
+          runtimeType == other.runtimeType &&
+          title == other.title &&
+          path == other.path;
 }
 
 final class NomoMenuTextItem extends NomoMenuItem {
@@ -35,7 +38,7 @@ final class NomoMenuImageItem extends NomoMenuItem {
   const NomoMenuImageItem({
     required super.title,
     required super.path,
-    required this.image,
+    required this.imagePath,
   });
-  final ImageProvider image;
+  final String imagePath;
 }
