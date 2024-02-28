@@ -307,4 +307,46 @@ class NomoColors {
       'foreground3': foreground3.toHexColor(),
     };
   }
+
+  @override
+  int get hashCode => Object.hashAll([
+        primary,
+        brightness,
+        onPrimary,
+        primaryContainer,
+        secondary,
+        onSecondary,
+        secondaryContainer,
+        background1,
+        background2,
+        background3,
+        surface,
+        error,
+        disabled,
+        onDisabled,
+        foreground1,
+        foreground2,
+        foreground3,
+      ]);
+  @override
+  bool operator ==(Object other) {
+    return other is NomoColors &&
+        other.primary == primary &&
+        other.brightness == brightness &&
+        other.onPrimary == onPrimary &&
+        other.primaryContainer == primaryContainer &&
+        other.secondary == secondary &&
+        other.onSecondary == onSecondary &&
+        other.secondaryContainer == secondaryContainer &&
+        other.background1 == background1 &&
+        other.background2 == background2 &&
+        other.background3 == background3 &&
+        other.surface == surface &&
+        other.error == error &&
+        other.disabled == disabled &&
+        other.onDisabled == onDisabled &&
+        other.foreground1 == foreground1 &&
+        other.foreground2 == foreground2 &&
+        other.foreground3 == foreground3;
+  }
 }
