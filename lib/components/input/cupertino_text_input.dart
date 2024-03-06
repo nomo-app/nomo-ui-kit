@@ -1278,6 +1278,7 @@ class _TextInputDependetAttachmentState
     controller = AnimationController(
       vsync: this,
       duration: widget.duration,
+      value: widget.controller.text.isEmpty ? 0 : 1,
     );
     textStyleAnimation =
         TextStyleTween(begin: widget.placeHolderStyle, end: widget.titleStyle)
@@ -1290,6 +1291,7 @@ class _TextInputDependetAttachmentState
 
     widget.focusNode.addListener(focusChanged);
     widget.controller.addListener(focusChanged);
+
     super.initState();
   }
 

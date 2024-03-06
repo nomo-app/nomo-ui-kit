@@ -56,6 +56,7 @@ class NomoInput extends StatefulWidget {
   final TextAlign textAlign;
   final void Function(String value)? onChanged;
   final void Function(bool hasFocus)? onFocusChanged;
+  final String? initialText;
 
   @NomoColorField(Colors.white)
   final Color? background;
@@ -161,6 +162,7 @@ class NomoInput extends StatefulWidget {
     this.onFocusChanged,
     this.enabled = true,
     this.scrollable = false,
+    this.initialText,
   }) : assert(
           height == null || usePlaceholderAsTitle == false,
           'Not supported please ask Thomas to implement',
@@ -204,8 +206,9 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
     super.initState();
 
     decorationNotifier = ValueNotifier(null);
-    valueNotifier = widget.valueNotifier ?? ValueNotifier('')
-      ..addListener(notifierChanged);
+    valueNotifier =
+        widget.valueNotifier ?? ValueNotifier(widget.initialText ?? '')
+          ..addListener(notifierChanged);
     errorNotifer = widget.errorNotifier ?? ValueNotifier(null)
       ..addListener(errorChanged);
     inputStateNotifier = ValueNotifier(InputState.nonError);
