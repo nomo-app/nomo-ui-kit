@@ -56,47 +56,52 @@ class NomoRouteBody extends StatelessWidget {
     final route = RouteInfoProvider.of(context).route;
     final _scrollController = scrollController ?? ScrollController();
 
-    return Scrollbar(
-      controller: _scrollController,
-      radius: theme.scrollBarRadius,
-      thickness: theme.scrollBarThickness,
-      child: ColoredBox(
-        color: context.colors.background1,
-        child: DefaultScrollController(
-          scrollController: _scrollController,
-          child: switch (this) {
-            _ when child != null => _ChildBody(
+    final useScrollBar = builder == null;
+
+    return ColoredBox(
+      color: context.colors.background1,
+      child: DefaultScrollController(
+        scrollController: _scrollController,
+        child: switch (this) {
+          _ when child != null => _ChildBody(
+              theme: theme,
+              child: child!,
+            ),
+          _ when builder != null => Builder(
+              builder: (context) => _ChildBody(
                 theme: theme,
-                child: child!,
+                child: builder!(context, route),
               ),
-            _ when builder != null => Builder(
-                builder: (context) => _ChildBody(
-                  theme: theme,
-                  child: builder!(context, route),
-                ),
-              ),
-            _ when slivers != null => _SliverBody(
+            ),
+          _ when slivers != null => _SliverBody(
+              theme: theme,
+              slivers: slivers!,
+            ),
+          _ when sliverBuilder != null => Builder(
+              builder: (context) => _SliverBody(
                 theme: theme,
-                slivers: slivers!,
+                slivers: sliverBuilder!(context, route),
               ),
-            _ when sliverBuilder != null => Builder(
-                builder: (context) => _SliverBody(
-                  theme: theme,
-                  slivers: sliverBuilder!(context, route),
-                ),
-              ),
-            _ when children != null => _ChildrenBody(
+            ),
+          _ when children != null => _ChildrenBody(
+              theme: theme,
+              children: children!,
+            ),
+          _ => Builder(
+              builder: (context) => _ChildrenBody(
                 theme: theme,
-                children: children!,
+                children: childrenBuilder!(context, route),
               ),
-            _ => Builder(
-                builder: (context) => _ChildrenBody(
-                  theme: theme,
-                  children: childrenBuilder!(context, route),
-                ),
-              ),
-          },
-        ),
+            ),
+        },
+      ),
+    ).wrapIf(
+      useScrollBar,
+      (child) => Scrollbar(
+        controller: _scrollController,
+        radius: theme.scrollBarRadius,
+        thickness: theme.scrollBarThickness,
+        child: child,
       ),
     );
   }

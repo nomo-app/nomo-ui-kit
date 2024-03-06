@@ -1052,13 +1052,15 @@ class _CupertinoInputState extends State<CupertinoInput>
     ];
     final themeData = CupertinoTheme.of(context);
 
-    final resolvedStyle = widget.style?.copyWith(
-      color: CupertinoDynamicColor.maybeResolve(widget.style?.color, context),
-      backgroundColor: CupertinoDynamicColor.maybeResolve(
-          widget.style?.backgroundColor, context),
-    );
+    // final resolvedStyle = widget.style?.copyWith(
+    //   color: CupertinoDynamicColor.maybeResolve(widget.style?.color, context),
+    //   backgroundColor: CupertinoDynamicColor.maybeResolve(
+    //     widget.style?.backgroundColor,
+    //     context,
+    //   ),
+    // );
 
-    final textStyle = themeData.textTheme.textStyle.merge(resolvedStyle);
+    final textStyle = widget.style ?? NomoDefaultTextStyle.of(context);
 
     final keyboardAppearance =
         widget.keyboardAppearance ?? CupertinoTheme.brightnessOf(context);
@@ -1067,9 +1069,6 @@ class _CupertinoInputState extends State<CupertinoInput>
           context,
         ) ??
         themeData.primaryColor;
-
-    final disabled =
-        CupertinoDynamicColor.resolve(_kDisabledBackground, context);
 
     final selectionColor = CupertinoDynamicColor.maybeResolve(
           DefaultSelectionStyle.of(context).selectionColor,
@@ -1185,10 +1184,7 @@ class _CupertinoInputState extends State<CupertinoInput>
             builder: (context, tween, child) {
               final decoration = tween?.decoration;
               if (tween == null || decoration == null) {
-                return Container(
-                  color: !enabled ? disabled : null,
-                  child: child,
-                );
+                return child!;
               }
               final duration =
                   tween.shouldAnimate ? widget.duration : Duration.zero;
@@ -1198,9 +1194,7 @@ class _CupertinoInputState extends State<CupertinoInput>
                 curve: widget.curve,
                 builder: (context, decoration, _) {
                   return DecoratedBox(
-                    decoration: decoration.copyWith(
-                      color: !enabled ? disabled : null,
-                    ),
+                    decoration: decoration,
                     child: child,
                   );
                 },
@@ -1339,7 +1333,6 @@ class _TextInputDependetAttachmentState
 
   @override
   Widget build(BuildContext context) {
-    final padding = widget.padding.resolve(Directionality.of(context));
     return ValueListenableBuilder(
       valueListenable: controller,
       builder: (context, val, child) {
@@ -1347,16 +1340,9 @@ class _TextInputDependetAttachmentState
 
         return TextInputLayoutDelegate(
           children: {
-            if (widget.leading != null)
-              TextLayoutItem.leading: Padding(
-                padding: EdgeInsets.only(right: padding.left),
-                child: widget.leading,
-              ),
+            if (widget.leading != null) TextLayoutItem.leading: widget.leading!,
             if (widget.trailling != null)
-              TextLayoutItem.trailling: Padding(
-                padding: EdgeInsets.only(left: padding.right),
-                child: widget.trailling,
-              ),
+              TextLayoutItem.trailling: widget.trailling!,
             TextLayoutItem.text: widget.text,
             if (widget.placeHolder != null && !widget.usePlaceHolderAsTitle)
               TextLayoutItem.placeHolder: Opacity(

@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nomo_ui_generator/annotations.dart';
+import 'package:nomo_ui_kit/animations/implicit/animated_nomo_default_textstyle.dart';
 import 'package:nomo_ui_kit/components/input/cupertino_text_input.dart';
 import 'package:nomo_ui_kit/components/input/form/nomo_form.dart';
 import 'package:nomo_ui_kit/components/text/nomo_text.dart';
@@ -29,14 +30,16 @@ typedef BoxDecorationTweenInfo = ({
 
 @NomoComponentThemeData('inputTheme')
 class NomoInput extends StatefulWidget {
-  final TextStyle? style;
   final Widget? leading;
   final Widget? trailling;
   final List<TextInputFormatter>? inputFormatters;
   final bool autoFocus;
+  final bool enabled;
+  final bool scrollable;
   final TextInputType? keyboardType;
   final String? placeHolder;
   final String? title;
+  final TextStyle? style;
   final TextStyle? placeHolderStyle;
   final TextStyle? titleStyle;
   final TextStyle? errorStyle;
@@ -52,7 +55,7 @@ class NomoInput extends StatefulWidget {
   final double? height;
   final TextAlign textAlign;
   final void Function(String value)? onChanged;
-  final void Function()? onFocused;
+  final void Function(bool hasFocus)? onFocusChanged;
 
   @NomoColorField(Colors.white)
   final Color? background;
@@ -155,7 +158,9 @@ class NomoInput extends StatefulWidget {
     this.height,
     this.onChanged,
     this.textAlign = TextAlign.start,
-    this.onFocused,
+    this.onFocusChanged,
+    this.enabled = true,
+    this.scrollable = false,
   }) : assert(
           height == null || usePlaceholderAsTitle == false,
           'Not supported please ask Thomas to implement',
@@ -174,6 +179,7 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
   late final ValueNotifier<BoxDecorationTweenInfo?> decorationNotifier;
   late final ValueNotifier<InputState> inputStateNotifier;
   late final TextEditingController textController;
+  late final ScrollController? scrollController;
   late BoxDecoration defaultDecoration = BoxDecoration(
     color: theme.background,
     borderRadius: theme.borderRadius,
@@ -206,6 +212,8 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
     textController = TextEditingController(text: valueNotifier.value)
       ..addListener(textControllerChanged);
     focusNode = FocusNode()..addListener(focusChanged);
+
+    scrollController = widget.scrollable ? ScrollController() : null;
   }
 
   @override
@@ -279,6 +287,8 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
 
     formValidator?.removeListener(formValidate);
 
+    scrollController?.dispose();
+
     super.dispose();
   }
 
@@ -290,7 +300,7 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
       changeToState(InputState.nonSelected);
     }
 
-    widget.onFocused?.call();
+    widget.onFocusChanged?.call(focusNode.hasFocus);
   }
 
   void textControllerChanged() {
@@ -381,6 +391,12 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
 
     final edgeInsets = theme.padding.resolve(Directionality.of(context));
 
+    var style = widget.style ?? defaultTextStyle;
+
+    if (widget.enabled == false) {
+      style = style.copyWith(color: context.colors.onDisabled);
+    }
+
     return ValueListenableBuilder(
       valueListenable: errorNotifer,
       builder: (context, error, child) {
@@ -396,52 +412,56 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
             Container(
               height: widget.height,
               margin: theme.margin,
-              child: CupertinoInput(
-                usePlaceholderAsTitle: widget.usePlaceholderAsTitle,
-                decorationTween: decorationNotifier,
-                cursorColor: context.colors.primary,
-                focusNode: focusNode,
-                curve: theme.curve,
+              child: AnimatedNomoDefaultTextStyle(
+                style: style,
                 duration: theme.duration,
-                placeholder: widget.placeHolder,
-                placeholderStyle: placeHolderStyle,
-                titleStyle: titleStyle,
-                minLines: widget.minLines,
-                maxLines: widget.maxLines,
-                textInputAction: widget.textInputAction,
-                controller: textController,
-                textAlign: widget.textAlign,
-                prefix: Padding(
-                  padding: EdgeInsets.only(left: edgeInsets.left),
-                  child: widget.leading,
-                ).ifElseNull(widget.leading != null),
-                suffix: Padding(
-                  padding: EdgeInsets.only(right: edgeInsets.right),
-                  child: widget.trailling,
-                ).ifElseNull(widget.trailling != null),
-                padding: theme.padding,
-                inputFormatters: widget.inputFormatters,
-                keyboardAppearance: context.colors.brightness,
-                keyboardType: widget.keyboardType,
-                style: widget.style ?? defaultTextStyle,
-                selectionControls: switch (PlatformInfo.I.isCupertino) {
-                  true when PlatformInfo.I.isCupertino =>
-                    CupertinoDesktopTextSelectionControls(),
-                  true => CupertinoTextSelectionControls(),
-                  false when PlatformInfo.I.isCupertino =>
-                    DesktopTextSelectionControls(),
-                  false => MaterialTextSelectionControls(),
-                },
-                contextMenuBuilder: (context, editableTextState) {
-                  return switch (PlatformInfo.I.isCupertino) {
-                    true => CupertinoAdaptiveTextSelectionToolbar.editableText(
-                        editableTextState: editableTextState,
-                      ),
-                    false => AdaptiveTextSelectionToolbar.editableText(
-                        editableTextState: editableTextState,
-                      )
-                  };
-                },
+                curve: theme.curve,
+                child: CupertinoInput(
+                  usePlaceholderAsTitle: widget.usePlaceholderAsTitle,
+                  decorationTween: decorationNotifier,
+                  cursorColor: context.colors.primary,
+                  focusNode: focusNode,
+                  curve: theme.curve,
+                  scrollController: scrollController,
+                  scrollPhysics: widget.scrollable
+                      ? null
+                      : const NeverScrollableScrollPhysics(),
+                  duration: theme.duration,
+                  placeholder: widget.placeHolder,
+                  placeholderStyle: placeHolderStyle,
+                  titleStyle: titleStyle,
+                  minLines: widget.minLines,
+                  maxLines: widget.maxLines,
+                  textInputAction: widget.textInputAction,
+                  controller: textController,
+                  enabled: widget.enabled,
+                  textAlign: widget.textAlign,
+                  prefix: widget.leading.ifElseNull(widget.leading != null),
+                  suffix: widget.trailling.ifElseNull(widget.trailling != null),
+                  padding: theme.padding,
+                  inputFormatters: widget.inputFormatters,
+                  keyboardAppearance: context.colors.brightness,
+                  keyboardType: widget.keyboardType,
+                  selectionControls: switch (PlatformInfo.I.isCupertino) {
+                    true when PlatformInfo.I.isCupertino =>
+                      CupertinoDesktopTextSelectionControls(),
+                    true => CupertinoTextSelectionControls(),
+                    false when PlatformInfo.I.isCupertino =>
+                      DesktopTextSelectionControls(),
+                    false => MaterialTextSelectionControls(),
+                  },
+                  contextMenuBuilder: (context, editableTextState) {
+                    return switch (PlatformInfo.I.isCupertino) {
+                      true =>
+                        CupertinoAdaptiveTextSelectionToolbar.editableText(
+                          editableTextState: editableTextState,
+                        ),
+                      false => AdaptiveTextSelectionToolbar.editableText(
+                          editableTextState: editableTextState,
+                        )
+                    };
+                  },
+                ),
               ),
             ),
             Padding(

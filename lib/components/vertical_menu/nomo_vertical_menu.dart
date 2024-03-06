@@ -11,7 +11,7 @@ const kDuration = Duration(milliseconds: 200);
 const kCurve = Curves.easeInOut;
 
 @NomoComponentThemeData('verticalMenuTheme')
-class NomoVerticalMenu extends StatelessWidget {
+class NomoVerticalMenu<T> extends StatelessWidget {
   const NomoVerticalMenu({
     required this.items,
     required this.selected,
@@ -28,13 +28,21 @@ class NomoVerticalMenu extends StatelessWidget {
     this.spacing,
     this.title,
     this.onTap,
+    this.border,
+    this.selectedBorder,
     super.key,
   });
-  final List<NomoMenuItem> items;
+  final List<NomoMenuItem<T>> items;
   final TextStyle? style;
   final Widget? title;
-  final void Function(NomoMenuItem item)? onTap;
-  final NomoMenuItem? selected;
+  final void Function(NomoMenuItem<T> item)? onTap;
+  final T? selected;
+
+  @NomoColorField<BorderSide>(BorderSide.none)
+  final BorderSide? border;
+
+  @NomoColorField<BorderSide>(BorderSide.none)
+  final BorderSide? selectedBorder;
 
   @NomoColorField(Colors.black)
   final Color? foreground;
@@ -77,13 +85,13 @@ class NomoVerticalMenu extends StatelessWidget {
           for (final item in items)
             NomoVerticalListTile(
               item: item,
-              theme: theme,
-              style: style,
+              menuTheme: theme,
+              titleStyle: style,
               onTap: () {
                 onTap?.call(item);
               },
             ),
-        ].any((tile) => tile.intrinsicWidth > width);
+        ].any((tile) => tile.getIntrinsicWidth(context) > width);
 
         return Column(
           mainAxisSize: MainAxisSize.min,
@@ -100,13 +108,13 @@ class NomoVerticalMenu extends StatelessWidget {
                 final item = items[index];
                 return NomoVerticalListTile(
                   item: item,
-                  theme: theme,
-                  style: style,
+                  menuTheme: theme,
+                  titleStyle: style,
                   collapsed: collapsed,
                   onTap: () {
                     onTap?.call(items[index]);
                   },
-                  selected: item == selected,
+                  selected: item.key == selected,
                 );
               },
               separatorBuilder: (context, index) => theme.spacing.vSpacing,

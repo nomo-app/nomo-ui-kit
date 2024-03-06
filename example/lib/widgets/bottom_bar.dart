@@ -25,7 +25,7 @@ class _BottomBarState extends State<BottomBar> {
       style: context.typography.b1,
       selected: current,
       onTap: (item) {
-        NomoNavigator.of(context).pushNamed(item.path);
+        NomoNavigator.of(context).pushNamed(item.key);
         setState(() {});
       },
       title: NomoText(

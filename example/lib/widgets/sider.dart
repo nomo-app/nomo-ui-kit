@@ -27,12 +27,12 @@ class Sider extends StatelessWidget {
       padding: EdgeInsets.only(top: topInset ?? 0),
       child: NomoSider(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
-        child: NomoVerticalMenu(
+        child: NomoVerticalMenu<String>(
           style: context.typography.b1,
           background: context.componentColors.verticalMenuTheme.background,
-          selected: current,
+          selected: current?.key,
           onTap: (item) {
-            NomoNavigator.of(context).pushNamed(item.path);
+            NomoNavigator.of(context).pushNamed(item.key);
           },
           iconSize: 22,
           items: menuItems,

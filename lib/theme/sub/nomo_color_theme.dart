@@ -11,7 +11,9 @@ import 'package:nomo_ui_kit/components/buttons/secondary/nomo_secondary_button.d
 import 'package:nomo_ui_kit/components/buttons/text/nomo_text_button.dart';
 import 'package:nomo_ui_kit/components/card/nomo_card.dart';
 import 'package:nomo_ui_kit/components/dialog/nomo_dialog.dart';
+import 'package:nomo_ui_kit/components/divider/nomo_divider.dart';
 import 'package:nomo_ui_kit/components/expandable/expandable.dart';
+import 'package:nomo_ui_kit/components/info_item/nomo_info_item.dart';
 import 'package:nomo_ui_kit/components/input/textInput/nomo_input.dart';
 import 'package:nomo_ui_kit/components/loading/loading.dart';
 import 'package:nomo_ui_kit/components/loading/shimmer/shimmer.dart';
@@ -40,6 +42,8 @@ class NomoComponentColors {
   final NomoInputColorData inputTheme;
   final NomoDialogColorData dialogTheme;
   final NomoCardColorData cardTheme;
+  final NomoDividerColorData dividerTheme;
+  final NomoInfoItemColorData infoItemTheme;
 
   const NomoComponentColors._({
     required this.outlineContainerTheme,
@@ -58,6 +62,8 @@ class NomoComponentColors {
     required this.inputTheme,
     required this.dialogTheme,
     required this.cardTheme,
+    required this.dividerTheme,
+    required this.infoItemTheme,
   });
 
   static NomoComponentColors defaultComponents(NomoColors core) =>
@@ -107,6 +113,9 @@ class NomoComponentColors {
           background: core.background1.darken(0.05),
           borderRadius: BorderRadius.circular(4),
           errorColor: core.error,
+        ),
+        dividerTheme: NomoDividerColorData(
+          color: core.disabled,
         ),
       );
 }

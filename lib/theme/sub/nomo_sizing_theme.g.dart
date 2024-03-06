@@ -85,6 +85,16 @@ NomoComponentSizes lerpNomoComponentSizes(
       b.cardTheme,
       t,
     ),
+    dividerTheme: NomoDividerSizingData.lerp(
+      a.dividerTheme,
+      b.dividerTheme,
+      t,
+    ),
+    infoItemTheme: NomoInfoItemSizingData.lerp(
+      a.infoItemTheme,
+      b.infoItemTheme,
+      t,
+    ),
   );
 }
 
@@ -105,6 +115,8 @@ NomoComponentSizes overrideNomoComponentSizes({
   NomoInputSizingData? inputTheme,
   NomoDialogSizingData? dialogTheme,
   NomoCardSizingData? cardTheme,
+  NomoDividerSizingData? dividerTheme,
+  NomoInfoItemSizingData? infoItemTheme,
 }) {
   final def = NomoComponentSizes.defaultComponents(core);
   return NomoComponentSizes._(
@@ -123,6 +135,8 @@ NomoComponentSizes overrideNomoComponentSizes({
     inputTheme: inputTheme ?? def.inputTheme,
     dialogTheme: dialogTheme ?? def.dialogTheme,
     cardTheme: cardTheme ?? def.cardTheme,
+    dividerTheme: dividerTheme ?? def.dividerTheme,
+    infoItemTheme: infoItemTheme ?? def.infoItemTheme,
   );
 }
 
@@ -142,6 +156,8 @@ NomoComponentSizes defaultConstructor({
   NomoInputSizingData? inputTheme,
   NomoDialogSizingData? dialogTheme,
   NomoCardSizingData? cardTheme,
+  NomoDividerSizingData? dividerTheme,
+  NomoInfoItemSizingData? infoItemTheme,
 }) {
   return NomoComponentSizes._(
     outlineContainerTheme:
@@ -162,5 +178,7 @@ NomoComponentSizes defaultConstructor({
     inputTheme: inputTheme ?? const NomoInputSizingData(),
     dialogTheme: dialogTheme ?? const NomoDialogSizingData(),
     cardTheme: cardTheme ?? const NomoCardSizingData(),
+    dividerTheme: dividerTheme ?? const NomoDividerSizingData(),
+    infoItemTheme: infoItemTheme ?? const NomoInfoItemSizingData(),
   );
 }

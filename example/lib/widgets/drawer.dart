@@ -31,15 +31,15 @@ class DrawerEx extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
         child: Padding(
           padding: const EdgeInsets.only(top: 16),
-          child: NomoVerticalMenu(
+          child: NomoVerticalMenu<String>(
             title: NomoText(
               "Components",
               style: context.typography.h2,
             ),
             style: context.typography.b1,
-            selected: current,
+            selected: current?.key,
             onTap: (item) {
-              NomoNavigator.of(context).pushNamed(item.path);
+              NomoNavigator.of(context).pushNamed(item.key);
               NomoScaffold.of(context).closeEndDrawer();
             },
             iconSize: 22,

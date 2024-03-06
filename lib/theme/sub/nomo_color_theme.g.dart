@@ -90,6 +90,16 @@ NomoComponentColors lerpNomoComponentColors(
       b.cardTheme,
       t,
     ),
+    dividerTheme: NomoDividerColorData.lerp(
+      a.dividerTheme,
+      b.dividerTheme,
+      t,
+    ),
+    infoItemTheme: NomoInfoItemColorData.lerp(
+      a.infoItemTheme,
+      b.infoItemTheme,
+      t,
+    ),
   );
 }
 
@@ -111,6 +121,8 @@ NomoComponentColors overrideNomoComponentColors({
   NomoInputColorData? inputTheme,
   NomoDialogColorData? dialogTheme,
   NomoCardColorData? cardTheme,
+  NomoDividerColorData? dividerTheme,
+  NomoInfoItemColorData? infoItemTheme,
 }) {
   final def = NomoComponentColors.defaultComponents(core);
   return NomoComponentColors._(
@@ -130,6 +142,8 @@ NomoComponentColors overrideNomoComponentColors({
     inputTheme: inputTheme ?? def.inputTheme,
     dialogTheme: dialogTheme ?? def.dialogTheme,
     cardTheme: cardTheme ?? def.cardTheme,
+    dividerTheme: dividerTheme ?? def.dividerTheme,
+    infoItemTheme: infoItemTheme ?? def.infoItemTheme,
   );
 }
 
@@ -150,6 +164,8 @@ NomoComponentColors defaultConstructor({
   NomoInputColorData? inputTheme,
   NomoDialogColorData? dialogTheme,
   NomoCardColorData? cardTheme,
+  NomoDividerColorData? dividerTheme,
+  NomoInfoItemColorData? infoItemTheme,
 }) {
   return NomoComponentColors._(
     outlineContainerTheme:
@@ -171,5 +187,7 @@ NomoComponentColors defaultConstructor({
     inputTheme: inputTheme ?? const NomoInputColorData(),
     dialogTheme: dialogTheme ?? const NomoDialogColorData(),
     cardTheme: cardTheme ?? const NomoCardColorData(),
+    dividerTheme: dividerTheme ?? const NomoDividerColorData(),
+    infoItemTheme: infoItemTheme ?? const NomoInfoItemColorData(),
   );
 }

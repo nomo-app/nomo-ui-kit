@@ -8,12 +8,16 @@ part of 'nomo_vertical_menu.dart';
 
 // ignore_for_file: prefer_constructors_over_static_methods,avoid_unused_constructor_parameters, require_trailing_commas, avoid_init_to_null, use_named_constants
 class NomoVerticalMenuColorDataNullable {
+  final BorderSide? border;
+  final BorderSide? selectedBorder;
   final Color? foreground;
   final Color? background;
   final Color? selectedBackground;
   final Color? selectedForeground;
   final BorderRadius? borderRadius;
   const NomoVerticalMenuColorDataNullable({
+    this.border,
+    this.selectedBorder,
     this.foreground,
     this.background,
     this.selectedBackground,
@@ -23,6 +27,10 @@ class NomoVerticalMenuColorDataNullable {
 }
 
 class NomoVerticalMenuColorData implements NomoVerticalMenuColorDataNullable {
+  @override
+  final BorderSide border;
+  @override
+  final BorderSide selectedBorder;
   @override
   final Color foreground;
   @override
@@ -34,6 +42,8 @@ class NomoVerticalMenuColorData implements NomoVerticalMenuColorDataNullable {
   @override
   final BorderRadius borderRadius;
   const NomoVerticalMenuColorData({
+    this.border = BorderSide.none,
+    this.selectedBorder = BorderSide.none,
     this.foreground = Colors.black,
     this.background = Colors.white,
     this.selectedBackground = Colors.red,
@@ -43,6 +53,8 @@ class NomoVerticalMenuColorData implements NomoVerticalMenuColorDataNullable {
   static NomoVerticalMenuColorData lerp(
       NomoVerticalMenuColorData a, NomoVerticalMenuColorData b, double t) {
     return NomoVerticalMenuColorData(
+      border: BorderSide.lerp(a.border, b.border, t)!,
+      selectedBorder: BorderSide.lerp(a.selectedBorder, b.selectedBorder, t)!,
       foreground: Color.lerp(a.foreground, b.foreground, t)!,
       background: Color.lerp(a.background, b.background, t)!,
       selectedBackground:
@@ -113,6 +125,10 @@ class NomoVerticalMenuThemeData
         NomoVerticalMenuSizingData,
         NomoVerticalMenuConstants {
   @override
+  final BorderSide border;
+  @override
+  final BorderSide selectedBorder;
+  @override
   final Color foreground;
   @override
   final Color background;
@@ -133,6 +149,8 @@ class NomoVerticalMenuThemeData
   @override
   final double iconSize;
   const NomoVerticalMenuThemeData({
+    this.border = BorderSide.none,
+    this.selectedBorder = BorderSide.none,
     this.foreground = Colors.black,
     this.background = Colors.white,
     this.selectedBackground = Colors.red,
@@ -150,6 +168,8 @@ class NomoVerticalMenuThemeData
     NomoVerticalMenuConstants constants,
   ) {
     return NomoVerticalMenuThemeData(
+      border: colors.border,
+      selectedBorder: colors.selectedBorder,
       foreground: colors.foreground,
       background: colors.background,
       selectedBackground: colors.selectedBackground,
@@ -165,6 +185,8 @@ class NomoVerticalMenuThemeData
   NomoVerticalMenuThemeData copyWith(
       [NomoVerticalMenuThemeDataNullable? override]) {
     return NomoVerticalMenuThemeData(
+      border: override?.border ?? border,
+      selectedBorder: override?.selectedBorder ?? selectedBorder,
       foreground: override?.foreground ?? foreground,
       background: override?.background ?? background,
       selectedBackground: override?.selectedBackground ?? selectedBackground,
@@ -184,6 +206,10 @@ class NomoVerticalMenuThemeDataNullable
         NomoVerticalMenuColorDataNullable,
         NomoVerticalMenuSizingDataNullable,
         NomoVerticalMenuConstantsNullable {
+  @override
+  final BorderSide? border;
+  @override
+  final BorderSide? selectedBorder;
   @override
   final Color? foreground;
   @override
@@ -205,6 +231,8 @@ class NomoVerticalMenuThemeDataNullable
   @override
   final double? iconSize;
   const NomoVerticalMenuThemeDataNullable({
+    this.border,
+    this.selectedBorder,
     this.foreground,
     this.background,
     this.selectedBackground,
@@ -257,6 +285,8 @@ NomoVerticalMenuThemeData getFromContext(
           globalColorTheme, globalSizingTheme, globalConstants)
       .copyWith(themeOverride);
   return NomoVerticalMenuThemeData(
+    border: widget.border ?? themeData.border,
+    selectedBorder: widget.selectedBorder ?? themeData.selectedBorder,
     foreground: widget.foreground ?? themeData.foreground,
     background: widget.background ?? themeData.background,
     selectedBackground:
