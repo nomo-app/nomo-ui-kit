@@ -82,7 +82,16 @@ class _NomoScaffoldState extends State<NomoScaffold> {
               Expanded(
                 child: Padding(
                   padding: theme.padding,
-                  child: widget.child,
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      return MediaQuery(
+                        data: MediaQuery.of(context).copyWith(
+                          size: constraints.biggest,
+                        ),
+                        child: widget.child,
+                      );
+                    },
+                  ),
                 ),
               ),
             ],

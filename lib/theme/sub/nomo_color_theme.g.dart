@@ -100,6 +100,11 @@ NomoComponentColors lerpNomoComponentColors(
       b.infoItemTheme,
       t,
     ),
+    notificationTheme: NomoNotificationColorData.lerp(
+      a.notificationTheme,
+      b.notificationTheme,
+      t,
+    ),
   );
 }
 
@@ -123,6 +128,7 @@ NomoComponentColors overrideNomoComponentColors({
   NomoCardColorData? cardTheme,
   NomoDividerColorData? dividerTheme,
   NomoInfoItemColorData? infoItemTheme,
+  NomoNotificationColorData? notificationTheme,
 }) {
   final def = NomoComponentColors.defaultComponents(core);
   return NomoComponentColors._(
@@ -144,6 +150,7 @@ NomoComponentColors overrideNomoComponentColors({
     cardTheme: cardTheme ?? def.cardTheme,
     dividerTheme: dividerTheme ?? def.dividerTheme,
     infoItemTheme: infoItemTheme ?? def.infoItemTheme,
+    notificationTheme: notificationTheme ?? def.notificationTheme,
   );
 }
 
@@ -166,6 +173,7 @@ NomoComponentColors defaultConstructor({
   NomoCardColorData? cardTheme,
   NomoDividerColorData? dividerTheme,
   NomoInfoItemColorData? infoItemTheme,
+  NomoNotificationColorData? notificationTheme,
 }) {
   return NomoComponentColors._(
     outlineContainerTheme:
@@ -189,5 +197,6 @@ NomoComponentColors defaultConstructor({
     cardTheme: cardTheme ?? const NomoCardColorData(),
     dividerTheme: dividerTheme ?? const NomoDividerColorData(),
     infoItemTheme: infoItemTheme ?? const NomoInfoItemColorData(),
+    notificationTheme: notificationTheme ?? const NomoNotificationColorData(),
   );
 }

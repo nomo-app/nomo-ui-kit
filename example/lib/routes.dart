@@ -13,6 +13,7 @@ import 'package:example/sections/list_section.dart';
 import 'package:example/sections/loading_section.dart';
 import 'package:example/sections/menu_section.dart';
 import 'package:example/sections/modal_sheet_section.dart';
+import 'package:example/sections/notification_section.dart';
 import 'package:example/sections/text_section.dart';
 import 'package:example/sections/tile_section.dart';
 import 'package:example/theme.dart';
@@ -129,6 +130,11 @@ const _routes = [
         path: "/data",
         title: "Data",
         page: DataSection,
+      ),
+      MenuPageRouteInfo(
+        path: "/notifications",
+        title: "Notifications",
+        page: NotificationSection,
       ),
       MenuPageRouteInfo(
         path: "/icons",

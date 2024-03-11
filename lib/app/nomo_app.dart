@@ -5,6 +5,7 @@ import 'package:nomo_router/router/entities/route.dart';
 import 'package:nomo_router/router/entities/transitions.dart';
 import 'package:nomo_ui_kit/app/animator.dart';
 import 'package:nomo_ui_kit/app/metric_reactor.dart';
+import 'package:nomo_ui_kit/app/notifications/app_notification.dart';
 import 'package:nomo_ui_kit/components/text/nomo_text.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 import 'package:nomo_ui_kit/theme/sub/nomo_sizing_theme.dart';
@@ -128,7 +129,8 @@ class _NomoAppState extends State<NomoApp> {
             ),
         (child) => ScaffoldMessenger(
               child: child,
-            )
+            ),
+        (child) => InAppNotification(child: child),
       ],
       child: MetricReactor(
         sizingThemeBuilder: widget.sizingThemeBuilder,

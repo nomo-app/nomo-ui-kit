@@ -95,6 +95,11 @@ NomoComponentSizes lerpNomoComponentSizes(
       b.infoItemTheme,
       t,
     ),
+    notificationTheme: NomoNotificationSizingData.lerp(
+      a.notificationTheme,
+      b.notificationTheme,
+      t,
+    ),
   );
 }
 
@@ -117,6 +122,7 @@ NomoComponentSizes overrideNomoComponentSizes({
   NomoCardSizingData? cardTheme,
   NomoDividerSizingData? dividerTheme,
   NomoInfoItemSizingData? infoItemTheme,
+  NomoNotificationSizingData? notificationTheme,
 }) {
   final def = NomoComponentSizes.defaultComponents(core);
   return NomoComponentSizes._(
@@ -137,6 +143,7 @@ NomoComponentSizes overrideNomoComponentSizes({
     cardTheme: cardTheme ?? def.cardTheme,
     dividerTheme: dividerTheme ?? def.dividerTheme,
     infoItemTheme: infoItemTheme ?? def.infoItemTheme,
+    notificationTheme: notificationTheme ?? def.notificationTheme,
   );
 }
 
@@ -158,6 +165,7 @@ NomoComponentSizes defaultConstructor({
   NomoCardSizingData? cardTheme,
   NomoDividerSizingData? dividerTheme,
   NomoInfoItemSizingData? infoItemTheme,
+  NomoNotificationSizingData? notificationTheme,
 }) {
   return NomoComponentSizes._(
     outlineContainerTheme:
@@ -180,5 +188,6 @@ NomoComponentSizes defaultConstructor({
     cardTheme: cardTheme ?? const NomoCardSizingData(),
     dividerTheme: dividerTheme ?? const NomoDividerSizingData(),
     infoItemTheme: infoItemTheme ?? const NomoInfoItemSizingData(),
+    notificationTheme: notificationTheme ?? const NomoNotificationSizingData(),
   );
 }

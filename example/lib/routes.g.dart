@@ -41,6 +41,7 @@ class AppRouter extends NomoAppRouter {
                 key: typedArgs?.key,
               );
             },
+            NotificationSectionRoute.path: ([a]) => NotificationSectionRoute(),
             IconSectionRoute.path: ([a]) {
               final typedArgs = a as IconSectionArguments?;
               return IconSectionRoute(
@@ -237,6 +238,20 @@ class DataSectionRoute extends AppRoute implements DataSectionArguments {
           ),
         );
   static String path = '/data';
+}
+
+class NotificationSectionArguments {
+  const NotificationSectionArguments();
+}
+
+class NotificationSectionRoute extends AppRoute
+    implements NotificationSectionArguments {
+  NotificationSectionRoute()
+      : super(
+          name: '/notifications',
+          page: NotificationSection(),
+        );
+  static String path = '/notifications';
 }
 
 class IconSectionArguments {

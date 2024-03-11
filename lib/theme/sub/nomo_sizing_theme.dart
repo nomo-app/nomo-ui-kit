@@ -15,6 +15,7 @@ import 'package:nomo_ui_kit/components/divider/nomo_divider.dart';
 import 'package:nomo_ui_kit/components/expandable/expandable.dart';
 import 'package:nomo_ui_kit/components/info_item/nomo_info_item.dart';
 import 'package:nomo_ui_kit/components/input/textInput/nomo_input.dart';
+import 'package:nomo_ui_kit/components/notification/nomo_notification.dart';
 import 'package:nomo_ui_kit/components/outline_container/nomo_outline_container.dart';
 import 'package:nomo_ui_kit/components/vertical_menu/nomo_vertical_menu.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
@@ -117,6 +118,7 @@ class NomoComponentSizes {
   final NomoCardSizingData cardTheme;
   final NomoDividerSizingData dividerTheme;
   final NomoInfoItemSizingData infoItemTheme;
+  final NomoNotificationSizingData notificationTheme;
 
   const NomoComponentSizes._({
     required this.outlineContainerTheme,
@@ -136,6 +138,7 @@ class NomoComponentSizes {
     required this.cardTheme,
     required this.dividerTheme,
     required this.infoItemTheme,
+    required this.notificationTheme,
   });
 
   static NomoComponentSizes defaultComponents(NomoSizes core) =>
