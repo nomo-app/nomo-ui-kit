@@ -21,9 +21,9 @@ class _BottomBarState extends State<BottomBar> {
       MenuPageRouteInfo currentRoute => currentRoute.toMenuItem,
       _ => null,
     };
-    return NomoBottomBar(
+    return NomoBottomBar<String>(
       style: context.typography.b1,
-      selected: current,
+      selected: current?.key,
       onTap: (item) {
         NomoNavigator.of(context).pushNamed(item.key);
         setState(() {});
