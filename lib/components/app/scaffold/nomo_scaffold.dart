@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nomo_ui_generator/annotations.dart';
+import 'package:nomo_ui_kit/components/app/app_bar/nomo_app_bar.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 
 part 'nomo_scaffold.theme_data.g.dart';
@@ -22,7 +23,7 @@ class NomoScaffold extends StatefulWidget {
     this.endDrawer,
   });
   final Widget child;
-  final PreferredSizeWidget? appBar;
+  final NomoAppBar? appBar;
   final Widget? nestedAppBar;
   final Widget? bottomBar;
   final Widget? sider;
@@ -110,7 +111,7 @@ class _NomoScaffoldState extends State<NomoScaffold> {
           child: body,
         ),
       ),
-      appBar: widget.appBar,
+      appBar: widget.appBar?.asPreferedSizeWidget(context),
       bottomNavigationBar: bottomBar,
       bottomSheet: widget.bottomSheet,
       backgroundColor: theme.backgroundColor,
