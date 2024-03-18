@@ -21,6 +21,7 @@ class NomoScaffold extends StatefulWidget {
     this.drawer,
     this.nestedAppBar,
     this.endDrawer,
+    this.floatingActionButton,
   });
   final Widget child;
   final NomoAppBar? appBar;
@@ -30,6 +31,7 @@ class NomoScaffold extends StatefulWidget {
   final Widget? bottomSheet;
   final Widget? drawer;
   final Widget? endDrawer;
+  final Widget? floatingActionButton;
 
   @NomoSizingField(EdgeInsets.zero)
   final EdgeInsetsGeometry? padding;
@@ -117,6 +119,7 @@ class _NomoScaffoldState extends State<NomoScaffold> {
       backgroundColor: theme.backgroundColor,
       drawer: widget.drawer,
       endDrawer: widget.endDrawer,
+      floatingActionButton: widget.floatingActionButton,
     );
   }
 }
