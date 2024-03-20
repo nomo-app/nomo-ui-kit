@@ -50,5 +50,5 @@ class PlatformInfo {
   static bool get _isMaterial => !_isCupertino;
 
   static bool get _isDesktop =>
-      Platform.isLinux || Platform.isMacOS || Platform.isMacOS;
+      Platform.isLinux || Platform.isWindows || Platform.isMacOS;
 }
