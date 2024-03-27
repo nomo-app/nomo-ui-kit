@@ -111,6 +111,7 @@ class NomoComponentColors {
         primaryButtonTheme: PrimaryNomoButtonColorData(
           backgroundColor: core.primary,
           foregroundColor: core.onPrimary,
+          borderRadius: BorderRadius.circular(28),
         ),
         inputTheme: NomoInputColorData(
           background: core.background1.darken(0.05),
