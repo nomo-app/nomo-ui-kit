@@ -57,7 +57,7 @@ class _MetricReactorState extends State<MetricReactor>
   @override
   Widget build(BuildContext context) {
     return MediaQuery(
-      data: mediaQueryData.copyWith(textScaler: TextScaler.linear(1.0)),
+      data: mediaQueryData.copyWith(textScaler: TextScaler.noScaling),
       child: widget.child,
     );
   }

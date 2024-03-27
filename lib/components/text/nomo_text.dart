@@ -207,7 +207,7 @@ Size calculateTextSize({
       style: style,
     ),
     textDirection: TextDirection.ltr,
-    //   textScaler: TextScaler.linear(textScaleFactor),
+    textScaler: TextScaler.linear(textScaleFactor),
   )..layout();
 
   return textPainter.size;
