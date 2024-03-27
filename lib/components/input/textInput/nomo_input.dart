@@ -281,7 +281,7 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
       ..dispose();
     valueNotifier.removeListener(notifierChanged);
 
-    if (widget.validator == null) {
+    if (widget.valueNotifier == null) {
       valueNotifier.dispose();
     }
 
