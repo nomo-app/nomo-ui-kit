@@ -234,9 +234,12 @@ class _NomoVerticalListTileState<T> extends State<NomoVerticalListTile<T>>
                         ),
                         const Spacer(),
                         if (widget.item.trailling != null)
-                          NomoDefaultTextStyle(
-                            style: theme.traillingStyle,
-                            child: widget.item.trailling!,
+                          NomoTextTheme(
+                            color: foreground!,
+                            child: NomoDefaultTextStyle(
+                              style: theme.traillingStyle,
+                              child: widget.item.trailling!,
+                            ),
                           ),
                       ],
                     ],

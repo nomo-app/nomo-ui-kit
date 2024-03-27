@@ -144,7 +144,7 @@ class NomoComponentSizes {
   static NomoComponentSizes defaultComponents(NomoSizes core) =>
       defaultConstructor(
         outlineContainerTheme: const NomoOutlineContainerSizingData(
-          padding: EdgeInsets.all(32),
+          padding: EdgeInsets.all(16),
         ),
         primaryButtonTheme: const PrimaryNomoButtonSizingData(
           padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),

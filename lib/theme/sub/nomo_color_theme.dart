@@ -105,6 +105,9 @@ class NomoComponentColors {
         expandableTheme: ExpandableColorData(
           iconColor: core.foreground1,
         ),
+        cardTheme: NomoCardColorData(
+          backgroundColor: core.surface,
+        ),
         dialogTheme: NomoDialogColorData(
           backgroundColor: core.surface,
         ),
@@ -116,6 +119,12 @@ class NomoComponentColors {
         inputTheme: NomoInputColorData(
           background: core.background1.darken(0.05),
           borderRadius: BorderRadius.circular(4),
+          selectedBorder: Border.fromBorderSide(
+            BorderSide(
+              color: core.primary,
+              width: 1.5,
+            ),
+          ),
           errorColor: core.error,
         ),
         dividerTheme: NomoDividerColorData(
