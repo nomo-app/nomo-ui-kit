@@ -28,6 +28,8 @@ class NomoRouteBody extends StatelessWidget {
   @NomoSizingField(Radius.circular(4))
   final Radius? scrollBarRadius;
 
+  final bool useScrollBar;
+
   const NomoRouteBody({
     this.child,
     super.key,
@@ -40,6 +42,7 @@ class NomoRouteBody extends StatelessWidget {
     this.builder,
     this.childrenBuilder,
     this.sliverBuilder,
+    this.useScrollBar = false,
   }) : assert(
           child != null ||
               slivers != null ||
@@ -55,8 +58,6 @@ class NomoRouteBody extends StatelessWidget {
     final theme = getFromContext(context, this);
     final route = RouteInfoProvider.of(context).route;
     final _scrollController = scrollController ?? ScrollController();
-
-    final useScrollBar = builder == null;
 
     return ColoredBox(
       color: context.colors.background1,
