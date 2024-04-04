@@ -96,7 +96,8 @@ Widget wrapper(nav) {
 
 @AppRoutes()
 const _routes = [
-  NestedPageRouteInfo(
+  NestedNavigator(
+    key: ValueKey("main"),
     wrapper: wrapper,
     children: [
       MenuPageRouteInfo(

@@ -115,8 +115,8 @@ class AppRouter extends NomoAppRouter {
               );
             },
           },
-          _routes.expanded.where((r) => r is! NestedPageRouteInfo).toList(),
-          _routes.expanded.whereType<NestedPageRouteInfo>().toList(),
+          _routes.expanded.where((r) => r is! NestedNavigator).toList(),
+          _routes.expanded.whereType<NestedNavigator>().toList(),
         );
 }
 
