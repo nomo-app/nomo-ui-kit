@@ -34,42 +34,40 @@ Widget wrapper(nav) {
     builder: (context) {
       final themeProvider = ThemeProvider.of(context);
       return NomoScaffold(
-        appBar: PreferredSize(
-          preferredSize:
-              Size.fromHeight(context.componentSizes.appBarTheme.height),
-          child: NomoAppBar(
-            leading: Text(
-              "Nomo UI Kit",
-              style: context.typography.h3,
-            ),
-            trailling: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (themeProvider.colorTheme == ColorMode.DARK.theme)
-                  IconButton(
-                    onPressed: () {
-                      ThemeProvider.of(context).changeColorTheme(
-                        ColorMode.LIGHT.theme,
-                      );
-                    },
-                    icon: const Icon(
-                      Icons.light_mode,
-                      color: Colors.white,
-                    ),
-                  )
-                else
-                  IconButton(
-                    onPressed: () {
-                      ThemeProvider.of(context).changeColorTheme(
-                        ColorMode.DARK.theme,
-                      );
-                    },
-                    icon: const Icon(
-                      Icons.dark_mode,
-                    ),
+        appBar: NomoAppBar(
+          leading: Text(
+            "Nomo UI Kit",
+            style: context.typography.h3,
+          ),
+          trailling: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (themeProvider.colorTheme == ColorMode.DARK.theme)
+                IconButton(
+                  onPressed: () {
+                    ThemeProvider.of(context).changeColorTheme(
+                      ColorMode.LIGHT.theme,
+                    );
+                  },
+                  icon: const Icon(
+                    Icons.light_mode,
+                    color: Colors.white,
                   ),
-                if (!context.componentSizes.scaffoldTheme.showSider)
-                  Builder(builder: (context) {
+                )
+              else
+                IconButton(
+                  onPressed: () {
+                    ThemeProvider.of(context).changeColorTheme(
+                      ColorMode.DARK.theme,
+                    );
+                  },
+                  icon: const Icon(
+                    Icons.dark_mode,
+                  ),
+                ),
+              if (!context.componentSizes.scaffoldTheme.showSider)
+                Builder(
+                  builder: (context) {
                     return IconButton(
                       onPressed: () {
                         NomoScaffold.of(context).openEndDrawer();
@@ -79,9 +77,9 @@ Widget wrapper(nav) {
                         color: context.colorTheme.colors.foreground1,
                       ),
                     );
-                  }),
-              ],
-            ),
+                  },
+                ),
+            ],
           ),
         ),
         sider: const Sider(

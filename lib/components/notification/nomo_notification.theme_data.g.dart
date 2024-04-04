@@ -20,23 +20,62 @@ class NomoNotificationColorData implements NomoNotificationColorDataNullable {
 }
 
 class NomoNotificationSizingDataNullable {
-  const NomoNotificationSizingDataNullable();
+  final EdgeInsetsGeometry? padding;
+  final BorderRadius? borderRadius;
+  final double? spacing;
+  final double? maxWidth;
+  const NomoNotificationSizingDataNullable({
+    this.padding,
+    this.borderRadius,
+    this.spacing,
+    this.maxWidth,
+  });
 }
 
 class NomoNotificationSizingData implements NomoNotificationSizingDataNullable {
-  const NomoNotificationSizingData();
+  @override
+  final EdgeInsetsGeometry padding;
+  @override
+  final BorderRadius borderRadius;
+  @override
+  final double spacing;
+  @override
+  final double maxWidth;
+  const NomoNotificationSizingData({
+    this.padding = const EdgeInsets.all(16),
+    this.borderRadius = const BorderRadius.all(Radius.circular(16)),
+    this.spacing = 16.0,
+    this.maxWidth = 280.0,
+  });
   static NomoNotificationSizingData lerp(
       NomoNotificationSizingData a, NomoNotificationSizingData b, double t) {
-    return const NomoNotificationSizingData();
+    return NomoNotificationSizingData(
+      padding: EdgeInsetsGeometry.lerp(a.padding, b.padding, t)!,
+      borderRadius: BorderRadius.lerp(a.borderRadius, b.borderRadius, t)!,
+      spacing: lerpDouble(a.spacing, b.spacing, t)!,
+      maxWidth: lerpDouble(a.maxWidth, b.maxWidth, t)!,
+    );
   }
 }
 
 class NomoNotificationConstantsNullable {
-  const NomoNotificationConstantsNullable();
+  final TextStyle? titleStyle;
+  final TextStyle? subtitleStyle;
+  const NomoNotificationConstantsNullable({
+    this.titleStyle,
+    this.subtitleStyle,
+  });
 }
 
 class NomoNotificationConstants implements NomoNotificationConstantsNullable {
-  const NomoNotificationConstants();
+  @override
+  final TextStyle titleStyle;
+  @override
+  final TextStyle subtitleStyle;
+  const NomoNotificationConstants({
+    this.titleStyle = const TextStyle(),
+    this.subtitleStyle = const TextStyle(),
+  });
 }
 
 class NomoNotificationThemeData
@@ -44,17 +83,50 @@ class NomoNotificationThemeData
         NomoNotificationColorData,
         NomoNotificationSizingData,
         NomoNotificationConstants {
-  const NomoNotificationThemeData();
+  @override
+  final EdgeInsetsGeometry padding;
+  @override
+  final BorderRadius borderRadius;
+  @override
+  final double spacing;
+  @override
+  final double maxWidth;
+  @override
+  final TextStyle titleStyle;
+  @override
+  final TextStyle subtitleStyle;
+  const NomoNotificationThemeData({
+    this.padding = const EdgeInsets.all(16),
+    this.borderRadius = const BorderRadius.all(Radius.circular(16)),
+    this.spacing = 16.0,
+    this.maxWidth = 280.0,
+    this.titleStyle = const TextStyle(),
+    this.subtitleStyle = const TextStyle(),
+  });
   factory NomoNotificationThemeData.from(
     NomoNotificationColorData colors,
     NomoNotificationSizingData sizing,
     NomoNotificationConstants constants,
   ) {
-    return NomoNotificationThemeData();
+    return NomoNotificationThemeData(
+      padding: sizing.padding,
+      borderRadius: sizing.borderRadius,
+      spacing: sizing.spacing,
+      maxWidth: sizing.maxWidth,
+      titleStyle: constants.titleStyle,
+      subtitleStyle: constants.subtitleStyle,
+    );
   }
   NomoNotificationThemeData copyWith(
       [NomoNotificationThemeDataNullable? override]) {
-    return NomoNotificationThemeData();
+    return NomoNotificationThemeData(
+      padding: override?.padding ?? padding,
+      borderRadius: override?.borderRadius ?? borderRadius,
+      spacing: override?.spacing ?? spacing,
+      maxWidth: override?.maxWidth ?? maxWidth,
+      titleStyle: override?.titleStyle ?? titleStyle,
+      subtitleStyle: override?.subtitleStyle ?? subtitleStyle,
+    );
   }
 }
 
@@ -62,7 +134,28 @@ class NomoNotificationThemeDataNullable
     implements
         NomoNotificationColorDataNullable,
         NomoNotificationSizingDataNullable,
-        NomoNotificationConstantsNullable {}
+        NomoNotificationConstantsNullable {
+  @override
+  final EdgeInsetsGeometry? padding;
+  @override
+  final BorderRadius? borderRadius;
+  @override
+  final double? spacing;
+  @override
+  final double? maxWidth;
+  @override
+  final TextStyle? titleStyle;
+  @override
+  final TextStyle? subtitleStyle;
+  const NomoNotificationThemeDataNullable({
+    this.padding,
+    this.borderRadius,
+    this.spacing,
+    this.maxWidth,
+    this.titleStyle,
+    this.subtitleStyle,
+  });
+}
 
 class NomoNotificationThemeOverride extends InheritedWidget {
   final NomoNotificationThemeDataNullable data;
@@ -92,11 +185,22 @@ NomoNotificationThemeData getFromContext(
   NomoNotification widget,
 ) {
   const globalColorTheme = NomoNotificationColorData();
-  const globalSizingTheme = NomoNotificationSizingData();
-  const globalConstants = NomoNotificationConstants();
+  final globalSizingTheme =
+      NomoTheme.maybeOf(context)?.componentSizes.notificationTheme ??
+          const NomoNotificationSizingData();
+  final globalConstants =
+      NomoTheme.maybeOf(context)?.constants.notificationTheme ??
+          const NomoNotificationConstants();
   final themeOverride = NomoNotificationThemeOverride.maybeOf(context);
   final themeData = NomoNotificationThemeData.from(
           globalColorTheme, globalSizingTheme, globalConstants)
       .copyWith(themeOverride);
-  return NomoNotificationThemeData();
+  return NomoNotificationThemeData(
+    padding: widget.padding ?? themeData.padding,
+    borderRadius: widget.borderRadius ?? themeData.borderRadius,
+    spacing: widget.spacing ?? themeData.spacing,
+    maxWidth: widget.maxWidth ?? themeData.maxWidth,
+    titleStyle: widget.titleStyle ?? themeData.titleStyle,
+    subtitleStyle: widget.subtitleStyle ?? themeData.subtitleStyle,
+  );
 }

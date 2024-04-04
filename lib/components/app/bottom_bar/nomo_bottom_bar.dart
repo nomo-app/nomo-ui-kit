@@ -8,7 +8,7 @@ import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 part 'nomo_bottom_bar.theme_data.g.dart';
 
 @NomoComponentThemeData('bottomBarTheme')
-class NomoBottomBar extends StatelessWidget {
+class NomoBottomBar<T> extends StatelessWidget {
   const NomoBottomBar({
     required this.items,
     required this.selected,
@@ -31,11 +31,11 @@ class NomoBottomBar extends StatelessWidget {
           items.length > 0 && items.length <= 5,
           'Items must be between 1 and 5',
         );
-  final List<NomoMenuItem> items;
+  final List<NomoMenuItem<T>> items;
   final TextStyle? style;
   final Widget? title;
-  final void Function(NomoMenuItem item)? onTap;
-  final NomoMenuItem? selected;
+  final void Function(NomoMenuItem<T> item)? onTap;
+  final T? selected;
   final double? widthFactor;
   final double? itemWidth;
 
@@ -87,7 +87,7 @@ class NomoBottomBar extends StatelessWidget {
               widthFactor: widthFactor,
               item: item,
               theme: theme,
-              selected: item == selected,
+              selected: item.key == selected,
               onTap: () => onTap?.call(item),
             ),
         ],
