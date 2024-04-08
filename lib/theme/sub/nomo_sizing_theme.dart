@@ -149,6 +149,10 @@ class NomoComponentSizes {
         primaryButtonTheme: const PrimaryNomoButtonSizingData(
           padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
         ),
+        dialogTheme: NomoDialogSizingData(
+          borderRadius: BorderRadius.circular(6),
+          padding: EdgeInsets.all(16),
+        ),
       );
 }
 
