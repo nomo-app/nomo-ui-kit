@@ -113,7 +113,10 @@ class _NomoScaffoldState extends State<NomoScaffold> {
       body: ColoredBox(
         color: context.colors.surface,
         child: SafeArea(
-          child: body,
+          child: ColoredBox(
+            color: theme.backgroundColor,
+            child: body,
+          ),
         ),
       ),
       appBar: widget.appBar?.asPreferedSizeWidget(context),

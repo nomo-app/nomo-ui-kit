@@ -76,7 +76,7 @@ class NomoComponentColors {
           background: core.background1,
         ),
         appBarTheme: NomoAppBarColorData(
-          backgroundColor: core.background1,
+          backgroundColor: core.surface,
         ),
         scaffoldTheme: NomoScaffoldColorData(
           backgroundColor: core.background1,
