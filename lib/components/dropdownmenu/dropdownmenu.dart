@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nomo_ui_kit/components/card/nomo_card.dart';
 import 'package:nomo_ui_kit/components/dropdownmenu/drop_down_item.dart';
 import 'package:nomo_ui_kit/components/text/nomo_text.dart';
 
@@ -8,7 +7,7 @@ class NomoDropDownMenu<T> extends StatefulWidget {
     required this.items,
     required this.onChanged,
     super.key,
-    this.initailValue,
+    this.initialValue,
     this.width,
     this.height,
     this.decoration,
@@ -25,7 +24,7 @@ class NomoDropDownMenu<T> extends StatefulWidget {
     this.dropdownBorderColor,
   });
   final List<NomoDropdownItem<T>> items;
-  final NomoDropdownItem<T>? initailValue;
+  final T? initialValue;
   final double? width;
   final double? height;
   final BoxDecoration? decoration;
@@ -48,7 +47,7 @@ class NomoDropDownMenu<T> extends StatefulWidget {
 
 class _NomoDropDownMenuState<T> extends State<NomoDropDownMenu<T>> {
   bool _isExpanded = false;
-  late NomoDropdownItem<T> _selectedItem;
+  late T _selectedItem;
   double _turns = 0;
   final LayerLink _layerLink = LayerLink();
   final ScrollController _scrollController = ScrollController();
@@ -57,7 +56,7 @@ class _NomoDropDownMenuState<T> extends State<NomoDropDownMenu<T>> {
   @override
   void initState() {
     super.initState();
-    _selectedItem = widget.initailValue ?? widget.items.first;
+    _selectedItem = widget.initialValue ?? widget.items.first.value;
   }
 
   void toogleExpanded() {
@@ -83,12 +82,18 @@ class _NomoDropDownMenuState<T> extends State<NomoDropDownMenu<T>> {
 
   void selectItem(NomoDropdownItem<T> item) {
     setState(() {
-      _selectedItem = item;
+      _selectedItem = item.value;
       _isExpanded = false;
       if (item.value != null) {
-        widget.onChanged(item.value as T);
+        widget.onChanged(item.value);
       }
     });
+  }
+
+  String get selectedDisplayText {
+    return widget.items
+        .firstWhere((element) => element.value == _selectedItem)
+        .displayText;
   }
 
   @override
@@ -111,7 +116,7 @@ class _NomoDropDownMenuState<T> extends State<NomoDropDownMenu<T>> {
                   Expanded(
                     child: NomoText(
                       overflow: widget.overflow,
-                      _selectedItem.displayText,
+                      selectedDisplayText,
                       style: widget.textStyle,
                       //   minFontSize: widget.minFontSize!,
                       //     maxFontSize: widget.maxFontSize!,
