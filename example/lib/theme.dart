@@ -2,7 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:nomo_ui_kit/components/app/app.dart';
+import 'package:nomo_ui_kit/components/app/app_bar/nomo_app_bar.dart';
+import 'package:nomo_ui_kit/components/app/bottom_bar/nomo_bottom_bar.dart';
+import 'package:nomo_ui_kit/components/app/scaffold/nomo_scaffold.dart';
+import 'package:nomo_ui_kit/components/app/sider/nomo_sider.dart';
 import 'package:nomo_ui_kit/components/input/textInput/nomo_input.dart';
 import 'package:nomo_ui_kit/components/outline_container/nomo_outline_container.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
@@ -78,14 +81,6 @@ final light = NomoColorThemeData(
     brightness: Brightness.light,
     onDisabled: Colors.grey,
   ),
-  buildComponents: (core) {
-    return overrideNomoComponentColors(
-      core: core,
-      outlineContainerTheme: NomoOutlineContainerColorData(
-        background: core.background1.darken(0.05),
-      ),
-    );
-  },
 );
 
 final dark = NomoColorThemeData(
@@ -109,19 +104,6 @@ final dark = NomoColorThemeData(
     brightness: Brightness.dark,
     onDisabled: Colors.grey,
   ),
-  buildComponents: (core) {
-    return overrideNomoComponentColors(
-      core: core,
-      outlineContainerTheme: NomoOutlineContainerColorData(
-        background: core.background1.lighten(0.05),
-        border: const Border.fromBorderSide(
-          BorderSide(
-            color: Colors.white24,
-          ),
-        ),
-      ),
-    );
-  },
 );
 
 final avinoc = NomoColorThemeData(
@@ -147,6 +129,21 @@ final avinoc = NomoColorThemeData(
   ),
 );
 
+///
+/// Sizing
+///
+
+NomoComponentSizes defaultComponentSizes(NomoSizes sizes) {
+  return const NomoComponentSizes(
+    siderTheme: NomoSiderSizingData(
+      width: 200,
+    ),
+    scaffoldTheme: NomoScaffoldSizingData(
+      showSider: true,
+    ),
+  );
+}
+
 final sizingSmall = NomoSizingThemeData(
   key: const ValueKey('small'),
   sizes: const NomoSizes(
@@ -160,21 +157,14 @@ final sizingSmall = NomoSizingThemeData(
     spacing2: 6,
     spacing3: 8,
   ),
-  buildComponents: (core) => overrideNomoComponentSizes(
-    core: core,
-    outlineContainerTheme: const NomoOutlineContainerSizingData(
-      padding: EdgeInsets.all(4),
-      spacing: 4,
-    ),
-    appBarTheme: const NomoAppBarSizingData(),
-    scaffoldTheme: const NomoScaffoldSizingData(
-      showBottomBar: true,
-      showSider: false,
-    ),
-    routeBodyTheme: const NomoRouteBodySizingData(
-      padding: EdgeInsets.all(16),
-    ),
-  ),
+  defaultComponents: defaultComponentSizes,
+  overrideComponents: (core) {
+    return const NomoComponentSizesNullable(
+      scaffoldTheme: NomoScaffoldSizingDataNullable(
+        showSider: false,
+      ),
+    );
+  },
 );
 
 final sizingMedium = NomoSizingThemeData(
@@ -190,21 +180,9 @@ final sizingMedium = NomoSizingThemeData(
     spacing2: 6,
     spacing3: 8,
   ),
-  buildComponents: (core) {
-    return overrideNomoComponentSizes(
-      core: core,
-      outlineContainerTheme: const NomoOutlineContainerSizingData(
-        padding: EdgeInsets.all(8),
-        spacing: 8,
-      ),
-      appBarTheme: const NomoAppBarSizingData(),
-      scaffoldTheme: const NomoScaffoldSizingData(
-        showSider: false,
-      ),
-      routeBodyTheme: const NomoRouteBodySizingData(
-        padding: EdgeInsets.all(24),
-      ),
-    );
+  defaultComponents: defaultComponentSizes,
+  overrideComponents: (core) {
+    return const NomoComponentSizesNullable();
   },
 );
 
@@ -222,17 +200,9 @@ final sizingLarge = NomoSizingThemeData(
     spacing2: 10,
     spacing3: 12,
   ),
-  buildComponents: (core) {
-    return overrideNomoComponentSizes(
-      core: core,
-      siderTheme: const NomoSiderThemeData(
-        padding: EdgeInsets.all(4),
-        width: 200,
-      ),
-      routeBodyTheme: const NomoRouteBodySizingData(
-        padding: EdgeInsets.all(32),
-      ),
-    );
+  defaultComponents: defaultComponentSizes,
+  overrideComponents: (core) {
+    return const NomoComponentSizesNullable();
   },
 );
 

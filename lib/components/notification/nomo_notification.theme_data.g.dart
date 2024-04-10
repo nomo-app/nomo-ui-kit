@@ -17,6 +17,11 @@ class NomoNotificationColorData implements NomoNotificationColorDataNullable {
       NomoNotificationColorData a, NomoNotificationColorData b, double t) {
     return const NomoNotificationColorData();
   }
+
+  static NomoNotificationColorData overrideWith(NomoNotificationColorData base,
+      [NomoNotificationColorDataNullable? override]) {
+    return NomoNotificationColorData();
+  }
 }
 
 class NomoNotificationSizingDataNullable {
@@ -54,6 +59,17 @@ class NomoNotificationSizingData implements NomoNotificationSizingDataNullable {
       borderRadius: BorderRadius.lerp(a.borderRadius, b.borderRadius, t)!,
       spacing: lerpDouble(a.spacing, b.spacing, t)!,
       maxWidth: lerpDouble(a.maxWidth, b.maxWidth, t)!,
+    );
+  }
+
+  static NomoNotificationSizingData overrideWith(
+      NomoNotificationSizingData base,
+      [NomoNotificationSizingDataNullable? override]) {
+    return NomoNotificationSizingData(
+      padding: override?.padding ?? base.padding,
+      borderRadius: override?.borderRadius ?? base.borderRadius,
+      spacing: override?.spacing ?? base.spacing,
+      maxWidth: override?.maxWidth ?? base.maxWidth,
     );
   }
 }

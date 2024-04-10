@@ -17,6 +17,11 @@ class NomoInfoItemColorData implements NomoInfoItemColorDataNullable {
       NomoInfoItemColorData a, NomoInfoItemColorData b, double t) {
     return const NomoInfoItemColorData();
   }
+
+  static NomoInfoItemColorData overrideWith(NomoInfoItemColorData base,
+      [NomoInfoItemColorDataNullable? override]) {
+    return NomoInfoItemColorData();
+  }
 }
 
 class NomoInfoItemSizingDataNullable {
@@ -36,6 +41,13 @@ class NomoInfoItemSizingData implements NomoInfoItemSizingDataNullable {
       NomoInfoItemSizingData a, NomoInfoItemSizingData b, double t) {
     return NomoInfoItemSizingData(
       padding: EdgeInsetsGeometry.lerp(a.padding, b.padding, t)!,
+    );
+  }
+
+  static NomoInfoItemSizingData overrideWith(NomoInfoItemSizingData base,
+      [NomoInfoItemSizingDataNullable? override]) {
+    return NomoInfoItemSizingData(
+      padding: override?.padding ?? base.padding,
     );
   }
 }

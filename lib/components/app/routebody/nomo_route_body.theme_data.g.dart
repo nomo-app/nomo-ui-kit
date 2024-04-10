@@ -17,6 +17,11 @@ class NomoRouteBodyColorData implements NomoRouteBodyColorDataNullable {
       NomoRouteBodyColorData a, NomoRouteBodyColorData b, double t) {
     return const NomoRouteBodyColorData();
   }
+
+  static NomoRouteBodyColorData overrideWith(NomoRouteBodyColorData base,
+      [NomoRouteBodyColorDataNullable? override]) {
+    return NomoRouteBodyColorData();
+  }
 }
 
 class NomoRouteBodySizingDataNullable {
@@ -49,6 +54,16 @@ class NomoRouteBodySizingData implements NomoRouteBodySizingDataNullable {
       scrollBarThickness:
           lerpDouble(a.scrollBarThickness, b.scrollBarThickness, t)!,
       scrollBarRadius: Radius.lerp(a.scrollBarRadius, b.scrollBarRadius, t)!,
+    );
+  }
+
+  static NomoRouteBodySizingData overrideWith(NomoRouteBodySizingData base,
+      [NomoRouteBodySizingDataNullable? override]) {
+    return NomoRouteBodySizingData(
+      padding: override?.padding ?? base.padding,
+      scrollBarThickness:
+          override?.scrollBarThickness ?? base.scrollBarThickness,
+      scrollBarRadius: override?.scrollBarRadius ?? base.scrollBarRadius,
     );
   }
 }

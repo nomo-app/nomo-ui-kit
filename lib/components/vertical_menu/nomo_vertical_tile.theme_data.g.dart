@@ -18,6 +18,12 @@ class NomoVerticalListTileColorData
       NomoVerticalListTileColorData b, double t) {
     return const NomoVerticalListTileColorData();
   }
+
+  static NomoVerticalListTileColorData overrideWith(
+      NomoVerticalListTileColorData base,
+      [NomoVerticalListTileColorDataNullable? override]) {
+    return NomoVerticalListTileColorData();
+  }
 }
 
 class NomoVerticalListTileSizingDataNullable {
@@ -30,6 +36,12 @@ class NomoVerticalListTileSizingData
   static NomoVerticalListTileSizingData lerp(NomoVerticalListTileSizingData a,
       NomoVerticalListTileSizingData b, double t) {
     return const NomoVerticalListTileSizingData();
+  }
+
+  static NomoVerticalListTileSizingData overrideWith(
+      NomoVerticalListTileSizingData base,
+      [NomoVerticalListTileSizingDataNullable? override]) {
+    return NomoVerticalListTileSizingData();
   }
 }
 

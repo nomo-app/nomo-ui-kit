@@ -70,6 +70,20 @@ class ExpandableColorData implements ExpandableColorDataNullable {
       iconColor: Color.lerp(a.iconColor, b.iconColor, t),
     );
   }
+
+  static ExpandableColorData overrideWith(ExpandableColorData base,
+      [ExpandableColorDataNullable? override]) {
+    return ExpandableColorData(
+      titlePadding: override?.titlePadding ?? base.titlePadding,
+      childrenPadding: override?.childrenPadding ?? base.childrenPadding,
+      borderRadius: override?.borderRadius ?? base.borderRadius,
+      highlightColor: override?.highlightColor ?? base.highlightColor,
+      focusColor: override?.focusColor ?? base.focusColor,
+      splashColor: override?.splashColor ?? base.splashColor,
+      hoverColor: override?.hoverColor ?? base.hoverColor,
+      iconColor: override?.iconColor ?? base.iconColor,
+    );
+  }
 }
 
 class ExpandableSizingDataNullable {
@@ -89,6 +103,13 @@ class ExpandableSizingData implements ExpandableSizingDataNullable {
       ExpandableSizingData a, ExpandableSizingData b, double t) {
     return ExpandableSizingData(
       iconSize: lerpDouble(a.iconSize, b.iconSize, t)!,
+    );
+  }
+
+  static ExpandableSizingData overrideWith(ExpandableSizingData base,
+      [ExpandableSizingDataNullable? override]) {
+    return ExpandableSizingData(
+      iconSize: override?.iconSize ?? base.iconSize,
     );
   }
 }

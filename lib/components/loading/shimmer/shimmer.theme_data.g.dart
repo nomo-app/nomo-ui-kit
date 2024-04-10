@@ -30,6 +30,13 @@ class ShimmerColorData implements ShimmerColorDataNullable {
       gradient: LinearGradient.lerp(a.gradient, b.gradient, t)!,
     );
   }
+
+  static ShimmerColorData overrideWith(ShimmerColorData base,
+      [ShimmerColorDataNullable? override]) {
+    return ShimmerColorData(
+      gradient: override?.gradient ?? base.gradient,
+    );
+  }
 }
 
 class ShimmerSizingDataNullable {
@@ -41,6 +48,11 @@ class ShimmerSizingData implements ShimmerSizingDataNullable {
   static ShimmerSizingData lerp(
       ShimmerSizingData a, ShimmerSizingData b, double t) {
     return const ShimmerSizingData();
+  }
+
+  static ShimmerSizingData overrideWith(ShimmerSizingData base,
+      [ShimmerSizingDataNullable? override]) {
+    return ShimmerSizingData();
   }
 }
 

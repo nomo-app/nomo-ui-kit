@@ -45,6 +45,17 @@ class NomoOutlineContainerColorData
       border: BoxBorder.lerp(a.border, b.border, t)!,
     );
   }
+
+  static NomoOutlineContainerColorData overrideWith(
+      NomoOutlineContainerColorData base,
+      [NomoOutlineContainerColorDataNullable? override]) {
+    return NomoOutlineContainerColorData(
+      foreground: override?.foreground ?? base.foreground,
+      background: override?.background ?? base.background,
+      shape: override?.shape ?? base.shape,
+      border: override?.border ?? base.border,
+    );
+  }
 }
 
 class NomoOutlineContainerSizingDataNullable {
@@ -71,6 +82,15 @@ class NomoOutlineContainerSizingData
     return NomoOutlineContainerSizingData(
       padding: EdgeInsetsGeometry.lerp(a.padding, b.padding, t)!,
       spacing: lerpDouble(a.spacing, b.spacing, t)!,
+    );
+  }
+
+  static NomoOutlineContainerSizingData overrideWith(
+      NomoOutlineContainerSizingData base,
+      [NomoOutlineContainerSizingDataNullable? override]) {
+    return NomoOutlineContainerSizingData(
+      padding: override?.padding ?? base.padding,
+      spacing: override?.spacing ?? base.spacing,
     );
   }
 }

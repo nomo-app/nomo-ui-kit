@@ -26,6 +26,13 @@ class NomoDividerColorData implements NomoDividerColorDataNullable {
       color: Color.lerp(a.color, b.color, t)!,
     );
   }
+
+  static NomoDividerColorData overrideWith(NomoDividerColorData base,
+      [NomoDividerColorDataNullable? override]) {
+    return NomoDividerColorData(
+      color: override?.color ?? base.color,
+    );
+  }
 }
 
 class NomoDividerSizingDataNullable {
@@ -51,6 +58,14 @@ class NomoDividerSizingData implements NomoDividerSizingDataNullable {
     return NomoDividerSizingData(
       crossAxisSize: lerpDouble(a.crossAxisSize, b.crossAxisSize, t)!,
       crossAxisSpacing: lerpDouble(a.crossAxisSpacing, b.crossAxisSpacing, t)!,
+    );
+  }
+
+  static NomoDividerSizingData overrideWith(NomoDividerSizingData base,
+      [NomoDividerSizingDataNullable? override]) {
+    return NomoDividerSizingData(
+      crossAxisSize: override?.crossAxisSize ?? base.crossAxisSize,
+      crossAxisSpacing: override?.crossAxisSpacing ?? base.crossAxisSpacing,
     );
   }
 }

@@ -47,7 +47,7 @@ class NomoComponentColors {
   final NomoInfoItemColorData infoItemTheme;
   final NomoNotificationColorData notificationTheme;
 
-  const NomoComponentColors._({
+  const NomoComponentColors({
     required this.outlineContainerTheme,
     required this.appBarTheme,
     required this.scaffoldTheme,
@@ -137,9 +137,12 @@ class NomoColorThemeData {
   NomoColorThemeData({
     required this.colors,
     required this.key,
-    NomoComponentColors Function(NomoColors core) buildComponents =
+    NomoComponentColors Function(NomoColors core) defaultComponents =
         NomoComponentColors.defaultComponents,
-  }) : components = buildComponents.call(colors);
+    NomoComponentColorsNullable Function(NomoColors core)? overrideComponents,
+  }) : components = defaultComponents(colors).overrideWith(
+          overrideComponents?.call(colors),
+        );
 
   NomoColorThemeData._({
     required this.colors,

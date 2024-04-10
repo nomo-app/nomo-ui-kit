@@ -26,6 +26,13 @@ class NomoDialogColorData implements NomoDialogColorDataNullable {
       backgroundColor: Color.lerp(a.backgroundColor, b.backgroundColor, t)!,
     );
   }
+
+  static NomoDialogColorData overrideWith(NomoDialogColorData base,
+      [NomoDialogColorDataNullable? override]) {
+    return NomoDialogColorData(
+      backgroundColor: override?.backgroundColor ?? base.backgroundColor,
+    );
+  }
 }
 
 class NomoDialogSizingDataNullable {
@@ -76,6 +83,18 @@ class NomoDialogSizingData implements NomoDialogSizingDataNullable {
       padding: EdgeInsetsGeometry.lerp(a.padding, b.padding, t)!,
       borderRadius:
           BorderRadiusGeometry.lerp(a.borderRadius, b.borderRadius, t)!,
+    );
+  }
+
+  static NomoDialogSizingData overrideWith(NomoDialogSizingData base,
+      [NomoDialogSizingDataNullable? override]) {
+    return NomoDialogSizingData(
+      elevation: override?.elevation ?? base.elevation,
+      contentSpacing: override?.contentSpacing ?? base.contentSpacing,
+      widthRatio: override?.widthRatio ?? base.widthRatio,
+      margin: override?.margin ?? base.margin,
+      padding: override?.padding ?? base.padding,
+      borderRadius: override?.borderRadius ?? base.borderRadius,
     );
   }
 }

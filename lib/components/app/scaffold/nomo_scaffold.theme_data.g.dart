@@ -26,6 +26,13 @@ class NomoScaffoldColorData implements NomoScaffoldColorDataNullable {
       backgroundColor: Color.lerp(a.backgroundColor, b.backgroundColor, t)!,
     );
   }
+
+  static NomoScaffoldColorData overrideWith(NomoScaffoldColorData base,
+      [NomoScaffoldColorDataNullable? override]) {
+    return NomoScaffoldColorData(
+      backgroundColor: override?.backgroundColor ?? base.backgroundColor,
+    );
+  }
 }
 
 class NomoScaffoldSizingDataNullable {
@@ -57,6 +64,15 @@ class NomoScaffoldSizingData implements NomoScaffoldSizingDataNullable {
       padding: EdgeInsetsGeometry.lerp(a.padding, b.padding, t)!,
       showBottomBar: t < 0.5 ? a.showBottomBar : b.showBottomBar,
       showSider: t < 0.5 ? a.showSider : b.showSider,
+    );
+  }
+
+  static NomoScaffoldSizingData overrideWith(NomoScaffoldSizingData base,
+      [NomoScaffoldSizingDataNullable? override]) {
+    return NomoScaffoldSizingData(
+      padding: override?.padding ?? base.padding,
+      showBottomBar: override?.showBottomBar ?? base.showBottomBar,
+      showSider: override?.showSider ?? base.showSider,
     );
   }
 }

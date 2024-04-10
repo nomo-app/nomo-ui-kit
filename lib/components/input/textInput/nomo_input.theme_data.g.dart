@@ -74,6 +74,21 @@ class NomoInputColorData implements NomoInputColorDataNullable {
       margin: EdgeInsetsGeometry.lerp(a.margin, b.margin, t)!,
     );
   }
+
+  static NomoInputColorData overrideWith(NomoInputColorData base,
+      [NomoInputColorDataNullable? override]) {
+    return NomoInputColorData(
+      background: override?.background ?? base.background,
+      errorColor: override?.errorColor ?? base.errorColor,
+      borderRadius: override?.borderRadius ?? base.borderRadius,
+      border: override?.border ?? base.border,
+      selectedBorder: override?.selectedBorder ?? base.selectedBorder,
+      errorBorder: override?.errorBorder ?? base.errorBorder,
+      selectedErrorBorder:
+          override?.selectedErrorBorder ?? base.selectedErrorBorder,
+      margin: override?.margin ?? base.margin,
+    );
+  }
 }
 
 class NomoInputSizingDataNullable {
@@ -93,6 +108,13 @@ class NomoInputSizingData implements NomoInputSizingDataNullable {
       NomoInputSizingData a, NomoInputSizingData b, double t) {
     return NomoInputSizingData(
       padding: EdgeInsetsGeometry.lerp(a.padding, b.padding, t)!,
+    );
+  }
+
+  static NomoInputSizingData overrideWith(NomoInputSizingData base,
+      [NomoInputSizingDataNullable? override]) {
+    return NomoInputSizingData(
+      padding: override?.padding ?? base.padding,
     );
   }
 }

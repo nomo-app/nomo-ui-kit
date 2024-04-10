@@ -64,6 +64,21 @@ class NomoVerticalMenuColorData implements NomoVerticalMenuColorDataNullable {
       borderRadius: BorderRadius.lerp(a.borderRadius, b.borderRadius, t)!,
     );
   }
+
+  static NomoVerticalMenuColorData overrideWith(NomoVerticalMenuColorData base,
+      [NomoVerticalMenuColorDataNullable? override]) {
+    return NomoVerticalMenuColorData(
+      border: override?.border ?? base.border,
+      selectedBorder: override?.selectedBorder ?? base.selectedBorder,
+      foreground: override?.foreground ?? base.foreground,
+      background: override?.background ?? base.background,
+      selectedBackground:
+          override?.selectedBackground ?? base.selectedBackground,
+      selectedForeground:
+          override?.selectedForeground ?? base.selectedForeground,
+      borderRadius: override?.borderRadius ?? base.borderRadius,
+    );
+  }
 }
 
 class NomoVerticalMenuSizingDataNullable {
@@ -107,6 +122,18 @@ class NomoVerticalMenuSizingData implements NomoVerticalMenuSizingDataNullable {
       spacing: lerpDouble(a.spacing, b.spacing, t)!,
       height: lerpDouble(a.height, b.height, t)!,
       iconSize: lerpDouble(a.iconSize, b.iconSize, t)!,
+    );
+  }
+
+  static NomoVerticalMenuSizingData overrideWith(
+      NomoVerticalMenuSizingData base,
+      [NomoVerticalMenuSizingDataNullable? override]) {
+    return NomoVerticalMenuSizingData(
+      hPadding: override?.hPadding ?? base.hPadding,
+      itemSpacing: override?.itemSpacing ?? base.itemSpacing,
+      spacing: override?.spacing ?? base.spacing,
+      height: override?.height ?? base.height,
+      iconSize: override?.iconSize ?? base.iconSize,
     );
   }
 }

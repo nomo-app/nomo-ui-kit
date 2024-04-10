@@ -32,6 +32,14 @@ class LoadingColorData implements LoadingColorDataNullable {
       strokeWidth: lerpDouble(a.strokeWidth, b.strokeWidth, t)!,
     );
   }
+
+  static LoadingColorData overrideWith(LoadingColorData base,
+      [LoadingColorDataNullable? override]) {
+    return LoadingColorData(
+      color: override?.color ?? base.color,
+      strokeWidth: override?.strokeWidth ?? base.strokeWidth,
+    );
+  }
 }
 
 class LoadingSizingDataNullable {
@@ -43,6 +51,11 @@ class LoadingSizingData implements LoadingSizingDataNullable {
   static LoadingSizingData lerp(
       LoadingSizingData a, LoadingSizingData b, double t) {
     return const LoadingSizingData();
+  }
+
+  static LoadingSizingData overrideWith(LoadingSizingData base,
+      [LoadingSizingDataNullable? override]) {
+    return LoadingSizingData();
   }
 }
 

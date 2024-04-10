@@ -256,6 +256,17 @@ class ComponentThemeDataGenerator
     }
     buffer.writeln(");}");
 
+    /// Override
+    buffer.writeln("static $className overrideWith(");
+    buffer.writeln("$className base,");
+    buffer.writeln("[$classNameNullable? override]");
+    buffer.writeln(") {");
+    buffer.writeln("return $className(");
+    for (final name in colorFields.keys) {
+      buffer.writeln("$name: override?.$name ?? base.$name,");
+    }
+    buffer.writeln(");}");
+
     buffer.writeln("}");
     final content = buffer.toString();
     buffer.clear();
@@ -406,6 +417,17 @@ class ComponentThemeDataGenerator
       buffer.writeln(
         "$name: $type.lerp(a.$name, b.$name, t)$nullAssertion,",
       );
+    }
+    buffer.writeln(");}");
+
+    /// Override
+    buffer.writeln("static $className overrideWith(");
+    buffer.writeln("$className base,");
+    buffer.writeln("[$classNameNullable? override]");
+    buffer.writeln(") {");
+    buffer.writeln("return $className(");
+    for (final name in sizingFields.keys) {
+      buffer.writeln("$name: override?.$name ?? base.$name,");
     }
     buffer.writeln(");}");
 

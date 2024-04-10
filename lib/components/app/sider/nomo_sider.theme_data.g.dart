@@ -32,6 +32,14 @@ class NomoSiderColorData implements NomoSiderColorDataNullable {
       border: Border.lerp(a.border, b.border, t)!,
     );
   }
+
+  static NomoSiderColorData overrideWith(NomoSiderColorData base,
+      [NomoSiderColorDataNullable? override]) {
+    return NomoSiderColorData(
+      backgroundColor: override?.backgroundColor ?? base.backgroundColor,
+      border: override?.border ?? base.border,
+    );
+  }
 }
 
 class NomoSiderSizingDataNullable {
@@ -63,6 +71,15 @@ class NomoSiderSizingData implements NomoSiderSizingDataNullable {
       padding: EdgeInsetsGeometry.lerp(a.padding, b.padding, t)!,
       scrollPadding: lerpDouble(a.scrollPadding, b.scrollPadding, t)!,
       width: lerpDouble(a.width, b.width, t)!,
+    );
+  }
+
+  static NomoSiderSizingData overrideWith(NomoSiderSizingData base,
+      [NomoSiderSizingDataNullable? override]) {
+    return NomoSiderSizingData(
+      padding: override?.padding ?? base.padding,
+      scrollPadding: override?.scrollPadding ?? base.scrollPadding,
+      width: override?.width ?? base.width,
     );
   }
 }

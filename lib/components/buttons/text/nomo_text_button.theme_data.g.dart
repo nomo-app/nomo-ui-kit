@@ -33,6 +33,14 @@ class NomoTextButtonColorData implements NomoTextButtonColorDataNullable {
           BorderRadiusGeometry.lerp(a.borderRadius, b.borderRadius, t)!,
     );
   }
+
+  static NomoTextButtonColorData overrideWith(NomoTextButtonColorData base,
+      [NomoTextButtonColorDataNullable? override]) {
+    return NomoTextButtonColorData(
+      foregroundColor: override?.foregroundColor ?? base.foregroundColor,
+      borderRadius: override?.borderRadius ?? base.borderRadius,
+    );
+  }
 }
 
 class NomoTextButtonSizingDataNullable {
@@ -52,6 +60,13 @@ class NomoTextButtonSizingData implements NomoTextButtonSizingDataNullable {
       NomoTextButtonSizingData a, NomoTextButtonSizingData b, double t) {
     return NomoTextButtonSizingData(
       padding: EdgeInsetsGeometry.lerp(a.padding, b.padding, t)!,
+    );
+  }
+
+  static NomoTextButtonSizingData overrideWith(NomoTextButtonSizingData base,
+      [NomoTextButtonSizingDataNullable? override]) {
+    return NomoTextButtonSizingData(
+      padding: override?.padding ?? base.padding,
     );
   }
 }

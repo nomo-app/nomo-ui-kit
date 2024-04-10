@@ -33,6 +33,14 @@ class NomoAppBarColorData implements NomoAppBarColorDataNullable {
       backgroundColor: Color.lerp(a.backgroundColor, b.backgroundColor, t)!,
     );
   }
+
+  static NomoAppBarColorData overrideWith(NomoAppBarColorData base,
+      [NomoAppBarColorDataNullable? override]) {
+    return NomoAppBarColorData(
+      borderRadius: override?.borderRadius ?? base.borderRadius,
+      backgroundColor: override?.backgroundColor ?? base.backgroundColor,
+    );
+  }
 }
 
 class NomoAppBarSizingDataNullable {
@@ -70,6 +78,16 @@ class NomoAppBarSizingData implements NomoAppBarSizingDataNullable {
       topInset: lerpDouble(a.topInset, b.topInset, t)!,
       height: lerpDouble(a.height, b.height, t)!,
       elevation: lerpDouble(a.elevation, b.elevation, t)!,
+    );
+  }
+
+  static NomoAppBarSizingData overrideWith(NomoAppBarSizingData base,
+      [NomoAppBarSizingDataNullable? override]) {
+    return NomoAppBarSizingData(
+      spacing: override?.spacing ?? base.spacing,
+      topInset: override?.topInset ?? base.topInset,
+      height: override?.height ?? base.height,
+      elevation: override?.elevation ?? base.elevation,
     );
   }
 }

@@ -45,6 +45,17 @@ class PrimaryNomoButtonColorData implements PrimaryNomoButtonColorDataNullable {
           BorderRadiusGeometry.lerp(a.borderRadius, b.borderRadius, t)!,
     );
   }
+
+  static PrimaryNomoButtonColorData overrideWith(
+      PrimaryNomoButtonColorData base,
+      [PrimaryNomoButtonColorDataNullable? override]) {
+    return PrimaryNomoButtonColorData(
+      backgroundColor: override?.backgroundColor ?? base.backgroundColor,
+      foregroundColor: override?.foregroundColor ?? base.foregroundColor,
+      elevation: override?.elevation ?? base.elevation,
+      borderRadius: override?.borderRadius ?? base.borderRadius,
+    );
+  }
 }
 
 class PrimaryNomoButtonSizingDataNullable {
@@ -65,6 +76,14 @@ class PrimaryNomoButtonSizingData
       PrimaryNomoButtonSizingData a, PrimaryNomoButtonSizingData b, double t) {
     return PrimaryNomoButtonSizingData(
       padding: EdgeInsetsGeometry.lerp(a.padding, b.padding, t)!,
+    );
+  }
+
+  static PrimaryNomoButtonSizingData overrideWith(
+      PrimaryNomoButtonSizingData base,
+      [PrimaryNomoButtonSizingDataNullable? override]) {
+    return PrimaryNomoButtonSizingData(
+      padding: override?.padding ?? base.padding,
     );
   }
 }

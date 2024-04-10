@@ -53,7 +53,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final file = get(
         Uri.parse(
-          "https://raw.githubusercontent.com/nomo-app/nomo-ui-kit/develop/README.md",
+          "https://raw.githubusercontent.com/nomo-app/nomo-ui-kit/main/README.md",
         ),
         headers: {"Accept": "text/plain"}).then(
       (value) => value.body,

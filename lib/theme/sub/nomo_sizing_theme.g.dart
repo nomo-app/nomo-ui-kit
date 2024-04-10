@@ -9,7 +9,7 @@ part of 'nomo_sizing_theme.dart';
 // ignore_for_file: prefer_constructors_over_static_methods,avoid_unused_constructor_parameters, require_trailing_commas, avoid_init_to_null
 NomoComponentSizes lerpNomoComponentSizes(
     NomoComponentSizes a, NomoComponentSizes b, double t) {
-  return NomoComponentSizes._(
+  return NomoComponentSizes(
     outlineContainerTheme: NomoOutlineContainerSizingData.lerp(
       a.outlineContainerTheme,
       b.outlineContainerTheme,
@@ -103,50 +103,6 @@ NomoComponentSizes lerpNomoComponentSizes(
   );
 }
 
-NomoComponentSizes overrideNomoComponentSizes({
-  required NomoSizes core,
-  NomoOutlineContainerSizingData? outlineContainerTheme,
-  NomoAppBarSizingData? appBarTheme,
-  NomoScaffoldSizingData? scaffoldTheme,
-  NomoBottomBarSizingData? bottomBarTheme,
-  NomoSiderSizingData? siderTheme,
-  NomoVerticalMenuSizingData? verticalMenuTheme,
-  NomoRouteBodySizingData? routeBodyTheme,
-  PrimaryNomoButtonSizingData? primaryButtonTheme,
-  SecondaryNomoButtonSizingData? secondaryButtonTheme,
-  NomoTextButtonSizingData? textButtonTheme,
-  NomoLinkButtonSizingData? linkButtonTheme,
-  ExpandableSizingData? expandableTheme,
-  NomoInputSizingData? inputTheme,
-  NomoDialogSizingData? dialogTheme,
-  NomoCardSizingData? cardTheme,
-  NomoDividerSizingData? dividerTheme,
-  NomoInfoItemSizingData? infoItemTheme,
-  NomoNotificationSizingData? notificationTheme,
-}) {
-  final def = NomoComponentSizes.defaultComponents(core);
-  return NomoComponentSizes._(
-    outlineContainerTheme: outlineContainerTheme ?? def.outlineContainerTheme,
-    appBarTheme: appBarTheme ?? def.appBarTheme,
-    scaffoldTheme: scaffoldTheme ?? def.scaffoldTheme,
-    bottomBarTheme: bottomBarTheme ?? def.bottomBarTheme,
-    siderTheme: siderTheme ?? def.siderTheme,
-    verticalMenuTheme: verticalMenuTheme ?? def.verticalMenuTheme,
-    routeBodyTheme: routeBodyTheme ?? def.routeBodyTheme,
-    primaryButtonTheme: primaryButtonTheme ?? def.primaryButtonTheme,
-    secondaryButtonTheme: secondaryButtonTheme ?? def.secondaryButtonTheme,
-    textButtonTheme: textButtonTheme ?? def.textButtonTheme,
-    linkButtonTheme: linkButtonTheme ?? def.linkButtonTheme,
-    expandableTheme: expandableTheme ?? def.expandableTheme,
-    inputTheme: inputTheme ?? def.inputTheme,
-    dialogTheme: dialogTheme ?? def.dialogTheme,
-    cardTheme: cardTheme ?? def.cardTheme,
-    dividerTheme: dividerTheme ?? def.dividerTheme,
-    infoItemTheme: infoItemTheme ?? def.infoItemTheme,
-    notificationTheme: notificationTheme ?? def.notificationTheme,
-  );
-}
-
 NomoComponentSizes defaultConstructor({
   NomoOutlineContainerSizingData? outlineContainerTheme,
   NomoAppBarSizingData? appBarTheme,
@@ -167,7 +123,7 @@ NomoComponentSizes defaultConstructor({
   NomoInfoItemSizingData? infoItemTheme,
   NomoNotificationSizingData? notificationTheme,
 }) {
-  return NomoComponentSizes._(
+  return NomoComponentSizes(
     outlineContainerTheme:
         outlineContainerTheme ?? const NomoOutlineContainerSizingData(),
     appBarTheme: appBarTheme ?? const NomoAppBarSizingData(),
@@ -190,4 +146,88 @@ NomoComponentSizes defaultConstructor({
     infoItemTheme: infoItemTheme ?? const NomoInfoItemSizingData(),
     notificationTheme: notificationTheme ?? const NomoNotificationSizingData(),
   );
+}
+
+class NomoComponentSizesNullable {
+  final NomoOutlineContainerSizingDataNullable? outlineContainerTheme;
+  final NomoAppBarSizingDataNullable? appBarTheme;
+  final NomoScaffoldSizingDataNullable? scaffoldTheme;
+  final NomoBottomBarSizingDataNullable? bottomBarTheme;
+  final NomoSiderSizingDataNullable? siderTheme;
+  final NomoVerticalMenuSizingDataNullable? verticalMenuTheme;
+  final NomoRouteBodySizingDataNullable? routeBodyTheme;
+  final PrimaryNomoButtonSizingDataNullable? primaryButtonTheme;
+  final SecondaryNomoButtonSizingDataNullable? secondaryButtonTheme;
+  final NomoTextButtonSizingDataNullable? textButtonTheme;
+  final NomoLinkButtonSizingDataNullable? linkButtonTheme;
+  final ExpandableSizingDataNullable? expandableTheme;
+  final NomoInputSizingDataNullable? inputTheme;
+  final NomoDialogSizingDataNullable? dialogTheme;
+  final NomoCardSizingDataNullable? cardTheme;
+  final NomoDividerSizingDataNullable? dividerTheme;
+  final NomoInfoItemSizingDataNullable? infoItemTheme;
+  final NomoNotificationSizingDataNullable? notificationTheme;
+  const NomoComponentSizesNullable({
+    this.outlineContainerTheme,
+    this.appBarTheme,
+    this.scaffoldTheme,
+    this.bottomBarTheme,
+    this.siderTheme,
+    this.verticalMenuTheme,
+    this.routeBodyTheme,
+    this.primaryButtonTheme,
+    this.secondaryButtonTheme,
+    this.textButtonTheme,
+    this.linkButtonTheme,
+    this.expandableTheme,
+    this.inputTheme,
+    this.dialogTheme,
+    this.cardTheme,
+    this.dividerTheme,
+    this.infoItemTheme,
+    this.notificationTheme,
+  });
+}
+
+extension NomoComponentSizesOverride on NomoComponentSizes {
+  NomoComponentSizes overrideWith(NomoComponentSizesNullable? nullable) {
+    if (nullable == null) return this;
+    return NomoComponentSizes(
+      outlineContainerTheme: NomoOutlineContainerSizingData.overrideWith(
+          outlineContainerTheme, nullable.outlineContainerTheme),
+      appBarTheme:
+          NomoAppBarSizingData.overrideWith(appBarTheme, nullable.appBarTheme),
+      scaffoldTheme: NomoScaffoldSizingData.overrideWith(
+          scaffoldTheme, nullable.scaffoldTheme),
+      bottomBarTheme: NomoBottomBarSizingData.overrideWith(
+          bottomBarTheme, nullable.bottomBarTheme),
+      siderTheme:
+          NomoSiderSizingData.overrideWith(siderTheme, nullable.siderTheme),
+      verticalMenuTheme: NomoVerticalMenuSizingData.overrideWith(
+          verticalMenuTheme, nullable.verticalMenuTheme),
+      routeBodyTheme: NomoRouteBodySizingData.overrideWith(
+          routeBodyTheme, nullable.routeBodyTheme),
+      primaryButtonTheme: PrimaryNomoButtonSizingData.overrideWith(
+          primaryButtonTheme, nullable.primaryButtonTheme),
+      secondaryButtonTheme: SecondaryNomoButtonSizingData.overrideWith(
+          secondaryButtonTheme, nullable.secondaryButtonTheme),
+      textButtonTheme: NomoTextButtonSizingData.overrideWith(
+          textButtonTheme, nullable.textButtonTheme),
+      linkButtonTheme: NomoLinkButtonSizingData.overrideWith(
+          linkButtonTheme, nullable.linkButtonTheme),
+      expandableTheme: ExpandableSizingData.overrideWith(
+          expandableTheme, nullable.expandableTheme),
+      inputTheme:
+          NomoInputSizingData.overrideWith(inputTheme, nullable.inputTheme),
+      dialogTheme:
+          NomoDialogSizingData.overrideWith(dialogTheme, nullable.dialogTheme),
+      cardTheme: NomoCardSizingData.overrideWith(cardTheme, nullable.cardTheme),
+      dividerTheme: NomoDividerSizingData.overrideWith(
+          dividerTheme, nullable.dividerTheme),
+      infoItemTheme: NomoInfoItemSizingData.overrideWith(
+          infoItemTheme, nullable.infoItemTheme),
+      notificationTheme: NomoNotificationSizingData.overrideWith(
+          notificationTheme, nullable.notificationTheme),
+    );
+  }
 }

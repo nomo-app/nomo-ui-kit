@@ -32,6 +32,14 @@ class NomoLinkButtonColorData implements NomoLinkButtonColorDataNullable {
       tapDownColor: Color.lerp(a.tapDownColor, b.tapDownColor, t)!,
     );
   }
+
+  static NomoLinkButtonColorData overrideWith(NomoLinkButtonColorData base,
+      [NomoLinkButtonColorDataNullable? override]) {
+    return NomoLinkButtonColorData(
+      foregroundColor: override?.foregroundColor ?? base.foregroundColor,
+      tapDownColor: override?.tapDownColor ?? base.tapDownColor,
+    );
+  }
 }
 
 class NomoLinkButtonSizingDataNullable {
@@ -57,6 +65,14 @@ class NomoLinkButtonSizingData implements NomoLinkButtonSizingDataNullable {
     return NomoLinkButtonSizingData(
       padding: EdgeInsetsGeometry.lerp(a.padding, b.padding, t)!,
       selectionColor: Color.lerp(a.selectionColor, b.selectionColor, t)!,
+    );
+  }
+
+  static NomoLinkButtonSizingData overrideWith(NomoLinkButtonSizingData base,
+      [NomoLinkButtonSizingDataNullable? override]) {
+    return NomoLinkButtonSizingData(
+      padding: override?.padding ?? base.padding,
+      selectionColor: override?.selectionColor ?? base.selectionColor,
     );
   }
 }

@@ -45,6 +45,17 @@ class NomoBottomBarColorData implements NomoBottomBarColorDataNullable {
       borderRadius: BorderRadius.lerp(a.borderRadius, b.borderRadius, t)!,
     );
   }
+
+  static NomoBottomBarColorData overrideWith(NomoBottomBarColorData base,
+      [NomoBottomBarColorDataNullable? override]) {
+    return NomoBottomBarColorData(
+      foreground: override?.foreground ?? base.foreground,
+      background: override?.background ?? base.background,
+      selectedForeground:
+          override?.selectedForeground ?? base.selectedForeground,
+      borderRadius: override?.borderRadius ?? base.borderRadius,
+    );
+  }
 }
 
 class NomoBottomBarSizingDataNullable {
@@ -88,6 +99,17 @@ class NomoBottomBarSizingData implements NomoBottomBarSizingDataNullable {
       iconSize: lerpDouble(a.iconSize, b.iconSize, t)!,
       padding: EdgeInsetsGeometry.lerp(a.padding, b.padding, t)!,
       itemPadding: EdgeInsetsGeometry.lerp(a.itemPadding, b.itemPadding, t)!,
+    );
+  }
+
+  static NomoBottomBarSizingData overrideWith(NomoBottomBarSizingData base,
+      [NomoBottomBarSizingDataNullable? override]) {
+    return NomoBottomBarSizingData(
+      height: override?.height ?? base.height,
+      spacing: override?.spacing ?? base.spacing,
+      iconSize: override?.iconSize ?? base.iconSize,
+      padding: override?.padding ?? base.padding,
+      itemPadding: override?.itemPadding ?? base.itemPadding,
     );
   }
 }

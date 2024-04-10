@@ -59,6 +59,19 @@ class SecondaryNomoButtonColorData
           BorderRadiusGeometry.lerp(a.borderRadius, b.borderRadius, t)!,
     );
   }
+
+  static SecondaryNomoButtonColorData overrideWith(
+      SecondaryNomoButtonColorData base,
+      [SecondaryNomoButtonColorDataNullable? override]) {
+    return SecondaryNomoButtonColorData(
+      backgroundColor: override?.backgroundColor ?? base.backgroundColor,
+      foregroundColor: override?.foregroundColor ?? base.foregroundColor,
+      elevation: override?.elevation ?? base.elevation,
+      selectionColor: override?.selectionColor ?? base.selectionColor,
+      border: override?.border ?? base.border,
+      borderRadius: override?.borderRadius ?? base.borderRadius,
+    );
+  }
 }
 
 class SecondaryNomoButtonSizingDataNullable {
@@ -79,6 +92,14 @@ class SecondaryNomoButtonSizingData
       SecondaryNomoButtonSizingData b, double t) {
     return SecondaryNomoButtonSizingData(
       padding: EdgeInsetsGeometry.lerp(a.padding, b.padding, t)!,
+    );
+  }
+
+  static SecondaryNomoButtonSizingData overrideWith(
+      SecondaryNomoButtonSizingData base,
+      [SecondaryNomoButtonSizingDataNullable? override]) {
+    return SecondaryNomoButtonSizingData(
+      padding: override?.padding ?? base.padding,
     );
   }
 }

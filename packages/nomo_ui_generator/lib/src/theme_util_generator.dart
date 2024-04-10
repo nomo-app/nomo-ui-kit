@@ -7,7 +7,7 @@ import 'package:source_gen/source_gen.dart';
 
 class ThemeUtilGenerator extends GeneratorForAnnotation<NomoThemeUtils> {
   @override
-  generateForAnnotatedElement(
+  Future<String> generateForAnnotatedElement(
     Element element,
     ConstantReader annotation,
     BuildStep buildStep,
@@ -15,19 +15,24 @@ class ThemeUtilGenerator extends GeneratorForAnnotation<NomoThemeUtils> {
     final StringBuffer buffer = StringBuffer();
 
     buffer.writeln(
-        "// ignore_for_file: prefer_constructors_over_static_methods,avoid_unused_constructor_parameters, require_trailing_commas, avoid_init_to_null ");
+      '// ignore_for_file: prefer_constructors_over_static_methods,avoid_unused_constructor_parameters, require_trailing_commas, avoid_init_to_null ',
+    );
 
     final visitor = ModelVisitor();
 
-    final coreType = annotation.read("coreType").stringValue;
+    final coreType = annotation.read('coreType').stringValue;
 
     element.visitChildren(visitor);
 
     lerp(buffer, visitor);
 
-    overrideFactory(buffer, visitor, coreType);
+    //   overrideFactory(buffer, visitor, coreType);
 
     defaultConstructor(buffer, visitor);
+
+    nullableClass(buffer, visitor);
+
+    overrideExtension(buffer, visitor);
 
     final out = buffer.toString();
     return out;
@@ -38,47 +43,97 @@ void lerp(StringBuffer buffer, ModelVisitor visitor) {
   final className = visitor.className;
   final fields = visitor.fields;
 
-  buffer.writeln("$className lerp$className($className a, $className b, double t) {");
-  buffer.writeln("return $className._(");
+  buffer.writeln(
+    '$className lerp$className($className a, $className b, double t) {',
+  );
+  buffer.writeln('return $className(');
   fields.forEach((key, value) {
-    buffer.writeln("$key: $value.lerp(a.$key, b.$key, t,),");
+    buffer.writeln('$key: $value.lerp(a.$key, b.$key, t,),');
   });
-  buffer.writeln(");");
-  buffer.writeln("}");
+  buffer.writeln(');');
+  buffer.writeln('}');
 }
 
-void overrideFactory(StringBuffer buffer, ModelVisitor visitor, String coreType) {
+void overrideFactory(
+  StringBuffer buffer,
+  ModelVisitor visitor,
+  String coreType,
+) {
   final className = visitor.className;
   final fields = visitor.fields;
 
-  buffer.writeln("$className override$className({");
-  buffer.writeln("required $coreType core,");
+  buffer.writeln('$className override$className({');
+  buffer.writeln(
+    'required $coreType core,',
+  );
+  buffer.writeln(
+    'required $className Function($coreType core) defaultComponents,',
+  );
   fields.forEach((key, value) {
-    buffer.writeln("$value? $key,");
+    buffer.writeln('${value}Nullable? $key,');
   });
-  buffer.writeln("}) {");
-  buffer.writeln("final def = $className.defaultComponents(core);");
-  buffer.writeln("return $className._(");
+  buffer
+    ..writeln('}) {')
+    ..writeln('final def = defaultComponents(core);')
+    ..writeln('return $className(');
   fields.forEach((key, value) {
-    buffer.writeln("$key: $key ?? def.$key,");
+    buffer.writeln('$key: $value.overrideWith(def.$key, $key,),');
   });
-  buffer.writeln(");");
-  buffer.writeln("}");
+  buffer.writeln(');');
+  buffer.writeln('}');
 }
 
 void defaultConstructor(StringBuffer buffer, ModelVisitor visitor) {
   final className = visitor.className;
   final fields = visitor.fields;
 
-  buffer.writeln("$className defaultConstructor({");
+  buffer.writeln('$className defaultConstructor({');
   fields.forEach((key, value) {
-    buffer.writeln("$value? $key,");
+    buffer.writeln('$value? $key,');
   });
-  buffer.writeln("}) {");
-  buffer.writeln("return $className._(");
+  buffer
+    ..writeln('}) {')
+    ..writeln('return $className(');
   fields.forEach((key, value) {
-    buffer.writeln("$key: $key ?? const $value(),");
+    buffer.writeln('$key: $key ?? const $value(),');
   });
-  buffer.writeln(");");
-  buffer.writeln("}");
+  buffer
+    ..writeln(');')
+    ..writeln('}');
+}
+
+void nullableClass(StringBuffer buffer, ModelVisitor visitor) {
+  final className = visitor.className;
+  final classNameNullable = '${className}Nullable';
+  final fields = visitor.fields;
+
+  buffer.writeln('class $classNameNullable {');
+  fields.forEach((key, value) {
+    buffer.writeln('final ${value}Nullable? $key;');
+  });
+  buffer.writeln('const $classNameNullable({');
+  fields.forEach((key, value) {
+    buffer.writeln('this.$key,');
+  });
+  buffer
+    ..writeln('});')
+    ..writeln('}');
+}
+
+void overrideExtension(StringBuffer buffer, ModelVisitor visitor) {
+  final className = visitor.className;
+  final classNameNullable = '${className}Nullable';
+  final fields = visitor.fields;
+
+  buffer.writeln('extension ${className}Override on $className {');
+
+  buffer.writeln('$className overrideWith($classNameNullable? nullable) {');
+  buffer.writeln('if (nullable == null) return this;');
+  buffer.writeln('return $className(');
+  fields.forEach((key, value) {
+    buffer.writeln('$key: $value.overrideWith($key, nullable.$key),');
+  });
+  buffer.writeln(');');
+  buffer.writeln('}');
+  buffer.writeln('}');
 }

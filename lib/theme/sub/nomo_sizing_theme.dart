@@ -120,25 +120,25 @@ class NomoComponentSizes {
   final NomoInfoItemSizingData infoItemTheme;
   final NomoNotificationSizingData notificationTheme;
 
-  const NomoComponentSizes._({
-    required this.outlineContainerTheme,
-    required this.appBarTheme,
-    required this.scaffoldTheme,
-    required this.bottomBarTheme,
-    required this.siderTheme,
-    required this.verticalMenuTheme,
-    required this.routeBodyTheme,
-    required this.primaryButtonTheme,
-    required this.secondaryButtonTheme,
-    required this.textButtonTheme,
-    required this.linkButtonTheme,
-    required this.expandableTheme,
-    required this.inputTheme,
-    required this.dialogTheme,
-    required this.cardTheme,
-    required this.dividerTheme,
-    required this.infoItemTheme,
-    required this.notificationTheme,
+  const NomoComponentSizes({
+    this.outlineContainerTheme = const NomoOutlineContainerSizingData(),
+    this.appBarTheme = const NomoAppBarSizingData(),
+    this.scaffoldTheme = const NomoScaffoldSizingData(),
+    this.bottomBarTheme = const NomoBottomBarSizingData(),
+    this.siderTheme = const NomoSiderSizingData(),
+    this.verticalMenuTheme = const NomoVerticalMenuSizingData(),
+    this.routeBodyTheme = const NomoRouteBodySizingData(),
+    this.primaryButtonTheme = const PrimaryNomoButtonSizingData(),
+    this.secondaryButtonTheme = const SecondaryNomoButtonSizingData(),
+    this.textButtonTheme = const NomoTextButtonSizingData(),
+    this.linkButtonTheme = const NomoLinkButtonSizingData(),
+    this.expandableTheme = const ExpandableSizingData(),
+    this.inputTheme = const NomoInputSizingData(),
+    this.dialogTheme = const NomoDialogSizingData(),
+    this.cardTheme = const NomoCardSizingData(),
+    this.dividerTheme = const NomoDividerSizingData(),
+    this.infoItemTheme = const NomoInfoItemSizingData(),
+    this.notificationTheme = const NomoNotificationSizingData(),
   });
 
   static NomoComponentSizes defaultComponents(NomoSizes core) =>
@@ -160,9 +160,12 @@ class NomoSizingThemeData {
   NomoSizingThemeData({
     required this.key,
     required this.sizes,
-    NomoComponentSizes Function(NomoSizes core) buildComponents =
+    NomoComponentSizes Function(NomoSizes core) defaultComponents =
         NomoComponentSizes.defaultComponents,
-  }) : components = buildComponents(sizes);
+    NomoComponentSizesNullable Function(NomoSizes core)? overrideComponents,
+  }) : components = defaultComponents(sizes).overrideWith(
+          overrideComponents?.call(sizes),
+        );
 
   NomoSizingThemeData._({
     required this.sizes,

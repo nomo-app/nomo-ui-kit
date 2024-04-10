@@ -38,6 +38,15 @@ class NomoCardColorData implements NomoCardColorDataNullable {
       backgroundColor: Color.lerp(a.backgroundColor, b.backgroundColor, t)!,
     );
   }
+
+  static NomoCardColorData overrideWith(NomoCardColorData base,
+      [NomoCardColorDataNullable? override]) {
+    return NomoCardColorData(
+      shadowColor: override?.shadowColor ?? base.shadowColor,
+      border: override?.border ?? base.border,
+      backgroundColor: override?.backgroundColor ?? base.backgroundColor,
+    );
+  }
 }
 
 class NomoCardSizingDataNullable {
@@ -82,6 +91,17 @@ class NomoCardSizingData implements NomoCardSizingDataNullable {
           BorderRadiusGeometry.lerp(a.borderRadius, b.borderRadius, t)!,
       padding: EdgeInsetsGeometry.lerp(a.padding, b.padding, t)!,
       margin: EdgeInsetsGeometry.lerp(a.margin, b.margin, t)!,
+    );
+  }
+
+  static NomoCardSizingData overrideWith(NomoCardSizingData base,
+      [NomoCardSizingDataNullable? override]) {
+    return NomoCardSizingData(
+      elevation: override?.elevation ?? base.elevation,
+      offset: override?.offset ?? base.offset,
+      borderRadius: override?.borderRadius ?? base.borderRadius,
+      padding: override?.padding ?? base.padding,
+      margin: override?.margin ?? base.margin,
     );
   }
 }
