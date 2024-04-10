@@ -22,6 +22,7 @@ class NomoText extends StatelessWidget {
     this.fontSize,
     this.fit = false,
     this.useInheritedTheme = false,
+    this.textShortener,
   })  : assert(
           fontSizes == null || fontSizes.length > 0,
           'fontSizes must be a list of at least one value',
@@ -47,6 +48,7 @@ class NomoText extends StatelessWidget {
   final double? fontSize;
   final bool fit;
   final bool useInheritedTheme;
+  final String Function(String text, int length)? textShortener;
 
   /// If true will look for the NomoTextTranslator InheritedWidget for translating the text
   final bool translate;
@@ -65,7 +67,7 @@ class NomoText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final translator = NomoTextTranslator.of(context);
-    final effectiveText =
+    var effectiveText =
         translate && translator != null ? translator(text) : text;
 
     final textColor = useInheritedTheme
@@ -143,6 +145,24 @@ class NomoText extends StatelessWidget {
             ..layout(maxWidth: maxWidth);
           lines = textPainter.computeLineMetrics();
           totalHeight = lines.fold(0.0, (prev, line) => prev + line.height);
+        }
+
+        final initalLength = effectiveText.length;
+        if (textShortener != null) {
+          for (var i = 1;
+              textPainter.didExceedMaxLines || totalHeight > maxHeight;
+              i++) {
+            effectiveText = textShortener!(effectiveText, initalLength - i);
+
+            textPainter
+              ..text = TextSpan(
+                text: effectiveText,
+                style: style,
+              )
+              ..layout(maxWidth: maxWidth);
+            lines = textPainter.computeLineMetrics();
+            totalHeight = lines.fold(0.0, (prev, line) => prev + line.height);
+          }
         }
 
         return Text(
