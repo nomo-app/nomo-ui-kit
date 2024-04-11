@@ -14,10 +14,8 @@ dependencies:
   flutter_hooks: ^0.19.0  
   logger: ^1.4.0
   flutter_svg: ^2.0.10+1
-  nomo_router:
-    path: packages/nomo-router
   nomo_ui_generator:
-    path: packages/nomo_ui_generator
+    path: nomo_ui_generator
   flutter_localizations:
     sdk: flutter
   

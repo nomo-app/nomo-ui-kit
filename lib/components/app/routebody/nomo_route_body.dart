@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nomo_router/nomo_router.dart';
 import 'package:nomo_ui_generator/annotations.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 import 'package:nomo_ui_kit/utils/layout_extensions.dart';
@@ -9,13 +8,11 @@ part 'nomo_route_body.theme_data.g.dart';
 @NomoComponentThemeData('routeBody')
 class NomoRouteBody extends StatelessWidget {
   final Widget? child;
-  final Widget Function(BuildContext context, NomoPage<dynamic> route)? builder;
+  final Widget Function(BuildContext context)? builder;
   final List<Widget>? slivers;
-  final List<Widget> Function(BuildContext context, NomoPage<dynamic> route)?
-      sliverBuilder;
+  final List<Widget> Function(BuildContext context)? sliverBuilder;
   final List<Widget>? children;
-  final List<Widget> Function(BuildContext context, NomoPage<dynamic> route)?
-      childrenBuilder;
+  final List<Widget> Function(BuildContext context)? childrenBuilder;
 
   final ScrollController? scrollController;
 
@@ -64,7 +61,6 @@ class NomoRouteBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = getFromContext(context, this);
-    final route = RouteInfoProvider.of(context).route;
     final _scrollController = scrollController ?? ScrollController();
 
     return ColoredBox(
@@ -83,7 +79,7 @@ class NomoRouteBody extends StatelessWidget {
                 theme: theme,
                 scrollable: scrollable,
                 footer: footer,
-                child: builder!(context, route),
+                child: builder!(context),
               ),
             ),
           _ when slivers != null => _SliverBody(
@@ -94,7 +90,7 @@ class NomoRouteBody extends StatelessWidget {
           _ when sliverBuilder != null => Builder(
               builder: (context) => _SliverBody(
                 theme: theme,
-                slivers: sliverBuilder!(context, route),
+                slivers: sliverBuilder!(context),
                 footer: footer,
               ),
             ),
@@ -107,7 +103,7 @@ class NomoRouteBody extends StatelessWidget {
               builder: (context) => _ChildrenBody(
                 theme: theme,
                 footer: footer,
-                children: childrenBuilder!(context, route),
+                children: childrenBuilder!(context),
               ),
             ),
         },

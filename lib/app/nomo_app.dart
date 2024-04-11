@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:nomo_router/nomo_router.dart';
-import 'package:nomo_router/router/entities/route.dart';
-import 'package:nomo_router/router/entities/transitions.dart';
 import 'package:nomo_ui_kit/app/animator.dart';
 import 'package:nomo_ui_kit/app/metric_reactor.dart';
 import 'package:nomo_ui_kit/app/notifications/app_notification.dart';
@@ -22,28 +19,22 @@ final _scrollBehavior = const ScrollBehavior().copyWith(
 class NomoApp extends StatefulWidget {
   const NomoApp({
     required this.themeDelegate,
+    required this.routerConfig,
     required this.color,
-    required this.appRouter,
     required this.supportedLocales,
     super.key,
     this.localizationDelegate,
     this.currentLocale,
-    this.defaultPageTransistion = const PageFadeTransition(),
-    this.defaultModalTransistion = const PageFadeTransition(),
     this.translator,
     this.appWrapper,
     this.navigatorObservers = const [],
     this.nestedNavigatorObservers = const [],
     this.home,
-    this.shouldPop,
-    this.willPop,
   });
 
   final NomoThemeDelegate<Object, Object> themeDelegate;
+  final RouterConfig<Object> routerConfig;
   final Color color;
-  final NomoAppRouter appRouter;
-  final PageTransition defaultPageTransistion;
-  final PageTransition defaultModalTransistion;
   final LocalizationsDelegate<dynamic>? localizationDelegate;
   final Iterable<Locale> supportedLocales;
   final Locale? currentLocale;
@@ -51,8 +42,6 @@ class NomoApp extends StatefulWidget {
   final Widget? home;
   final List<NavigatorObserver> navigatorObservers;
   final List<NavigatorObserver> nestedNavigatorObservers;
-  final Future<bool> Function()? shouldPop;
-  final Future<bool> Function()? willPop;
 
   /// A Wrapper that can access the ThemeProvider and NomoNavigator
   final Widget Function(BuildContext context, Widget app)? appWrapper;
@@ -63,29 +52,10 @@ class NomoApp extends StatefulWidget {
 
 class _NomoAppState extends State<NomoApp> {
   late final ThemeNotifier themeNotifier;
-  late final NomoRouterDelegate delegate;
-  late final PlatformRouteInformationProvider routeInformationProvider;
-  late final NomoBackButtonDispatcher backButtonDispatcher;
 
   @override
   void initState() {
-    routeInformationProvider = PlatformRouteInformationProvider(
-      initialRouteInformation: RouteInformation(
-        uri: WidgetsBinding.instance.platformDispatcher.defaultRouteName.uri,
-      ),
-    );
     themeNotifier = ThemeNotifier(widget.themeDelegate);
-    delegate = NomoRouterDelegate(
-      appRouter: widget.appRouter,
-      observers: widget.navigatorObservers,
-      nestedObservers: widget.nestedNavigatorObservers,
-      initial: widget.home,
-    );
-    backButtonDispatcher = NomoBackButtonDispatcher(
-      delegate,
-      widget.shouldPop,
-      widget.willPop,
-    );
     super.initState();
   }
 
@@ -107,10 +77,7 @@ class _NomoAppState extends State<NomoApp> {
       supportedLocales: widget.supportedLocales,
       locale: widget.currentLocale,
       color: widget.color,
-      routerDelegate: delegate,
-      routeInformationProvider: routeInformationProvider,
-      backButtonDispatcher: backButtonDispatcher,
-      routeInformationParser: const NomoRouteInformationParser(),
+      routerConfig: widget.routerConfig,
     );
 
     return MultiWrapper(
@@ -120,12 +87,6 @@ class _NomoAppState extends State<NomoApp> {
         if (widget.translator != null)
           (child) =>
               NomoTextTranslator(translator: widget.translator!, child: child),
-        (child) => NomoNavigator(
-              delegate: delegate,
-              defaultTransistion: widget.defaultPageTransistion,
-              defaultModalTransistion: widget.defaultModalTransistion,
-              child: child,
-            ),
         (child) => ScaffoldMessenger(
               child: child,
             ),

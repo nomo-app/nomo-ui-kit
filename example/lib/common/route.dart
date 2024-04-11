@@ -1,4 +1,3 @@
-import 'package:nomo_router/nomo_router.dart';
 import 'package:nomo_ui_kit/entities/menu_item.dart';
 
 extension MenuUtilList on Iterable<MenuRouteInfoMixin> {
