@@ -5,7 +5,7 @@ import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 
 part 'shimmer.theme_data.g.dart';
 
-@NomoComponentThemeData('shimmerTheme')
+@NomoComponentThemeData('shimmer')
 class Shimmer extends StatefulWidget {
   final Widget? child;
   final Duration duration;

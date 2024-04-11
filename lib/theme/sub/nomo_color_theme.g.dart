@@ -10,191 +10,206 @@ part of 'nomo_color_theme.dart';
 NomoComponentColors lerpNomoComponentColors(
     NomoComponentColors a, NomoComponentColors b, double t) {
   return NomoComponentColors(
-    outlineContainerTheme: NomoOutlineContainerColorData.lerp(
-      a.outlineContainerTheme,
-      b.outlineContainerTheme,
+    outlineContainerColor: NomoOutlineContainerColorData.lerp(
+      a.outlineContainerColor,
+      b.outlineContainerColor,
       t,
     ),
-    appBarTheme: NomoAppBarColorData.lerp(
-      a.appBarTheme,
-      b.appBarTheme,
+    appBarColor: NomoAppBarColorData.lerp(
+      a.appBarColor,
+      b.appBarColor,
       t,
     ),
-    scaffoldTheme: NomoScaffoldColorData.lerp(
-      a.scaffoldTheme,
-      b.scaffoldTheme,
+    scaffoldColor: NomoScaffoldColorData.lerp(
+      a.scaffoldColor,
+      b.scaffoldColor,
       t,
     ),
-    bottomBarTheme: NomoBottomBarColorData.lerp(
-      a.bottomBarTheme,
-      b.bottomBarTheme,
+    bottomBarColor: NomoBottomBarColorData.lerp(
+      a.bottomBarColor,
+      b.bottomBarColor,
       t,
     ),
-    siderTheme: NomoSiderColorData.lerp(
-      a.siderTheme,
-      b.siderTheme,
+    siderColor: NomoSiderColorData.lerp(
+      a.siderColor,
+      b.siderColor,
       t,
     ),
-    verticalMenuTheme: NomoVerticalMenuColorData.lerp(
-      a.verticalMenuTheme,
-      b.verticalMenuTheme,
+    verticalMenuColor: NomoVerticalMenuColorData.lerp(
+      a.verticalMenuColor,
+      b.verticalMenuColor,
       t,
     ),
-    primaryButtonTheme: PrimaryNomoButtonColorData.lerp(
-      a.primaryButtonTheme,
-      b.primaryButtonTheme,
+    primaryButtonColor: PrimaryNomoButtonColorData.lerp(
+      a.primaryButtonColor,
+      b.primaryButtonColor,
       t,
     ),
-    secondaryButtonTheme: SecondaryNomoButtonColorData.lerp(
-      a.secondaryButtonTheme,
-      b.secondaryButtonTheme,
+    secondaryButtonColor: SecondaryNomoButtonColorData.lerp(
+      a.secondaryButtonColor,
+      b.secondaryButtonColor,
       t,
     ),
-    textButtonTheme: NomoTextButtonColorData.lerp(
-      a.textButtonTheme,
-      b.textButtonTheme,
+    textButtonColor: NomoTextButtonColorData.lerp(
+      a.textButtonColor,
+      b.textButtonColor,
       t,
     ),
-    linkButtonTheme: NomoLinkButtonColorData.lerp(
-      a.linkButtonTheme,
-      b.linkButtonTheme,
+    linkButtonColor: NomoLinkButtonColorData.lerp(
+      a.linkButtonColor,
+      b.linkButtonColor,
       t,
     ),
-    loadingTheme: LoadingColorData.lerp(
-      a.loadingTheme,
-      b.loadingTheme,
+    loadingColor: LoadingColorData.lerp(
+      a.loadingColor,
+      b.loadingColor,
       t,
     ),
-    shimmerTheme: ShimmerColorData.lerp(
-      a.shimmerTheme,
-      b.shimmerTheme,
+    shimmerColor: ShimmerColorData.lerp(
+      a.shimmerColor,
+      b.shimmerColor,
       t,
     ),
-    expandableTheme: ExpandableColorData.lerp(
-      a.expandableTheme,
-      b.expandableTheme,
+    expandableColor: ExpandableColorData.lerp(
+      a.expandableColor,
+      b.expandableColor,
       t,
     ),
-    inputTheme: NomoInputColorData.lerp(
-      a.inputTheme,
-      b.inputTheme,
+    inputColor: NomoInputColorData.lerp(
+      a.inputColor,
+      b.inputColor,
       t,
     ),
-    dialogTheme: NomoDialogColorData.lerp(
-      a.dialogTheme,
-      b.dialogTheme,
+    dialogColor: NomoDialogColorData.lerp(
+      a.dialogColor,
+      b.dialogColor,
       t,
     ),
-    cardTheme: NomoCardColorData.lerp(
-      a.cardTheme,
-      b.cardTheme,
+    cardColor: NomoCardColorData.lerp(
+      a.cardColor,
+      b.cardColor,
       t,
     ),
-    dividerTheme: NomoDividerColorData.lerp(
-      a.dividerTheme,
-      b.dividerTheme,
+    dividerColor: NomoDividerColorData.lerp(
+      a.dividerColor,
+      b.dividerColor,
       t,
     ),
-    infoItemTheme: NomoInfoItemColorData.lerp(
-      a.infoItemTheme,
-      b.infoItemTheme,
+    infoItemColor: NomoInfoItemColorData.lerp(
+      a.infoItemColor,
+      b.infoItemColor,
       t,
     ),
-    notificationTheme: NomoNotificationColorData.lerp(
-      a.notificationTheme,
-      b.notificationTheme,
+    notificationColor: NomoNotificationColorData.lerp(
+      a.notificationColor,
+      b.notificationColor,
       t,
     ),
-  );
-}
-
-NomoComponentColors defaultConstructor({
-  NomoOutlineContainerColorData? outlineContainerTheme,
-  NomoAppBarColorData? appBarTheme,
-  NomoScaffoldColorData? scaffoldTheme,
-  NomoBottomBarColorData? bottomBarTheme,
-  NomoSiderColorData? siderTheme,
-  NomoVerticalMenuColorData? verticalMenuTheme,
-  PrimaryNomoButtonColorData? primaryButtonTheme,
-  SecondaryNomoButtonColorData? secondaryButtonTheme,
-  NomoTextButtonColorData? textButtonTheme,
-  NomoLinkButtonColorData? linkButtonTheme,
-  LoadingColorData? loadingTheme,
-  ShimmerColorData? shimmerTheme,
-  ExpandableColorData? expandableTheme,
-  NomoInputColorData? inputTheme,
-  NomoDialogColorData? dialogTheme,
-  NomoCardColorData? cardTheme,
-  NomoDividerColorData? dividerTheme,
-  NomoInfoItemColorData? infoItemTheme,
-  NomoNotificationColorData? notificationTheme,
-}) {
-  return NomoComponentColors(
-    outlineContainerTheme:
-        outlineContainerTheme ?? const NomoOutlineContainerColorData(),
-    appBarTheme: appBarTheme ?? const NomoAppBarColorData(),
-    scaffoldTheme: scaffoldTheme ?? const NomoScaffoldColorData(),
-    bottomBarTheme: bottomBarTheme ?? const NomoBottomBarColorData(),
-    siderTheme: siderTheme ?? const NomoSiderColorData(),
-    verticalMenuTheme: verticalMenuTheme ?? const NomoVerticalMenuColorData(),
-    primaryButtonTheme:
-        primaryButtonTheme ?? const PrimaryNomoButtonColorData(),
-    secondaryButtonTheme:
-        secondaryButtonTheme ?? const SecondaryNomoButtonColorData(),
-    textButtonTheme: textButtonTheme ?? const NomoTextButtonColorData(),
-    linkButtonTheme: linkButtonTheme ?? const NomoLinkButtonColorData(),
-    loadingTheme: loadingTheme ?? const LoadingColorData(),
-    shimmerTheme: shimmerTheme ?? const ShimmerColorData(),
-    expandableTheme: expandableTheme ?? const ExpandableColorData(),
-    inputTheme: inputTheme ?? const NomoInputColorData(),
-    dialogTheme: dialogTheme ?? const NomoDialogColorData(),
-    cardTheme: cardTheme ?? const NomoCardColorData(),
-    dividerTheme: dividerTheme ?? const NomoDividerColorData(),
-    infoItemTheme: infoItemTheme ?? const NomoInfoItemColorData(),
-    notificationTheme: notificationTheme ?? const NomoNotificationColorData(),
   );
 }
 
 class NomoComponentColorsNullable {
-  final NomoOutlineContainerColorDataNullable? outlineContainerTheme;
-  final NomoAppBarColorDataNullable? appBarTheme;
-  final NomoScaffoldColorDataNullable? scaffoldTheme;
-  final NomoBottomBarColorDataNullable? bottomBarTheme;
-  final NomoSiderColorDataNullable? siderTheme;
-  final NomoVerticalMenuColorDataNullable? verticalMenuTheme;
-  final PrimaryNomoButtonColorDataNullable? primaryButtonTheme;
-  final SecondaryNomoButtonColorDataNullable? secondaryButtonTheme;
-  final NomoTextButtonColorDataNullable? textButtonTheme;
-  final NomoLinkButtonColorDataNullable? linkButtonTheme;
-  final LoadingColorDataNullable? loadingTheme;
-  final ShimmerColorDataNullable? shimmerTheme;
-  final ExpandableColorDataNullable? expandableTheme;
-  final NomoInputColorDataNullable? inputTheme;
-  final NomoDialogColorDataNullable? dialogTheme;
-  final NomoCardColorDataNullable? cardTheme;
-  final NomoDividerColorDataNullable? dividerTheme;
-  final NomoInfoItemColorDataNullable? infoItemTheme;
-  final NomoNotificationColorDataNullable? notificationTheme;
+  final NomoOutlineContainerColorDataNullable? outlineContainerColor;
+  final NomoAppBarColorDataNullable? appBarColor;
+  final NomoScaffoldColorDataNullable? scaffoldColor;
+  final NomoBottomBarColorDataNullable? bottomBarColor;
+  final NomoSiderColorDataNullable? siderColor;
+  final NomoVerticalMenuColorDataNullable? verticalMenuColor;
+  final PrimaryNomoButtonColorDataNullable? primaryButtonColor;
+  final SecondaryNomoButtonColorDataNullable? secondaryButtonColor;
+  final NomoTextButtonColorDataNullable? textButtonColor;
+  final NomoLinkButtonColorDataNullable? linkButtonColor;
+  final LoadingColorDataNullable? loadingColor;
+  final ShimmerColorDataNullable? shimmerColor;
+  final ExpandableColorDataNullable? expandableColor;
+  final NomoInputColorDataNullable? inputColor;
+  final NomoDialogColorDataNullable? dialogColor;
+  final NomoCardColorDataNullable? cardColor;
+  final NomoDividerColorDataNullable? dividerColor;
+  final NomoInfoItemColorDataNullable? infoItemColor;
+  final NomoNotificationColorDataNullable? notificationColor;
   const NomoComponentColorsNullable({
-    this.outlineContainerTheme,
-    this.appBarTheme,
-    this.scaffoldTheme,
-    this.bottomBarTheme,
-    this.siderTheme,
-    this.verticalMenuTheme,
-    this.primaryButtonTheme,
-    this.secondaryButtonTheme,
-    this.textButtonTheme,
-    this.linkButtonTheme,
-    this.loadingTheme,
-    this.shimmerTheme,
-    this.expandableTheme,
-    this.inputTheme,
-    this.dialogTheme,
-    this.cardTheme,
-    this.dividerTheme,
-    this.infoItemTheme,
-    this.notificationTheme,
+    this.outlineContainerColor,
+    this.appBarColor,
+    this.scaffoldColor,
+    this.bottomBarColor,
+    this.siderColor,
+    this.verticalMenuColor,
+    this.primaryButtonColor,
+    this.secondaryButtonColor,
+    this.textButtonColor,
+    this.linkButtonColor,
+    this.loadingColor,
+    this.shimmerColor,
+    this.expandableColor,
+    this.inputColor,
+    this.dialogColor,
+    this.cardColor,
+    this.dividerColor,
+    this.infoItemColor,
+    this.notificationColor,
+  });
+}
+
+class NomoComponentColors implements NomoComponentColorsNullable {
+  @override
+  final NomoOutlineContainerColorData outlineContainerColor;
+  @override
+  final NomoAppBarColorData appBarColor;
+  @override
+  final NomoScaffoldColorData scaffoldColor;
+  @override
+  final NomoBottomBarColorData bottomBarColor;
+  @override
+  final NomoSiderColorData siderColor;
+  @override
+  final NomoVerticalMenuColorData verticalMenuColor;
+  @override
+  final PrimaryNomoButtonColorData primaryButtonColor;
+  @override
+  final SecondaryNomoButtonColorData secondaryButtonColor;
+  @override
+  final NomoTextButtonColorData textButtonColor;
+  @override
+  final NomoLinkButtonColorData linkButtonColor;
+  @override
+  final LoadingColorData loadingColor;
+  @override
+  final ShimmerColorData shimmerColor;
+  @override
+  final ExpandableColorData expandableColor;
+  @override
+  final NomoInputColorData inputColor;
+  @override
+  final NomoDialogColorData dialogColor;
+  @override
+  final NomoCardColorData cardColor;
+  @override
+  final NomoDividerColorData dividerColor;
+  @override
+  final NomoInfoItemColorData infoItemColor;
+  @override
+  final NomoNotificationColorData notificationColor;
+  const NomoComponentColors({
+    this.outlineContainerColor = const NomoOutlineContainerColorData(),
+    this.appBarColor = const NomoAppBarColorData(),
+    this.scaffoldColor = const NomoScaffoldColorData(),
+    this.bottomBarColor = const NomoBottomBarColorData(),
+    this.siderColor = const NomoSiderColorData(),
+    this.verticalMenuColor = const NomoVerticalMenuColorData(),
+    this.primaryButtonColor = const PrimaryNomoButtonColorData(),
+    this.secondaryButtonColor = const SecondaryNomoButtonColorData(),
+    this.textButtonColor = const NomoTextButtonColorData(),
+    this.linkButtonColor = const NomoLinkButtonColorData(),
+    this.loadingColor = const LoadingColorData(),
+    this.shimmerColor = const ShimmerColorData(),
+    this.expandableColor = const ExpandableColorData(),
+    this.inputColor = const NomoInputColorData(),
+    this.dialogColor = const NomoDialogColorData(),
+    this.cardColor = const NomoCardColorData(),
+    this.dividerColor = const NomoDividerColorData(),
+    this.infoItemColor = const NomoInfoItemColorData(),
+    this.notificationColor = const NomoNotificationColorData(),
   });
 }
 
@@ -202,43 +217,43 @@ extension NomoComponentColorsOverride on NomoComponentColors {
   NomoComponentColors overrideWith(NomoComponentColorsNullable? nullable) {
     if (nullable == null) return this;
     return NomoComponentColors(
-      outlineContainerTheme: NomoOutlineContainerColorData.overrideWith(
-          outlineContainerTheme, nullable.outlineContainerTheme),
-      appBarTheme:
-          NomoAppBarColorData.overrideWith(appBarTheme, nullable.appBarTheme),
-      scaffoldTheme: NomoScaffoldColorData.overrideWith(
-          scaffoldTheme, nullable.scaffoldTheme),
-      bottomBarTheme: NomoBottomBarColorData.overrideWith(
-          bottomBarTheme, nullable.bottomBarTheme),
-      siderTheme:
-          NomoSiderColorData.overrideWith(siderTheme, nullable.siderTheme),
-      verticalMenuTheme: NomoVerticalMenuColorData.overrideWith(
-          verticalMenuTheme, nullable.verticalMenuTheme),
-      primaryButtonTheme: PrimaryNomoButtonColorData.overrideWith(
-          primaryButtonTheme, nullable.primaryButtonTheme),
-      secondaryButtonTheme: SecondaryNomoButtonColorData.overrideWith(
-          secondaryButtonTheme, nullable.secondaryButtonTheme),
-      textButtonTheme: NomoTextButtonColorData.overrideWith(
-          textButtonTheme, nullable.textButtonTheme),
-      linkButtonTheme: NomoLinkButtonColorData.overrideWith(
-          linkButtonTheme, nullable.linkButtonTheme),
-      loadingTheme:
-          LoadingColorData.overrideWith(loadingTheme, nullable.loadingTheme),
-      shimmerTheme:
-          ShimmerColorData.overrideWith(shimmerTheme, nullable.shimmerTheme),
-      expandableTheme: ExpandableColorData.overrideWith(
-          expandableTheme, nullable.expandableTheme),
-      inputTheme:
-          NomoInputColorData.overrideWith(inputTheme, nullable.inputTheme),
-      dialogTheme:
-          NomoDialogColorData.overrideWith(dialogTheme, nullable.dialogTheme),
-      cardTheme: NomoCardColorData.overrideWith(cardTheme, nullable.cardTheme),
-      dividerTheme: NomoDividerColorData.overrideWith(
-          dividerTheme, nullable.dividerTheme),
-      infoItemTheme: NomoInfoItemColorData.overrideWith(
-          infoItemTheme, nullable.infoItemTheme),
-      notificationTheme: NomoNotificationColorData.overrideWith(
-          notificationTheme, nullable.notificationTheme),
+      outlineContainerColor: NomoOutlineContainerColorData.overrideWith(
+          outlineContainerColor, nullable.outlineContainerColor),
+      appBarColor:
+          NomoAppBarColorData.overrideWith(appBarColor, nullable.appBarColor),
+      scaffoldColor: NomoScaffoldColorData.overrideWith(
+          scaffoldColor, nullable.scaffoldColor),
+      bottomBarColor: NomoBottomBarColorData.overrideWith(
+          bottomBarColor, nullable.bottomBarColor),
+      siderColor:
+          NomoSiderColorData.overrideWith(siderColor, nullable.siderColor),
+      verticalMenuColor: NomoVerticalMenuColorData.overrideWith(
+          verticalMenuColor, nullable.verticalMenuColor),
+      primaryButtonColor: PrimaryNomoButtonColorData.overrideWith(
+          primaryButtonColor, nullable.primaryButtonColor),
+      secondaryButtonColor: SecondaryNomoButtonColorData.overrideWith(
+          secondaryButtonColor, nullable.secondaryButtonColor),
+      textButtonColor: NomoTextButtonColorData.overrideWith(
+          textButtonColor, nullable.textButtonColor),
+      linkButtonColor: NomoLinkButtonColorData.overrideWith(
+          linkButtonColor, nullable.linkButtonColor),
+      loadingColor:
+          LoadingColorData.overrideWith(loadingColor, nullable.loadingColor),
+      shimmerColor:
+          ShimmerColorData.overrideWith(shimmerColor, nullable.shimmerColor),
+      expandableColor: ExpandableColorData.overrideWith(
+          expandableColor, nullable.expandableColor),
+      inputColor:
+          NomoInputColorData.overrideWith(inputColor, nullable.inputColor),
+      dialogColor:
+          NomoDialogColorData.overrideWith(dialogColor, nullable.dialogColor),
+      cardColor: NomoCardColorData.overrideWith(cardColor, nullable.cardColor),
+      dividerColor: NomoDividerColorData.overrideWith(
+          dividerColor, nullable.dividerColor),
+      infoItemColor: NomoInfoItemColorData.overrideWith(
+          infoItemColor, nullable.infoItemColor),
+      notificationColor: NomoNotificationColorData.overrideWith(
+          notificationColor, nullable.notificationColor),
     );
   }
 }

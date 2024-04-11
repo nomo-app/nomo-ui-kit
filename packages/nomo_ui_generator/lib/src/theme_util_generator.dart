@@ -1,9 +1,13 @@
+import 'dart:math';
+
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:build/src/builder/build_step.dart';
 import 'package:nomo_ui_generator/annotations.dart';
-import 'package:nomo_ui_generator/src/model_visitor.dart';
 import 'package:source_gen/source_gen.dart';
+
+import 'package:analyzer/dart/constant/value.dart';
+// ignore: implementation_imports
 
 class ThemeUtilGenerator extends GeneratorForAnnotation<NomoThemeUtils> {
   @override
@@ -12,37 +16,49 @@ class ThemeUtilGenerator extends GeneratorForAnnotation<NomoThemeUtils> {
     ConstantReader annotation,
     BuildStep buildStep,
   ) async {
-    final StringBuffer buffer = StringBuffer();
+    // Cast the Element instance to VariableElement
+    final variableElement = element as VariableElement;
+
+    final String className = annotation.read('name').stringValue;
+
+    final fields =
+        variableElement.computeConstantValue()?.toListValue() ?? <DartObject>[];
+
+    final fieldMap = <String, String>{};
+
+    fields.forEach((element) {
+      final typeName =
+          element.toTypeValue()!.getDisplayString(withNullability: false);
+
+      var variableName = typeName.replaceAll('Nomo', '').replaceAll('Data', '');
+      variableName = variableName.substring(0, 1).toLowerCase() +
+          variableName.substring(1);
+
+      fieldMap[variableName] = typeName;
+    });
+
+    final buffer = StringBuffer();
 
     buffer.writeln(
       '// ignore_for_file: prefer_constructors_over_static_methods,avoid_unused_constructor_parameters, require_trailing_commas, avoid_init_to_null ',
     );
 
-    final visitor = ModelVisitor();
+    lerp(buffer, className, fieldMap);
 
-    final coreType = annotation.read('coreType').stringValue;
+    classes(buffer, className, fieldMap);
 
-    element.visitChildren(visitor);
-
-    lerp(buffer, visitor);
-
-    //   overrideFactory(buffer, visitor, coreType);
-
-    defaultConstructor(buffer, visitor);
-
-    nullableClass(buffer, visitor);
-
-    overrideExtension(buffer, visitor);
+    overrideExtension(buffer, className, fieldMap);
 
     final out = buffer.toString();
     return out;
   }
 }
 
-void lerp(StringBuffer buffer, ModelVisitor visitor) {
-  final className = visitor.className;
-  final fields = visitor.fields;
-
+void lerp(
+  StringBuffer buffer,
+  String className,
+  Map<String, String> fields,
+) {
   buffer.writeln(
     '$className lerp$className($className a, $className b, double t) {',
   );
@@ -54,58 +70,12 @@ void lerp(StringBuffer buffer, ModelVisitor visitor) {
   buffer.writeln('}');
 }
 
-void overrideFactory(
+void classes(
   StringBuffer buffer,
-  ModelVisitor visitor,
-  String coreType,
+  String className,
+  Map<String, String> fields,
 ) {
-  final className = visitor.className;
-  final fields = visitor.fields;
-
-  buffer.writeln('$className override$className({');
-  buffer.writeln(
-    'required $coreType core,',
-  );
-  buffer.writeln(
-    'required $className Function($coreType core) defaultComponents,',
-  );
-  fields.forEach((key, value) {
-    buffer.writeln('${value}Nullable? $key,');
-  });
-  buffer
-    ..writeln('}) {')
-    ..writeln('final def = defaultComponents(core);')
-    ..writeln('return $className(');
-  fields.forEach((key, value) {
-    buffer.writeln('$key: $value.overrideWith(def.$key, $key,),');
-  });
-  buffer.writeln(');');
-  buffer.writeln('}');
-}
-
-void defaultConstructor(StringBuffer buffer, ModelVisitor visitor) {
-  final className = visitor.className;
-  final fields = visitor.fields;
-
-  buffer.writeln('$className defaultConstructor({');
-  fields.forEach((key, value) {
-    buffer.writeln('$value? $key,');
-  });
-  buffer
-    ..writeln('}) {')
-    ..writeln('return $className(');
-  fields.forEach((key, value) {
-    buffer.writeln('$key: $key ?? const $value(),');
-  });
-  buffer
-    ..writeln(');')
-    ..writeln('}');
-}
-
-void nullableClass(StringBuffer buffer, ModelVisitor visitor) {
-  final className = visitor.className;
   final classNameNullable = '${className}Nullable';
-  final fields = visitor.fields;
 
   buffer.writeln('class $classNameNullable {');
   fields.forEach((key, value) {
@@ -118,12 +88,27 @@ void nullableClass(StringBuffer buffer, ModelVisitor visitor) {
   buffer
     ..writeln('});')
     ..writeln('}');
+
+  buffer.writeln('class $className implements $classNameNullable{');
+  fields.forEach((key, value) {
+    buffer.writeln('@override');
+    buffer.writeln('final $value $key;');
+  });
+  buffer.writeln('const $className({');
+  fields.forEach((key, value) {
+    buffer.writeln('this.$key = const $value(),');
+  });
+  buffer
+    ..writeln('});')
+    ..writeln('}');
 }
 
-void overrideExtension(StringBuffer buffer, ModelVisitor visitor) {
-  final className = visitor.className;
+void overrideExtension(
+  StringBuffer buffer,
+  String className,
+  Map<String, String> fields,
+) {
   final classNameNullable = '${className}Nullable';
-  final fields = visitor.fields;
 
   buffer.writeln('extension ${className}Override on $className {');
 
@@ -136,4 +121,10 @@ void overrideExtension(StringBuffer buffer, ModelVisitor visitor) {
   buffer.writeln(');');
   buffer.writeln('}');
   buffer.writeln('}');
+}
+
+extension on List<DartObject> {
+  List<Map<String, DartObject>> get namedArgumentsList {
+    return map((e) => ConstantReader(e).revive().namedArguments).toList();
+  }
 }

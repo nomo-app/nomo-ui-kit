@@ -4,7 +4,7 @@ import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 
 part 'nomo_outline_container.theme_data.g.dart';
 
-@NomoComponentThemeData('outlineContainerTheme')
+@NomoComponentThemeData('outlineContainer')
 
 ///
 /// A container with a border and a background color.

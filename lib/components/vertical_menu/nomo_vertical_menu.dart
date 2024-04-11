@@ -10,7 +10,7 @@ part 'nomo_vertical_menu.theme_data.g.dart';
 const kDuration = Duration(milliseconds: 200);
 const kCurve = Curves.easeInOut;
 
-@NomoComponentThemeData('verticalMenuTheme')
+@NomoComponentThemeData('verticalMenu')
 class NomoVerticalMenu<T> extends StatelessWidget {
   const NomoVerticalMenu({
     required this.items,

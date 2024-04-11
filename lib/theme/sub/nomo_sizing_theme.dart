@@ -99,82 +99,55 @@ class NomoSizes {
   }
 }
 
-@NomoThemeUtils('NomoSizes')
-class NomoComponentSizes {
-  final NomoOutlineContainerSizingData outlineContainerTheme;
-  final NomoAppBarSizingData appBarTheme;
-  final NomoScaffoldSizingData scaffoldTheme;
-  final NomoBottomBarSizingData bottomBarTheme;
-  final NomoSiderSizingData siderTheme;
-  final NomoVerticalMenuSizingData verticalMenuTheme;
-  final NomoRouteBodySizingData routeBodyTheme;
-  final PrimaryNomoButtonSizingData primaryButtonTheme;
-  final SecondaryNomoButtonSizingData secondaryButtonTheme;
-  final NomoTextButtonSizingData textButtonTheme;
-  final NomoLinkButtonSizingData linkButtonTheme;
-  final ExpandableSizingData expandableTheme;
-  final NomoInputSizingData inputTheme;
-  final NomoDialogSizingData dialogTheme;
-  final NomoCardSizingData cardTheme;
-  final NomoDividerSizingData dividerTheme;
-  final NomoInfoItemSizingData infoItemTheme;
-  final NomoNotificationSizingData notificationTheme;
+@NomoThemeUtils(
+  'NomoComponentSizes',
+)
+const _components = <Object>[
+  NomoOutlineContainerSizingData,
+  NomoAppBarSizingData,
+  NomoScaffoldSizingData,
+  NomoBottomBarSizingData,
+  NomoSiderSizingData,
+  NomoVerticalMenuSizingData,
+  NomoRouteBodySizingData,
+  PrimaryNomoButtonSizingData,
+  SecondaryNomoButtonSizingData,
+  NomoTextButtonSizingData,
+  NomoLinkButtonSizingData,
+  ExpandableSizingData,
+  NomoInputSizingData,
+  NomoDialogSizingData,
+  NomoCardSizingData,
+  NomoDividerSizingData,
+  NomoInfoItemSizingData,
+  NomoNotificationSizingData,
+];
 
-  const NomoComponentSizes({
-    this.outlineContainerTheme = const NomoOutlineContainerSizingData(),
-    this.appBarTheme = const NomoAppBarSizingData(),
-    this.scaffoldTheme = const NomoScaffoldSizingData(),
-    this.bottomBarTheme = const NomoBottomBarSizingData(),
-    this.siderTheme = const NomoSiderSizingData(),
-    this.verticalMenuTheme = const NomoVerticalMenuSizingData(),
-    this.routeBodyTheme = const NomoRouteBodySizingData(),
-    this.primaryButtonTheme = const PrimaryNomoButtonSizingData(),
-    this.secondaryButtonTheme = const SecondaryNomoButtonSizingData(),
-    this.textButtonTheme = const NomoTextButtonSizingData(),
-    this.linkButtonTheme = const NomoLinkButtonSizingData(),
-    this.expandableTheme = const ExpandableSizingData(),
-    this.inputTheme = const NomoInputSizingData(),
-    this.dialogTheme = const NomoDialogSizingData(),
-    this.cardTheme = const NomoCardSizingData(),
-    this.dividerTheme = const NomoDividerSizingData(),
-    this.infoItemTheme = const NomoInfoItemSizingData(),
-    this.notificationTheme = const NomoNotificationSizingData(),
-  });
+NomoComponentSizes predefinedComponentSizes(NomoSizes core) =>
+    NomoComponentSizes(
+      primaryButtonSizing: const PrimaryNomoButtonSizingData(
+        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+      ),
+      dialogSizing: NomoDialogSizingData(
+        borderRadius: BorderRadius.circular(6),
+        padding: const EdgeInsets.all(16),
+      ),
+    );
 
-  static NomoComponentSizes defaultComponents(NomoSizes core) =>
-      defaultConstructor(
-        outlineContainerTheme: const NomoOutlineContainerSizingData(
-          padding: EdgeInsets.all(16),
-        ),
-        primaryButtonTheme: const PrimaryNomoButtonSizingData(
-          padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
-        ),
-        dialogTheme: NomoDialogSizingData(
-          borderRadius: BorderRadius.circular(6),
-          padding: EdgeInsets.all(16),
-        ),
-      );
-}
-
-class NomoSizingThemeData {
-  NomoSizingThemeData({
+@immutable
+class NomoSizingThemeData implements NomoSizingThemeDataNullable {
+  const NomoSizingThemeData({
     required this.key,
-    required this.sizes,
-    NomoComponentSizes Function(NomoSizes core) defaultComponents =
-        NomoComponentSizes.defaultComponents,
-    NomoComponentSizesNullable Function(NomoSizes core)? overrideComponents,
-  }) : components = defaultComponents(sizes).overrideWith(
-          overrideComponents?.call(sizes),
-        );
-
-  NomoSizingThemeData._({
     required this.sizes,
     required this.components,
-    required this.key,
   });
+
+  @override
   final NomoSizes sizes;
+  @override
   final NomoComponentSizes components;
-  final ValueKey key;
+  @override
+  final ValueKey<Object> key;
 
   @override
   int get hashCode => key.hashCode;
@@ -189,10 +162,33 @@ class NomoSizingThemeData {
     NomoSizingThemeData b,
     double t,
   ) {
-    return NomoSizingThemeData._(
+    return NomoSizingThemeData(
       key: t < 0.5 ? a.key : b.key,
       sizes: NomoSizes.lerp(a.sizes, b.sizes, t),
       components: lerpNomoComponentSizes(a.components, b.components, t),
+    );
+  }
+}
+
+class NomoSizingThemeDataNullable {
+  final NomoSizes sizes;
+  final NomoComponentSizesNullable? components;
+  final ValueKey<Object> key;
+
+  NomoSizingThemeDataNullable({
+    required this.sizes,
+    required this.key,
+    NomoComponentSizesNullable Function(NomoSizes core)? buildComponents,
+  }) : components = buildComponents?.call(sizes);
+
+  static NomoSizingThemeData convert(
+    NomoSizingThemeDataNullable data,
+    NomoComponentSizes defaultComponents,
+  ) {
+    return NomoSizingThemeData(
+      key: data.key,
+      sizes: data.sizes,
+      components: defaultComponents.overrideWith(data.components),
     );
   }
 }

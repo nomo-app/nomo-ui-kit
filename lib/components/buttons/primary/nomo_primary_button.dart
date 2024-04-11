@@ -17,7 +17,7 @@ enum ActionType {
 
 // TODO: Selected Elevation?
 
-@NomoComponentThemeData('primaryButtonTheme')
+@NomoComponentThemeData('primaryButton')
 class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
   final String? text;
   final IconData? icon;

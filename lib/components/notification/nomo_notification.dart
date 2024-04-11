@@ -9,7 +9,7 @@ import 'package:nomo_ui_kit/utils/layout_extensions.dart';
 
 part 'nomo_notification.theme_data.g.dart';
 
-@NomoComponentThemeData('notificationTheme')
+@NomoComponentThemeData('notification')
 class NomoNotification extends StatelessWidget {
   final String title;
   final String subtitle;

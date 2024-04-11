@@ -4,7 +4,7 @@ import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 
 part 'nomo_sider.theme_data.g.dart';
 
-@NomoComponentThemeData('siderTheme')
+@NomoComponentThemeData('sider')
 class NomoSider extends StatelessWidget {
   const NomoSider({
     required this.child,

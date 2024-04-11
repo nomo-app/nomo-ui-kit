@@ -10,7 +10,7 @@ class MetricReactor extends StatefulWidget {
     super.key,
   });
   final Widget child;
-  final NomoSizingThemeData Function(double) sizingThemeBuilder;
+  final Object Function(double) sizingThemeBuilder;
 
   @override
   State<MetricReactor> createState() => _MetricReactorState();

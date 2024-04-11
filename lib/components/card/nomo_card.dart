@@ -5,7 +5,7 @@ import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 
 part 'nomo_card.theme_data.g.dart';
 
-@NomoComponentThemeData('cardTheme')
+@NomoComponentThemeData('card')
 class NomoCard extends StatelessWidget {
   final Widget child;
 

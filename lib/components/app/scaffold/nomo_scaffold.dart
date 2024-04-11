@@ -5,7 +5,7 @@ import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 
 part 'nomo_scaffold.theme_data.g.dart';
 
-@NomoComponentThemeData('scaffoldTheme')
+@NomoComponentThemeData('scaffold')
 class NomoScaffold extends StatefulWidget {
   const NomoScaffold({
     required this.child,

@@ -42,12 +42,10 @@ Widget wrapper(nav) {
           trailling: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              if (themeProvider.colorTheme == ColorMode.DARK.theme)
+              if (themeProvider.colorMode == ColorMode.DARK)
                 IconButton(
                   onPressed: () {
-                    ThemeProvider.of(context).changeColorTheme(
-                      ColorMode.LIGHT.theme,
-                    );
+                    ThemeProvider.of(context).changeColorTheme(ColorMode.LIGHT);
                   },
                   icon: const Icon(
                     Icons.light_mode,
@@ -57,15 +55,13 @@ Widget wrapper(nav) {
               else
                 IconButton(
                   onPressed: () {
-                    ThemeProvider.of(context).changeColorTheme(
-                      ColorMode.DARK.theme,
-                    );
+                    ThemeProvider.of(context).changeColorTheme(ColorMode.DARK);
                   },
                   icon: const Icon(
                     Icons.dark_mode,
                   ),
                 ),
-              if (!context.componentSizes.scaffoldTheme.showSider)
+              if (!context.componentSizes.scaffoldSizing.showSider)
                 Builder(
                   builder: (context) {
                     return IconButton(
@@ -82,9 +78,7 @@ Widget wrapper(nav) {
             ],
           ),
         ),
-        sider: const Sider(
-          topInset: 32,
-        ),
+        sider: const Sider(),
         endDrawer: const DrawerEx(),
         child: nav,
       );

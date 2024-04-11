@@ -84,3 +84,53 @@ class NomoTheme extends InheritedWidget {
     return oldWidget.value != value;
   }
 }
+
+abstract class NomoThemeDelegate<C, S> {
+  /// Base Components Colors
+  NomoComponentColorsNullable defaultComponentsColor(NomoColors core);
+
+  /// Map of all your Color Themes
+  Map<C, NomoColorThemeDataNullable> get colorThemes;
+
+  /// Initial Color Theme
+  C initialColorTheme();
+
+  /// Base Components Sizes
+  NomoComponentSizesNullable defaultComponentsSize(NomoSizes core);
+
+  /// Map of all your Sizing Themes
+  Map<S, NomoSizingThemeDataNullable> get sizingThemes;
+
+  /// Sizing Theme Builder
+  /// This functions returns the sizing theme based on the width of the screen
+  S sizingThemeBuilder(double width);
+
+  /// Typography Theme
+  NomoTypographyTheme get typography;
+
+  /// Constants
+  NomoConstantsThemeData get constants;
+
+  Map<S, NomoSizingThemeData> createSizingThemes() {
+    final map = <S, NomoSizingThemeData>{};
+    for (final MapEntry(:key, :value) in sizingThemes.entries) {
+      final defComponents = predefinedComponentSizes(value.sizes).overrideWith(
+        defaultComponentsSize(value.sizes),
+      );
+      map[key] = NomoSizingThemeDataNullable.convert(value, defComponents);
+    }
+    return map;
+  }
+
+  Map<C, NomoColorThemeData> createColorThemes() {
+    final map = <C, NomoColorThemeData>{};
+    for (final MapEntry(:key, :value) in colorThemes.entries) {
+      final defComponents =
+          predefinedComponentColors(value.colors).overrideWith(
+        defaultComponentsColor(value.colors),
+      );
+      map[key] = NomoColorThemeDataNullable.convert(value, defComponents);
+    }
+    return map;
+  }
+}

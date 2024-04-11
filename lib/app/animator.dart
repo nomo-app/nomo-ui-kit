@@ -34,15 +34,16 @@ class _ThemeAnimatorState extends State<ThemeAnimator> {
 
   @override
   void initState() {
-    lastTheme = widget.notifier.value;
+    lastTheme = widget.notifier.theme;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-      valueListenable: widget.notifier,
-      builder: (context, nextTheme, child) {
+    return ListenableBuilder(
+      listenable: widget.notifier,
+      builder: (context, child) {
+        final nextTheme = widget.notifier.theme;
         return TweenAnimationBuilder(
           tween: NomoThemeDataTween(begin: lastTheme, end: nextTheme),
           duration: kThemeChangeDuration,

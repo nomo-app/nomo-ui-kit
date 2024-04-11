@@ -7,7 +7,7 @@ import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 
 part 'nomo_secondary_button.theme_data.g.dart';
 
-@NomoComponentThemeData('secondaryButtonTheme')
+@NomoComponentThemeData('secondaryButton')
 class SecondaryNomoButton extends StatelessWidget with NomoButtonMixin {
   final String? text;
   final IconData? icon;

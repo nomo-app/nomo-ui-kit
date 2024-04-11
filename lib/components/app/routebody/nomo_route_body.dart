@@ -6,7 +6,7 @@ import 'package:nomo_ui_kit/utils/layout_extensions.dart';
 
 part 'nomo_route_body.theme_data.g.dart';
 
-@NomoComponentThemeData('routeBodyTheme')
+@NomoComponentThemeData('routeBody')
 class NomoRouteBody extends StatelessWidget {
   final Widget? child;
   final Widget Function(BuildContext context, NomoPage<dynamic> route)? builder;

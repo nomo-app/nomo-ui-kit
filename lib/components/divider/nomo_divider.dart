@@ -6,7 +6,7 @@ import 'package:nomo_ui_kit/utils/layout_extensions.dart';
 
 part 'nomo_divider.theme_data.g.dart';
 
-@NomoComponentThemeData('dividerTheme')
+@NomoComponentThemeData('divider')
 class NomoDivider extends StatelessWidget {
   @NomoColorField(Colors.black38)
   final Color? color;

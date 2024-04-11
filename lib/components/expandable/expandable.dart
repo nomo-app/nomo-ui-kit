@@ -11,7 +11,7 @@ const _kExpand = Icons.arrow_forward_ios_rounded;
 const _kDuration = Duration(milliseconds: 300);
 const _kCurve = Curves.easeInOut;
 
-@NomoComponentThemeData('expandableTheme')
+@NomoComponentThemeData('expandable')
 class Expandable extends StatefulWidget {
   final Widget title;
   final List<Widget> children;

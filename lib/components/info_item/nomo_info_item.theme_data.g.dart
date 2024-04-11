@@ -155,7 +155,7 @@ NomoInfoItemThemeData getFromContext(
 ) {
   const globalColorTheme = NomoInfoItemColorData();
   final globalSizingTheme =
-      NomoTheme.maybeOf(context)?.componentSizes.infoItemTheme ??
+      NomoTheme.maybeOf(context)?.componentSizes.infoItemSizing ??
           const NomoInfoItemSizingData();
   final globalConstants = NomoTheme.maybeOf(context)?.constants.infoItemTheme ??
       const NomoInfoItemConstants();

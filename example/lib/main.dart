@@ -5,6 +5,7 @@ import 'package:http/http.dart';
 import 'package:markdown_widget/markdown_widget.dart';
 import 'package:nomo_router/nomo_router.dart';
 import 'package:nomo_ui_kit/app/nomo_app.dart';
+import 'package:nomo_ui_kit/components/app/app.dart';
 import 'package:nomo_ui_kit/components/app/routebody/nomo_route_body.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 // ignore: depend_on_referenced_packages
@@ -29,17 +30,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return NomoApp(
-      sizingThemeBuilder: (width) => switch (width) {
-        < 480 => sizingSmall,
-        < 1080 => sizingMedium,
-        _ => sizingLarge,
-      },
-      theme: NomoThemeData(
-        colorTheme: ColorMode.LIGHT.theme,
-        sizingTheme: SizingMode.LARGE.theme,
-        textTheme: typography,
-        constants: constants,
-      ),
+      themeDelegate: AppThemeDelegate(),
+      color: Colors.red,
       supportedLocales: const [Locale('en', 'US')],
       appRouter: appRouter,
     );

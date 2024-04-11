@@ -233,10 +233,10 @@ NomoCardThemeData getFromContext(
   NomoCard widget,
 ) {
   final globalColorTheme =
-      NomoTheme.maybeOf(context)?.componentColors.cardTheme ??
+      NomoTheme.maybeOf(context)?.componentColors.cardColor ??
           const NomoCardColorData();
   final globalSizingTheme =
-      NomoTheme.maybeOf(context)?.componentSizes.cardTheme ??
+      NomoTheme.maybeOf(context)?.componentSizes.cardSizing ??
           const NomoCardSizingData();
   const globalConstants = NomoCardConstants();
   final themeOverride = NomoCardThemeOverride.maybeOf(context);

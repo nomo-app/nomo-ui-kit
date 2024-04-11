@@ -23,9 +23,9 @@ class NomoConstant<T extends Object> {
 }
 
 class NomoThemeUtils {
-  final String coreType;
+  final String name;
 
-  const NomoThemeUtils(this.coreType);
+  const NomoThemeUtils(this.name);
 }
 
 class StaticFieldsList {

@@ -195,10 +195,10 @@ PrimaryNomoButtonThemeData getFromContext(
   PrimaryNomoButton widget,
 ) {
   final globalColorTheme =
-      NomoTheme.maybeOf(context)?.componentColors.primaryButtonTheme ??
+      NomoTheme.maybeOf(context)?.componentColors.primaryButtonColor ??
           const PrimaryNomoButtonColorData();
   final globalSizingTheme =
-      NomoTheme.maybeOf(context)?.componentSizes.primaryButtonTheme ??
+      NomoTheme.maybeOf(context)?.componentSizes.primaryButtonSizing ??
           const PrimaryNomoButtonSizingData();
   const globalConstants = PrimaryNomoButtonConstants();
   final themeOverride = PrimaryNomoButtonThemeOverride.maybeOf(context);

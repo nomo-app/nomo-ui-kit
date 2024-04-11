@@ -5,7 +5,7 @@ import 'package:nomo_ui_kit/entities/nomo_decoration.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 part 'nomo_app_bar.theme_data.g.dart';
 
-@NomoComponentThemeData('appBarTheme')
+@NomoComponentThemeData('appBar')
 class NomoAppBar extends StatelessWidget {
   const NomoAppBar({
     super.key,

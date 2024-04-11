@@ -175,10 +175,10 @@ NomoScaffoldThemeData getFromContext(
   NomoScaffold widget,
 ) {
   final globalColorTheme =
-      NomoTheme.maybeOf(context)?.componentColors.scaffoldTheme ??
+      NomoTheme.maybeOf(context)?.componentColors.scaffoldColor ??
           const NomoScaffoldColorData();
   final globalSizingTheme =
-      NomoTheme.maybeOf(context)?.componentSizes.scaffoldTheme ??
+      NomoTheme.maybeOf(context)?.componentSizes.scaffoldSizing ??
           const NomoScaffoldSizingData();
   const globalConstants = NomoScaffoldConstants();
   final themeOverride = NomoScaffoldThemeOverride.maybeOf(context);

@@ -252,10 +252,10 @@ NomoBottomBarThemeData getFromContext(
   NomoBottomBar widget,
 ) {
   final globalColorTheme =
-      NomoTheme.maybeOf(context)?.componentColors.bottomBarTheme ??
+      NomoTheme.maybeOf(context)?.componentColors.bottomBarColor ??
           const NomoBottomBarColorData();
   final globalSizingTheme =
-      NomoTheme.maybeOf(context)?.componentSizes.bottomBarTheme ??
+      NomoTheme.maybeOf(context)?.componentSizes.bottomBarSizing ??
           const NomoBottomBarSizingData();
   const globalConstants = NomoBottomBarConstants();
   final themeOverride = NomoBottomBarThemeOverride.maybeOf(context);

@@ -8,7 +8,6 @@ import 'package:nomo_ui_kit/app/metric_reactor.dart';
 import 'package:nomo_ui_kit/app/notifications/app_notification.dart';
 import 'package:nomo_ui_kit/components/text/nomo_text.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
-import 'package:nomo_ui_kit/theme/sub/nomo_sizing_theme.dart';
 import 'package:nomo_ui_kit/theme/theme_provider.dart';
 import 'package:nomo_ui_kit/utils/layout_extensions.dart';
 import 'package:nomo_ui_kit/utils/multi_wrapper.dart';
@@ -22,10 +21,10 @@ final _scrollBehavior = const ScrollBehavior().copyWith(
 
 class NomoApp extends StatefulWidget {
   const NomoApp({
+    required this.themeDelegate,
+    required this.color,
     required this.appRouter,
     required this.supportedLocales,
-    required this.theme,
-    required this.sizingThemeBuilder,
     super.key,
     this.localizationDelegate,
     this.currentLocale,
@@ -40,14 +39,14 @@ class NomoApp extends StatefulWidget {
     this.willPop,
   });
 
+  final NomoThemeDelegate<Object, Object> themeDelegate;
+  final Color color;
   final NomoAppRouter appRouter;
   final PageTransition defaultPageTransistion;
   final PageTransition defaultModalTransistion;
   final LocalizationsDelegate<dynamic>? localizationDelegate;
   final Iterable<Locale> supportedLocales;
   final Locale? currentLocale;
-  final NomoThemeData theme;
-  final NomoSizingThemeData Function(double) sizingThemeBuilder;
   final String Function(String value)? translator;
   final Widget? home;
   final List<NavigatorObserver> navigatorObservers;
@@ -75,7 +74,7 @@ class _NomoAppState extends State<NomoApp> {
         uri: WidgetsBinding.instance.platformDispatcher.defaultRouteName.uri,
       ),
     );
-    themeNotifier = ThemeNotifier(widget.theme);
+    themeNotifier = ThemeNotifier(widget.themeDelegate);
     delegate = NomoRouterDelegate(
       appRouter: widget.appRouter,
       observers: widget.navigatorObservers,
@@ -107,7 +106,7 @@ class _NomoAppState extends State<NomoApp> {
       ],
       supportedLocales: widget.supportedLocales,
       locale: widget.currentLocale,
-      color: widget.theme.colors.primary,
+      color: widget.color,
       routerDelegate: delegate,
       routeInformationProvider: routeInformationProvider,
       backButtonDispatcher: backButtonDispatcher,
@@ -133,7 +132,7 @@ class _NomoAppState extends State<NomoApp> {
         (child) => InAppNotification(child: child),
       ],
       child: MetricReactor(
-        sizingThemeBuilder: widget.sizingThemeBuilder,
+        sizingThemeBuilder: widget.themeDelegate.sizingThemeBuilder,
         child: ThemeAnimator(
           notifier: themeNotifier,
           child: app.wrapIf(

@@ -4,7 +4,7 @@ import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 
 part 'loading.theme_data.g.dart';
 
-@NomoComponentThemeData('loadingTheme')
+@NomoComponentThemeData('loading')
 class Loading extends StatelessWidget {
   @NomoColorField(primaryColor)
   final Color? color;
@@ -71,7 +71,8 @@ class LoadingColorAnimation extends StatefulWidget {
   State<LoadingColorAnimation> createState() => _LoadingColorAnimationState();
 }
 
-class _LoadingColorAnimationState extends State<LoadingColorAnimation> with TickerProviderStateMixin {
+class _LoadingColorAnimationState extends State<LoadingColorAnimation>
+    with TickerProviderStateMixin {
   late final AnimationController controller;
   late Animation<Color?> animation;
 
@@ -81,7 +82,8 @@ class _LoadingColorAnimationState extends State<LoadingColorAnimation> with Tick
       vsync: this,
     )..repeat(reverse: true, period: widget.period);
 
-    animation = ColorTween(begin: widget.startColor, end: widget.endColor).animate(controller);
+    animation = ColorTween(begin: widget.startColor, end: widget.endColor)
+        .animate(controller);
     super.initState();
   }
 

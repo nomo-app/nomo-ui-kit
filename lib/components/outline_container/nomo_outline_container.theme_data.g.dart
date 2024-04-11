@@ -211,10 +211,10 @@ NomoOutlineContainerThemeData getFromContext(
   NomoOutlineContainer widget,
 ) {
   final globalColorTheme =
-      NomoTheme.maybeOf(context)?.componentColors.outlineContainerTheme ??
+      NomoTheme.maybeOf(context)?.componentColors.outlineContainerColor ??
           const NomoOutlineContainerColorData();
   final globalSizingTheme =
-      NomoTheme.maybeOf(context)?.componentSizes.outlineContainerTheme ??
+      NomoTheme.maybeOf(context)?.componentSizes.outlineContainerSizing ??
           const NomoOutlineContainerSizingData();
   const globalConstants = NomoOutlineContainerConstants();
   final themeOverride = NomoOutlineContainerThemeOverride.maybeOf(context);

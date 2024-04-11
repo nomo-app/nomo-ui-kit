@@ -11,7 +11,7 @@ import 'package:nomo_ui_kit/utils/layout_extensions.dart';
 
 part 'nomo_vertical_tile.theme_data.g.dart';
 
-@NomoComponentThemeData('verticalListTileTheme')
+@NomoComponentThemeData('verticalListTile')
 class NomoVerticalListTile<T> extends StatefulWidget {
   @NomoConstant(TextStyle())
   final TextStyle? titleStyle;

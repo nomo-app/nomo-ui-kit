@@ -7,7 +7,7 @@ import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 
 part 'nomo_bottom_bar.theme_data.g.dart';
 
-@NomoComponentThemeData('bottomBarTheme')
+@NomoComponentThemeData('bottomBar')
 class NomoBottomBar<T> extends StatelessWidget {
   const NomoBottomBar({
     required this.items,

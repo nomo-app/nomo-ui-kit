@@ -585,20 +585,20 @@ String _getFromContext({
 
   if (colorFields.isNotEmpty) {
     buffer.writeln(
-        "final globalColorTheme = NomoTheme.maybeOf(context)?.componentColors.$themeName ?? const $colorDataClassName();");
+        "final globalColorTheme = NomoTheme.maybeOf(context)?.componentColors.${themeName}Color ?? const $colorDataClassName();");
   } else {
     buffer.writeln("const globalColorTheme = $colorDataClassName();");
   }
   if (sizingFields.isNotEmpty) {
     buffer.writeln(
-        "final globalSizingTheme = NomoTheme.maybeOf(context)?.componentSizes.$themeName ?? const $sizingDataClassName();");
+        "final globalSizingTheme = NomoTheme.maybeOf(context)?.componentSizes.${themeName}Sizing ?? const $sizingDataClassName();");
   } else {
     buffer.writeln("const globalSizingTheme = $sizingDataClassName();");
   }
 
   if (constants.isNotEmpty) {
     buffer.writeln(
-        "final globalConstants = NomoTheme.maybeOf(context)?.constants.$themeName ?? const $constantsName();");
+        "final globalConstants = NomoTheme.maybeOf(context)?.constants.${themeName}Theme ?? const $constantsName();");
   } else {
     buffer.writeln("const globalConstants = $constantsName();");
   }

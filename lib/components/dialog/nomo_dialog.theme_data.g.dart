@@ -218,10 +218,10 @@ NomoDialogThemeData getFromContext(
   NomoDialog widget,
 ) {
   final globalColorTheme =
-      NomoTheme.maybeOf(context)?.componentColors.dialogTheme ??
+      NomoTheme.maybeOf(context)?.componentColors.dialogColor ??
           const NomoDialogColorData();
   final globalSizingTheme =
-      NomoTheme.maybeOf(context)?.componentSizes.dialogTheme ??
+      NomoTheme.maybeOf(context)?.componentSizes.dialogSizing ??
           const NomoDialogSizingData();
   const globalConstants = NomoDialogConstants();
   final themeOverride = NomoDialogThemeOverride.maybeOf(context);

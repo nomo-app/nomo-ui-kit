@@ -299,10 +299,10 @@ NomoInputThemeData getFromContext(
   NomoInput widget,
 ) {
   final globalColorTheme =
-      NomoTheme.maybeOf(context)?.componentColors.inputTheme ??
+      NomoTheme.maybeOf(context)?.componentColors.inputColor ??
           const NomoInputColorData();
   final globalSizingTheme =
-      NomoTheme.maybeOf(context)?.componentSizes.inputTheme ??
+      NomoTheme.maybeOf(context)?.componentSizes.inputSizing ??
           const NomoInputSizingData();
   final globalConstants = NomoTheme.maybeOf(context)?.constants.inputTheme ??
       const NomoInputConstants();

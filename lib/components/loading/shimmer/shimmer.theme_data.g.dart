@@ -131,7 +131,7 @@ ShimmerThemeData getFromContext(
   Shimmer widget,
 ) {
   final globalColorTheme =
-      NomoTheme.maybeOf(context)?.componentColors.shimmerTheme ??
+      NomoTheme.maybeOf(context)?.componentColors.shimmerColor ??
           const ShimmerColorData();
   const globalSizingTheme = ShimmerSizingData();
   const globalConstants = ShimmerConstants();

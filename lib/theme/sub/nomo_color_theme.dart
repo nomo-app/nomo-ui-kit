@@ -25,129 +25,102 @@ import 'package:nomo_ui_kit/utils/extensions.dart';
 
 part 'nomo_color_theme.g.dart';
 
-@NomoThemeUtils('NomoColors')
-class NomoComponentColors {
-  final NomoOutlineContainerColorData outlineContainerTheme;
-  final NomoAppBarColorData appBarTheme;
-  final NomoScaffoldColorData scaffoldTheme;
-  final NomoBottomBarColorData bottomBarTheme;
-  final NomoSiderColorData siderTheme;
-  final NomoVerticalMenuColorData verticalMenuTheme;
-  final PrimaryNomoButtonColorData primaryButtonTheme;
-  final SecondaryNomoButtonColorData secondaryButtonTheme;
-  final NomoTextButtonColorData textButtonTheme;
-  final NomoLinkButtonColorData linkButtonTheme;
-  final LoadingColorData loadingTheme;
-  final ShimmerColorData shimmerTheme;
-  final ExpandableColorData expandableTheme;
-  final NomoInputColorData inputTheme;
-  final NomoDialogColorData dialogTheme;
-  final NomoCardColorData cardTheme;
-  final NomoDividerColorData dividerTheme;
-  final NomoInfoItemColorData infoItemTheme;
-  final NomoNotificationColorData notificationTheme;
+@NomoThemeUtils(
+  'NomoComponentColors',
+)
+const _components = [
+  NomoOutlineContainerColorData,
+  NomoAppBarColorData,
+  NomoScaffoldColorData,
+  NomoBottomBarColorData,
+  NomoSiderColorData,
+  NomoVerticalMenuColorData,
+  PrimaryNomoButtonColorData,
+  SecondaryNomoButtonColorData,
+  NomoTextButtonColorData,
+  NomoLinkButtonColorData,
+  LoadingColorData,
+  ShimmerColorData,
+  ExpandableColorData,
+  NomoInputColorData,
+  NomoDialogColorData,
+  NomoCardColorData,
+  NomoDividerColorData,
+  NomoInfoItemColorData,
+  NomoNotificationColorData,
+];
 
-  const NomoComponentColors({
-    required this.outlineContainerTheme,
-    required this.appBarTheme,
-    required this.scaffoldTheme,
-    required this.bottomBarTheme,
-    required this.siderTheme,
-    required this.verticalMenuTheme,
-    required this.primaryButtonTheme,
-    required this.secondaryButtonTheme,
-    required this.textButtonTheme,
-    required this.linkButtonTheme,
-    required this.loadingTheme,
-    required this.shimmerTheme,
-    required this.expandableTheme,
-    required this.inputTheme,
-    required this.dialogTheme,
-    required this.cardTheme,
-    required this.dividerTheme,
-    required this.infoItemTheme,
-    required this.notificationTheme,
-  });
-
-  static NomoComponentColors defaultComponents(NomoColors core) =>
-      defaultConstructor(
-        outlineContainerTheme: NomoOutlineContainerThemeData(
-          foreground: core.foreground1,
-          background: core.background1,
-        ),
-        appBarTheme: NomoAppBarColorData(
-          backgroundColor: core.surface,
-        ),
-        scaffoldTheme: NomoScaffoldColorData(
-          backgroundColor: core.background1,
-        ),
-        bottomBarTheme: NomoBottomBarColorData(
-          background: core.surface,
-          borderRadius: BorderRadius.circular(12),
-          foreground: core.foreground1,
-          selectedForeground: core.primary,
-        ),
-        secondaryButtonTheme: SecondaryNomoButtonColorData(
-          foregroundColor: core.foreground1,
-          selectionColor: core.secondary,
-          backgroundColor: Colors.transparent,
-        ),
-        siderTheme: NomoSiderColorData(
-          backgroundColor: core.background1,
-        ),
-        verticalMenuTheme: NomoVerticalMenuColorData(
-          foreground: core.foreground1,
-          background: core.background1,
-          selectedBackground: core.secondaryContainer,
-          selectedForeground: core.secondary,
-          borderRadius: BorderRadius.circular(12),
-        ),
-        expandableTheme: ExpandableColorData(
-          iconColor: core.foreground1,
-        ),
-        cardTheme: NomoCardColorData(
-          backgroundColor: core.surface,
-        ),
-        dialogTheme: NomoDialogColorData(
-          backgroundColor: core.surface,
-        ),
-        primaryButtonTheme: PrimaryNomoButtonColorData(
-          backgroundColor: core.primary,
-          foregroundColor: core.onPrimary,
-          borderRadius: BorderRadius.circular(6),
-        ),
-        inputTheme: NomoInputColorData(
-          background: core.background1.darken(0.05),
-          borderRadius: BorderRadius.circular(4),
-          selectedBorder: Border.fromBorderSide(
-            BorderSide(
-              color: core.primary,
-              width: 1.5,
-            ),
-          ),
-          errorColor: core.error,
-        ),
-        dividerTheme: NomoDividerColorData(
-          color: core.disabled,
-        ),
-      );
+NomoComponentColors predefinedComponentColors(NomoColors colors) {
+  return NomoComponentColors(
+    appBarColor: NomoAppBarColorData(
+      backgroundColor: colors.surface,
+    ),
+    siderColor: NomoSiderColorData(
+      backgroundColor: colors.surface,
+      border: const Border.fromBorderSide(BorderSide.none),
+    ),
+    verticalMenuColor: NomoVerticalMenuColorData(
+      background: colors.surface,
+      selectedBackground: colors.primaryContainer,
+      foreground: colors.foreground1,
+      selectedForeground: colors.primary,
+    ),
+    bottomBarColor: NomoBottomBarColorData(
+      background: colors.surface,
+      foreground: colors.foreground1,
+      selectedForeground: colors.primary,
+    ),
+    scaffoldColor: NomoScaffoldColorData(
+      backgroundColor: colors.background1,
+    ),
+    cardColor: NomoCardColorData(
+      backgroundColor: colors.surface,
+      border: const Border.fromBorderSide(BorderSide.none),
+    ),
+    dialogColor: NomoDialogColorData(
+      backgroundColor: colors.surface,
+    ),
+    dividerColor: const NomoDividerColorData(),
+    inputColor: NomoInputColorData(
+      background: colors.background2,
+      border: const Border.fromBorderSide(BorderSide.none),
+      borderRadius: BorderRadius.circular(12),
+      errorColor: colors.error,
+    ),
+    primaryButtonColor: PrimaryNomoButtonColorData(
+      backgroundColor: colors.primary,
+      foregroundColor: colors.onPrimary,
+      borderRadius: BorderRadius.circular(12),
+    ),
+    secondaryButtonColor: SecondaryNomoButtonColorData(
+      backgroundColor: colors.secondary,
+      foregroundColor: colors.onSecondary,
+      borderRadius: BorderRadius.circular(12),
+    ),
+    textButtonColor: NomoTextButtonColorData(
+      foregroundColor: colors.foreground1,
+    ),
+    outlineContainerColor: NomoOutlineContainerColorData(
+      background: colors.background2,
+      border: const Border.fromBorderSide(BorderSide.none),
+    ),
+    shimmerColor: const ShimmerColorData(),
+    expandableColor: const ExpandableColorData(),
+    infoItemColor: const NomoInfoItemColorData(),
+    linkButtonColor: const NomoLinkButtonColorData(),
+    loadingColor: LoadingColorData(
+      color: colors.primary,
+    ),
+    notificationColor: const NomoNotificationColorData(),
+  );
 }
 
-class NomoColorThemeData {
-  NomoColorThemeData({
+@immutable
+class NomoColorThemeData implements NomoColorThemeDataNullable {
+  const NomoColorThemeData({
     required this.colors,
     required this.key,
-    NomoComponentColors Function(NomoColors core) defaultComponents =
-        NomoComponentColors.defaultComponents,
-    NomoComponentColorsNullable Function(NomoColors core)? overrideComponents,
-  }) : components = defaultComponents(colors).overrideWith(
-          overrideComponents?.call(colors),
-        );
-
-  NomoColorThemeData._({
-    required this.colors,
     required this.components,
-    required this.key,
   });
 
   factory NomoColorThemeData.lerp(
@@ -155,15 +128,18 @@ class NomoColorThemeData {
     NomoColorThemeData b,
     double t,
   ) {
-    return NomoColorThemeData._(
+    return NomoColorThemeData(
       key: t < 0.5 ? a.key : b.key,
       colors: NomoColors.lerp(a.colors, b.colors, t),
       components: lerpNomoComponentColors(a.components, b.components, t),
     );
   }
+  @override
   final NomoColors colors;
+  @override
   final NomoComponentColors components;
-  final ValueKey key;
+  @override
+  final ValueKey<Object> key;
 
   @override
   int get hashCode => key.hashCode;
@@ -174,6 +150,30 @@ class NomoColorThemeData {
   }
 }
 
+class NomoColorThemeDataNullable {
+  final NomoColors colors;
+  final NomoComponentColorsNullable? components;
+  final ValueKey<Object> key;
+
+  NomoColorThemeDataNullable({
+    required this.colors,
+    required this.key,
+    NomoComponentColorsNullable Function(NomoColors core)? buildComponents,
+  }) : components = buildComponents?.call(colors);
+
+  static NomoColorThemeData convert(
+    NomoColorThemeDataNullable data,
+    NomoComponentColors defaultComponents,
+  ) {
+    return NomoColorThemeData(
+      key: data.key,
+      colors: data.colors,
+      components: defaultComponents.overrideWith(data.components),
+    );
+  }
+}
+
+@immutable
 class NomoColors {
   final Color primary;
   final Brightness brightness;

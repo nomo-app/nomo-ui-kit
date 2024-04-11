@@ -159,7 +159,7 @@ NomoRouteBodyThemeData getFromContext(
 ) {
   const globalColorTheme = NomoRouteBodyColorData();
   final globalSizingTheme =
-      NomoTheme.maybeOf(context)?.componentSizes.routeBodyTheme ??
+      NomoTheme.maybeOf(context)?.componentSizes.routeBodySizing ??
           const NomoRouteBodySizingData();
   const globalConstants = NomoRouteBodyConstants();
   final themeOverride = NomoRouteBodyThemeOverride.maybeOf(context);

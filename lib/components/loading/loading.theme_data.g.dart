@@ -138,7 +138,7 @@ LoadingThemeData getFromContext(
   Loading widget,
 ) {
   final globalColorTheme =
-      NomoTheme.maybeOf(context)?.componentColors.loadingTheme ??
+      NomoTheme.maybeOf(context)?.componentColors.loadingColor ??
           const LoadingColorData();
   const globalSizingTheme = LoadingSizingData();
   const globalConstants = LoadingConstants();

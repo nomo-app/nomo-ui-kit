@@ -250,10 +250,10 @@ ExpandableThemeData getFromContext(
   Expandable widget,
 ) {
   final globalColorTheme =
-      NomoTheme.maybeOf(context)?.componentColors.expandableTheme ??
+      NomoTheme.maybeOf(context)?.componentColors.expandableColor ??
           const ExpandableColorData();
   final globalSizingTheme =
-      NomoTheme.maybeOf(context)?.componentSizes.expandableTheme ??
+      NomoTheme.maybeOf(context)?.componentSizes.expandableSizing ??
           const ExpandableSizingData();
   const globalConstants = ExpandableConstants();
   final themeOverride = ExpandableThemeOverride.maybeOf(context);

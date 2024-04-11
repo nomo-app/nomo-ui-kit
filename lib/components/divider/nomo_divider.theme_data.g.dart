@@ -160,10 +160,10 @@ NomoDividerThemeData getFromContext(
   NomoDivider widget,
 ) {
   final globalColorTheme =
-      NomoTheme.maybeOf(context)?.componentColors.dividerTheme ??
+      NomoTheme.maybeOf(context)?.componentColors.dividerColor ??
           const NomoDividerColorData();
   final globalSizingTheme =
-      NomoTheme.maybeOf(context)?.componentSizes.dividerTheme ??
+      NomoTheme.maybeOf(context)?.componentSizes.dividerSizing ??
           const NomoDividerSizingData();
   const globalConstants = NomoDividerConstants();
   final themeOverride = NomoDividerThemeOverride.maybeOf(context);

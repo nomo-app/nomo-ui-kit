@@ -203,10 +203,10 @@ NomoAppBarThemeData getFromContext(
   NomoAppBar widget,
 ) {
   final globalColorTheme =
-      NomoTheme.maybeOf(context)?.componentColors.appBarTheme ??
+      NomoTheme.maybeOf(context)?.componentColors.appBarColor ??
           const NomoAppBarColorData();
   final globalSizingTheme =
-      NomoTheme.maybeOf(context)?.componentSizes.appBarTheme ??
+      NomoTheme.maybeOf(context)?.componentSizes.appBarSizing ??
           const NomoAppBarSizingData();
   const globalConstants = NomoAppBarConstants();
   final themeOverride = NomoAppBarThemeOverride.maybeOf(context);

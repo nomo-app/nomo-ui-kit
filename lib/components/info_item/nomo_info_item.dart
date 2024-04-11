@@ -5,7 +5,7 @@ import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 
 part 'nomo_info_item.theme_data.g.dart';
 
-@NomoComponentThemeData('infoItemTheme')
+@NomoComponentThemeData('infoItem')
 class NomoInfoItem extends StatelessWidget {
   final String title;
   final String value;

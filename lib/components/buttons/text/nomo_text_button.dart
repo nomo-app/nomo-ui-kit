@@ -6,7 +6,7 @@ import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 
 part 'nomo_text_button.theme_data.g.dart';
 
-@NomoComponentThemeData('textButtonTheme')
+@NomoComponentThemeData('textButton')
 class NomoTextButton extends StatelessWidget with NomoButtonMixin {
   final String? text;
   final TextStyle? textStyle;

@@ -176,10 +176,10 @@ NomoLinkButtonThemeData getFromContext(
   NomoLinkButton widget,
 ) {
   final globalColorTheme =
-      NomoTheme.maybeOf(context)?.componentColors.linkButtonTheme ??
+      NomoTheme.maybeOf(context)?.componentColors.linkButtonColor ??
           const NomoLinkButtonColorData();
   final globalSizingTheme =
-      NomoTheme.maybeOf(context)?.componentSizes.linkButtonTheme ??
+      NomoTheme.maybeOf(context)?.componentSizes.linkButtonSizing ??
           const NomoLinkButtonSizingData();
   const globalConstants = NomoLinkButtonConstants();
   final themeOverride = NomoLinkButtonThemeOverride.maybeOf(context);

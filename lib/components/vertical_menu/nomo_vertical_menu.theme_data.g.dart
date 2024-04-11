@@ -301,10 +301,10 @@ NomoVerticalMenuThemeData getFromContext(
   NomoVerticalMenu widget,
 ) {
   final globalColorTheme =
-      NomoTheme.maybeOf(context)?.componentColors.verticalMenuTheme ??
+      NomoTheme.maybeOf(context)?.componentColors.verticalMenuColor ??
           const NomoVerticalMenuColorData();
   final globalSizingTheme =
-      NomoTheme.maybeOf(context)?.componentSizes.verticalMenuTheme ??
+      NomoTheme.maybeOf(context)?.componentSizes.verticalMenuSizing ??
           const NomoVerticalMenuSizingData();
   const globalConstants = NomoVerticalMenuConstants();
   final themeOverride = NomoVerticalMenuThemeOverride.maybeOf(context);

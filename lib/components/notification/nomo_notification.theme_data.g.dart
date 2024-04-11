@@ -202,7 +202,7 @@ NomoNotificationThemeData getFromContext(
 ) {
   const globalColorTheme = NomoNotificationColorData();
   final globalSizingTheme =
-      NomoTheme.maybeOf(context)?.componentSizes.notificationTheme ??
+      NomoTheme.maybeOf(context)?.componentSizes.notificationSizing ??
           const NomoNotificationSizingData();
   final globalConstants =
       NomoTheme.maybeOf(context)?.constants.notificationTheme ??

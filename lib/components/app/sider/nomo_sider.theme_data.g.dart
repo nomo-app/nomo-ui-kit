@@ -187,10 +187,10 @@ NomoSiderThemeData getFromContext(
   NomoSider widget,
 ) {
   final globalColorTheme =
-      NomoTheme.maybeOf(context)?.componentColors.siderTheme ??
+      NomoTheme.maybeOf(context)?.componentColors.siderColor ??
           const NomoSiderColorData();
   final globalSizingTheme =
-      NomoTheme.maybeOf(context)?.componentSizes.siderTheme ??
+      NomoTheme.maybeOf(context)?.componentSizes.siderSizing ??
           const NomoSiderSizingData();
   const globalConstants = NomoSiderConstants();
   final themeOverride = NomoSiderThemeOverride.maybeOf(context);

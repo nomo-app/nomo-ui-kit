@@ -28,7 +28,7 @@ typedef BoxDecorationTweenInfo = ({
   bool shouldAnimate
 });
 
-@NomoComponentThemeData('inputTheme')
+@NomoComponentThemeData('input')
 class NomoInput extends StatefulWidget {
   final Widget? leading;
   final Widget? trailling;

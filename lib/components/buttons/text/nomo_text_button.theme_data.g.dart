@@ -162,10 +162,10 @@ NomoTextButtonThemeData getFromContext(
   NomoTextButton widget,
 ) {
   final globalColorTheme =
-      NomoTheme.maybeOf(context)?.componentColors.textButtonTheme ??
+      NomoTheme.maybeOf(context)?.componentColors.textButtonColor ??
           const NomoTextButtonColorData();
   final globalSizingTheme =
-      NomoTheme.maybeOf(context)?.componentSizes.textButtonTheme ??
+      NomoTheme.maybeOf(context)?.componentSizes.textButtonSizing ??
           const NomoTextButtonSizingData();
   const globalConstants = NomoTextButtonConstants();
   final themeOverride = NomoTextButtonThemeOverride.maybeOf(context);

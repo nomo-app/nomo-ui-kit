@@ -8,35 +8,29 @@ import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 import 'package:nomo_ui_kit/utils/route.dart';
 
 class Sider extends StatelessWidget {
-  final double? topInset;
-
   const Sider({
     Key? key,
-    this.topInset,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final currentRoute = NomoNavigatorInformationProvider.of(context);
+    final currentRoute = NomoNavigatorInformationProvider.of(context).current;
     final current = switch (currentRoute) {
       MenuPageRouteInfo currentRoute => currentRoute.toMenuItem,
       _ => null,
     };
 
-    return Padding(
-      padding: EdgeInsets.only(top: topInset ?? 0),
-      child: NomoSider(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
-        child: NomoVerticalMenu<String>(
-          style: context.typography.b1,
-          background: context.componentColors.verticalMenuTheme.background,
-          selected: current?.key,
-          onTap: (item) {
-            NomoNavigator.of(context).pushNamed(item.key);
-          },
-          iconSize: 22,
-          items: menuItems,
-        ),
+    return NomoSider(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+      child: NomoVerticalMenu<String>(
+        style: context.typography.b1,
+        background: context.componentColors.verticalMenuColor.background,
+        selected: current?.key,
+        onTap: (item) {
+          NomoNavigator.of(context).pushNamed(item.key);
+        },
+        iconSize: 22,
+        items: menuItems,
       ),
     );
   }

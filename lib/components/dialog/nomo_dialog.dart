@@ -8,7 +8,7 @@ import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 
 part 'nomo_dialog.theme_data.g.dart';
 
-@NomoComponentThemeData('dialogTheme')
+@NomoComponentThemeData('dialog')
 class NomoDialog extends StatelessWidget {
   const NomoDialog({
     required this.content,
