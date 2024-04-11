@@ -23,6 +23,7 @@ class NomoScaffold extends StatefulWidget {
     this.endDrawer,
     this.floatingActionButton,
     this.floatingActionButtonLocation,
+    this.backgroundImage,
   });
   final Widget child;
   final NomoAppBar? appBar;
@@ -34,6 +35,7 @@ class NomoScaffold extends StatefulWidget {
   final Widget? endDrawer;
   final Widget? floatingActionButton;
   final FloatingActionButtonLocation? floatingActionButtonLocation;
+  final DecorationImage? backgroundImage;
 
   @NomoSizingField(EdgeInsets.zero)
   final EdgeInsetsGeometry? padding;
@@ -113,8 +115,11 @@ class _NomoScaffoldState extends State<NomoScaffold> {
       body: ColoredBox(
         color: context.colors.surface,
         child: SafeArea(
-          child: ColoredBox(
-            color: theme.backgroundColor,
+          child: Container(
+            decoration: BoxDecoration(
+              image: widget.backgroundImage,
+              color: theme.backgroundColor,
+            ),
             child: body,
           ),
         ),

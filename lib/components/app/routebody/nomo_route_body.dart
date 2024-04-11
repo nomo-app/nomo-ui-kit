@@ -30,6 +30,12 @@ class NomoRouteBody extends StatelessWidget {
 
   final bool useScrollBar;
 
+  final Widget? footer;
+
+  /// Only used when [child] or [builder] is provided
+  /// If true, the child will be wrapped in a SingleChildScrollView
+  final bool scrollable;
+
   const NomoRouteBody({
     this.child,
     super.key,
@@ -43,6 +49,8 @@ class NomoRouteBody extends StatelessWidget {
     this.childrenBuilder,
     this.sliverBuilder,
     this.useScrollBar = false,
+    this.footer,
+    this.scrollable = false,
   }) : assert(
           child != null ||
               slivers != null ||
@@ -66,31 +74,39 @@ class NomoRouteBody extends StatelessWidget {
         child: switch (this) {
           _ when child != null => _ChildBody(
               theme: theme,
+              scrollable: scrollable,
+              footer: footer,
               child: child!,
             ),
           _ when builder != null => Builder(
               builder: (context) => _ChildBody(
                 theme: theme,
+                scrollable: scrollable,
+                footer: footer,
                 child: builder!(context, route),
               ),
             ),
           _ when slivers != null => _SliverBody(
               theme: theme,
               slivers: slivers!,
+              footer: footer,
             ),
           _ when sliverBuilder != null => Builder(
               builder: (context) => _SliverBody(
                 theme: theme,
                 slivers: sliverBuilder!(context, route),
+                footer: footer,
               ),
             ),
           _ when children != null => _ChildrenBody(
               theme: theme,
+              footer: footer,
               children: children!,
             ),
           _ => Builder(
               builder: (context) => _ChildrenBody(
                 theme: theme,
+                footer: footer,
                 children: childrenBuilder!(context, route),
               ),
             ),
@@ -111,24 +127,33 @@ class NomoRouteBody extends StatelessWidget {
 class _ChildrenBody extends StatelessWidget {
   final NomoRouteBodyThemeData theme;
   final List<Widget> children;
+  final Widget? footer;
 
   const _ChildrenBody({
     required this.theme,
     required this.children,
+    this.footer,
   });
 
   @override
   Widget build(BuildContext context) {
+    final verticalPadding = theme.padding.vertical / 2;
     return CustomScrollView(
       controller: DefaultScrollController.of(context),
       slivers: [
+        verticalPadding.vSpacing.toBox,
         SliverPadding(
-          padding: theme.padding,
+          padding:
+              EdgeInsets.symmetric(horizontal: theme.padding.horizontal / 2),
           sliver: SliverList.builder(
             itemBuilder: (context, index) => children[index],
             itemCount: children.length,
           ),
         ),
+        if (footer != null)
+          FillRemainingFooter(padding: verticalPadding, child: footer!)
+        else
+          verticalPadding.vSpacing.toBox,
       ],
     );
   }
@@ -137,25 +162,34 @@ class _ChildrenBody extends StatelessWidget {
 class _SliverBody extends StatelessWidget {
   final NomoRouteBodyThemeData theme;
   final List<Widget> slivers;
+  final Widget? footer;
 
   const _SliverBody({
     required this.theme,
     required this.slivers,
+    this.footer,
   });
 
   @override
   Widget build(BuildContext context) {
+    final verticalPadding = theme.padding.vertical / 2;
     return CustomScrollView(
       controller: DefaultScrollController.of(context),
       slivers: [
-        (theme.padding.vertical / 2).vSpacing.toBox,
+        verticalPadding.vSpacing.toBox,
         for (final sliver in slivers)
           SliverPadding(
             padding:
                 EdgeInsets.symmetric(horizontal: theme.padding.horizontal / 2),
             sliver: sliver,
           ),
-        (theme.padding.vertical / 2).vSpacing.toBox,
+        if (footer != null)
+          FillRemainingFooter(
+            padding: verticalPadding,
+            child: footer!,
+          )
+        else
+          verticalPadding.vSpacing.toBox,
       ],
     );
   }
@@ -163,18 +197,46 @@ class _SliverBody extends StatelessWidget {
 
 class _ChildBody extends StatelessWidget {
   final NomoRouteBodyThemeData theme;
+  final bool scrollable;
+  final Widget? footer;
   final Widget child;
 
   const _ChildBody({
     required this.theme,
     required this.child,
+    required this.scrollable,
+    this.footer,
   });
 
   @override
   Widget build(BuildContext context) {
+    if (scrollable) {
+      return Padding(
+        padding: theme.padding,
+        child: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                controller: DefaultScrollController.of(context),
+                child: child,
+              ),
+            ),
+            if (footer != null) footer!,
+          ],
+        ),
+      );
+    }
+
     return Padding(
       padding: theme.padding,
-      child: child,
+      child: Column(
+        children: [
+          Expanded(
+            child: child,
+          ),
+          if (footer != null) footer!,
+        ],
+      ),
     );
   }
 }
@@ -208,4 +270,34 @@ extension SliverUtil on Widget {
   Widget get toBox => SliverToBoxAdapter(
         child: this,
       );
+}
+
+class FillRemainingFooter extends StatelessWidget {
+  final Widget child;
+  final double padding;
+
+  const FillRemainingFooter({
+    required this.child,
+    required this.padding,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverFillRemaining(
+      hasScrollBody: false,
+      child: Column(
+        children: [
+          const Expanded(
+            child: SizedBox.shrink(),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: padding),
+            child: child,
+          ),
+          SizedBox(height: padding),
+        ],
+      ),
+    );
+  }
 }
