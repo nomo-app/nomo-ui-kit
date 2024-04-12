@@ -6814,7 +6814,8 @@ class NomoIcons {
 
   /// Alias hands-american-sign-language-interpreting for icon [handsAslInterpreting]
   @Deprecated('Use "handsAslInterpreting" instead.')
-  static const IconData handsAmericanSignLanguageInterpreting = handsAslInterpreting;
+  static const IconData handsAmericanSignLanguageInterpreting =
+      handsAslInterpreting;
 
   /// Solid Hands Bound icon
   ///
@@ -9867,7 +9868,8 @@ class NomoIcons {
   ///
   /// https://fontawesome.com/icons/person-walking-dashed-line-arrow-right?style=solid
   /// exit, refugee
-  static const IconData personWalkingDashedLineArrowRight = IconDataSolid(0xe553);
+  static const IconData personWalkingDashedLineArrowRight =
+      IconDataSolid(0xe553);
 
   /// Solid Person Walking Luggage icon
   ///
