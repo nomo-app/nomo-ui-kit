@@ -50,6 +50,8 @@ class _ThemeAnimatorState extends State<ThemeAnimator> {
           curve: kThemeChangeCurve,
           builder: (_, theme, child) => NomoTheme(
             value: theme,
+            colorMode: widget.notifier.colorMode,
+            sizingMode: widget.notifier.sizingMode,
             child: NomoDefaultTextStyle(
               style: theme.typography.b1,
               child: child!,

@@ -64,15 +64,25 @@ class NomoThemeData {
 class NomoTheme extends InheritedWidget {
   const NomoTheme({
     required this.value,
+    required this.colorMode,
+    required this.sizingMode,
     required super.child,
     super.key,
   });
   final NomoThemeData value;
+  final Object colorMode;
+  final Object sizingMode;
 
   static NomoThemeData of(BuildContext context) {
     final result = context.dependOnInheritedWidgetOfExactType<NomoTheme>();
     assert(result != null, 'No ThemeInfo found in context');
     return result!.value;
+  }
+
+  static NomoTheme themeOf(BuildContext context) {
+    final result = context.dependOnInheritedWidgetOfExactType<NomoTheme>();
+    assert(result != null, 'No ThemeInfo found in context');
+    return result!;
   }
 
   static NomoThemeData? maybeOf(BuildContext context) {
