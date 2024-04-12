@@ -1,6 +1,8 @@
 name: nomo_ui_kit
 description: UI Component Library
 version: 0.0.1
+repository: https://github.com/nomo-app/nomo-ui-kit
+homepage: https://nomo.app
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
