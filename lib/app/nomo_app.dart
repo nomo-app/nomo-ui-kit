@@ -27,9 +27,6 @@ class NomoApp extends StatefulWidget {
     this.currentLocale,
     this.translator,
     this.appWrapper,
-    this.navigatorObservers = const [],
-    this.nestedNavigatorObservers = const [],
-    this.home,
   });
 
   final NomoThemeDelegate<Object, Object> themeDelegate;
@@ -39,9 +36,6 @@ class NomoApp extends StatefulWidget {
   final Iterable<Locale> supportedLocales;
   final Locale? currentLocale;
   final String Function(String value)? translator;
-  final Widget? home;
-  final List<NavigatorObserver> navigatorObservers;
-  final List<NavigatorObserver> nestedNavigatorObservers;
 
   /// A Wrapper that can access the ThemeProvider and NomoNavigator
   final Widget Function(BuildContext context, Widget app)? appWrapper;
