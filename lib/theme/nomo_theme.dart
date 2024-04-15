@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:nomo_ui_kit/theme/sub/nomo_color_theme.dart';
 import 'package:nomo_ui_kit/theme/sub/nomo_constants.dart';
 import 'package:nomo_ui_kit/theme/sub/nomo_sizing_theme.dart';
+import 'package:nomo_ui_kit/theme/theme_provider.dart';
 
 export 'dart:ui';
 

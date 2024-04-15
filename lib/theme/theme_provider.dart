@@ -60,6 +60,14 @@ class ThemeProvider extends InheritedWidget {
   Object get colorMode => _notifier.colorMode;
   Object get sizingMode => _notifier.sizingMode;
 
+  NomoColorThemeData? getColorThemeForMode(Object mode) {
+    return _notifier._colorThemes[mode];
+  }
+
+  NomoSizingThemeData? getSizingThemeForMode(Object mode) {
+    return _notifier._sizingThemes[mode];
+  }
+
   static ThemeProvider of(BuildContext context) {
     final result = context.dependOnInheritedWidgetOfExactType<ThemeProvider>();
     assert(result != null, 'No ThemeProvider found in context');

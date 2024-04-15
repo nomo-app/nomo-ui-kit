@@ -6,11 +6,19 @@ part of 'nomo_theme.dart';
 extension ThemeContextExtension on BuildContext {
   NomoThemeData get theme => NomoTheme.of(this);
 
+  NomoTheme get _themeData => NomoTheme.themeOf(this);
+
+  ThemeProvider get themeProvider => ThemeProvider.of(this);
+
   NomoColors get colors => theme.colors;
 
   NomoComponentColors get componentColors => theme.componentColors;
 
   NomoColorThemeData get colorTheme => theme.colorTheme;
+
+  T getColorMode<T extends Object>() => _themeData.colorMode as T;
+
+  T getSizingMode<T extends Object>() => _themeData.sizingMode as T;
 
   NomoTypographyTheme get typography => theme.typography;
 
