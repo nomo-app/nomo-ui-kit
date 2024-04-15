@@ -14,8 +14,8 @@ class ThemeNotifier extends ChangeNotifier {
   NomoThemeData get theme => _theme;
 
   ThemeNotifier(this._delegate) {
-    _colorThemes = _delegate.createColorThemes();
-    _sizingThemes = _delegate.createSizingThemes();
+    _colorThemes = _delegate.colorThemeMap;
+    _sizingThemes = _delegate.sizingThemeMap;
 
     colorMode = _delegate.initialColorTheme();
     sizingMode = _sizingThemes.keys.first;
@@ -26,6 +26,11 @@ class ThemeNotifier extends ChangeNotifier {
       constants: _delegate.constants.componentConstants,
       textTheme: _delegate.typography,
     );
+
+    _delegate
+      ..onThemeChanged(theme, colorMode, sizingMode)
+      ..onColorThemeChanged(_theme.colorTheme, colorMode)
+      ..onSizingThemeChanged(_theme.sizingTheme, sizingMode);
   }
 
   void changeColorTheme(Object mode) {
@@ -34,6 +39,10 @@ class ThemeNotifier extends ChangeNotifier {
     colorMode = mode;
     _theme = _theme.copyWith(colorTheme: _colorThemes[mode]);
     notifyListeners();
+
+    _delegate
+      ..onColorThemeChanged(_theme.colorTheme, mode)
+      ..onThemeChanged(_theme, mode, sizingMode);
   }
 
   void changeSizingTheme(Object mode) {
@@ -42,6 +51,10 @@ class ThemeNotifier extends ChangeNotifier {
     sizingMode = mode;
     _theme = _theme.copyWith(sizingTheme: _sizingThemes[mode]);
     notifyListeners();
+
+    _delegate
+      ..onSizingThemeChanged(_theme.sizingTheme, mode)
+      ..onThemeChanged(_theme, colorMode, mode);
   }
 }
 

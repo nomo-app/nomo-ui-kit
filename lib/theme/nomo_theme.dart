@@ -97,6 +97,9 @@ class NomoTheme extends InheritedWidget {
 }
 
 abstract class NomoThemeDelegate<C, S> {
+  late final Map<C, NomoColorThemeData> colorThemeMap = _createColorThemes();
+  late final Map<S, NomoSizingThemeData> sizingThemeMap = _createSizingThemes();
+
   /// Base Components Colors
   NomoComponentColorsNullable defaultComponentsColor(NomoColors core);
 
@@ -122,7 +125,13 @@ abstract class NomoThemeDelegate<C, S> {
   /// Constants
   NomoConstantsThemeData get constants;
 
-  Map<S, NomoSizingThemeData> createSizingThemes() {
+  void onThemeChanged(NomoThemeData theme, C colorMode, S sizingMode) {}
+
+  void onColorThemeChanged(NomoColorThemeData theme, C colorMode) {}
+
+  void onSizingThemeChanged(NomoSizingThemeData theme, S sizingMode) {}
+
+  Map<S, NomoSizingThemeData> _createSizingThemes() {
     final map = <S, NomoSizingThemeData>{};
     for (final MapEntry(:key, :value) in sizingThemes.entries) {
       final defComponents = predefinedComponentSizes(value.sizes).overrideWith(
@@ -133,7 +142,7 @@ abstract class NomoThemeDelegate<C, S> {
     return map;
   }
 
-  Map<C, NomoColorThemeData> createColorThemes() {
+  Map<C, NomoColorThemeData> _createColorThemes() {
     final map = <C, NomoColorThemeData>{};
     for (final MapEntry(:key, :value) in colorThemes.entries) {
       final defComponents =
