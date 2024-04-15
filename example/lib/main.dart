@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:markdown_widget/markdown_widget.dart';
 import 'package:nomo_router/nomo_router.dart';
+import 'package:nomo_router/router/entities/transitions.dart';
 import 'package:nomo_ui_kit/app/nomo_app.dart';
 import 'package:nomo_ui_kit/components/app/app.dart';
 import 'package:nomo_ui_kit/components/app/routebody/nomo_route_body.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_web_plugins/url_strategy.dart';
-import 'package:nomo_ui_kit/utils/route.dart';
 
 final appRouter = AppRouter();
 
@@ -29,11 +29,16 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return NomoApp(
-      themeDelegate: AppThemeDelegate(),
-      color: Colors.red,
-      supportedLocales: const [Locale('en', 'US')],
-      appRouter: appRouter,
+    return NomoNavigator(
+      delegate: appRouter.delegate,
+      defaultTransistion: const PageSharedAxisTransition(
+          type: SharedAxisTransitionType.horizontal),
+      child: NomoApp(
+        themeDelegate: AppThemeDelegate(),
+        color: Colors.red,
+        supportedLocales: const [Locale('en', 'US')],
+        routerConfig: appRouter.config,
+      ),
     );
   }
 }
@@ -52,7 +57,7 @@ class HomePage extends StatelessWidget {
     );
 
     return NomoRouteBody(
-      builder: (context, route) => SingleChildScrollView(
+      builder: (context) => SingleChildScrollView(
         controller: DefaultScrollController.of(context),
         child: FutureBuilder(
           future: file,

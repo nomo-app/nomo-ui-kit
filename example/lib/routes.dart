@@ -23,6 +23,7 @@ import 'package:flutter/material.dart';
 import 'package:nomo_router/nomo_router.dart';
 import 'package:nomo_router/router/entities/route.dart';
 import 'package:nomo_ui_kit/components/app/app.dart';
+import 'package:nomo_ui_kit/entities/menu_item.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 import 'package:nomo_ui_kit/theme/theme_provider.dart';
 import 'package:route_gen/anotations.dart';
@@ -192,3 +193,32 @@ const _routes = [
     ],
   ),
 ];
+
+extension MenuUtilList on Iterable<MenuRouteInfoMixin> {
+  List<NomoMenuItem<String>> get toMenuItems {
+    return map((route) => route.toMenuItem).toList();
+  }
+}
+
+extension MenuUtil on MenuRouteInfoMixin {
+  NomoMenuItem<String> get toMenuItem {
+    if (icon != null) {
+      return NomoMenuIconItem(
+        title: title,
+        icon: icon!,
+        key: path,
+      );
+    }
+    if (imagePath != null) {
+      return NomoMenuImageItem(
+        title: title,
+        imagePath: imagePath!,
+        key: path,
+      );
+    }
+    return NomoMenuTextItem(
+      title: title,
+      key: path,
+    );
+  }
+}

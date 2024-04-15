@@ -7,7 +7,11 @@ part of 'routes.dart';
 // **************************************************************************
 
 class AppRouter extends NomoAppRouter {
-  AppRouter()
+  final Future<bool> Function()? shouldPop;
+  final Future<bool> Function()? willPop;
+  late final RouterConfig<Object> config;
+  late final NomoRouterDelegate delegate;
+  AppRouter({this.shouldPop, this.willPop})
       : super(
           {
             HomePageRoute.path: ([a]) {
@@ -117,7 +121,20 @@ class AppRouter extends NomoAppRouter {
           },
           _routes.expanded.where((r) => r is! NestedNavigator).toList(),
           _routes.expanded.whereType<NestedNavigator>().toList(),
-        );
+        ) {
+    delegate = NomoRouterDelegate(appRouter: this);
+    config = RouterConfig(
+        routerDelegate: delegate,
+        backButtonDispatcher:
+            NomoBackButtonDispatcher(delegate, shouldPop, willPop),
+        routeInformationParser: const NomoRouteInformationParser(),
+        routeInformationProvider: PlatformRouteInformationProvider(
+          initialRouteInformation: RouteInformation(
+            uri:
+                WidgetsBinding.instance.platformDispatcher.defaultRouteName.uri,
+          ),
+        ));
+  }
 }
 
 class HomePageArguments {
