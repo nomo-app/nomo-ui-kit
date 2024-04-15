@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:nomo_ui_generator/annotations.dart';
 import 'package:nomo_ui_kit/components/app/app_bar/nomo_app_bar.dart';
 import 'package:nomo_ui_kit/components/app/bottom_bar/nomo_bottom_bar.dart';
@@ -20,7 +19,6 @@ import 'package:nomo_ui_kit/components/loading/shimmer/shimmer.dart';
 import 'package:nomo_ui_kit/components/notification/nomo_notification.dart';
 import 'package:nomo_ui_kit/components/outline_container/nomo_outline_container.dart';
 import 'package:nomo_ui_kit/components/vertical_menu/nomo_vertical_menu.dart';
-import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 import 'package:nomo_ui_kit/utils/extensions.dart';
 
 part 'nomo_color_theme.g.dart';
@@ -28,7 +26,8 @@ part 'nomo_color_theme.g.dart';
 @NomoThemeUtils(
   'NomoComponentColors',
 )
-const _components = [
+// ignore: unused_element
+const _ = [
   NomoOutlineContainerColorData,
   NomoAppBarColorData,
   NomoScaffoldColorData,
@@ -80,7 +79,6 @@ NomoComponentColors predefinedComponentColors(NomoColors colors) {
     dialogColor: NomoDialogColorData(
       backgroundColor: colors.surface,
     ),
-    dividerColor: const NomoDividerColorData(),
     inputColor: NomoInputColorData(
       background: colors.background2,
       border: const Border.fromBorderSide(BorderSide.none),
@@ -102,16 +100,10 @@ NomoComponentColors predefinedComponentColors(NomoColors colors) {
     ),
     outlineContainerColor: NomoOutlineContainerColorData(
       background: colors.background2,
-      border: const Border.fromBorderSide(BorderSide.none),
     ),
-    shimmerColor: const ShimmerColorData(),
-    expandableColor: const ExpandableColorData(),
-    infoItemColor: const NomoInfoItemColorData(),
-    linkButtonColor: const NomoLinkButtonColorData(),
     loadingColor: LoadingColorData(
       color: colors.primary,
     ),
-    notificationColor: const NomoNotificationColorData(),
   );
 }
 

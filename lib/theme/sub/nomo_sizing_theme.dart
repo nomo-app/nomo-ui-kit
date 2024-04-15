@@ -102,7 +102,8 @@ class NomoSizes {
 @NomoThemeUtils(
   'NomoComponentSizes',
 )
-const _components = <Object>[
+// ignore: unused_element
+const _ = <Object>[
   NomoOutlineContainerSizingData,
   NomoAppBarSizingData,
   NomoScaffoldSizingData,

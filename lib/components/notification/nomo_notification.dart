@@ -34,10 +34,7 @@ class NomoNotification extends StatelessWidget {
   final TextStyle? subtitleStyle;
 
   const NomoNotification({
-    super.key,
-    required this.title,
-    required this.subtitle,
-    required this.leading,
+    required this.title, required this.subtitle, required this.leading, super.key,
     this.titleStyle,
     this.subtitleStyle,
     this.padding,
@@ -53,13 +50,11 @@ class NomoNotification extends StatelessWidget {
     return ConstrainedBox(
       constraints: BoxConstraints(
         maxWidth: theme.maxWidth,
-        minWidth: 0,
       ),
       child: NomoCard(
         padding: theme.padding,
         borderRadius: theme.borderRadius,
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             leading,
             theme.spacing.hSpacing,
@@ -83,12 +78,12 @@ class NomoNotification extends StatelessWidget {
             SecondaryNomoButton(
               shape: BoxShape.circle,
               icon: Icons.close,
-              border: Border.fromBorderSide(BorderSide.none),
-              padding: EdgeInsets.all(4),
+              border: const Border.fromBorderSide(BorderSide.none),
+              padding: const EdgeInsets.all(4),
               onPressed: () {
                 InAppNotification.dismiss(context: context);
               },
-            )
+            ),
           ],
         ),
       ),

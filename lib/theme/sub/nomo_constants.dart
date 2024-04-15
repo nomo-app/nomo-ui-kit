@@ -1,4 +1,3 @@
-import 'package:nomo_ui_generator/annotations.dart';
 import 'package:nomo_ui_kit/components/info_item/nomo_info_item.dart';
 import 'package:nomo_ui_kit/components/input/textInput/nomo_input.dart';
 import 'package:nomo_ui_kit/components/notification/nomo_notification.dart';

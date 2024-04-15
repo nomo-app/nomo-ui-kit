@@ -177,7 +177,10 @@ class _NomoVerticalListTileState<T> extends State<NomoVerticalListTile<T>>
                   when imageItem.imagePath.contains('svg') =>
                 SvgPicture.asset(
                   imageItem.imagePath,
-                  color: foreground,
+
+                  colorFilter: foreground != null
+                      ? ColorFilter.mode(foreground, BlendMode.srcIn)
+                      : null,
                   width: menuTheme.iconSize,
                   //colorFilter: ,
                 ),
@@ -211,7 +214,6 @@ class _NomoVerticalListTileState<T> extends State<NomoVerticalListTile<T>>
                       true => MainAxisAlignment.center,
                       false => MainAxisAlignment.start,
                     },
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       if (icon != null) icon,
                       if (!widget.collapsed) ...[

@@ -6,7 +6,7 @@ part of 'nomo_info_item.dart';
 // ComponentThemeDataGenerator
 // **************************************************************************
 
-// ignore_for_file: prefer_constructors_over_static_methods,avoid_unused_constructor_parameters, require_trailing_commas, avoid_init_to_null, use_named_constants
+// ignore_for_file: prefer_constructors_over_static_methods,avoid_unused_constructor_parameters, require_trailing_commas, avoid_init_to_null, use_named_constants, strict_raw_type, prefer_const_constructors, unnecessary_non_null_assertion
 class NomoInfoItemColorDataNullable {
   const NomoInfoItemColorDataNullable();
 }

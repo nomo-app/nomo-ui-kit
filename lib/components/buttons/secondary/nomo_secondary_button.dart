@@ -91,7 +91,7 @@ class SecondaryNomoButton extends StatelessWidget with NomoButtonMixin {
     this.translate,
     this.direction = Axis.horizontal,
   }) : assert(child == null || (icon == null && text == null),
-            'Either Specify child or text and icon');
+            'Either Specify child or text and icon',);
 
   @override
   Widget build(BuildContext context) {

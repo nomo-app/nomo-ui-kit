@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
-import 'package:nomo_ui_kit/theme/sub/nomo_sizing_theme.dart';
 import 'package:nomo_ui_kit/theme/theme_provider.dart';
 
 class MetricReactor extends StatefulWidget {

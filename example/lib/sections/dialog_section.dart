@@ -30,9 +30,9 @@ class DialogSection extends StatelessWidget {
                 context: context,
                 builder: (context) => NomoDialog(
                   backgroundColor: Colors.white,
-                  content: Padding(
-                    padding: const EdgeInsets.all(32.0),
-                    child: const NomoText("Content"),
+                  content: const Padding(
+                    padding: EdgeInsets.all(32.0),
+                    child: NomoText("Content"),
                   ),
                   title: "Title",
                   titleStyle: context.typography.h1,

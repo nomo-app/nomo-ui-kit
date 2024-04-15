@@ -24,11 +24,6 @@ export 'package:flutter/services.dart'
         TextInputAction,
         TextInputType;
 
-const Color _kDisabledBackground = CupertinoDynamicColor.withBrightness(
-  color: Color(0xFFFAFAFA),
-  darkColor: Color(0xFF050505),
-);
-
 // An eyeballed value that moves the cursor slightly left of where it is
 // rendered for text on Android so it's positioning more accurately matches the
 // native iOS text cursor positioning.
@@ -242,8 +237,10 @@ class CupertinoInput extends StatefulWidget {
           !expands || (maxLines == null && minLines == null),
           'minLines and maxLines must be null when expands is true.',
         ),
-        assert(!obscureText || maxLines == 1,
-            'Obscured fields cannot be multiline.'),
+        assert(
+          !obscureText || maxLines == 1,
+          'Obscured fields cannot be multiline.',
+        ),
         assert(maxLength == null || maxLength > 0),
         // Assert the following instead of setting it directly to avoid surprising the user by silently changing the value they set.
         assert(
@@ -556,7 +553,9 @@ class CupertinoInput extends StatefulWidget {
   final EditableTextContextMenuBuilder? contextMenuBuilder;
 
   static Widget _defaultContextMenuBuilder(
-      BuildContext context, EditableTextState editableTextState) {
+    BuildContext context,
+    EditableTextState editableTextState,
+  ) {
     return CupertinoAdaptiveTextSelectionToolbar.editableText(
       editableTextState: editableTextState,
     );
@@ -635,40 +634,90 @@ class CupertinoInput extends StatefulWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty<TextEditingController>(
-        'controller', controller,
-        defaultValue: null));
-    properties.add(DiagnosticsProperty<FocusNode>('focusNode', focusNode,
-        defaultValue: null));
-    properties.add(DiagnosticsProperty<UndoHistoryController>(
-        'undoController', undoController,
-        defaultValue: null));
-    properties.add(DiagnosticsProperty<ValueNotifier<BoxDecorationTweenInfo?>>(
-        'decorationTween', decorationTween));
+    properties.add(
+      DiagnosticsProperty<TextEditingController>(
+        'controller',
+        controller,
+        defaultValue: null,
+      ),
+    );
+    properties.add(
+      DiagnosticsProperty<FocusNode>(
+        'focusNode',
+        focusNode,
+        defaultValue: null,
+      ),
+    );
+    properties.add(
+      DiagnosticsProperty<UndoHistoryController>(
+        'undoController',
+        undoController,
+        defaultValue: null,
+      ),
+    );
+    properties.add(
+      DiagnosticsProperty<ValueNotifier<BoxDecorationTweenInfo?>>(
+        'decorationTween',
+        decorationTween,
+      ),
+    );
     properties.add(DiagnosticsProperty<EdgeInsetsGeometry>('padding', padding));
     properties.add(StringProperty('placeholder', placeholder));
     properties.add(
-        DiagnosticsProperty<TextStyle>('placeholderStyle', placeholderStyle));
-    properties.add(DiagnosticsProperty<OverlayVisibilityMode>(
-        'prefix', prefix == null ? null : prefixMode));
-    properties.add(DiagnosticsProperty<OverlayVisibilityMode>(
-        'suffix', suffix == null ? null : suffixMode));
-    properties.add(DiagnosticsProperty<OverlayVisibilityMode>(
-        'clearButtonMode', clearButtonMode));
-    properties.add(DiagnosticsProperty<TextInputType>(
-        'keyboardType', keyboardType,
-        defaultValue: TextInputType.text));
+      DiagnosticsProperty<TextStyle>('placeholderStyle', placeholderStyle),
+    );
     properties.add(
-        DiagnosticsProperty<TextStyle>('style', style, defaultValue: null));
+      DiagnosticsProperty<OverlayVisibilityMode>(
+        'prefix',
+        prefix == null ? null : prefixMode,
+      ),
+    );
     properties.add(
-        DiagnosticsProperty<bool>('autofocus', autofocus, defaultValue: false));
-    properties.add(DiagnosticsProperty<String>(
-        'obscuringCharacter', obscuringCharacter,
-        defaultValue: '•'));
-    properties.add(DiagnosticsProperty<bool>('obscureText', obscureText,
-        defaultValue: false));
-    properties.add(DiagnosticsProperty<bool>('autocorrect', autocorrect,
-        defaultValue: true));
+      DiagnosticsProperty<OverlayVisibilityMode>(
+        'suffix',
+        suffix == null ? null : suffixMode,
+      ),
+    );
+    properties.add(
+      DiagnosticsProperty<OverlayVisibilityMode>(
+        'clearButtonMode',
+        clearButtonMode,
+      ),
+    );
+    properties.add(
+      DiagnosticsProperty<TextInputType>(
+        'keyboardType',
+        keyboardType,
+        defaultValue: TextInputType.text,
+      ),
+    );
+    properties.add(
+      DiagnosticsProperty<TextStyle>('style', style, defaultValue: null),
+    );
+    properties.add(
+      DiagnosticsProperty<bool>('autofocus', autofocus, defaultValue: false),
+    );
+    properties.add(
+      DiagnosticsProperty<String>(
+        'obscuringCharacter',
+        obscuringCharacter,
+        defaultValue: '•',
+      ),
+    );
+    properties.add(
+      DiagnosticsProperty<bool>(
+        'obscureText',
+        obscureText,
+        defaultValue: false,
+      ),
+    );
+    properties.add(
+      DiagnosticsProperty<bool>(
+        'autocorrect',
+        autocorrect,
+        defaultValue: true,
+      ),
+    );
     properties.add(
       EnumProperty<SmartDashesType>(
         'smartDashesType',
@@ -685,58 +734,121 @@ class CupertinoInput extends StatefulWidget {
             obscureText ? SmartQuotesType.disabled : SmartQuotesType.enabled,
       ),
     );
-    properties.add(DiagnosticsProperty<bool>(
-        'enableSuggestions', enableSuggestions,
-        defaultValue: true));
+    properties.add(
+      DiagnosticsProperty<bool>(
+        'enableSuggestions',
+        enableSuggestions,
+        defaultValue: true,
+      ),
+    );
     properties.add(IntProperty('maxLines', maxLines, defaultValue: 1));
     properties.add(IntProperty('minLines', minLines, defaultValue: null));
     properties.add(
-        DiagnosticsProperty<bool>('expands', expands, defaultValue: false));
+      DiagnosticsProperty<bool>('expands', expands, defaultValue: false),
+    );
     properties.add(IntProperty('maxLength', maxLength, defaultValue: null));
-    properties.add(EnumProperty<MaxLengthEnforcement>(
-        'maxLengthEnforcement', maxLengthEnforcement,
-        defaultValue: null));
+    properties.add(
+      EnumProperty<MaxLengthEnforcement>(
+        'maxLengthEnforcement',
+        maxLengthEnforcement,
+        defaultValue: null,
+      ),
+    );
     properties
         .add(DoubleProperty('cursorWidth', cursorWidth, defaultValue: 2.0));
     properties
         .add(DoubleProperty('cursorHeight', cursorHeight, defaultValue: null));
-    properties.add(DiagnosticsProperty<Radius>('cursorRadius', cursorRadius,
-        defaultValue: null));
-    properties.add(DiagnosticsProperty<bool>(
-        'cursorOpacityAnimates', cursorOpacityAnimates,
-        defaultValue: true));
-    properties.add(createCupertinoColorProperty('cursorColor', cursorColor,
-        defaultValue: null));
     properties.add(
-      FlagProperty('selectionEnabled',
-          value: selectionEnabled,
-          defaultValue: true,
-          ifFalse: 'selection disabled'),
+      DiagnosticsProperty<Radius>(
+        'cursorRadius',
+        cursorRadius,
+        defaultValue: null,
+      ),
     );
-    properties.add(DiagnosticsProperty<TextSelectionControls>(
-        'selectionControls', selectionControls,
-        defaultValue: null));
-    properties.add(DiagnosticsProperty<ScrollController>(
-        'scrollController', scrollController,
-        defaultValue: null));
-    properties.add(DiagnosticsProperty<ScrollPhysics>(
-        'scrollPhysics', scrollPhysics,
-        defaultValue: null));
-    properties.add(EnumProperty<TextAlign>('textAlign', textAlign,
-        defaultValue: TextAlign.start));
-    properties.add(DiagnosticsProperty<TextAlignVertical>(
-        'textAlignVertical', textAlignVertical,
-        defaultValue: null));
-    properties.add(EnumProperty<TextDirection>('textDirection', textDirection,
-        defaultValue: null));
-    properties.add(DiagnosticsProperty<Clip>('clipBehavior', clipBehavior,
-        defaultValue: Clip.hardEdge));
-    properties.add(DiagnosticsProperty<bool>('scribbleEnabled', scribbleEnabled,
-        defaultValue: true));
     properties.add(
       DiagnosticsProperty<bool>(
-          'enableIMEPersonalizedLearning', enableIMEPersonalizedLearning,
-          defaultValue: true),
+        'cursorOpacityAnimates',
+        cursorOpacityAnimates,
+        defaultValue: true,
+      ),
+    );
+    properties.add(
+      createCupertinoColorProperty(
+        'cursorColor',
+        cursorColor,
+        defaultValue: null,
+      ),
+    );
+    properties.add(
+      FlagProperty(
+        'selectionEnabled',
+        value: selectionEnabled,
+        defaultValue: true,
+        ifFalse: 'selection disabled',
+      ),
+    );
+    properties.add(
+      DiagnosticsProperty<TextSelectionControls>(
+        'selectionControls',
+        selectionControls,
+        defaultValue: null,
+      ),
+    );
+    properties.add(
+      DiagnosticsProperty<ScrollController>(
+        'scrollController',
+        scrollController,
+        defaultValue: null,
+      ),
+    );
+    properties.add(
+      DiagnosticsProperty<ScrollPhysics>(
+        'scrollPhysics',
+        scrollPhysics,
+        defaultValue: null,
+      ),
+    );
+    properties.add(
+      EnumProperty<TextAlign>(
+        'textAlign',
+        textAlign,
+        defaultValue: TextAlign.start,
+      ),
+    );
+    properties.add(
+      DiagnosticsProperty<TextAlignVertical>(
+        'textAlignVertical',
+        textAlignVertical,
+        defaultValue: null,
+      ),
+    );
+    properties.add(
+      EnumProperty<TextDirection>(
+        'textDirection',
+        textDirection,
+        defaultValue: null,
+      ),
+    );
+    properties.add(
+      DiagnosticsProperty<Clip>(
+        'clipBehavior',
+        clipBehavior,
+        defaultValue: Clip.hardEdge,
+      ),
+    );
+    properties.add(
+      DiagnosticsProperty<bool>(
+        'scribbleEnabled',
+        scribbleEnabled,
+        defaultValue: true,
+      ),
+    );
+    properties.add(
+      DiagnosticsProperty<bool>(
+        'enableIMEPersonalizedLearning',
+        enableIMEPersonalizedLearning,
+        defaultValue: true,
+      ),
     );
     properties.add(
       DiagnosticsProperty<SpellCheckConfiguration>(
@@ -758,8 +870,11 @@ class CupertinoInput extends StatefulWidget {
 
   static final TextMagnifierConfiguration _iosMagnifierConfiguration =
       TextMagnifierConfiguration(
-    magnifierBuilder: (BuildContext context, MagnifierController controller,
-        ValueNotifier<MagnifierInfo> magnifierInfo) {
+    magnifierBuilder: (
+      BuildContext context,
+      MagnifierController controller,
+      ValueNotifier<MagnifierInfo> magnifierInfo,
+    ) {
       switch (defaultTargetPlatform) {
         case TargetPlatform.android:
         case TargetPlatform.iOS:
@@ -948,7 +1063,9 @@ class _CupertinoInputState extends State<CupertinoInput>
   }
 
   void _handleSelectionChanged(
-      TextSelection selection, SelectionChangedCause? cause) {
+    TextSelection selection,
+    SelectionChangedCause? cause,
+  ) {
     final willShowSelectionHandles = _shouldShowSelectionHandles(cause);
     if (willShowSelectionHandles != _showSelectionHandles) {
       setState(() {
@@ -1136,7 +1253,9 @@ class _CupertinoInputState extends State<CupertinoInput>
           paintCursorAboveText: true,
           autocorrectionTextRectColor: selectionColor,
           backgroundCursorColor: CupertinoDynamicColor.resolve(
-              CupertinoColors.inactiveGray, context),
+            CupertinoColors.inactiveGray,
+            context,
+          ),
           selectionHeightStyle: widget.selectionHeightStyle,
           selectionWidthStyle: widget.selectionWidthStyle,
           scrollPadding: widget.scrollPadding,

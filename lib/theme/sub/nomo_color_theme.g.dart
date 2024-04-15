@@ -6,7 +6,7 @@ part of 'nomo_color_theme.dart';
 // ThemeUtilGenerator
 // **************************************************************************
 
-// ignore_for_file: prefer_constructors_over_static_methods,avoid_unused_constructor_parameters, require_trailing_commas, avoid_init_to_null
+// ignore_for_file: prefer_constructors_over_static_methods,avoid_unused_constructor_parameters, require_trailing_commas, avoid_init_to_null, use_named_constants, strict_raw_type, prefer_const_constructors, unnecessary_non_null_assertion
 NomoComponentColors lerpNomoComponentColors(
     NomoComponentColors a, NomoComponentColors b, double t) {
   return NomoComponentColors(

@@ -51,7 +51,7 @@ class NomoThemeData {
   }) {
     return NomoThemeData(
       colorTheme: colorTheme ?? this.colorTheme,
-      textTheme: (typographyTheme ?? this.typography).copyWith(
+      textTheme: (typographyTheme ?? typography).copyWith(
         colors: colorTheme?.colors,
         sizes: sizingTheme?.sizes,
       ),

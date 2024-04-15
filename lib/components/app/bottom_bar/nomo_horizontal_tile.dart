@@ -5,7 +5,7 @@ import 'package:nomo_ui_kit/components/text/nomo_text.dart';
 import 'package:nomo_ui_kit/components/vertical_menu/nomo_vertical_menu.dart';
 import 'package:nomo_ui_kit/entities/menu_item.dart';
 
-class NomoHorizontalListTile extends StatefulWidget {
+class NomoHorizontalListTile<T> extends StatefulWidget {
   const NomoHorizontalListTile({
     required this.item,
     required this.theme,
@@ -16,7 +16,7 @@ class NomoHorizontalListTile extends StatefulWidget {
     this.onTap,
     this.selected = false,
   });
-  final NomoMenuItem item;
+  final NomoMenuItem<T> item;
   final NomoBottomBarThemeData theme;
   final TextStyle? style;
   final double? widthFactor;
@@ -26,10 +26,11 @@ class NomoHorizontalListTile extends StatefulWidget {
   final bool selected;
 
   @override
-  State<NomoHorizontalListTile> createState() => _NomoHorizontalListTileState();
+  State<NomoHorizontalListTile<T>> createState() =>
+      _NomoHorizontalListTileState();
 }
 
-class _NomoHorizontalListTileState extends State<NomoHorizontalListTile>
+class _NomoHorizontalListTileState<T> extends State<NomoHorizontalListTile<T>>
     with SingleTickerProviderStateMixin {
   NomoBottomBarThemeData get theme => widget.theme;
 
@@ -57,7 +58,7 @@ class _NomoHorizontalListTileState extends State<NomoHorizontalListTile>
   }
 
   @override
-  void didUpdateWidget(oldWidget) {
+  void didUpdateWidget(NomoHorizontalListTile<T> oldWidget) {
     foreGroundAnimation = ColorTween(
       begin: widget.theme.foreground,
       end: widget.theme.selectedForeground,
@@ -88,20 +89,21 @@ class _NomoHorizontalListTileState extends State<NomoHorizontalListTile>
           final foreground = foreGroundAnimation.value;
 
           final icon = switch (widget.item) {
-            final NomoMenuIconItem iconItem => Icon(
+            final NomoMenuIconItem<T> iconItem => Icon(
                 iconItem.icon,
                 color: foreground,
                 size: theme.iconSize,
               ),
-            final NomoMenuImageItem imageItem
+            final NomoMenuImageItem<T> imageItem
                 when imageItem.imagePath.contains('svg') =>
               SvgPicture.asset(
                 imageItem.imagePath,
-                color: foreground,
                 width: theme.iconSize,
-                //colorFilter: ,
+                colorFilter: foreground != null
+                    ? ColorFilter.mode(foreground, BlendMode.srcIn)
+                    : null,
               ),
-            final NomoMenuImageItem imageItem => Image.asset(
+            final NomoMenuImageItem<T> imageItem => Image.asset(
                 imageItem.imagePath,
                 color: foreground,
                 width: theme.iconSize,

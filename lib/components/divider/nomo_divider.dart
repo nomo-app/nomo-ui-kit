@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:nomo_ui_generator/annotations.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 import 'package:nomo_ui_kit/utils/layout_extensions.dart';
@@ -69,7 +68,7 @@ class NomoDivider extends StatelessWidget {
           4.vSpacing,
           middle!,
           4.vSpacing,
-          Expanded(child: div)
+          Expanded(child: div),
         ],
       );
     }

@@ -57,7 +57,7 @@ class _InputSectionState extends State<InputSection> {
               usePlaceholderAsTitle: true,
               padding: const EdgeInsets.all(2),
               onChanged: (value) {
-                print("Value changed $value");
+                debugPrint("Value changed $value");
               },
             ),
           ),
@@ -163,7 +163,7 @@ class _InputSectionState extends State<InputSection> {
                   return null;
                 },
               ),
-              NomoInput(
+              const NomoInput(
                 formKey: "input2",
               ),
               SizedBox(

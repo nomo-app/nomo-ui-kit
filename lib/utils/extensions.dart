@@ -1,6 +1,3 @@
-import 'dart:ui';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:nomo_ui_kit/theme/sub/nomo_color_theme.dart';
 

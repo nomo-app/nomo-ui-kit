@@ -31,8 +31,8 @@ const notificationHorizontalAnimationDuration = Duration(milliseconds: 350);
 class InAppNotification extends StatelessWidget {
   /// Creates an in-app notification system.
   const InAppNotification({
-    super.key,
     required this.child,
+    super.key,
   });
 
   final Widget child;
@@ -63,6 +63,7 @@ class InAppNotification extends StatelessWidget {
     Curve curve = Curves.easeOutCubic,
     Curve dismissCurve = Curves.easeOutCubic,
     bool useRootNavigator = false,
+    // ignore: strict_raw_type
     @visibleForTesting FutureOr Function()? notificationCreatedCallback,
   }) async {
     final controller = _NotificationController.of(context);
@@ -110,7 +111,6 @@ class InAppNotification extends StatelessWidget {
 
 class _NotificationController extends InheritedWidget {
   const _NotificationController({
-    super.key,
     required super.child,
     required this.state,
   });
@@ -351,23 +351,23 @@ typedef SizeChangedCallback = void Function(Size size);
 
 class SizeListenableContainer extends SingleChildRenderObjectWidget {
   const SizeListenableContainer({
-    super.key,
     required Widget super.child,
     required this.onSizeChanged,
+    super.key,
   });
 
   final SizeChangedCallback onSizeChanged;
 
   @override
-  _SizeListenableRenderObject createRenderObject(BuildContext context) {
-    return _SizeListenableRenderObject(onSizeChanged: onSizeChanged);
+  SizeListenableRenderObject createRenderObject(BuildContext context) {
+    return SizeListenableRenderObject(onSizeChanged: onSizeChanged);
   }
 }
 
-class _SizeListenableRenderObject extends RenderProxyBox {
-  _SizeListenableRenderObject({
-    RenderBox? child,
+class SizeListenableRenderObject extends RenderProxyBox {
+  SizeListenableRenderObject({
     required this.onSizeChanged,
+    RenderBox? child,
   }) : super(child);
 
   final SizeChangedCallback onSizeChanged;
@@ -397,7 +397,6 @@ class _SizeListenableRenderObject extends RenderProxyBox {
 
 class _VsyncProvider extends StatefulWidget {
   const _VsyncProvider({
-    super.key,
     required this.child,
   });
 
@@ -473,6 +472,7 @@ class VerticalInteractAnimationController extends AnimationController
 
   double _notificationHeight = 0.0;
 
+  // ignore: avoid_setters_without_getters
   set notificationHeight(double value) => _notificationHeight = value;
 
   VerticalInteractAnimationController({
@@ -513,6 +513,7 @@ class HorizontalInteractAnimationController extends AnimationController
 
   double _screenWidth = 0.0;
 
+  // ignore: avoid_setters_without_getters
   set screenWidth(double value) => _screenWidth = value;
 
   HorizontalInteractAnimationController({

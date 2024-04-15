@@ -14,15 +14,15 @@ class FadeIn extends StatefulWidget {
   final Widget child;
   final Duration duration;
   final Duration delay;
-  final Function(AnimationController)? controller;
+  final void Function(AnimationController)? controller;
   final bool manualTrigger;
   final bool animate;
 
   FadeIn({
-    super.key,
     required this.child,
+    super.key,
     this.duration = const Duration(milliseconds: 400),
-    this.delay = const Duration(milliseconds: 0),
+    this.delay = Duration.zero,
     this.controller,
     this.manualTrigger = false,
     this.animate = true,
@@ -35,12 +35,12 @@ class FadeIn extends StatefulWidget {
   }
 
   @override
-  _FadeInState createState() => _FadeInState();
+  FadeInState createState() => FadeInState();
 }
 
 /// FadeState class
 /// The animation magic happens here
-class _FadeInState extends State<FadeIn> with SingleTickerProviderStateMixin {
+class FadeInState extends State<FadeIn> with SingleTickerProviderStateMixin {
   /// Animation controller that controls this animation
   AnimationController? controller;
 
@@ -91,12 +91,13 @@ class _FadeInState extends State<FadeIn> with SingleTickerProviderStateMixin {
 
     /// Builds the animation with the corresponding
     return AnimatedBuilder(
-        animation: animation,
-        builder: (BuildContext context, Widget? child) {
-          return Opacity(
-            opacity: animation.value,
-            child: widget.child,
-          );
-        });
+      animation: animation,
+      builder: (BuildContext context, Widget? child) {
+        return Opacity(
+          opacity: animation.value,
+          child: widget.child,
+        );
+      },
+    );
   }
 }

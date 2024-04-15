@@ -28,6 +28,8 @@ import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 import 'package:nomo_ui_kit/theme/theme_provider.dart';
 import 'package:route_gen/anotations.dart';
 
+// ignore_for_file: prefer_const_constructors
+
 part 'routes.g.dart';
 
 Widget wrapper(nav) {
