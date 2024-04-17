@@ -97,14 +97,19 @@ class NomoTheme extends InheritedWidget {
 }
 
 abstract class NomoThemeDelegate<C, S> {
-  late final Map<C, NomoColorThemeData> colorThemeMap = _createColorThemes();
-  late final Map<S, NomoSizingThemeData> sizingThemeMap = _createSizingThemes();
+  late Map<C, NomoColorThemeData> colorThemeMap = _createColorThemes();
+  late Map<S, NomoSizingThemeData> sizingThemeMap = _createSizingThemes();
+
+  void reloadThemeData() {
+    colorThemeMap = _createColorThemes();
+    sizingThemeMap = _createSizingThemes();
+  }
 
   /// Base Components Colors
   NomoComponentColorsNullable defaultComponentsColor(NomoColors core);
 
   /// Map of all your Color Themes
-  Map<C, NomoColorThemeDataNullable> get colorThemes;
+  Map<C, NomoColorThemeDataNullable> getColorThemes();
 
   /// Initial Color Theme
   C initialColorTheme();
@@ -113,7 +118,7 @@ abstract class NomoThemeDelegate<C, S> {
   NomoComponentSizesNullable defaultComponentsSize(NomoSizes core);
 
   /// Map of all your Sizing Themes
-  Map<S, NomoSizingThemeDataNullable> get sizingThemes;
+  Map<S, NomoSizingThemeDataNullable> getSizingThemes();
 
   /// Sizing Theme Builder
   /// This functions returns the sizing theme based on the width of the screen
@@ -133,7 +138,7 @@ abstract class NomoThemeDelegate<C, S> {
 
   Map<S, NomoSizingThemeData> _createSizingThemes() {
     final map = <S, NomoSizingThemeData>{};
-    for (final MapEntry(:key, :value) in sizingThemes.entries) {
+    for (final MapEntry(:key, :value) in getSizingThemes().entries) {
       final defComponents = predefinedComponentSizes(value.sizes).overrideWith(
         defaultComponentsSize(value.sizes),
       );
@@ -144,7 +149,7 @@ abstract class NomoThemeDelegate<C, S> {
 
   Map<C, NomoColorThemeData> _createColorThemes() {
     final map = <C, NomoColorThemeData>{};
-    for (final MapEntry(:key, :value) in colorThemes.entries) {
+    for (final MapEntry(:key, :value) in getColorThemes().entries) {
       final defComponents =
           predefinedComponentColors(value.colors).overrideWith(
         defaultComponentsColor(value.colors),

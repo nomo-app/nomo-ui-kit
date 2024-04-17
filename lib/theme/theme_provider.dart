@@ -5,13 +5,19 @@ import 'package:nomo_ui_kit/theme/sub/nomo_sizing_theme.dart';
 
 class ThemeNotifier extends ChangeNotifier {
   final NomoThemeDelegate<Object, Object> _delegate;
-  late final Map<Object, NomoColorThemeData> _colorThemes;
-  late final Map<Object, NomoSizingThemeData> _sizingThemes;
+  late Map<Object, NomoColorThemeData> _colorThemes;
+  late Map<Object, NomoSizingThemeData> _sizingThemes;
   late Object colorMode;
   late Object sizingMode;
   late NomoThemeData _theme;
 
   NomoThemeData get theme => _theme;
+
+  void reloadThemeData() {
+    _delegate.reloadThemeData();
+    _colorThemes = _delegate.colorThemeMap;
+    _sizingThemes = _delegate.sizingThemeMap;
+  }
 
   ThemeNotifier(this._delegate) {
     _colorThemes = _delegate.colorThemeMap;
@@ -34,7 +40,7 @@ class ThemeNotifier extends ChangeNotifier {
   }
 
   void changeColorTheme(Object mode) {
-    if (colorMode == mode) return;
+    // if (colorMode == mode) return;
 
     colorMode = mode;
     _theme = _theme.copyWith(colorTheme: _colorThemes[mode]);
@@ -65,6 +71,10 @@ class ThemeProvider extends InheritedWidget {
     super.key,
   }) : _notifier = notifier;
   final ThemeNotifier _notifier;
+
+  void reloadThemeData() {
+    _notifier.reloadThemeData();
+  }
 
   NomoThemeData get theme => _notifier.theme;
   NomoColorThemeData get colorTheme => _notifier.theme.colorTheme;
