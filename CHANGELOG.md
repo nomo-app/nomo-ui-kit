@@ -10,3 +10,7 @@ Initial release.
 ## 0.0.3
 
 * Added support for changing themes on the go
+
+## 0.0.4
+
+* Added itemDecorator on vertical and horizontal menu items
