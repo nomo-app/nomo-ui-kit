@@ -28,6 +28,7 @@ class NomoBottomBar<T> extends StatelessWidget {
     this.padding,
     this.iconSize,
     this.itemPadding,
+    this.itemDecorator,
   }) : assert(
           items.length > 0 && items.length <= 5,
           'Items must be between 1 and 5',
@@ -36,6 +37,7 @@ class NomoBottomBar<T> extends StatelessWidget {
   final TextStyle? style;
   final Widget? title;
   final void Function(NomoMenuItem<T> item)? onTap;
+  final Widget Function(NomoMenuItem<T> item, Widget child)? itemDecorator;
   final T? selected;
   final double? widthFactor;
   final double? itemWidth;
@@ -83,14 +85,17 @@ class NomoBottomBar<T> extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           for (final item in items)
-            NomoHorizontalListTile(
-              itemWidth: itemWidth,
-              widthFactor: widthFactor,
-              item: item,
-              theme: theme,
-              selected: item.key == selected,
-              onTap: () => onTap?.call(item),
-            ),
+            () {
+              final widget = NomoHorizontalListTile(
+                itemWidth: itemWidth,
+                widthFactor: widthFactor,
+                item: item,
+                theme: theme,
+                selected: item.key == selected,
+                onTap: () => onTap?.call(item),
+              );
+              return itemDecorator?.call(item, widget) ?? widget;
+            }.call()
         ],
       ),
     );

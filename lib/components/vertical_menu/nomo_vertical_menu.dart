@@ -30,12 +30,14 @@ class NomoVerticalMenu<T> extends StatelessWidget {
     this.onTap,
     this.border,
     this.selectedBorder,
+    this.itemDecorator,
     super.key,
   });
   final List<NomoMenuItem<T>> items;
   final TextStyle? style;
   final Widget? title;
   final void Function(NomoMenuItem<T> item)? onTap;
+  final Widget Function(NomoMenuItem<T> item, Widget child)? itemDecorator;
   final T? selected;
 
   @NomoColorField<BorderSide>(BorderSide.none)
@@ -106,7 +108,7 @@ class NomoVerticalMenu<T> extends StatelessWidget {
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 final item = items[index];
-                return NomoVerticalListTile(
+                final widget = NomoVerticalListTile(
                   item: item,
                   menuTheme: theme,
                   titleStyle: style,
@@ -116,6 +118,8 @@ class NomoVerticalMenu<T> extends StatelessWidget {
                   },
                   selected: item.key == selected,
                 );
+
+                return itemDecorator?.call(item, widget) ?? widget;
               },
               separatorBuilder: (context, index) => theme.spacing.vSpacing,
               itemCount: items.length,
