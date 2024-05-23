@@ -177,12 +177,10 @@ class _NomoVerticalListTileState<T> extends State<NomoVerticalListTile<T>>
                   when imageItem.imagePath.contains('svg') =>
                 SvgPicture.asset(
                   imageItem.imagePath,
-
                   colorFilter: foreground != null
                       ? ColorFilter.mode(foreground, BlendMode.srcIn)
                       : null,
                   width: menuTheme.iconSize,
-                  //colorFilter: ,
                 ),
               final NomoMenuImageItem<T> imageItem => Image.asset(
                   imageItem.imagePath,
@@ -234,15 +232,18 @@ class _NomoVerticalListTileState<T> extends State<NomoVerticalListTile<T>>
                               ),
                           ],
                         ),
-                        const Spacer(),
                         if (widget.item.trailling != null)
-                          NomoTextTheme(
-                            color: foreground!,
-                            child: NomoDefaultTextStyle(
-                              style: theme.traillingStyle,
-                              child: widget.item.trailling!,
+                          Expanded(
+                            child: NomoTextTheme(
+                              color: foreground!,
+                              child: NomoDefaultTextStyle(
+                                style: theme.traillingStyle,
+                                child: widget.item.trailling!,
+                              ),
                             ),
-                          ),
+                          )
+                        else
+                          const Spacer(),
                       ],
                     ],
                   ),
