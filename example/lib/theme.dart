@@ -52,7 +52,7 @@ class AppThemeDelegate extends NomoThemeDelegate<ColorMode, SizingMode> {
       );
 
   @override
-  Map<SizingMode, NomoSizingThemeDataNullable> get sizingThemes {
+  Map<SizingMode, NomoSizingThemeDataNullable> getSizingThemes() {
     return {
       SizingMode.SMALL: NomoSizingThemeDataNullable(
         key: const ValueKey('small'),
@@ -122,7 +122,7 @@ class AppThemeDelegate extends NomoThemeDelegate<ColorMode, SizingMode> {
   }
 
   @override
-  Map<ColorMode, NomoColorThemeDataNullable> get colorThemes {
+  Map<ColorMode, NomoColorThemeDataNullable> getColorThemes() {
     return {
       ColorMode.LIGHT: NomoColorThemeDataNullable(
         key: const ValueKey('light'),

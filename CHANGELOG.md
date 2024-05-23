@@ -14,3 +14,7 @@ Initial release.
 ## 0.0.4
 
 * Added itemDecorator on vertical and horizontal menu items
+
+## 0.0.5
+
+* Make Trailling Widgets inside NomoVerticalMenu Expanded
