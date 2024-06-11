@@ -14,6 +14,7 @@ class NomoNotification extends StatelessWidget {
   final String title;
   final String subtitle;
   final Widget leading;
+  final bool expand;
 
   @NomoSizingField(EdgeInsets.all(16))
   final EdgeInsetsGeometry? padding;
@@ -24,7 +25,7 @@ class NomoNotification extends StatelessWidget {
   @NomoSizingField(16.0)
   final double? spacing;
 
-  @NomoSizingField(280.0)
+  @NomoSizingField(double.infinity)
   final double? maxWidth;
 
   @NomoConstant(TextStyle())
@@ -34,13 +35,17 @@ class NomoNotification extends StatelessWidget {
   final TextStyle? subtitleStyle;
 
   const NomoNotification({
-    required this.title, required this.subtitle, required this.leading, super.key,
+    required this.title,
+    required this.subtitle,
+    required this.leading,
+    super.key,
     this.titleStyle,
     this.subtitleStyle,
     this.padding,
     this.borderRadius,
     this.spacing,
     this.maxWidth,
+    this.expand = false,
   });
 
   @override
@@ -50,6 +55,7 @@ class NomoNotification extends StatelessWidget {
     return ConstrainedBox(
       constraints: BoxConstraints(
         maxWidth: theme.maxWidth,
+        minWidth: 0,
       ),
       child: NomoCard(
         padding: theme.padding,
@@ -58,21 +64,25 @@ class NomoNotification extends StatelessWidget {
           children: [
             leading,
             theme.spacing.hSpacing,
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  NomoText(
-                    title,
-                    style: theme.titleStyle,
-                  ),
-                  4.hSpacing,
-                  NomoText(
-                    subtitle,
-                    style: theme.subtitleStyle,
-                  ),
-                ],
-              ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                NomoText(
+                  title,
+                  style: theme.titleStyle,
+                  maxLines: 1,
+                ),
+                4.hSpacing,
+                NomoText(
+                  subtitle,
+                  style: theme.subtitleStyle,
+                  maxLines: 1,
+                  fit: true,
+                ),
+              ],
+            ).wrapIf(
+              expand,
+              (p0) => Expanded(child: p0),
             ),
             theme.spacing.hSpacing,
             SecondaryNomoButton(

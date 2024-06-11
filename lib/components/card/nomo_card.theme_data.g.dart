@@ -6,7 +6,7 @@ part of 'nomo_card.dart';
 // ComponentThemeDataGenerator
 // **************************************************************************
 
-// ignore_for_file: prefer_constructors_over_static_methods,avoid_unused_constructor_parameters, require_trailing_commas, avoid_init_to_null, use_named_constants, strict_raw_type, prefer_const_constructors, unnecessary_non_null_assertion, dead_null_aware_expression
+// ignore_for_file: prefer_constructors_over_static_methods,avoid_unused_constructor_parameters, require_trailing_commas, avoid_init_to_null, use_named_constants, strict_raw_type, prefer_const_constructors, unnecessary_non_null_assertion
 class NomoCardColorDataNullable {
   final Color? shadowColor;
   final BoxBorder? border;

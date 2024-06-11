@@ -50,7 +50,7 @@ class NomoNotificationSizingData implements NomoNotificationSizingDataNullable {
     this.padding = const EdgeInsets.all(16),
     this.borderRadius = const BorderRadius.all(Radius.circular(16)),
     this.spacing = 16.0,
-    this.maxWidth = 280.0,
+    this.maxWidth = double.infinity,
   });
   static NomoNotificationSizingData lerp(
       NomoNotificationSizingData a, NomoNotificationSizingData b, double t) {
@@ -115,7 +115,7 @@ class NomoNotificationThemeData
     this.padding = const EdgeInsets.all(16),
     this.borderRadius = const BorderRadius.all(Radius.circular(16)),
     this.spacing = 16.0,
-    this.maxWidth = 280.0,
+    this.maxWidth = double.infinity,
     this.titleStyle = const TextStyle(),
     this.subtitleStyle = const TextStyle(),
   });
