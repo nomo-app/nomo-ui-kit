@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nomo_ui_generator/annotations.dart';
 import 'package:nomo_ui_kit/components/app/app_bar/nomo_app_bar.dart';
 import 'package:nomo_ui_kit/components/app/bottom_bar/nomo_bottom_bar.dart';
+import 'package:nomo_ui_kit/components/app/routebody/nomo_route_body.dart';
 import 'package:nomo_ui_kit/components/app/scaffold/nomo_scaffold.dart';
 import 'package:nomo_ui_kit/components/app/sider/nomo_sider.dart';
 import 'package:nomo_ui_kit/components/buttons/link/nomo_link_button.dart';
@@ -47,6 +48,7 @@ const _ = [
   NomoDividerColorData,
   NomoInfoItemColorData,
   NomoNotificationColorData,
+  NomoRouteBodyColorData,
 ];
 
 NomoComponentColors predefinedComponentColors(NomoColors colors) {

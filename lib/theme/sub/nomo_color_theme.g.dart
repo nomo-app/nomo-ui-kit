@@ -105,6 +105,11 @@ NomoComponentColors lerpNomoComponentColors(
       b.notificationColor,
       t,
     ),
+    routeBodyColor: NomoRouteBodyColorData.lerp(
+      a.routeBodyColor,
+      b.routeBodyColor,
+      t,
+    ),
   );
 }
 
@@ -128,6 +133,7 @@ class NomoComponentColorsNullable {
   final NomoDividerColorDataNullable? dividerColor;
   final NomoInfoItemColorDataNullable? infoItemColor;
   final NomoNotificationColorDataNullable? notificationColor;
+  final NomoRouteBodyColorDataNullable? routeBodyColor;
   const NomoComponentColorsNullable({
     this.outlineContainerColor,
     this.appBarColor,
@@ -148,6 +154,7 @@ class NomoComponentColorsNullable {
     this.dividerColor,
     this.infoItemColor,
     this.notificationColor,
+    this.routeBodyColor,
   });
 }
 
@@ -190,6 +197,8 @@ class NomoComponentColors implements NomoComponentColorsNullable {
   final NomoInfoItemColorData infoItemColor;
   @override
   final NomoNotificationColorData notificationColor;
+  @override
+  final NomoRouteBodyColorData routeBodyColor;
   const NomoComponentColors({
     this.outlineContainerColor = const NomoOutlineContainerColorData(),
     this.appBarColor = const NomoAppBarColorData(),
@@ -210,6 +219,7 @@ class NomoComponentColors implements NomoComponentColorsNullable {
     this.dividerColor = const NomoDividerColorData(),
     this.infoItemColor = const NomoInfoItemColorData(),
     this.notificationColor = const NomoNotificationColorData(),
+    this.routeBodyColor = const NomoRouteBodyColorData(),
   });
 }
 
@@ -254,6 +264,8 @@ extension NomoComponentColorsOverride on NomoComponentColors {
           infoItemColor, nullable.infoItemColor),
       notificationColor: NomoNotificationColorData.overrideWith(
           notificationColor, nullable.notificationColor),
+      routeBodyColor: NomoRouteBodyColorData.overrideWith(
+          routeBodyColor, nullable.routeBodyColor),
     );
   }
 }

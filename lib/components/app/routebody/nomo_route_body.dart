@@ -25,6 +25,15 @@ class NomoRouteBody extends StatelessWidget {
   @NomoSizingField(Radius.circular(4))
   final Radius? scrollBarRadius;
 
+  @NomoSizingField<double?>(null)
+  final double? maxContentWidth;
+
+  @NomoColorField<Color?>(null)
+  final Color? backgroundColor;
+
+  @NomoColorField<Widget?>(null)
+  final Widget? background;
+
   final bool useScrollBar;
 
   final Widget? footer;
@@ -47,7 +56,10 @@ class NomoRouteBody extends StatelessWidget {
     this.sliverBuilder,
     this.useScrollBar = false,
     this.footer,
+    this.backgroundColor,
     this.scrollable = false,
+    this.maxContentWidth,
+    this.background,
   }) : assert(
           child != null ||
               slivers != null ||
@@ -63,60 +75,71 @@ class NomoRouteBody extends StatelessWidget {
     final theme = getFromContext(context, this);
     final _scrollController = scrollController ?? ScrollController();
 
-    return ColoredBox(
-      color: context.colors.background1,
-      child: DefaultScrollController(
-        scrollController: _scrollController,
-        child: switch (this) {
-          _ when child != null => _ChildBody(
+    return DefaultScrollController(
+      scrollController: _scrollController,
+      child: switch (this) {
+        _ when child != null => _ChildBody(
+            theme: theme,
+            scrollable: scrollable,
+            footer: footer,
+            child: child!,
+          ),
+        _ when builder != null => Builder(
+            builder: (context) => _ChildBody(
               theme: theme,
               scrollable: scrollable,
               footer: footer,
-              child: child!,
+              child: builder!(context),
             ),
-          _ when builder != null => Builder(
-              builder: (context) => _ChildBody(
-                theme: theme,
-                scrollable: scrollable,
-                footer: footer,
-                child: builder!(context),
-              ),
-            ),
-          _ when slivers != null => _SliverBody(
+          ),
+        _ when slivers != null => _SliverBody(
+            theme: theme,
+            slivers: slivers!,
+            footer: footer,
+          ),
+        _ when sliverBuilder != null => Builder(
+            builder: (context) => _SliverBody(
               theme: theme,
-              slivers: slivers!,
+              slivers: sliverBuilder!(context),
               footer: footer,
             ),
-          _ when sliverBuilder != null => Builder(
-              builder: (context) => _SliverBody(
-                theme: theme,
-                slivers: sliverBuilder!(context),
-                footer: footer,
-              ),
-            ),
-          _ when children != null => _ChildrenBody(
+          ),
+        _ when children != null => _ChildrenBody(
+            theme: theme,
+            footer: footer,
+            children: children!,
+          ),
+        _ => Builder(
+            builder: (context) => _ChildrenBody(
               theme: theme,
               footer: footer,
-              children: children!,
+              children: childrenBuilder!(context),
             ),
-          _ => Builder(
-              builder: (context) => _ChildrenBody(
-                theme: theme,
-                footer: footer,
-                children: childrenBuilder!(context),
-              ),
-            ),
-        },
-      ),
-    ).wrapIf(
-      useScrollBar,
-      (child) => Scrollbar(
-        controller: _scrollController,
-        radius: theme.scrollBarRadius,
-        thickness: theme.scrollBarThickness,
-        child: child,
-      ),
-    );
+          ),
+      },
+    )
+        .wrapIf(
+          useScrollBar,
+          (child) => Scrollbar(
+            controller: _scrollController,
+            radius: theme.scrollBarRadius,
+            thickness: theme.scrollBarThickness,
+            child: child,
+          ),
+        )
+        .wrapIf(
+          theme.backgroundColor != null,
+          (child) => ColoredBox(color: theme.backgroundColor!, child: child),
+        )
+        .wrapIf(
+          theme.background != null,
+          (child) => Stack(
+            children: [
+              theme.background!,
+              child,
+            ],
+          ),
+        );
   }
 }
 
@@ -134,23 +157,30 @@ class _ChildrenBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final verticalPadding = theme.padding.vertical / 2;
-    return CustomScrollView(
-      controller: DefaultScrollController.of(context),
-      slivers: [
-        verticalPadding.vSpacing.toBox,
-        SliverPadding(
-          padding:
-              EdgeInsets.symmetric(horizontal: theme.padding.horizontal / 2),
-          sliver: SliverList.builder(
-            itemBuilder: (context, index) => children[index],
-            itemCount: children.length,
-          ),
+    return Center(
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          maxWidth: theme.maxContentWidth ?? double.infinity,
         ),
-        if (footer != null)
-          FillRemainingFooter(padding: verticalPadding, child: footer!)
-        else
-          verticalPadding.vSpacing.toBox,
-      ],
+        child: CustomScrollView(
+          controller: DefaultScrollController.of(context),
+          slivers: [
+            verticalPadding.vSpacing.toBox,
+            SliverPadding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: theme.padding.horizontal / 2),
+              sliver: SliverList.builder(
+                itemBuilder: (context, index) => children[index],
+                itemCount: children.length,
+              ),
+            ),
+            if (footer != null)
+              FillRemainingFooter(padding: verticalPadding, child: footer!)
+            else
+              verticalPadding.vSpacing.toBox,
+          ],
+        ),
+      ),
     );
   }
 }
@@ -207,7 +237,10 @@ class _ChildBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (scrollable) {
-      return Padding(
+      return Container(
+        constraints: BoxConstraints(
+          maxWidth: theme.maxContentWidth ?? double.infinity,
+        ),
         padding: theme.padding,
         child: Column(
           children: [

@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:nomo_ui_generator/annotations.dart';
+import 'package:nomo_ui_kit/components/app/app.dart';
 import 'package:nomo_ui_kit/components/app/app_bar/nomo_app_bar.dart';
 import 'package:nomo_ui_kit/components/app/bottom_bar/nomo_bottom_bar.dart';
 import 'package:nomo_ui_kit/components/app/routebody/nomo_route_body.dart';
