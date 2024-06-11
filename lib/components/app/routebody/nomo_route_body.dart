@@ -38,6 +38,8 @@ class NomoRouteBody extends StatelessWidget {
 
   final Widget? footer;
 
+  final Widget? floatingFooter;
+
   /// Only used when [child] or [builder] is provided
   /// If true, the child will be wrapped in a SingleChildScrollView
   final bool scrollable;
@@ -60,6 +62,7 @@ class NomoRouteBody extends StatelessWidget {
     this.scrollable = false,
     this.maxContentWidth,
     this.background,
+    this.floatingFooter,
   }) : assert(
           child != null ||
               slivers != null ||
@@ -80,39 +83,37 @@ class NomoRouteBody extends StatelessWidget {
       child: switch (this) {
         _ when child != null => _ChildBody(
             theme: theme,
-            scrollable: scrollable,
-            footer: footer,
+            parent: this,
             child: child!,
           ),
         _ when builder != null => Builder(
             builder: (context) => _ChildBody(
               theme: theme,
-              scrollable: scrollable,
-              footer: footer,
+              parent: this,
               child: builder!(context),
             ),
           ),
         _ when slivers != null => _SliverBody(
             theme: theme,
             slivers: slivers!,
-            footer: footer,
+            parent: this,
           ),
         _ when sliverBuilder != null => Builder(
             builder: (context) => _SliverBody(
               theme: theme,
               slivers: sliverBuilder!(context),
-              footer: footer,
+              parent: this,
             ),
           ),
         _ when children != null => _ChildrenBody(
             theme: theme,
-            footer: footer,
+            parent: this,
             children: children!,
           ),
         _ => Builder(
             builder: (context) => _ChildrenBody(
               theme: theme,
-              footer: footer,
+              parent: this,
               children: childrenBuilder!(context),
             ),
           ),
@@ -145,13 +146,13 @@ class NomoRouteBody extends StatelessWidget {
 
 class _ChildrenBody extends StatelessWidget {
   final NomoRouteBodyThemeData theme;
+  final NomoRouteBody parent;
   final List<Widget> children;
-  final Widget? footer;
 
   const _ChildrenBody({
     required this.theme,
     required this.children,
-    this.footer,
+    required this.parent,
   });
 
   @override
@@ -162,22 +163,30 @@ class _ChildrenBody extends StatelessWidget {
         constraints: BoxConstraints(
           maxWidth: theme.maxContentWidth ?? double.infinity,
         ),
-        child: CustomScrollView(
-          controller: DefaultScrollController.of(context),
-          slivers: [
-            verticalPadding.vSpacing.toBox,
-            SliverPadding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: theme.padding.horizontal / 2),
-              sliver: SliverList.builder(
-                itemBuilder: (context, index) => children[index],
-                itemCount: children.length,
-              ),
+        child: Stack(
+          children: [
+            CustomScrollView(
+              controller: DefaultScrollController.of(context),
+              slivers: [
+                verticalPadding.vSpacing.toBox,
+                SliverPadding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: theme.padding.horizontal / 2),
+                  sliver: SliverList.builder(
+                    itemBuilder: (context, index) => children[index],
+                    itemCount: children.length,
+                  ),
+                ),
+                if (parent.footer != null)
+                  FillRemainingFooter(
+                    padding: verticalPadding,
+                    child: parent.footer!,
+                  )
+                else
+                  verticalPadding.vSpacing.toBox,
+              ],
             ),
-            if (footer != null)
-              FillRemainingFooter(padding: verticalPadding, child: footer!)
-            else
-              verticalPadding.vSpacing.toBox,
+            if (parent.floatingFooter != null) parent.floatingFooter!,
           ],
         ),
       ),
@@ -188,83 +197,112 @@ class _ChildrenBody extends StatelessWidget {
 class _SliverBody extends StatelessWidget {
   final NomoRouteBodyThemeData theme;
   final List<Widget> slivers;
-  final Widget? footer;
+  final NomoRouteBody parent;
 
   const _SliverBody({
     required this.theme,
     required this.slivers,
-    this.footer,
+    required this.parent,
   });
 
   @override
   Widget build(BuildContext context) {
     final verticalPadding = theme.padding.vertical / 2;
-    return CustomScrollView(
-      controller: DefaultScrollController.of(context),
-      slivers: [
-        verticalPadding.vSpacing.toBox,
-        for (final sliver in slivers)
-          SliverPadding(
-            padding:
-                EdgeInsets.symmetric(horizontal: theme.padding.horizontal / 2),
-            sliver: sliver,
-          ),
-        if (footer != null)
-          FillRemainingFooter(
-            padding: verticalPadding,
-            child: footer!,
-          )
-        else
-          verticalPadding.vSpacing.toBox,
-      ],
+    return Center(
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          maxWidth: theme.maxContentWidth ?? double.infinity,
+        ),
+        child: Stack(
+          children: [
+            CustomScrollView(
+              controller: DefaultScrollController.of(context),
+              slivers: [
+                verticalPadding.vSpacing.toBox,
+                for (final sliver in slivers)
+                  SliverPadding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: theme.padding.horizontal / 2),
+                    sliver: sliver,
+                  ),
+                if (parent.footer != null)
+                  FillRemainingFooter(
+                    padding: verticalPadding,
+                    child: parent.footer!,
+                  )
+                else
+                  verticalPadding.vSpacing.toBox,
+              ],
+            ),
+            if (parent.floatingFooter != null) parent.floatingFooter!,
+          ],
+        ),
+      ),
     );
   }
 }
 
 class _ChildBody extends StatelessWidget {
   final NomoRouteBodyThemeData theme;
-  final bool scrollable;
-  final Widget? footer;
+  final NomoRouteBody parent;
   final Widget child;
 
   const _ChildBody({
     required this.theme,
     required this.child,
-    required this.scrollable,
-    this.footer,
+    required this.parent,
   });
 
   @override
   Widget build(BuildContext context) {
-    if (scrollable) {
-      return Container(
-        constraints: BoxConstraints(
-          maxWidth: theme.maxContentWidth ?? double.infinity,
-        ),
-        padding: theme.padding,
-        child: Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                controller: DefaultScrollController.of(context),
-                child: child,
+    if (parent.scrollable) {
+      return Center(
+        child: Container(
+          constraints: BoxConstraints(
+            maxWidth: theme.maxContentWidth ?? double.infinity,
+          ),
+          padding: theme.padding,
+          child: Stack(
+            children: [
+              Column(
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      controller: DefaultScrollController.of(context),
+                      child: child,
+                    ),
+                  ),
+                  if (parent.footer != null) parent.footer!,
+                ],
               ),
-            ),
-            if (footer != null) footer!,
-          ],
+              if (parent.floatingFooter != null) parent.floatingFooter!,
+            ],
+          ),
         ),
       );
     }
 
-    return Padding(
-      padding: theme.padding,
-      child: Column(
-        children: [
-          Expanded(
-            child: child,
-          ),
-          if (footer != null) footer!,
-        ],
+    return Center(
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          maxWidth: theme.maxContentWidth ?? double.infinity,
+        ),
+        child: Stack(
+          children: [
+            Padding(
+              padding: theme.padding,
+              child: Column(
+                children: [
+                  Expanded(
+                    child: child,
+                  ),
+                  if (parent.footer != null) parent.footer!,
+                ],
+              ),
+            ),
+            if (parent.floatingFooter != null) parent.floatingFooter!,
+          ],
+        ),
       ),
     );
   }
