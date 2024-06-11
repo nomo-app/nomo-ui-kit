@@ -77,7 +77,7 @@ class NomoRouteBodySizingData implements NomoRouteBodySizingDataNullable {
       scrollBarThickness:
           lerpDouble(a.scrollBarThickness, b.scrollBarThickness, t)!,
       scrollBarRadius: Radius.lerp(a.scrollBarRadius, b.scrollBarRadius, t)!,
-      maxContentWidth: lerpDouble(a.maxContentWidth, b.maxContentWidth, t),
+      maxContentWidth: t < 0.5 ? a.maxContentWidth : b.maxContentWidth,
     );
   }
 

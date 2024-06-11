@@ -25,7 +25,7 @@ class NomoRouteBody extends StatelessWidget {
   @NomoSizingField(Radius.circular(4))
   final Radius? scrollBarRadius;
 
-  @NomoSizingField<double?>(null)
+  @NomoSizingField<double?>(null, lerp: false)
   final double? maxContentWidth;
 
   @NomoColorField<Color?>(null)

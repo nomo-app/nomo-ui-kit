@@ -1,6 +1,6 @@
 name: nomo_ui_kit
 description: UI Component Library
-version: 0.0.5
+version: 0.0.6
 repository: https://github.com/nomo-app/nomo-ui-kit
 homepage: https://nomo.app
 platforms:
@@ -21,7 +21,7 @@ dependencies:
   flutter_hooks: ^0.19.0  
   logger: ^1.4.0
   flutter_svg: ^2.0.10+1
-  nomo_ui_generator: ^0.0.2
+  nomo_ui_generator: ^0.0.3
   flutter_localizations:
     sdk: flutter
   

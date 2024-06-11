@@ -18,3 +18,8 @@ Initial release.
 ## 0.0.5
 
 * Make Trailling Widgets inside NomoVerticalMenu Expanded
+
+## 0.0.6
+
+* Improve NomoRouteBody
+* Uprade to newest UI Generator (0.0.3)
