@@ -1,11 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:nomo_ui_generator/annotations.dart';
 import 'package:nomo_ui_kit/components/app/app.dart';
-import 'package:nomo_ui_kit/components/app/app_bar/nomo_app_bar.dart';
-import 'package:nomo_ui_kit/components/app/bottom_bar/nomo_bottom_bar.dart';
-import 'package:nomo_ui_kit/components/app/routebody/nomo_route_body.dart';
-import 'package:nomo_ui_kit/components/app/scaffold/nomo_scaffold.dart';
-import 'package:nomo_ui_kit/components/app/sider/nomo_sider.dart';
 import 'package:nomo_ui_kit/components/buttons/link/nomo_link_button.dart';
 import 'package:nomo_ui_kit/components/buttons/primary/nomo_primary_button.dart';
 import 'package:nomo_ui_kit/components/buttons/secondary/nomo_secondary_button.dart';

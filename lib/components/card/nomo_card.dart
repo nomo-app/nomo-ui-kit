@@ -10,7 +10,7 @@ class NomoCard extends StatelessWidget {
   final Widget child;
 
   @NomoSizingField(1.0)
-  final double elevation;
+  final double? elevation;
 
   @NomoSizingField<Offset>(Offset.zero)
   final Offset? offset;

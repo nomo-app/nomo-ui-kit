@@ -95,7 +95,7 @@ class NomoBottomBar<T> extends StatelessWidget {
                 onTap: () => onTap?.call(item),
               );
               return itemDecorator?.call(item, widget) ?? widget;
-            }.call()
+            }.call(),
         ],
       ),
     );

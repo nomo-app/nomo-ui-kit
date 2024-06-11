@@ -207,7 +207,6 @@ class _NomoVerticalListTileState<T> extends State<NomoVerticalListTile<T>>
                         menuTheme.hPadding.whenElse(!widget.collapsed, 0),
                   ),
                   child: Row(
-                    mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: switch (widget.collapsed) {
                       true => MainAxisAlignment.center,
                       false => MainAxisAlignment.start,

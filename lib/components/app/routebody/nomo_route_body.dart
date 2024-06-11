@@ -171,7 +171,8 @@ class _ChildrenBody extends StatelessWidget {
                 verticalPadding.vSpacing.toBox,
                 SliverPadding(
                   padding: EdgeInsets.symmetric(
-                      horizontal: theme.padding.horizontal / 2),
+                    horizontal: theme.padding.horizontal / 2,
+                  ),
                   sliver: SliverList.builder(
                     itemBuilder: (context, index) => children[index],
                     itemCount: children.length,
@@ -222,7 +223,8 @@ class _SliverBody extends StatelessWidget {
                 for (final sliver in slivers)
                   SliverPadding(
                     padding: EdgeInsets.symmetric(
-                        horizontal: theme.padding.horizontal / 2),
+                      horizontal: theme.padding.horizontal / 2,
+                    ),
                     sliver: sliver,
                   ),
                 if (parent.footer != null)

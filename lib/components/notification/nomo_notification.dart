@@ -55,7 +55,6 @@ class NomoNotification extends StatelessWidget {
     return ConstrainedBox(
       constraints: BoxConstraints(
         maxWidth: theme.maxWidth,
-        minWidth: 0,
       ),
       child: NomoCard(
         padding: theme.padding,
