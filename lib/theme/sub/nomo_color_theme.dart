@@ -19,6 +19,7 @@ import 'package:nomo_ui_kit/components/loading/loading.dart';
 import 'package:nomo_ui_kit/components/loading/shimmer/shimmer.dart';
 import 'package:nomo_ui_kit/components/notification/nomo_notification.dart';
 import 'package:nomo_ui_kit/components/outline_container/nomo_outline_container.dart';
+import 'package:nomo_ui_kit/components/snackbar/nomo_snackbar.dart';
 import 'package:nomo_ui_kit/components/vertical_menu/nomo_vertical_menu.dart';
 import 'package:nomo_ui_kit/utils/extensions.dart';
 
@@ -49,6 +50,7 @@ const _ = [
   NomoInfoItemColorData,
   NomoNotificationColorData,
   NomoRouteBodyColorData,
+  NomoSnackBarColorData,
 ];
 
 NomoComponentColors predefinedComponentColors(NomoColors colors) {

@@ -100,6 +100,11 @@ NomoComponentSizes lerpNomoComponentSizes(
       b.notificationSizing,
       t,
     ),
+    snackBarSizing: NomoSnackBarSizingData.lerp(
+      a.snackBarSizing,
+      b.snackBarSizing,
+      t,
+    ),
   );
 }
 
@@ -122,6 +127,7 @@ class NomoComponentSizesNullable {
   final NomoDividerSizingDataNullable? dividerSizing;
   final NomoInfoItemSizingDataNullable? infoItemSizing;
   final NomoNotificationSizingDataNullable? notificationSizing;
+  final NomoSnackBarSizingDataNullable? snackBarSizing;
   const NomoComponentSizesNullable({
     this.outlineContainerSizing,
     this.appBarSizing,
@@ -141,6 +147,7 @@ class NomoComponentSizesNullable {
     this.dividerSizing,
     this.infoItemSizing,
     this.notificationSizing,
+    this.snackBarSizing,
   });
 }
 
@@ -181,6 +188,8 @@ class NomoComponentSizes implements NomoComponentSizesNullable {
   final NomoInfoItemSizingData infoItemSizing;
   @override
   final NomoNotificationSizingData notificationSizing;
+  @override
+  final NomoSnackBarSizingData snackBarSizing;
   const NomoComponentSizes({
     this.outlineContainerSizing = const NomoOutlineContainerSizingData(),
     this.appBarSizing = const NomoAppBarSizingData(),
@@ -200,6 +209,7 @@ class NomoComponentSizes implements NomoComponentSizesNullable {
     this.dividerSizing = const NomoDividerSizingData(),
     this.infoItemSizing = const NomoInfoItemSizingData(),
     this.notificationSizing = const NomoNotificationSizingData(),
+    this.snackBarSizing = const NomoSnackBarSizingData(),
   });
 }
 
@@ -243,6 +253,8 @@ extension NomoComponentSizesOverride on NomoComponentSizes {
           infoItemSizing, nullable.infoItemSizing),
       notificationSizing: NomoNotificationSizingData.overrideWith(
           notificationSizing, nullable.notificationSizing),
+      snackBarSizing: NomoSnackBarSizingData.overrideWith(
+          snackBarSizing, nullable.snackBarSizing),
     );
   }
 }

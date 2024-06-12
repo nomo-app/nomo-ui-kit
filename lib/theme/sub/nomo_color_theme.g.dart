@@ -110,6 +110,11 @@ NomoComponentColors lerpNomoComponentColors(
       b.routeBodyColor,
       t,
     ),
+    snackBarColor: NomoSnackBarColorData.lerp(
+      a.snackBarColor,
+      b.snackBarColor,
+      t,
+    ),
   );
 }
 
@@ -134,6 +139,7 @@ class NomoComponentColorsNullable {
   final NomoInfoItemColorDataNullable? infoItemColor;
   final NomoNotificationColorDataNullable? notificationColor;
   final NomoRouteBodyColorDataNullable? routeBodyColor;
+  final NomoSnackBarColorDataNullable? snackBarColor;
   const NomoComponentColorsNullable({
     this.outlineContainerColor,
     this.appBarColor,
@@ -155,6 +161,7 @@ class NomoComponentColorsNullable {
     this.infoItemColor,
     this.notificationColor,
     this.routeBodyColor,
+    this.snackBarColor,
   });
 }
 
@@ -199,6 +206,8 @@ class NomoComponentColors implements NomoComponentColorsNullable {
   final NomoNotificationColorData notificationColor;
   @override
   final NomoRouteBodyColorData routeBodyColor;
+  @override
+  final NomoSnackBarColorData snackBarColor;
   const NomoComponentColors({
     this.outlineContainerColor = const NomoOutlineContainerColorData(),
     this.appBarColor = const NomoAppBarColorData(),
@@ -220,6 +229,7 @@ class NomoComponentColors implements NomoComponentColorsNullable {
     this.infoItemColor = const NomoInfoItemColorData(),
     this.notificationColor = const NomoNotificationColorData(),
     this.routeBodyColor = const NomoRouteBodyColorData(),
+    this.snackBarColor = const NomoSnackBarColorData(),
   });
 }
 
@@ -266,6 +276,8 @@ extension NomoComponentColorsOverride on NomoComponentColors {
           notificationColor, nullable.notificationColor),
       routeBodyColor: NomoRouteBodyColorData.overrideWith(
           routeBodyColor, nullable.routeBodyColor),
+      snackBarColor: NomoSnackBarColorData.overrideWith(
+          snackBarColor, nullable.snackBarColor),
     );
   }
 }

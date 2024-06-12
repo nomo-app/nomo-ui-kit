@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nomo_ui_generator/annotations.dart';
 import 'package:nomo_ui_kit/components/app/app_bar/layout/appbar_layout_delegate.dart';
+import 'package:nomo_ui_kit/components/text/nomo_text.dart';
 import 'package:nomo_ui_kit/entities/nomo_decoration.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 part 'nomo_app_bar.theme_data.g.dart';
@@ -52,49 +53,54 @@ class NomoAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = getFromContext(context, this);
     final topPadding = MediaQuery.of(context).padding.top;
-    return Container(
-      decoration: NomoDecoration(
-        color: theme.backgroundColor,
-        borderRadius: theme.borderRadius,
-        elevation: theme.elevation,
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SizedBox(
-            height: topPadding,
-          ),
-          Container(
-            height: theme.height,
-            margin: EdgeInsets.only(top: theme.topInset),
-            child: Material(
-              color: Colors.transparent,
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: theme.spacing),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Expanded(
-                      child: AppBarLayoutDelegate(
-                        children: {
-                          if (leading != null) AppBarItem.backButton: leading!,
-                          if (title != null) AppBarItem.title: title!,
-                          if (trailling != null) AppBarItem.actions: trailling!,
-                        },
+    return NomoDefaultTextStyle(
+      style: context.typography.h1.copyWith(fontWeight: FontWeight.bold),
+      child: Container(
+        decoration: NomoDecoration(
+          color: theme.backgroundColor,
+          borderRadius: theme.borderRadius,
+          elevation: theme.elevation,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(
+              height: topPadding,
+            ),
+            Container(
+              height: theme.height,
+              margin: EdgeInsets.only(top: theme.topInset),
+              child: Material(
+                color: Colors.transparent,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: theme.spacing),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Expanded(
+                        child: AppBarLayoutDelegate(
+                          children: {
+                            if (leading != null)
+                              AppBarItem.backButton: leading!,
+                            if (title != null) AppBarItem.title: title!,
+                            if (trailling != null)
+                              AppBarItem.actions: trailling!,
+                          },
+                        ),
                       ),
-                    ),
-                    if (bottom != null)
-                      SizedBox(
-                        height: bottom!.preferredSize.height,
-                        child: bottom,
-                      ),
-                  ],
+                      if (bottom != null)
+                        SizedBox(
+                          height: bottom!.preferredSize.height,
+                          child: bottom,
+                        ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
