@@ -23,3 +23,8 @@ Initial release.
 
 * Improve NomoRouteBody
 * Uprade to newest UI Generator (0.0.3)
+
+## 0.0.7
+
+* Implement NomoSnackBar
+* Improve NomoAppBar (Better Default Values)
