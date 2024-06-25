@@ -399,95 +399,98 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
       style = style.copyWith(color: context.colors.onDisabled);
     }
 
-    return ValueListenableBuilder(
-      valueListenable: errorNotifer,
-      builder: (context, error, child) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (widget.title != null)
-              NomoText(
-                widget.title!,
-                style: titleStyle,
-              ),
-            Container(
-              height: widget.height,
-              margin: theme.margin,
-              child: AnimatedNomoDefaultTextStyle(
-                style: style,
-                duration: theme.duration,
-                curve: theme.curve,
-                child: CupertinoInput(
-                  obscureText: widget.obscureText ?? false,
-                  usePlaceholderAsTitle: widget.usePlaceholderAsTitle,
-                  decorationTween: decorationNotifier,
-                  cursorColor: context.colors.primary,
-                  focusNode: focusNode,
-                  curve: theme.curve,
-                  scrollController: scrollController,
-                  scrollPhysics: widget.scrollable
-                      ? null
-                      : const NeverScrollableScrollPhysics(),
+    return FocusScope(
+      child: ValueListenableBuilder(
+        valueListenable: errorNotifer,
+        builder: (context, error, child) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (widget.title != null)
+                NomoText(
+                  widget.title!,
+                  style: titleStyle,
+                ),
+              Container(
+                height: widget.height,
+                margin: theme.margin,
+                child: AnimatedNomoDefaultTextStyle(
+                  style: style,
                   duration: theme.duration,
-                  placeholder: widget.placeHolder,
-                  placeholderStyle: placeHolderStyle,
-                  titleStyle: titleStyle,
-                  minLines: widget.minLines,
-                  maxLines: widget.maxLines,
-                  textInputAction: widget.textInputAction,
-                  controller: textController,
-                  enabled: widget.enabled,
-                  textAlign: widget.textAlign,
-                  prefix: widget.leading.ifElseNull(widget.leading != null),
-                  suffix: widget.trailling.ifElseNull(widget.trailling != null),
-                  padding: theme.padding,
-                  inputFormatters: widget.inputFormatters,
-                  keyboardAppearance: context.colors.brightness,
-                  keyboardType: widget.keyboardType,
-                  enableInteractiveSelection: true,
-                  selectionControls: switch (PlatformInfo.I.isCupertino) {
-                    true when PlatformInfo.I.isMacOS =>
-                      CupertinoDesktopTextSelectionControls(),
-                    true => CupertinoTextSelectionControls(),
-                    false when PlatformInfo.I.isDesktop =>
-                      DesktopTextSelectionControls(),
-                    false => MaterialTextSelectionControls(),
-                  },
-                  contextMenuBuilder: (context, editableTextState) {
-                    return AdaptiveTextSelectionToolbar.editableText(
-                      editableTextState: editableTextState,
-                    );
-                  },
+                  curve: theme.curve,
+                  child: CupertinoInput(
+                    obscureText: widget.obscureText ?? false,
+                    usePlaceholderAsTitle: widget.usePlaceholderAsTitle,
+                    decorationTween: decorationNotifier,
+                    cursorColor: context.colors.primary,
+                    focusNode: focusNode,
+                    curve: theme.curve,
+                    scrollController: scrollController,
+                    scrollPhysics: widget.scrollable
+                        ? null
+                        : const NeverScrollableScrollPhysics(),
+                    duration: theme.duration,
+                    placeholder: widget.placeHolder,
+                    placeholderStyle: placeHolderStyle,
+                    titleStyle: titleStyle,
+                    minLines: widget.minLines,
+                    maxLines: widget.maxLines,
+                    textInputAction: widget.textInputAction,
+                    controller: textController,
+                    enabled: widget.enabled,
+                    textAlign: widget.textAlign,
+                    prefix: widget.leading.ifElseNull(widget.leading != null),
+                    suffix:
+                        widget.trailling.ifElseNull(widget.trailling != null),
+                    padding: theme.padding,
+                    inputFormatters: widget.inputFormatters,
+                    keyboardAppearance: context.colors.brightness,
+                    keyboardType: widget.keyboardType,
+                    enableInteractiveSelection: true,
+                    selectionControls: switch (PlatformInfo.I.isCupertino) {
+                      true when PlatformInfo.I.isMacOS =>
+                        CupertinoDesktopTextSelectionControls(),
+                      true => CupertinoTextSelectionControls(),
+                      false when PlatformInfo.I.isDesktop =>
+                        DesktopTextSelectionControls(),
+                      false => MaterialTextSelectionControls(),
+                    },
+                    contextMenuBuilder: (context, editableTextState) {
+                      return AdaptiveTextSelectionToolbar.editableText(
+                        editableTextState: editableTextState,
+                      );
+                    },
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: edgeInsets.left),
-              child: AnimatedSize(
-                duration: theme.duration,
-                curve: theme.curve,
-                alignment: Alignment.centerLeft,
-                child: AnimatedOpacity(
-                  opacity: error == null ? 0 : 1,
+              Padding(
+                padding: EdgeInsets.only(left: edgeInsets.left),
+                child: AnimatedSize(
                   duration: theme.duration,
                   curve: theme.curve,
-                  child: Offstage(
-                    offstage: error == null,
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: NomoText(
-                        error ?? '',
-                        style: errorStyle,
+                  alignment: Alignment.centerLeft,
+                  child: AnimatedOpacity(
+                    opacity: error == null ? 0 : 1,
+                    duration: theme.duration,
+                    curve: theme.curve,
+                    child: Offstage(
+                      offstage: error == null,
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: NomoText(
+                          error ?? '',
+                          style: errorStyle,
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
-        );
-      },
+            ],
+          );
+        },
+      ),
     );
   }
 }

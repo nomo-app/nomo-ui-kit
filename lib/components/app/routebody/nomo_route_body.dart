@@ -208,6 +208,11 @@ class _SliverBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return CustomScrollView(
+      controller: DefaultScrollController.of(context),
+      slivers: slivers,
+    );
+
     final verticalPadding = theme.padding.vertical / 2;
     return Center(
       child: ConstrainedBox(
@@ -369,4 +374,11 @@ class FillRemainingFooter extends StatelessWidget {
       ),
     );
   }
+}
+
+class DisableImplicitScrolling extends ScrollPhysics {
+  const DisableImplicitScrolling({super.parent});
+
+  @override
+  bool get allowImplicitScrolling => false;
 }
