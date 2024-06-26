@@ -20,9 +20,7 @@ extension NomoThemeExtension on NomoColors {
       colorScheme: ColorScheme(
         primary: primary,
         secondary: secondary,
-        background: background1,
         surface: surface,
-        onBackground: foreground1,
         onSurface: foreground1,
         onPrimary: onPrimary,
         onSecondary: onSecondary,

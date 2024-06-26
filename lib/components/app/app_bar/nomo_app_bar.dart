@@ -3,7 +3,6 @@ import 'package:nomo_ui_generator/annotations.dart';
 import 'package:nomo_ui_kit/components/app/app_bar/layout/appbar_layout_delegate.dart';
 import 'package:nomo_ui_kit/components/nomo_elevation/nomo_elevation.dart';
 import 'package:nomo_ui_kit/components/text/nomo_text.dart';
-import 'package:nomo_ui_kit/entities/nomo_decoration.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 part 'nomo_app_bar.theme_data.g.dart';
 

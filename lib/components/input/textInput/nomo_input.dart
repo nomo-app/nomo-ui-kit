@@ -403,7 +403,6 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
     if (widget.enabled == false) {
       style = style.copyWith(color: context.colors.onDisabled);
     }
-    print(focusNode.hasFocus);
 
     return ValueListenableBuilder(
       valueListenable: errorNotifer,
