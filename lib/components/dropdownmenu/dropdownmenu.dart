@@ -22,6 +22,8 @@ class NomoDropDownMenu<T> extends StatefulWidget {
     this.overflow = TextOverflow.ellipsis,
     this.padding,
     this.dropdownBorderColor,
+    this.icon = Icons.keyboard_arrow_down,
+    this.disableRotation = false,
   });
   final List<NomoDropdownItem<T>> items;
   final T? initialValue;
@@ -40,6 +42,8 @@ class NomoDropDownMenu<T> extends StatefulWidget {
   final TextOverflow? overflow;
   final EdgeInsetsGeometry? padding;
   final Color? dropdownBorderColor;
+  final IconData icon;
+  final bool disableRotation;
 
   @override
   State<NomoDropDownMenu<T>> createState() => _NomoDropDownMenuState();
@@ -84,9 +88,7 @@ class _NomoDropDownMenuState<T> extends State<NomoDropDownMenu<T>> {
     setState(() {
       _selectedItem = item.value;
       _isExpanded = false;
-      if (item.value != null) {
-        widget.onChanged(item.value);
-      }
+      widget.onChanged(item.value);
     });
   }
 
@@ -108,6 +110,10 @@ class _NomoDropDownMenuState<T> extends State<NomoDropDownMenu<T>> {
           color: Colors.transparent,
           child: InkWell(
             onTap: toogleExpanded,
+            borderRadius: widget.decoration is BoxDecoration
+                ? widget.decoration?.borderRadius
+                    ?.resolve(Directionality.of(context))
+                : null,
             child: Padding(
               padding: widget.padding ?? EdgeInsets.zero,
               child: Row(
@@ -122,14 +128,20 @@ class _NomoDropDownMenuState<T> extends State<NomoDropDownMenu<T>> {
                       //     maxFontSize: widget.maxFontSize!,
                     ),
                   ),
-                  AnimatedRotation(
-                    turns: _turns,
-                    duration: const Duration(milliseconds: 200),
-                    child: Icon(
-                      Icons.keyboard_arrow_down,
+                  if (widget.disableRotation)
+                    Icon(
+                      widget.icon,
                       color: widget.iconColor ?? const Color(0xFF272626),
+                    )
+                  else
+                    AnimatedRotation(
+                      turns: _turns,
+                      duration: const Duration(milliseconds: 200),
+                      child: Icon(
+                        widget.icon,
+                        color: widget.iconColor ?? const Color(0xFF272626),
+                      ),
                     ),
-                  ),
                 ],
               ),
             ),

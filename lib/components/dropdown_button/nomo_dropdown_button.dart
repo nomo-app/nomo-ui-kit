@@ -28,6 +28,7 @@ class NomoDropDownButton<T> extends StatefulWidget {
   final IconData icon;
   final Widget? child;
   final ValueNotifier<T?>? valueNotifier;
+  final EdgeInsetsGeometry? padding;
 
   const NomoDropDownButton({
     required this.options,
@@ -40,6 +41,7 @@ class NomoDropDownButton<T> extends StatefulWidget {
     this.icon = Icons.arrow_drop_down,
     this.child,
     this.valueNotifier,
+    this.padding,
   }) : assert(options.length > 0, 'options cannot be empty');
 
   @override
@@ -65,6 +67,7 @@ class _NomoDropDownButtonState<T> extends State<NomoDropDownButton<T>> {
         return DropdownButton<T>(
           isDense: true,
           value: value,
+          padding: widget.padding,
           icon: child ??
               Icon(
                 widget.icon,

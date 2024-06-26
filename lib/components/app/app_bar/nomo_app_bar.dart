@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nomo_ui_generator/annotations.dart';
 import 'package:nomo_ui_kit/components/app/app_bar/layout/appbar_layout_delegate.dart';
+import 'package:nomo_ui_kit/components/nomo_elevation/nomo_elevation.dart';
 import 'package:nomo_ui_kit/components/text/nomo_text.dart';
 import 'package:nomo_ui_kit/entities/nomo_decoration.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
@@ -41,7 +42,9 @@ class NomoAppBar extends StatelessWidget {
   PreferredSizeWidget asPreferedSizeWidget(BuildContext context) {
     final theme = getFromContext(context, this);
 
-    final height = theme.height + MediaQuery.of(context).padding.top;
+    final height = theme.height +
+        MediaQuery.of(context).padding.top +
+        (bottom?.preferredSize.height ?? 0.0);
 
     return PreferredSize(
       preferredSize: Size.fromHeight(height),
@@ -55,12 +58,10 @@ class NomoAppBar extends StatelessWidget {
     final topPadding = MediaQuery.of(context).padding.top;
     return NomoDefaultTextStyle(
       style: context.typography.h1.copyWith(fontWeight: FontWeight.bold),
-      child: Container(
-        decoration: NomoDecoration(
-          color: theme.backgroundColor,
-          borderRadius: theme.borderRadius,
-          elevation: theme.elevation,
-        ),
+      child: NomoElevation(
+        elevation: theme.elevation,
+        backgroundColor: theme.backgroundColor,
+        borderRadius: theme.borderRadius,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -68,7 +69,6 @@ class NomoAppBar extends StatelessWidget {
               height: topPadding,
             ),
             Container(
-              height: theme.height,
               margin: EdgeInsets.only(top: theme.topInset),
               child: Material(
                 color: Colors.transparent,
@@ -78,7 +78,8 @@ class NomoAppBar extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Expanded(
+                      SizedBox(
+                        height: theme.height,
                         child: AppBarLayoutDelegate(
                           children: {
                             if (leading != null)
@@ -102,6 +103,32 @@ class NomoAppBar extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  NomoAppBar copyWith({
+    Widget? title,
+    Widget? leading,
+    Widget? trailling,
+    double? spacing,
+    Color? backgroundColor,
+    BorderRadiusGeometry? borderRadius,
+    PreferredSizeWidget? bottom,
+    double? topInset,
+    double? height,
+    double? elevation,
+  }) {
+    return NomoAppBar(
+      title: title ?? this.title,
+      leading: leading ?? this.leading,
+      trailling: trailling ?? this.trailling,
+      spacing: spacing ?? this.spacing,
+      backgroundColor: backgroundColor ?? this.backgroundColor,
+      borderRadius: borderRadius ?? this.borderRadius,
+      bottom: bottom ?? this.bottom,
+      topInset: topInset ?? this.topInset,
+      height: height ?? this.height,
+      elevation: elevation ?? this.elevation,
     );
   }
 }
