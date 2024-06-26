@@ -28,3 +28,10 @@ Initial release.
 
 * Implement NomoSnackBar
 * Improve NomoAppBar (Better Default Values)
+
+## 0.0.8
+
+* Implement NomoDropDownButton
+* Improvements to NomoInput
+* No Padding for NomoRouteBody when using slivers
+* Implement NomoElevation
