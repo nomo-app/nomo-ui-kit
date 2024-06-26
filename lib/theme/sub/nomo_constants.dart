@@ -1,5 +1,6 @@
 import 'package:nomo_ui_kit/components/info_item/nomo_info_item.dart';
 import 'package:nomo_ui_kit/components/input/textInput/nomo_input.dart';
+import 'package:nomo_ui_kit/components/nomo_elevation/nomo_elevation.dart';
 import 'package:nomo_ui_kit/components/notification/nomo_notification.dart';
 import 'package:nomo_ui_kit/components/snackbar/nomo_snackbar.dart';
 import 'package:nomo_ui_kit/components/vertical_menu/nomo_vertical_tile.dart';
@@ -12,6 +13,7 @@ class NomoComponentConstants {
   final NomoVerticalListTileConstants verticalListTileTheme;
   final NomoNotificationConstants notificationTheme;
   final NomoSnackBarConstants snackBarTheme;
+  final NomoElevationConstants elevationTheme;
 
   const NomoComponentConstants({
     this.inputTheme = const NomoInputConstants(),
@@ -19,6 +21,7 @@ class NomoComponentConstants {
     this.verticalListTileTheme = const NomoVerticalListTileConstants(),
     this.notificationTheme = const NomoNotificationConstants(),
     this.snackBarTheme = const NomoSnackBarConstants(),
+    this.elevationTheme = const NomoElevationConstants(),
   });
 }
 

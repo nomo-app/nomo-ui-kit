@@ -55,6 +55,7 @@ class NomoInput extends StatefulWidget {
   final void Function(bool hasFocus)? onFocusChanged;
   final String? initialText;
   final bool? obscureText;
+  final FocusNode? focusNode;
 
   @NomoColorField(Colors.white)
   final Color? background;
@@ -123,6 +124,7 @@ class NomoInput extends StatefulWidget {
   const NomoInput({
     super.key,
     this.background,
+    this.focusNode,
     this.padding,
     this.style,
     this.leading,
@@ -213,7 +215,8 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
     inputStateNotifier = ValueNotifier(InputState.nonError);
     textController = TextEditingController(text: valueNotifier.value)
       ..addListener(textControllerChanged);
-    focusNode = FocusNode()..addListener(focusChanged);
+    focusNode = widget.focusNode ?? FocusNode()
+      ..addListener(focusChanged);
 
     scrollController = widget.scrollable ? ScrollController() : null;
   }
@@ -270,9 +273,11 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    focusNode
-      ..removeListener(focusChanged)
-      ..dispose();
+    if (widget.focusNode == null) {
+      focusNode.dispose();
+    }
+    focusNode.removeListener(focusChanged);
+
     textController
       ..removeListener(textControllerChanged)
       ..dispose();

@@ -208,7 +208,6 @@ class _SliverBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final verticalPadding = theme.padding.vertical / 2;
     return Center(
       child: ConstrainedBox(
         constraints: BoxConstraints(
@@ -219,21 +218,12 @@ class _SliverBody extends StatelessWidget {
             CustomScrollView(
               controller: DefaultScrollController.of(context),
               slivers: [
-                verticalPadding.vSpacing.toBox,
-                for (final sliver in slivers)
-                  SliverPadding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: theme.padding.horizontal / 2,
-                    ),
-                    sliver: sliver,
-                  ),
+                ...slivers,
                 if (parent.footer != null)
                   FillRemainingFooter(
-                    padding: verticalPadding,
+                    padding: 0.0,
                     child: parent.footer!,
-                  )
-                else
-                  verticalPadding.vSpacing.toBox,
+                  ),
               ],
             ),
             if (parent.floatingFooter != null) parent.floatingFooter!,
@@ -369,4 +359,11 @@ class FillRemainingFooter extends StatelessWidget {
       ),
     );
   }
+}
+
+class DisableImplicitScrolling extends ScrollPhysics {
+  const DisableImplicitScrolling({super.parent});
+
+  @override
+  bool get allowImplicitScrolling => false;
 }
