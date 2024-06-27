@@ -64,10 +64,12 @@ class NomoDropDownMenu<T> extends StatefulWidget {
   @NomoSizingField<EdgeInsetsGeometry>(EdgeInsets.zero)
   final EdgeInsetsGeometry? itemPadding;
 
-  @NomoSizingField<EdgeInsetsGeometry>(EdgeInsets.symmetric(
-    horizontal: 12,
-    vertical: 8,
-  ))
+  @NomoSizingField<EdgeInsetsGeometry>(
+    EdgeInsets.symmetric(
+      horizontal: 12,
+      vertical: 8,
+    ),
+  )
   final EdgeInsetsGeometry? padding;
 
   @NomoColorField<ShapeBorder?>(null)
@@ -192,7 +194,7 @@ class _NomoDropDownMenuState<T> extends State<NomoDropDownMenu<T>> {
                   children: [
                     Expanded(
                       child: switch (selectedItem) {
-                        NomoDropDownItemString item => NomoText(
+                        final NomoDropDownItemString<T> item => NomoText(
                             overflow: widget.overflow,
                             item.title,
                             style: widget.textStyle,
@@ -200,7 +202,7 @@ class _NomoDropDownMenuState<T> extends State<NomoDropDownMenu<T>> {
                             fit: true,
                             minFontSize: theme.minFontSize,
                           ),
-                        NomoDropdownItemWidget item => item.widget,
+                        final NomoDropdownItemWidget<T> item => item.widget,
                       },
                     ),
                     if (widget.disableRotation)
@@ -288,7 +290,8 @@ class _NomoDropDownMenuState<T> extends State<NomoDropDownMenu<T>> {
                                   selectItem(item.value.value);
                                 },
                                 child: switch (item.value) {
-                                  NomoDropDownItemString item => Padding(
+                                  final NomoDropDownItemString<T> item =>
+                                    Padding(
                                       padding: theme.itemPadding,
                                       child: Row(
                                         children: [
@@ -299,7 +302,8 @@ class _NomoDropDownMenuState<T> extends State<NomoDropDownMenu<T>> {
                                         ],
                                       ),
                                     ),
-                                  NomoDropdownItemWidget item => Padding(
+                                  final NomoDropdownItemWidget<T> item =>
+                                    Padding(
                                       padding: theme.itemPadding,
                                       child: item.widget,
                                     ),
