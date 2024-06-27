@@ -35,3 +35,7 @@ Initial release.
 * Improvements to NomoInput
 * No Padding for NomoRouteBody when using slivers
 * Implement NomoElevation
+
+## 0.0.9
+
+* Implement ValueNotifier for NomoDropDownMenu
