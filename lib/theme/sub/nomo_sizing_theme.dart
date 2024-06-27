@@ -9,6 +9,7 @@ import 'package:nomo_ui_kit/components/card/nomo_card.dart';
 import 'package:nomo_ui_kit/components/dialog/nomo_dialog.dart';
 import 'package:nomo_ui_kit/components/divider/nomo_divider.dart';
 import 'package:nomo_ui_kit/components/dropdown_button/nomo_dropdown_button.dart';
+import 'package:nomo_ui_kit/components/dropdownmenu/dropdownmenu.dart';
 import 'package:nomo_ui_kit/components/expandable/expandable.dart';
 import 'package:nomo_ui_kit/components/info_item/nomo_info_item.dart';
 import 'package:nomo_ui_kit/components/input/textInput/nomo_input.dart';
@@ -124,6 +125,7 @@ const _ = <Object>[
   NomoSnackBarSizingData,
   NomoDropDownButtonSizingData,
   NomoElevationSizingData,
+  NomoDropDownMenuSizingData,
 ];
 
 NomoComponentSizes predefinedComponentSizes(NomoSizes core) =>

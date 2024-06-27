@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:nomo_ui_generator/annotations.dart';
 import 'package:nomo_ui_kit/components/dropdownmenu/drop_down_item.dart';
 import 'package:nomo_ui_kit/components/text/nomo_text.dart';
+import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 
+part 'dropdownmenu.theme_data.g.dart';
+
+@NomoComponentThemeData('dropDownMenu')
 class NomoDropDownMenu<T> extends StatefulWidget {
   const NomoDropDownMenu({
     required this.items,
@@ -10,54 +15,87 @@ class NomoDropDownMenu<T> extends StatefulWidget {
     this.initialValue,
     this.width,
     this.height,
-    this.decoration,
     this.iconColor,
     this.textStyle,
     this.dropdownElevation,
-    this.dropDownShape,
     this.offset,
     this.dropdownColor,
     this.minFontSize = 12,
-    this.maxFontSize = double.infinity,
     this.overflow = TextOverflow.ellipsis,
     this.padding,
-    this.dropdownBorderColor,
+    this.dropdownBorder,
     this.icon = Icons.keyboard_arrow_down,
     this.disableRotation = false,
     this.valueNotifer,
+    this.focusNode,
+    this.backgroundColor,
+    this.borderRadius,
+    this.border,
+    this.itemPadding,
+    this.itemHeight = 48,
   });
+
   final List<NomoDropdownItem<T>> items;
   final ValueNotifier<T?>? valueNotifer;
   final T? initialValue;
-  final double? width;
-  final double? height;
-  final BoxDecoration? decoration;
-  final Color? iconColor;
-  final TextStyle? textStyle;
+  final FocusNode? focusNode;
   final void Function(T? value)? onChanged;
-  final double? dropdownElevation;
-  final ShapeBorder? dropDownShape;
-  final Color? dropdownColor;
-  final Offset? offset;
-  final double? minFontSize;
-  final double? maxFontSize;
-  final TextOverflow? overflow;
-  final EdgeInsetsGeometry? padding;
-  final Color? dropdownBorderColor;
   final IconData icon;
   final bool disableRotation;
+  final TextOverflow? overflow;
+  final double? width;
+  final double? height;
+  final TextStyle? textStyle;
+  final Offset? offset;
+  final double itemHeight;
+
+  @NomoColorField(Color(0xFF272626))
+  final Color? iconColor;
+
+  @NomoColorField(1.0)
+  final double? dropdownElevation;
+
+  @NomoColorField(Colors.white)
+  final Color? dropdownColor;
+
+  @NomoSizingField(10.0)
+  final double? minFontSize;
+
+  @NomoSizingField<EdgeInsetsGeometry>(EdgeInsets.zero)
+  final EdgeInsetsGeometry? itemPadding;
+
+  @NomoSizingField<EdgeInsetsGeometry>(EdgeInsets.symmetric(
+    horizontal: 12,
+    vertical: 8,
+  ))
+  final EdgeInsetsGeometry? padding;
+
+  @NomoColorField<ShapeBorder?>(null)
+  final ShapeBorder? dropdownBorder;
+
+  @NomoColorField(Colors.white)
+  final Color? backgroundColor;
+
+  @NomoSizingField<BorderRadius?>(null)
+  final BorderRadius? borderRadius;
+
+  @NomoColorField<BorderSide>(BorderSide.none)
+  final BorderSide? border;
 
   @override
   State<NomoDropDownMenu<T>> createState() => _NomoDropDownMenuState();
 }
 
 class _NomoDropDownMenuState<T> extends State<NomoDropDownMenu<T>> {
-  bool _isExpanded = false;
+  bool get _isExpanded => _focusNode.hasFocus;
 
   late final ValueNotifier<T?> _valueNotifier;
+  late final FocusNode _focusNode;
 
   @override
   void initState() {
+    _focusNode = widget.focusNode ?? FocusNode()
+      ..addListener(onFocusChanged);
     _valueNotifier = widget.valueNotifer ??
         ValueNotifier<T?>(widget.initialValue ?? widget.items.first.value)
       ..addListener(onValueChange);
@@ -70,6 +108,10 @@ class _NomoDropDownMenuState<T> extends State<NomoDropDownMenu<T>> {
       _valueNotifier.dispose();
     }
     _valueNotifier.removeListener(onValueChange);
+    if (widget.focusNode == null) {
+      _focusNode.dispose();
+    }
+    _focusNode.removeListener(onFocusChanged);
 
     super.dispose();
   }
@@ -78,90 +120,105 @@ class _NomoDropDownMenuState<T> extends State<NomoDropDownMenu<T>> {
     selectItem(_valueNotifier.value);
   }
 
+  void onFocusChanged() {
+    if (_focusNode.hasFocus) {
+      setState(() {
+        _turns += 1 / 2;
+      });
+      _overlayEntry = _createOverlayEntry();
+
+      Overlay.of(context).insert(_overlayEntry);
+      return;
+    }
+
+    setState(() {
+      _turns -= 1 / 2;
+    });
+    _overlayEntry.remove();
+  }
+
   double _turns = 0;
   final LayerLink _layerLink = LayerLink();
   final ScrollController _scrollController = ScrollController();
   late OverlayEntry _overlayEntry;
 
-  void toogleExpanded() {
-    setState(() {
-      _turns += 1 / 2;
-      _isExpanded = !_isExpanded;
-    });
-    if (_isExpanded) {
-      _overlayEntry = _createOverlayEntry();
-      Overlay.of(context).insert(_overlayEntry);
-    } else {
-      _overlayEntry.remove();
-    }
-  }
-
-  void closeOverlay() {
-    setState(() {
-      _turns -= 1 / 2;
-      _isExpanded = false;
-    });
-    _overlayEntry.remove();
-  }
-
   void selectItem(T? value) {
     _valueNotifier.value = value;
-    _isExpanded = false;
     widget.onChanged?.call(value);
     setState(() {});
   }
 
-  String get selectedDisplayText {
+  NomoDropdownItem<T> get selectedItem {
     return widget.items
-        .firstWhere((element) => element.value == _valueNotifier.value)
-        .displayText;
+        .firstWhere((element) => element.value == _valueNotifier.value);
   }
 
   @override
   Widget build(BuildContext context) {
-    return CompositedTransformTarget(
-      link: _layerLink,
-      child: Container(
-        decoration: widget.decoration,
-        height: widget.height,
-        width: widget.width,
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            onTap: toogleExpanded,
-            borderRadius: widget.decoration is BoxDecoration
-                ? widget.decoration?.borderRadius
-                    ?.resolve(Directionality.of(context))
-                : null,
-            child: Padding(
-              padding: widget.padding ?? EdgeInsets.zero,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: NomoText(
-                      overflow: widget.overflow,
-                      selectedDisplayText,
-                      style: widget.textStyle,
-                      //   minFontSize: widget.minFontSize!,
-                      //     maxFontSize: widget.maxFontSize!,
-                    ),
-                  ),
-                  if (widget.disableRotation)
-                    Icon(
-                      widget.icon,
-                      color: widget.iconColor ?? const Color(0xFF272626),
+    final theme = getFromContext(context, widget);
+
+    return Focus(
+      focusNode: _focusNode,
+      child: CompositedTransformTarget(
+        link: _layerLink,
+        child: SizedBox(
+          height: widget.height,
+          width: widget.width,
+          child: Material(
+            color: theme.backgroundColor,
+            shape: RoundedRectangleBorder(
+              side: _isExpanded
+                  ? theme.border.copyWith(
+                      color: context.colors.primary,
+                      width: 2,
+                      style: BorderStyle.solid,
                     )
-                  else
-                    AnimatedRotation(
-                      turns: _turns,
-                      duration: const Duration(milliseconds: 200),
-                      child: Icon(
-                        widget.icon,
-                        color: widget.iconColor ?? const Color(0xFF272626),
-                      ),
+                  : theme.border,
+              borderRadius: theme.borderRadius ?? BorderRadius.zero,
+            ),
+            child: InkWell(
+              onTap: () {
+                if (_isExpanded) {
+                  _focusNode.unfocus();
+                } else {
+                  _focusNode.requestFocus();
+                }
+              },
+              borderRadius: theme.borderRadius ?? BorderRadius.zero,
+              child: Padding(
+                padding: theme.padding,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: switch (selectedItem) {
+                        NomoDropDownItemString item => NomoText(
+                            overflow: widget.overflow,
+                            item.title,
+                            style: widget.textStyle,
+                            maxLines: 1,
+                            fit: true,
+                            minFontSize: theme.minFontSize,
+                          ),
+                        NomoDropdownItemWidget item => item.widget,
+                      },
                     ),
-                ],
+                    if (widget.disableRotation)
+                      Icon(
+                        widget.icon,
+                        color: theme.iconColor,
+                      )
+                    else
+                      AnimatedRotation(
+                        turns: _turns,
+                        duration: const Duration(milliseconds: 200),
+                        child: Icon(
+                          widget.icon,
+                          color: theme.iconColor,
+                        ),
+                      ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -175,9 +232,12 @@ class _NomoDropDownMenuState<T> extends State<NomoDropDownMenu<T>> {
     final size = renderBox.size;
     final offset = renderBox.localToGlobal(Offset.zero);
     final topOffset = offset.dy + size.height + 5;
+    final theme = getFromContext(context, widget);
     return OverlayEntry(
       builder: (context) => GestureDetector(
-        onTap: closeOverlay,
+        onTap: () {
+          _focusNode.unfocus();
+        },
         behavior: HitTestBehavior.translucent,
         child: SizedBox(
           height: MediaQuery.of(context).size.height,
@@ -193,18 +253,12 @@ class _NomoDropDownMenuState<T> extends State<NomoDropDownMenu<T>> {
                   link: _layerLink,
                   showWhenUnlinked: false,
                   child: Material(
-                    shape: widget.dropDownShape ??
+                    shape: theme.dropdownBorder ??
                         RoundedRectangleBorder(
-                          side: widget.dropdownBorderColor != null
-                              ? BorderSide(
-                                  color: widget.dropdownBorderColor!,
-                                  width: 2,
-                                )
-                              : BorderSide.none,
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: theme.borderRadius ?? BorderRadius.zero,
                         ),
-                    elevation: widget.dropdownElevation ?? 0,
-                    color: widget.dropdownColor ?? Colors.white,
+                    elevation: theme.dropdownElevation,
+                    color: theme.dropdownColor,
                     child: ConstrainedBox(
                       constraints: BoxConstraints(
                         maxHeight: (MediaQuery.of(context).size.height -
@@ -225,20 +279,31 @@ class _NomoDropDownMenuState<T> extends State<NomoDropDownMenu<T>> {
                           shrinkWrap: true,
                           controller: _scrollController,
                           children: widget.items.asMap().entries.map((item) {
-                            return InkWell(
-                              onTap: () {
-                                toogleExpanded();
-                                selectItem(item.value.value);
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 8,
-                                  vertical: 16,
-                                ),
-                                child: NomoText(
-                                  item.value.displayText,
-                                  style: widget.textStyle,
-                                ),
+                            return SizedBox(
+                              height: widget.itemHeight,
+                              child: InkWell(
+                                onTap: () {
+                                  _focusNode.unfocus();
+
+                                  selectItem(item.value.value);
+                                },
+                                child: switch (item.value) {
+                                  NomoDropDownItemString item => Padding(
+                                      padding: theme.itemPadding,
+                                      child: Row(
+                                        children: [
+                                          NomoText(
+                                            item.title,
+                                            style: widget.textStyle,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  NomoDropdownItemWidget item => Padding(
+                                      padding: theme.itemPadding,
+                                      child: item.widget,
+                                    ),
+                                },
                               ),
                             );
                           }).toList(),

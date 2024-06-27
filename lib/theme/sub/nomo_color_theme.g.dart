@@ -125,6 +125,11 @@ NomoComponentColors lerpNomoComponentColors(
       b.elevationColor,
       t,
     ),
+    dropDownMenuColor: NomoDropDownMenuColorData.lerp(
+      a.dropDownMenuColor,
+      b.dropDownMenuColor,
+      t,
+    ),
   );
 }
 
@@ -152,6 +157,7 @@ class NomoComponentColorsNullable {
   final NomoSnackBarColorDataNullable? snackBarColor;
   final NomoDropDownButtonColorDataNullable? dropDownButtonColor;
   final NomoElevationColorDataNullable? elevationColor;
+  final NomoDropDownMenuColorDataNullable? dropDownMenuColor;
   const NomoComponentColorsNullable({
     this.outlineContainerColor,
     this.appBarColor,
@@ -176,6 +182,7 @@ class NomoComponentColorsNullable {
     this.snackBarColor,
     this.dropDownButtonColor,
     this.elevationColor,
+    this.dropDownMenuColor,
   });
 }
 
@@ -226,6 +233,8 @@ class NomoComponentColors implements NomoComponentColorsNullable {
   final NomoDropDownButtonColorData dropDownButtonColor;
   @override
   final NomoElevationColorData elevationColor;
+  @override
+  final NomoDropDownMenuColorData dropDownMenuColor;
   const NomoComponentColors({
     this.outlineContainerColor = const NomoOutlineContainerColorData(),
     this.appBarColor = const NomoAppBarColorData(),
@@ -250,6 +259,7 @@ class NomoComponentColors implements NomoComponentColorsNullable {
     this.snackBarColor = const NomoSnackBarColorData(),
     this.dropDownButtonColor = const NomoDropDownButtonColorData(),
     this.elevationColor = const NomoElevationColorData(),
+    this.dropDownMenuColor = const NomoDropDownMenuColorData(),
   });
 }
 
@@ -302,6 +312,8 @@ extension NomoComponentColorsOverride on NomoComponentColors {
           dropDownButtonColor, nullable.dropDownButtonColor),
       elevationColor: NomoElevationColorData.overrideWith(
           elevationColor, nullable.elevationColor),
+      dropDownMenuColor: NomoDropDownMenuColorData.overrideWith(
+          dropDownMenuColor, nullable.dropDownMenuColor),
     );
   }
 }
