@@ -1389,8 +1389,7 @@ class _TextInputDependetAttachmentState
   late final AnimationController controller;
   late Animation<TextStyle> textStyleAnimation;
 
-  late final titleHeight =
-      calculateTextSize(text: '', style: widget.titleStyle);
+  late Size titleHeight;
 
   @override
   void initState() {
@@ -1415,6 +1414,13 @@ class _TextInputDependetAttachmentState
   }
 
   @override
+  void didChangeDependencies() {
+    titleHeight =
+        calculateTextSize(text: '', style: widget.titleStyle, context: context);
+    super.didChangeDependencies();
+  }
+
+  @override
   void didUpdateWidget(covariant _TextInputDependetAttachment oldWidget) {
     textStyleAnimation =
         TextStyleTween(begin: widget.placeHolderStyle, end: widget.titleStyle)
@@ -1423,6 +1429,11 @@ class _TextInputDependetAttachmentState
         parent: controller,
         curve: widget.curve,
       ),
+    );
+    titleHeight = calculateTextSize(
+      text: '',
+      style: widget.titleStyle,
+      context: context,
     );
     super.didUpdateWidget(oldWidget);
   }

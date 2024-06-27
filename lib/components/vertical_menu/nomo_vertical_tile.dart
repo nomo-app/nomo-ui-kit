@@ -46,12 +46,14 @@ class NomoVerticalListTile<T> extends StatefulWidget {
     final titleWidth = calculateTextSize(
       text: item.title,
       style: theme.titleStyle,
+      context: context,
     ).width;
 
     final subTitleWidth = item.subtitle != null
         ? calculateTextSize(
             text: item.subtitle!,
             style: theme.subtitleStyle,
+            context: context,
           ).width
         : 0;
 

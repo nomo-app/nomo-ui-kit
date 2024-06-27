@@ -96,6 +96,8 @@ class NomoText extends StatelessWidget {
         final maxWidth = constraints.maxWidth;
         final maxHeight = constraints.maxHeight;
         double fontSize = max(style.fontSize ?? 0, minFontSize);
+        final defaultTextStyle = DefaultTextStyle.of(context);
+        style = defaultTextStyle.style.merge(style);
 
         if (fitHeight != null) {
           if (constraints.maxHeight == double.infinity) {
@@ -153,7 +155,6 @@ class NomoText extends StatelessWidget {
               textPainter.didExceedMaxLines || totalHeight > maxHeight;
               i++) {
             effectiveText = textShortener!(effectiveText, initalLength - i);
-
             textPainter
               ..text = TextSpan(
                 text: effectiveText,
@@ -219,15 +220,18 @@ class NomoText extends StatelessWidget {
 Size calculateTextSize({
   required String text,
   required TextStyle? style,
+  required BuildContext context,
   double textScaleFactor = 1.0,
 }) {
+  final defaultTextStyle = DefaultTextStyle.of(context);
+  style = defaultTextStyle.style.merge(style);
+
   final textPainter = TextPainter(
     text: TextSpan(
       text: text,
       style: style,
     ),
     textDirection: TextDirection.ltr,
-    textScaler: TextScaler.linear(textScaleFactor),
   )..layout();
 
   return textPainter.size;
