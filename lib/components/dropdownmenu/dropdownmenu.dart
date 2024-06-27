@@ -5,7 +5,7 @@ import 'package:nomo_ui_kit/components/text/nomo_text.dart';
 class NomoDropDownMenu<T> extends StatefulWidget {
   const NomoDropDownMenu({
     required this.items,
-    required this.onChanged,
+    this.onChanged,
     super.key,
     this.initialValue,
     this.width,
@@ -24,15 +24,17 @@ class NomoDropDownMenu<T> extends StatefulWidget {
     this.dropdownBorderColor,
     this.icon = Icons.keyboard_arrow_down,
     this.disableRotation = false,
+    this.valueNotifer,
   });
   final List<NomoDropdownItem<T>> items;
+  final ValueNotifier<T?>? valueNotifer;
   final T? initialValue;
   final double? width;
   final double? height;
   final BoxDecoration? decoration;
   final Color? iconColor;
   final TextStyle? textStyle;
-  final void Function(T value) onChanged;
+  final void Function(T? value)? onChanged;
   final double? dropdownElevation;
   final ShapeBorder? dropDownShape;
   final Color? dropdownColor;
@@ -51,17 +53,35 @@ class NomoDropDownMenu<T> extends StatefulWidget {
 
 class _NomoDropDownMenuState<T> extends State<NomoDropDownMenu<T>> {
   bool _isExpanded = false;
-  late T _selectedItem;
+
+  late final ValueNotifier<T?> _valueNotifier;
+
+  @override
+  void initState() {
+    _valueNotifier = widget.valueNotifer ??
+        ValueNotifier<T?>(widget.initialValue ?? widget.items.first.value)
+      ..addListener(onValueChange);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    if (widget.valueNotifer == null) {
+      _valueNotifier.dispose();
+    }
+    _valueNotifier.removeListener(onValueChange);
+
+    super.dispose();
+  }
+
+  void onValueChange() {
+    selectItem(_valueNotifier.value);
+  }
+
   double _turns = 0;
   final LayerLink _layerLink = LayerLink();
   final ScrollController _scrollController = ScrollController();
   late OverlayEntry _overlayEntry;
-
-  @override
-  void initState() {
-    super.initState();
-    _selectedItem = widget.initialValue ?? widget.items.first.value;
-  }
 
   void toogleExpanded() {
     setState(() {
@@ -84,17 +104,16 @@ class _NomoDropDownMenuState<T> extends State<NomoDropDownMenu<T>> {
     _overlayEntry.remove();
   }
 
-  void selectItem(NomoDropdownItem<T> item) {
-    setState(() {
-      _selectedItem = item.value;
-      _isExpanded = false;
-      widget.onChanged(item.value);
-    });
+  void selectItem(T? value) {
+    _valueNotifier.value = value;
+    _isExpanded = false;
+    widget.onChanged?.call(value);
+    setState(() {});
   }
 
   String get selectedDisplayText {
     return widget.items
-        .firstWhere((element) => element.value == _selectedItem)
+        .firstWhere((element) => element.value == _valueNotifier.value)
         .displayText;
   }
 
@@ -209,7 +228,7 @@ class _NomoDropDownMenuState<T> extends State<NomoDropDownMenu<T>> {
                             return InkWell(
                               onTap: () {
                                 toogleExpanded();
-                                selectItem(item.value);
+                                selectItem(item.value.value);
                               },
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(
