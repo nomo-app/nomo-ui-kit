@@ -45,3 +45,7 @@ Initial release.
 * Integrate NomoDropDownMenu into NomoTheme
 * Make NomoDropDownItem sealed class (Either String or Widget can be provided)
 * Add Fields
+
+## 0.0.11
+
+* Fix NomoText Behaviour when fit is set to true
