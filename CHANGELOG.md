@@ -39,3 +39,9 @@ Initial release.
 ## 0.0.9
 
 * Implement ValueNotifier for NomoDropDownMenu
+
+## 0.0.10
+
+* Integrate NomoDropDownMenu into NomoTheme
+* Make NomoDropDownItem sealed class (Either String or Widget can be provided)
+* Add Fields
