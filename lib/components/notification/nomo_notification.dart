@@ -15,6 +15,15 @@ class NomoNotification extends StatelessWidget {
   final String subtitle;
   final Widget leading;
   final bool expand;
+  final TextStyle? titleStyle;
+  final TextStyle? subtitleStyle;
+  final bool showCloseButton;
+
+  @NomoColorField<Color?>(null)
+  final Color? backgroundColor;
+
+  @NomoColorField<Color?>(null)
+  final Color? foregroundColor;
 
   @NomoSizingField(EdgeInsets.all(16))
   final EdgeInsetsGeometry? padding;
@@ -28,12 +37,6 @@ class NomoNotification extends StatelessWidget {
   @NomoSizingField(double.infinity)
   final double? maxWidth;
 
-  @NomoConstant(TextStyle())
-  final TextStyle? titleStyle;
-
-  @NomoConstant(TextStyle())
-  final TextStyle? subtitleStyle;
-
   const NomoNotification({
     required this.title,
     required this.subtitle,
@@ -46,6 +49,9 @@ class NomoNotification extends StatelessWidget {
     this.spacing,
     this.maxWidth,
     this.expand = false,
+    this.backgroundColor,
+    this.foregroundColor,
+    this.showCloseButton = true,
   });
 
   @override
@@ -59,6 +65,7 @@ class NomoNotification extends StatelessWidget {
       child: NomoCard(
         padding: theme.padding,
         borderRadius: theme.borderRadius,
+        backgroundColor: theme.backgroundColor,
         child: Row(
           children: [
             leading,
@@ -68,31 +75,39 @@ class NomoNotification extends StatelessWidget {
               children: [
                 NomoText(
                   title,
-                  style: theme.titleStyle,
+                  style: titleStyle ?? context.typography.b3,
                   maxLines: 1,
                 ),
                 4.hSpacing,
                 NomoText(
                   subtitle,
-                  style: theme.subtitleStyle,
+                  style: subtitleStyle ?? context.typography.b1,
                   maxLines: 1,
                   fit: true,
                 ),
               ],
-            ).wrapIf(
-              expand,
-              (p0) => Expanded(child: p0),
-            ),
-            theme.spacing.hSpacing,
-            SecondaryNomoButton(
-              shape: BoxShape.circle,
-              icon: Icons.close,
-              border: const Border.fromBorderSide(BorderSide.none),
-              padding: const EdgeInsets.all(4),
-              onPressed: () {
-                InAppNotification.dismiss(context: context);
-              },
-            ),
+            )
+                .wrapIf(
+                  theme.foregroundColor != null,
+                  (p0) =>
+                      NomoTextTheme(color: theme.foregroundColor!, child: p0),
+                )
+                .wrapIf(
+                  expand,
+                  (p0) => Expanded(child: p0),
+                ),
+            if (showCloseButton) ...[
+              theme.spacing.hSpacing,
+              SecondaryNomoButton(
+                shape: BoxShape.circle,
+                icon: Icons.close,
+                border: const Border.fromBorderSide(BorderSide.none),
+                padding: const EdgeInsets.all(4),
+                onPressed: () {
+                  InAppNotification.dismiss(context: context);
+                },
+              ),
+            ],
           ],
         ),
       ),

@@ -49,3 +49,7 @@ Initial release.
 ## 0.0.11
 
 * Fix NomoText Behaviour when fit is set to true
+
+## 0.0.12
+
+* Make NomoNotifications more customizable
