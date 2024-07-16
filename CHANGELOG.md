@@ -61,3 +61,7 @@ Initial release.
 ## 0.0.14
 
 * Fix for Positioning of bottom and top Widgets inside NomoInput
+
+## 0.0.15
+
+* Fix Bug in Nomo Link Button

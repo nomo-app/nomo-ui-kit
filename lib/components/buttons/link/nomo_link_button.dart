@@ -154,6 +154,7 @@ class _NomoLinkButtonState extends State<NomoLinkButton>
             child: NomoText(
               widget.text,
               style: widget.textStyle,
+              useInheritedTheme: true,
             ),
           ),
         ),
