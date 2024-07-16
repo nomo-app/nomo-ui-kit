@@ -58,6 +58,6 @@ Initial release.
 
 * Add Optional Parameters bottom and top to NomoInput
 
-## 0.0.13
+## 0.0.14
 
 * Fix for Positioning of bottom and top Widgets inside NomoInput
