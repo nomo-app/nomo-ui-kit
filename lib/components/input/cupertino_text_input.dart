@@ -1329,14 +1329,15 @@ class _CupertinoInputState extends State<CupertinoInput>
                 },
               );
             },
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                if (widget.top != null) widget.top!,
-                _selectionGestureDetectorBuilder.buildGestureDetector(
-                  behavior: HitTestBehavior.translucent,
-                  child: Padding(
-                    padding: widget.padding,
+            child: Padding(
+              padding: widget.padding,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (widget.top != null) widget.top!,
+                  _selectionGestureDetectorBuilder.buildGestureDetector(
+                    behavior: HitTestBehavior.translucent,
                     child: _TextInputDependetAttachment(
                       text: paddedEditable,
                       controller: controller,
@@ -1353,9 +1354,9 @@ class _CupertinoInputState extends State<CupertinoInput>
                       textAlign: widget.textAlign,
                     ),
                   ),
-                ),
-                if (widget.bottom != null) widget.bottom!,
-              ],
+                  if (widget.bottom != null) widget.bottom!,
+                ],
+              ),
             ),
           ),
         ),
