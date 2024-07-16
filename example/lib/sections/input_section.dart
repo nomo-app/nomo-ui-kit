@@ -54,6 +54,7 @@ class _InputSectionState extends State<InputSection> {
               titleStyle: context.typography.b1,
               placeHolder: "Test",
               placeHolderStyle: context.typography.b1,
+              title: "Title",
               usePlaceholderAsTitle: true,
               padding: const EdgeInsets.all(2),
               onChanged: (value) {

@@ -57,6 +57,9 @@ class NomoInput extends StatefulWidget {
   final bool? obscureText;
   final FocusNode? focusNode;
 
+  final Widget? bottom;
+  final Widget? top;
+
   @NomoColorField(Colors.white)
   final Color? background;
 
@@ -164,6 +167,8 @@ class NomoInput extends StatefulWidget {
     this.scrollable = false,
     this.initialText,
     this.obscureText,
+    this.top,
+    this.bottom,
   }) : assert(
           height == null || usePlaceholderAsTitle == false,
           'Not supported please ask Thomas to implement',
@@ -424,6 +429,8 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
                 duration: theme.duration,
                 curve: theme.curve,
                 child: CupertinoInput(
+                  bottom: widget.bottom,
+                  top: widget.top,
                   obscureText: widget.obscureText ?? false,
                   usePlaceholderAsTitle: widget.usePlaceholderAsTitle,
                   decorationTween: decorationNotifier,

@@ -222,6 +222,8 @@ class CupertinoInput extends StatefulWidget {
     this.contextMenuBuilder = _defaultContextMenuBuilder,
     this.spellCheckConfiguration,
     this.magnifierConfiguration,
+    this.bottom,
+    this.top,
   })  : assert(obscuringCharacter.length == 1),
         smartDashesType = smartDashesType ??
             (obscureText ? SmartDashesType.disabled : SmartDashesType.enabled),
@@ -299,6 +301,9 @@ class CupertinoInput extends StatefulWidget {
   final Duration duration;
 
   final Curve curve;
+
+  final Widget? bottom;
+  final Widget? top;
 
   /// An optional [Widget] to display before the text.
   final Widget? prefix;
@@ -1314,31 +1319,43 @@ class _CupertinoInputState extends State<CupertinoInput>
                 builder: (context, decoration, _) {
                   return DecoratedBox(
                     decoration: decoration,
-                    child: child,
+                    child: ClipRRect(
+                      borderRadius: decoration.borderRadius
+                              ?.resolve(Directionality.of(context)) ??
+                          BorderRadius.zero,
+                      child: child,
+                    ),
                   );
                 },
               );
             },
-            child: _selectionGestureDetectorBuilder.buildGestureDetector(
-              behavior: HitTestBehavior.translucent,
-              child: Padding(
-                padding: widget.padding,
-                child: _TextInputDependetAttachment(
-                  text: paddedEditable,
-                  controller: controller,
-                  focusNode: _effectiveFocusNode,
-                  usePlaceHolderAsTitle: widget.usePlaceholderAsTitle,
-                  leading: widget.prefix,
-                  trailling: widget.suffix,
-                  placeHolder: placeHolder,
-                  titleStyle: titleStyle,
-                  placeHolderStyle: placeHolderStyle,
-                  padding: widget.padding,
-                  curve: widget.curve,
-                  duration: widget.duration,
-                  textAlign: widget.textAlign,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                if (widget.top != null) widget.top!,
+                _selectionGestureDetectorBuilder.buildGestureDetector(
+                  behavior: HitTestBehavior.translucent,
+                  child: Padding(
+                    padding: widget.padding,
+                    child: _TextInputDependetAttachment(
+                      text: paddedEditable,
+                      controller: controller,
+                      focusNode: _effectiveFocusNode,
+                      usePlaceHolderAsTitle: widget.usePlaceholderAsTitle,
+                      leading: widget.prefix,
+                      trailling: widget.suffix,
+                      placeHolder: placeHolder,
+                      titleStyle: titleStyle,
+                      placeHolderStyle: placeHolderStyle,
+                      padding: widget.padding,
+                      curve: widget.curve,
+                      duration: widget.duration,
+                      textAlign: widget.textAlign,
+                    ),
+                  ),
                 ),
-              ),
+                if (widget.bottom != null) widget.bottom!,
+              ],
             ),
           ),
         ),

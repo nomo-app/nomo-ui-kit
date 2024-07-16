@@ -53,3 +53,7 @@ Initial release.
 ## 0.0.12
 
 * Make NomoNotifications more customizable
+
+## 0.0.13
+
+* Add Optional Parameters bottom and top to NomoInput
