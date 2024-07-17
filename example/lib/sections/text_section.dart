@@ -13,8 +13,10 @@ class TextSection extends StatelessWidget {
     return NomoRouteBody(
       children: [
         NomoText(
-          "Typography",
+          "lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam quis nostrud exercitation ullamco",
           style: context.typography.h3,
+          fit: true,
+          maxLines: 2,
         ),
         32.vSpacing,
         ...[

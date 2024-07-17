@@ -1,8 +1,6 @@
-import 'dart:math';
-
 import 'package:flutter/widgets.dart';
 
-class NomoText extends StatelessWidget {
+class NomoText extends StatefulWidget {
   const NomoText(
     this.text, {
     super.key,
@@ -53,41 +51,72 @@ class NomoText extends StatelessWidget {
   /// If true will look for the NomoTextTranslator InheritedWidget for translating the text
   final bool translate;
 
+  @override
+  State<NomoText> createState() => _NomoTextState();
+}
+
+class _NomoTextState extends State<NomoText> {
+  double? _initialFontSize;
+
+  @override
+  void initState() {
+    super.initState();
+    _initialFontSize = widget.fontSize ?? (widget.style?.fontSize ?? 14);
+  }
+
   double decreaseFontSize(double fontSize) {
-    if (fontSizes != null) {
-      return fontSizes!.firstWhere(
+    if (widget.fontSizes != null) {
+      return widget.fontSizes!.firstWhere(
         (size) => size < fontSize,
-        orElse: () => fontSize - decreaseBy,
+        orElse: () => fontSize - widget.decreaseBy,
       );
     }
 
-    return fontSize - decreaseBy;
+    return fontSize - widget.decreaseBy;
+  }
+
+  double increaseFontSize(double fontSize) {
+    if (widget.fontSizes != null) {
+      return widget.fontSizes!.firstWhere(
+        (size) => size > fontSize,
+        orElse: () => fontSize + widget.decreaseBy,
+      );
+    }
+
+    return fontSize + widget.decreaseBy;
   }
 
   @override
   Widget build(BuildContext context) {
     final translator = NomoTextTranslator.of(context);
-    var effectiveText =
-        translate && translator != null ? translator(text) : text;
+    var effectiveText = widget.translate && translator != null
+        ? translator(widget.text)
+        : widget.text;
 
-    final textColor = useInheritedTheme
-        ? color ?? NomoTextTheme.maybeOf(context)?.color ?? this.style?.color
-        : color ?? this.style?.color ?? NomoTextTheme.maybeOf(context)?.color;
+    final textColor = widget.useInheritedTheme
+        ? widget.color ??
+            NomoTextTheme.maybeOf(context)?.color ??
+            widget.style?.color
+        : widget.color ??
+            widget.style?.color ??
+            NomoTextTheme.maybeOf(context)?.color;
 
-    var style = (this.style ?? NomoDefaultTextStyle.of(context)).copyWith(
-      color: opacity == null ? textColor : textColor?.withOpacity(opacity!),
-      fontWeight: fontWeight,
-      fontSize: fontSize,
+    var style = (widget.style ?? NomoDefaultTextStyle.of(context)).copyWith(
+      color: widget.opacity == null
+          ? textColor
+          : textColor?.withOpacity(widget.opacity!),
+      fontWeight: widget.fontWeight,
+      fontSize: widget.fontSize ?? _initialFontSize,
     );
 
-    if (!fit) {
+    if (!widget.fit) {
       return Text(
         effectiveText,
         style: style,
-        maxLines: maxLines,
-        overflow: overflow,
-        textAlign: textAlign,
-        textDirection: textDirection,
+        maxLines: widget.maxLines,
+        overflow: widget.overflow,
+        textAlign: widget.textAlign,
+        textDirection: widget.textDirection,
       );
     }
 
@@ -95,11 +124,11 @@ class NomoText extends StatelessWidget {
       builder: (context, constraints) {
         final maxWidth = constraints.maxWidth;
         final maxHeight = constraints.maxHeight;
-        double fontSize = max(style.fontSize ?? 0, minFontSize);
+        var fontSize = _initialFontSize ?? widget.minFontSize;
         final defaultTextStyle = DefaultTextStyle.of(context);
         style = defaultTextStyle.style.merge(style);
 
-        if (fitHeight != null) {
+        if (widget.fitHeight != null) {
           if (constraints.maxHeight == double.infinity) {
             throw Exception('Cant use fitHeight with infinite height');
           }
@@ -114,9 +143,9 @@ class NomoText extends StatelessWidget {
             effectiveText,
             style: style,
             maxLines: lines,
-            overflow: overflow,
-            textAlign: textAlign,
-            textDirection: textDirection,
+            overflow: widget.overflow,
+            textAlign: widget.textAlign,
+            textDirection: widget.textDirection,
           );
         }
 
@@ -127,18 +156,19 @@ class NomoText extends StatelessWidget {
             text: effectiveText,
             style: style,
           ),
-          textDirection: textDirection ?? TextDirection.ltr,
-          maxLines: maxLines,
+          textDirection: widget.textDirection ?? TextDirection.ltr,
+          maxLines: widget.maxLines,
         )..layout(maxWidth: maxWidth);
 
         var lines = textPainter.computeLineMetrics();
         var totalHeight = lines.fold(0.0, (prev, line) => prev + line.height);
 
         while ((totalHeight > maxHeight || textPainter.didExceedMaxLines) &&
-            fontSize > minFontSize) {
+            fontSize > widget.minFontSize) {
           fontSize = decreaseFontSize(fontSize);
 
           style = style.copyWith(fontSize: fontSize);
+
           textPainter
             ..text = TextSpan(
               text: effectiveText,
@@ -149,12 +179,34 @@ class NomoText extends StatelessWidget {
           totalHeight = lines.fold(0.0, (prev, line) => prev + line.height);
         }
 
+        while (totalHeight <= maxHeight &&
+            textPainter.didExceedMaxLines &&
+            fontSize < (_initialFontSize ?? widget.minFontSize)) {
+          fontSize = increaseFontSize(fontSize);
+
+          style = style.copyWith(fontSize: fontSize);
+
+          textPainter
+            ..text = TextSpan(
+              text: effectiveText,
+              style: style,
+            )
+            ..layout(maxWidth: maxWidth);
+          lines = textPainter.computeLineMetrics();
+          totalHeight = lines.fold(0.0, (prev, line) => prev + line.height);
+          if (totalHeight > maxHeight || textPainter.didExceedMaxLines) {
+            fontSize = decreaseFontSize(fontSize);
+            break;
+          }
+        }
+
         final initalLength = effectiveText.length;
-        if (textShortener != null) {
+        if (widget.textShortener != null) {
           for (var i = 1;
               textPainter.didExceedMaxLines || totalHeight > maxHeight;
               i++) {
-            effectiveText = textShortener!(effectiveText, initalLength - i);
+            effectiveText =
+                widget.textShortener!(effectiveText, initalLength - i);
             textPainter
               ..text = TextSpan(
                 text: effectiveText,
@@ -169,10 +221,10 @@ class NomoText extends StatelessWidget {
         return Text(
           effectiveText,
           style: style,
-          maxLines: maxLines,
-          overflow: overflow,
-          textAlign: textAlign,
-          textDirection: textDirection,
+          maxLines: widget.maxLines,
+          overflow: widget.overflow,
+          textAlign: widget.textAlign,
+          textDirection: widget.textDirection,
         );
       },
     );

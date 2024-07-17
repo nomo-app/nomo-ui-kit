@@ -65,3 +65,7 @@ Initial release.
 ## 0.0.15
 
 * Fix Bug in Nomo Link Button
+
+## 0.0.16
+
+* Improve text scaling in NomoText if fit is set to true
