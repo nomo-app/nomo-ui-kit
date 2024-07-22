@@ -73,3 +73,7 @@ Initial release.
 ## 0.0.17
 
 * Adjust NomoDialog Height Behaviour and Title Layout. Also add scrollable Parameter.
+
+## 0.0.18
+
+* Fix Navigator.pop for NomoDialog when compiled to WASM
