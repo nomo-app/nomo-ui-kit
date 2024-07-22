@@ -109,7 +109,7 @@ class NomoDialog extends StatelessWidget {
                               border: const Border.fromBorderSide(
                                 BorderSide.none,
                               ),
-                              onPressed: Navigator.of(context).pop,
+                              onPressed: () => Navigator.of(context).pop(),
                               shape: BoxShape.circle,
                               icon: Icons.close,
                               padding: const EdgeInsets.all(8),
