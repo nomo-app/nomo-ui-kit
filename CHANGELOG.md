@@ -69,3 +69,7 @@ Initial release.
 ## 0.0.16
 
 * Improve text scaling in NomoText if fit is set to true
+
+## 0.0.17
+
+* Adjust NomoDialog Height Behaviour and Title Layout. Also add scrollable Parameter.

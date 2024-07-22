@@ -30,9 +30,17 @@ class DialogSection extends StatelessWidget {
                 context: context,
                 builder: (context) => NomoDialog(
                   backgroundColor: Colors.white,
-                  content: const Padding(
-                    padding: EdgeInsets.all(32.0),
-                    child: NomoText("Content"),
+                  scrollabe: true,
+                  content: Padding(
+                    padding: const EdgeInsets.all(32.0),
+                    child: Column(
+                      children: [
+                        const NomoText("Content"),
+                        16.vSpacing,
+                        const NomoText("Content"),
+                        // 2000.vSpacing,
+                      ],
+                    ),
                   ),
                   title: "Title",
                   titleStyle: context.typography.h1,
@@ -41,6 +49,7 @@ class DialogSection extends StatelessWidget {
                     SecondaryNomoButton(
                       width: 100,
                       height: 32,
+                      padding: EdgeInsets.zero,
                       text: "Action",
                       onPressed: () {},
                     ),
@@ -48,6 +57,7 @@ class DialogSection extends StatelessWidget {
                     PrimaryNomoButton(
                       width: 100,
                       height: 32,
+                      padding: EdgeInsets.zero,
                       text: "Action",
                       onPressed: () {},
                     ),

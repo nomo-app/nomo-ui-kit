@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:nomo_ui_generator/annotations.dart';
-import 'package:nomo_ui_kit/components/app/app_bar/layout/appbar_layout_delegate.dart';
 import 'package:nomo_ui_kit/components/buttons/secondary/nomo_secondary_button.dart';
 import 'package:nomo_ui_kit/components/elevatedBox/elevated_box.dart';
 import 'package:nomo_ui_kit/components/text/nomo_text.dart';
@@ -27,6 +26,7 @@ class NomoDialog extends StatelessWidget {
     this.closeButton,
     this.contentSpacing,
     this.leading,
+    this.scrollabe = false,
     super.key,
   }) : assert(
           titleWidget == null || title == null,
@@ -42,6 +42,7 @@ class NomoDialog extends StatelessWidget {
   final Widget? titleWidget;
   final Widget? closeButton;
   final Widget? leading;
+  final bool scrollabe;
 
   @NomoSizingField(1.0)
   final double? elevation;
@@ -69,65 +70,70 @@ class NomoDialog extends StatelessWidget {
     final theme = getFromContext(context, this);
 
     final width = MediaQuery.of(context).size.width * theme.widthRatio;
-    final height = MediaQuery.of(context).size.height -
-        MediaQuery.of(context).systemGestureInsets.top;
+    final height = MediaQuery.of(context).size.height;
 
-    return SizedBox(
-      height: height,
-      child: Center(
-        child: ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: maxWidth ?? width),
-          child: Container(
-            width: width,
-            margin: theme.margin,
-            child: ElevatedBox(
-              decoration: BoxDecoration(
-                color: theme.backgroundColor,
-                borderRadius: theme.borderRadius,
-              ),
-              elevation: theme.elevation,
-              child: Padding(
-                padding: theme.padding,
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+    return Center(
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          maxWidth: maxWidth ?? width,
+          maxHeight: height * 0.9,
+        ),
+        child: Container(
+          width: width,
+          margin: theme.margin,
+          child: ElevatedBox(
+            decoration: BoxDecoration(
+              color: theme.backgroundColor,
+              borderRadius: theme.borderRadius,
+            ),
+            elevation: theme.elevation,
+            child: Padding(
+              padding: theme.padding,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
                     children: [
-                      AppBarLayoutDelegate(
-                        children: {
-                          if (leading != null) AppBarItem.backButton: leading!,
-                          if (title != null)
-                            AppBarItem.title: NomoText(
-                              title!,
-                              style: titleStyle,
-                            )
-                          else if (titleWidget != null)
-                            AppBarItem.title: titleWidget!,
-                          if (showCloseButton!)
-                            AppBarItem.actions: closeButton ??
-                                SecondaryNomoButton(
-                                  border: const Border.fromBorderSide(
-                                    BorderSide.none,
-                                  ),
-                                  onPressed: Navigator.of(context).pop,
-                                  shape: BoxShape.circle,
-                                  icon: Icons.close,
-                                  padding: const EdgeInsets.all(8),
-                                  backgroundColor: theme.backgroundColor,
-                                ),
-                        },
-                      ),
-                      theme.contentSpacing,
-                      content,
-                      theme.contentSpacing,
-                      if (actions != null && actions!.isNotEmpty)
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: actions!,
-                        ),
+                      if (leading != null) leading!,
+                      if (title != null)
+                        NomoText(
+                          title!,
+                          style: titleStyle,
+                        )
+                      else if (titleWidget != null)
+                        titleWidget!,
+                      const Spacer(),
+                      if (showCloseButton!)
+                        closeButton ??
+                            SecondaryNomoButton(
+                              border: const Border.fromBorderSide(
+                                BorderSide.none,
+                              ),
+                              onPressed: Navigator.of(context).pop,
+                              shape: BoxShape.circle,
+                              icon: Icons.close,
+                              padding: const EdgeInsets.all(8),
+                              backgroundColor: theme.backgroundColor,
+                            ),
                     ],
                   ),
-                ),
+                  theme.contentSpacing,
+                  if (scrollabe)
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: content,
+                      ),
+                    )
+                  else
+                    content,
+                  if (actions != null && actions!.isNotEmpty) ...[
+                    theme.contentSpacing,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: actions!,
+                    ),
+                  ]
+                ],
               ),
             ),
           ),
