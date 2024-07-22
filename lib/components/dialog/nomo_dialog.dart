@@ -132,7 +132,7 @@ class NomoDialog extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: actions!,
                     ),
-                  ]
+                  ],
                 ],
               ),
             ),
