@@ -60,6 +60,7 @@ class CustomRenderBox extends RenderBox
   MainAxisSize mainAxisSize;
   double vSpacing;
   double hSpacing;
+  CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment.center;
 
   @override
   void setupParentData(RenderObject child) {
@@ -94,6 +95,7 @@ class CustomRenderBox extends RenderBox
 
     /// Layout Phase
     final childSizes = <RenderBox, Size>{};
+
     while (child != null) {
       child.layout(constraints, parentUsesSize: true);
       final size = child.size;
@@ -102,28 +104,37 @@ class CustomRenderBox extends RenderBox
     }
     child = firstChild;
 
-    /// Position Phase
+    /// Position Phase 1: Fit children into rows
     var offset = Offset.zero;
     var height = 0.0;
     var width = 0.0;
-    double? maxChildHeight;
-    var cHeight = 0.0;
+    final rowMaxHeights = <int, (Iterable<RenderBox>, Size)>{};
+    var i = 0;
     while (child != null) {
       final childSize = childSizes[child]!;
       final childParentData = child.pData;
-      maxChildHeight = max(maxChildHeight ?? 0, childSize.height);
-
       final overlaps = offset.dx + childSize.width > maxWidth;
 
       if (overlaps) {
-        offset = Offset(0, offset.dy + maxChildHeight + vSpacing);
-        maxChildHeight = null;
+        offset = Offset(
+            0, offset.dy + (rowMaxHeights[i]?.$2.height ?? 0) + vSpacing);
+        i++;
       }
+
+      rowMaxHeights[i] = (
+        [
+          ...?rowMaxHeights[i]?.$1,
+          child,
+        ],
+        Size(
+          max(rowMaxHeights[i]?.$2.width ?? 0, childSize.width),
+          max(rowMaxHeights[i]?.$2.height ?? 0, childSize.height),
+        ),
+      );
 
       childParentData.offset = offset;
 
       final cWidth = child.size.width;
-      cHeight = child.size.height;
 
       // Update
       final isLast = child == lastChild;
@@ -133,7 +144,30 @@ class CustomRenderBox extends RenderBox
       child = childAfter(child);
     }
 
-    height = offset.dy + (maxChildHeight ?? cHeight);
+    /// Position Phase 2: Align children in rows and calculate height
+    child = firstChild;
+    while (child != null) {
+      final childParentData = child.pData;
+
+      final maxVSize = rowMaxHeights.entries
+          .singleWhere((e) => e.value.$1.contains(child))
+          .value
+          .$2
+          .height;
+
+      if (crossAxisAlignment == CrossAxisAlignment.center) {
+        if (child.size.height < maxVSize) {
+          childParentData.offset = childParentData.offset.translate(
+            0,
+            (maxVSize - child.size.height) / 2,
+          );
+        }
+      }
+
+      child = childAfter(child);
+    }
+
+    height = offset.dy + rowMaxHeights[i]!.$2.height;
     width = mainAxisSize == MainAxisSize.min ? width : maxWidth;
 
     size = Size(width, height);
