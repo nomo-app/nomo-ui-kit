@@ -117,7 +117,9 @@ class CustomRenderBox extends RenderBox
 
       if (overlaps) {
         offset = Offset(
-            0, offset.dy + (rowMaxHeights[i]?.$2.height ?? 0) + vSpacing);
+          0,
+          offset.dy + (rowMaxHeights[i]?.$2.height ?? 0) + vSpacing,
+        );
         i++;
       }
 

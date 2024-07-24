@@ -77,3 +77,7 @@ Initial release.
 ## 0.0.18
 
 * Fix Navigator.pop for NomoDialog when compiled to WASM
+
+## 0.0.19
+
+* DynamicRow now uses CrossAxisAligment.center
