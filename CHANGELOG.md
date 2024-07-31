@@ -4,80 +4,80 @@ Initial release.
 
 ## 0.0.2
 
-* Remove Unused Parameters in NomoApp
-* Add onChanged Methods to ThemeDelegate
+- Remove Unused Parameters in NomoApp
+- Add onChanged Methods to ThemeDelegate
 
 ## 0.0.3
 
-* Added support for changing themes on the go
+- Added support for changing themes on the go
 
 ## 0.0.4
 
-* Added itemDecorator on vertical and horizontal menu items
+- Added itemDecorator on vertical and horizontal menu items
 
 ## 0.0.5
 
-* Make Trailling Widgets inside NomoVerticalMenu Expanded
+- Make Trailling Widgets inside NomoVerticalMenu Expanded
 
 ## 0.0.6
 
-* Improve NomoRouteBody
-* Uprade to newest UI Generator (0.0.3)
+- Improve NomoRouteBody
+- Uprade to newest UI Generator (0.0.3)
 
 ## 0.0.7
 
-* Implement NomoSnackBar
-* Improve NomoAppBar (Better Default Values)
+- Implement NomoSnackBar
+- Improve NomoAppBar (Better Default Values)
 
 ## 0.0.8
 
-* Implement NomoDropDownButton
-* Improvements to NomoInput
-* No Padding for NomoRouteBody when using slivers
-* Implement NomoElevation
+- Implement NomoDropDownButton
+- Improvements to NomoInput
+- No Padding for NomoRouteBody when using slivers
+- Implement NomoElevation
 
 ## 0.0.9
 
-* Implement ValueNotifier for NomoDropDownMenu
+- Implement ValueNotifier for NomoDropDownMenu
 
 ## 0.0.10
 
-* Integrate NomoDropDownMenu into NomoTheme
-* Make NomoDropDownItem sealed class (Either String or Widget can be provided)
-* Add Fields
+- Integrate NomoDropDownMenu into NomoTheme
+- Make NomoDropDownItem sealed class (Either String or Widget can be provided)
+- Add Fields
 
 ## 0.0.11
 
-* Fix NomoText Behaviour when fit is set to true
+- Fix NomoText Behaviour when fit is set to true
 
 ## 0.0.12
 
-* Make NomoNotifications more customizable
+- Make NomoNotifications more customizable
 
 ## 0.0.13
 
-* Add Optional Parameters bottom and top to NomoInput
+- Add Optional Parameters bottom and top to NomoInput
 
 ## 0.0.14
 
-* Fix for Positioning of bottom and top Widgets inside NomoInput
+- Fix for Positioning of bottom and top Widgets inside NomoInput
 
 ## 0.0.15
 
-* Fix Bug in Nomo Link Button
+- Fix Bug in Nomo Link Button
 
 ## 0.0.16
 
-* Improve text scaling in NomoText if fit is set to true
+- Improve text scaling in NomoText if fit is set to true
 
 ## 0.0.17
 
-* Adjust NomoDialog Height Behaviour and Title Layout. Also add scrollable Parameter.
+- Adjust NomoDialog Height Behaviour and Title Layout. Also add scrollable Parameter.
 
 ## 0.0.18
 
-* Fix Navigator.pop for NomoDialog when compiled to WASM
+- Fix Navigator.pop for NomoDialog when compiled to WASM
 
 ## 0.0.19
 
-* DynamicRow now uses CrossAxisAligment.center
+- DynamicRow now uses CrossAxisAligment.center
