@@ -95,58 +95,57 @@ class NomoDialog extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  centerTitle
-                      ? AppBarLayoutDelegate(
-                          children: {
-                            if (leading != null)
-                              AppBarItem.backButton: leading!,
-                            if (title != null)
-                              AppBarItem.title: NomoText(
-                                title!,
-                                style: titleStyle,
-                              )
-                            else if (titleWidget != null)
-                              AppBarItem.title: titleWidget!,
-                            if (showCloseButton!)
-                              AppBarItem.actions: closeButton ??
-                                  SecondaryNomoButton(
-                                    border: const Border.fromBorderSide(
-                                      BorderSide.none,
-                                    ),
-                                    onPressed: Navigator.of(context).pop,
-                                    shape: BoxShape.circle,
-                                    icon: Icons.close,
-                                    padding: const EdgeInsets.all(8),
-                                    backgroundColor: theme.backgroundColor,
-                                  ),
-                          },
-                        )
-                      : Row(
-                          children: [
-                            if (leading != null) leading!,
-                            if (title != null)
-                              NomoText(
-                                title!,
-                                style: titleStyle,
-                              )
-                            else if (titleWidget != null)
-                              titleWidget!,
-                            const Spacer(),
-                            if (showCloseButton!)
-                              closeButton ??
-                                  SecondaryNomoButton(
-                                    border: const Border.fromBorderSide(
-                                      BorderSide.none,
-                                    ),
-                                    onPressed: () =>
-                                        Navigator.of(context).pop(),
-                                    shape: BoxShape.circle,
-                                    icon: Icons.close,
-                                    padding: const EdgeInsets.all(8),
-                                    backgroundColor: theme.backgroundColor,
-                                  ),
-                          ],
-                        ),
+                  if (centerTitle)
+                    AppBarLayoutDelegate(
+                      children: {
+                        if (leading != null) AppBarItem.backButton: leading!,
+                        if (title != null)
+                          AppBarItem.title: NomoText(
+                            title!,
+                            style: titleStyle,
+                          )
+                        else if (titleWidget != null)
+                          AppBarItem.title: titleWidget!,
+                        if (showCloseButton!)
+                          AppBarItem.actions: closeButton ??
+                              SecondaryNomoButton(
+                                border: const Border.fromBorderSide(
+                                  BorderSide.none,
+                                ),
+                                onPressed: Navigator.of(context).pop,
+                                shape: BoxShape.circle,
+                                icon: Icons.close,
+                                padding: const EdgeInsets.all(8),
+                                backgroundColor: theme.backgroundColor,
+                              ),
+                      },
+                    )
+                  else
+                    Row(
+                      children: [
+                        if (leading != null) leading!,
+                        if (title != null)
+                          NomoText(
+                            title!,
+                            style: titleStyle,
+                          )
+                        else if (titleWidget != null)
+                          titleWidget!,
+                        const Spacer(),
+                        if (showCloseButton!)
+                          closeButton ??
+                              SecondaryNomoButton(
+                                border: const Border.fromBorderSide(
+                                  BorderSide.none,
+                                ),
+                                onPressed: () => Navigator.of(context).pop(),
+                                shape: BoxShape.circle,
+                                icon: Icons.close,
+                                padding: const EdgeInsets.all(8),
+                                backgroundColor: theme.backgroundColor,
+                              ),
+                      ],
+                    ),
                   theme.contentSpacing,
                   if (scrollabe)
                     Expanded(
