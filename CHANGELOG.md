@@ -81,3 +81,7 @@ Initial release.
 ## 0.0.19
 
 - DynamicRow now uses CrossAxisAligment.center
+
+## 0.0.20
+
+- Add flag to NomoDialog to center the title
