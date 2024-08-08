@@ -56,6 +56,8 @@ class NomoInput extends StatefulWidget {
   final String? initialText;
   final bool? obscureText;
   final FocusNode? focusNode;
+  final int? maxLength;
+  final int? maxParagraphs;
 
   final Widget? bottom;
   final Widget? top;
@@ -169,6 +171,8 @@ class NomoInput extends StatefulWidget {
     this.obscureText,
     this.top,
     this.bottom,
+    this.maxLength,
+    this.maxParagraphs,
   }) : assert(
           height == null || usePlaceholderAsTitle == false,
           'Not supported please ask Thomas to implement',
@@ -441,6 +445,7 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
                   scrollPhysics: widget.scrollable
                       ? null
                       : const NeverScrollableScrollPhysics(),
+                  maxLength: widget.maxLength,
                   duration: theme.duration,
                   placeholder: widget.placeHolder,
                   placeholderStyle: placeHolderStyle,
@@ -454,7 +459,13 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
                   prefix: widget.leading.ifElseNull(widget.leading != null),
                   suffix: widget.trailling.ifElseNull(widget.trailling != null),
                   padding: theme.padding,
-                  inputFormatters: widget.inputFormatters,
+                  inputFormatters: [
+                    if (widget.maxParagraphs != null)
+                      ParagraphLimitingTextInputFormatter(
+                        maxParagraphs: widget.maxParagraphs!,
+                      ),
+                    ...?widget.inputFormatters,
+                  ],
                   keyboardAppearance: context.colors.brightness,
                   keyboardType: widget.keyboardType,
                   enableInteractiveSelection: true,
@@ -501,5 +512,30 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
         );
       },
     );
+  }
+}
+
+class ParagraphLimitingTextInputFormatter extends TextInputFormatter {
+  final int maxParagraphs;
+
+  ParagraphLimitingTextInputFormatter({this.maxParagraphs = 2});
+
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    final paragraphCount = newValue.text.split('\n').length;
+    if (paragraphCount <= maxParagraphs) {
+      return newValue;
+    } else {
+      // Limit the input to the maximum number of paragraphs
+      final lastParagraphIndex = newValue.text.lastIndexOf('\n');
+      final truncatedText = newValue.text.substring(0, lastParagraphIndex);
+      return newValue.copyWith(
+        text: truncatedText,
+        selection: TextSelection.collapsed(offset: truncatedText.length),
+      );
+    }
   }
 }

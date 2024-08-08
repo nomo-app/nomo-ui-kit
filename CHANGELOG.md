@@ -85,3 +85,7 @@ Initial release.
 ## 0.0.20
 
 - Add flag to NomoDialog to center the title
+
+## 0.0.21
+
+- Add maxLength & maxParagraphs Parameters to NomoInput
