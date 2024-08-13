@@ -93,3 +93,7 @@ Initial release.
 ## 0.0.22
 
 - Remove Unused Dependency
+
+## 0.0.23
+
+- Minor Improvements
