@@ -346,6 +346,7 @@ class FillRemainingFooter extends StatelessWidget {
     return SliverFillRemaining(
       hasScrollBody: false,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const Expanded(
             child: SizedBox.shrink(),

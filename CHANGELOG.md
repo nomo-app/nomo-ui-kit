@@ -97,3 +97,8 @@ Initial release.
 ## 0.0.23
 
 - Minor Improvements
+
+## 0.0.24
+
+- Minor Improvements
+- Use CrossaxisAligment.strech for NomoRouteBody Footer
