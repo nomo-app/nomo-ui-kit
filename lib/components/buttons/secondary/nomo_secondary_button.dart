@@ -90,8 +90,10 @@ class SecondaryNomoButton extends StatelessWidget with NomoButtonMixin {
     this.expandToConstraints,
     this.translate,
     this.direction = Axis.horizontal,
-  }) : assert(child == null || (icon == null && text == null),
-            'Either Specify child or text and icon',);
+  }) : assert(
+          child == null || (icon == null && text == null),
+          'Either Specify child or text and icon',
+        );
 
   @override
   Widget build(BuildContext context) {

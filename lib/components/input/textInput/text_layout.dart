@@ -137,8 +137,10 @@ class TextInputLayoutRenderbox extends RenderBox
     ///
     final traillingSize = intrinsicSizes[TextLayoutItem.trailling] ?? Size.zero;
     if (tralling != null) {
-      final backButtonOffset = Offset(maxWidth - traillingSize.width,
-          centerVertically(maxHeight, traillingSize),);
+      final backButtonOffset = Offset(
+        maxWidth - traillingSize.width,
+        centerVertically(maxHeight, traillingSize),
+      );
       (tralling.parentData! as BoxParentData).offset = backButtonOffset;
     }
 
@@ -154,8 +156,10 @@ class TextInputLayoutRenderbox extends RenderBox
       parentUsesSize: true,
     );
     textSize = text.size;
-    final textOffset = Offset(leadingSize.width,
-        textInset + centerVertically(textMaxHeight, textSize),);
+    final textOffset = Offset(
+      leadingSize.width,
+      textInset + centerVertically(textMaxHeight, textSize),
+    );
     (text.parentData! as BoxParentData).offset = textOffset;
 
     ///

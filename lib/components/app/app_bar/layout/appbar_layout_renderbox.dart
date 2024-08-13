@@ -8,7 +8,9 @@ import 'package:flutter/widgets.dart';
 import 'package:nomo_ui_kit/components/app/app_bar/layout/appbar_layout_delegate.dart';
 
 class AppBarLayoutRenderBox extends RenderBox
-    with SlottedContainerRenderObjectMixin<AppBarItem, RenderBox>, DebugOverflowIndicatorMixin {
+    with
+        SlottedContainerRenderObjectMixin<AppBarItem, RenderBox>,
+        DebugOverflowIndicatorMixin {
   AppBarLayoutRenderBox({
     required this.items,
   });
@@ -45,9 +47,11 @@ class AppBarLayoutRenderBox extends RenderBox
       backButton.layout(remaingConstraints, parentUsesSize: true);
       backButtonSize = backButton.size;
 
-      final backButtonOffset = Offset(0, centerVertically(maxHeight, backButtonSize));
+      final backButtonOffset =
+          Offset(0, centerVertically(maxHeight, backButtonSize));
 
-      backButtonParentData = backButton.parentData! as BoxParentData..offset = backButtonOffset;
+      backButtonParentData = backButton.parentData! as BoxParentData
+        ..offset = backButtonOffset;
       remaingConstraints = remaingConstraints.copyWith(
         maxWidth: remaingConstraints.maxWidth - backButtonSize.width,
       );
@@ -65,7 +69,8 @@ class AppBarLayoutRenderBox extends RenderBox
         maxWidth - actionSize.width,
         centerVertically(maxHeight, actionSize),
       );
-      actionParentData = actions.parentData! as BoxParentData..offset = offsetAction;
+      actionParentData = actions.parentData! as BoxParentData
+        ..offset = offsetAction;
       remaingConstraints = remaingConstraints.copyWith(
         maxWidth: remaingConstraints.maxWidth - actionSize.width,
       );
@@ -74,7 +79,9 @@ class AppBarLayoutRenderBox extends RenderBox
     ///
     /// Title
     ///
-    final biggestIndent = backButtonSize.width >= actionSize.width ? backButtonSize.width : actionSize.width;
+    final biggestIndent = backButtonSize.width >= actionSize.width
+        ? backButtonSize.width
+        : actionSize.width;
 
     final titleConstraints = BoxConstraints(
       maxWidth: maxWidth - biggestIndent * 2,
@@ -89,11 +96,13 @@ class AppBarLayoutRenderBox extends RenderBox
         ((titleConstraints.maxWidth - titleSize.width) / 2) + biggestIndent,
         centerVertically(maxHeight, titleSize),
       );
-      titleParentData = title.parentData! as BoxParentData..offset = offsetTitle;
+      titleParentData = title.parentData! as BoxParentData
+        ..offset = offsetTitle;
     }
 
     /// Find the biggest height
-    final biggestHeight = max(backButtonSize.height, max(titleSize.height, actionSize.height));
+    final biggestHeight =
+        max(backButtonSize.height, max(titleSize.height, actionSize.height));
 
     if (maxHeight == double.infinity) {
       maxHeight = biggestHeight;

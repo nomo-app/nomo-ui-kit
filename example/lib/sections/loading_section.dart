@@ -91,7 +91,11 @@ class LoadingSection extends StatelessWidget {
               Shimmer(
                 duration: const Duration(milliseconds: 2000),
                 gradient: const LinearGradient(
-                  colors: [Color(0x222FAAA5), Color.fromARGB(126, 104, 115, 154), Color(0x222FAAA5)],
+                  colors: [
+                    Color(0x222FAAA5),
+                    Color.fromARGB(126, 104, 115, 154),
+                    Color(0x222FAAA5)
+                  ],
                   stops: [0.1, 0.3, 0.4],
                   begin: Alignment(-1.0, -0.3),
                   end: Alignment(1.0, 0.3),

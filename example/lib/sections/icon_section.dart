@@ -55,7 +55,10 @@ class _IconSectionState extends State<IconSection> {
           valueListenable: searchNotifier,
           builder: (context, searchText, child) {
             final filteredList = searchText.isNotEmpty
-                ? icons.where((element) => element.key.toLowerCase().contains(searchText)).toList()
+                ? icons
+                    .where((element) =>
+                        element.key.toLowerCase().contains(searchText))
+                    .toList()
                 : icons;
 
             return SliverGrid.builder(
