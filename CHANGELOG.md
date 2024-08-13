@@ -89,3 +89,7 @@ Initial release.
 ## 0.0.21
 
 - Add maxLength & maxParagraphs Parameters to NomoInput
+
+## 0.0.22
+
+- Remove Unused Dependency
