@@ -1,9 +1,9 @@
 import 'dart:io';
-import 'package:nomo_ui_kit/utils/platform_info/platform_info.dart';
+import 'package:nomo_ui_kit/utils/platform_info/platform_info_base.dart';
 
-PlatformInfo getInstance() => PlatformInfoIO();
+BasePlatformInfo getInstance() => PlatformInfoIO();
 
-final class PlatformInfoIO extends PlatformInfo {
+final class PlatformInfoIO extends BasePlatformInfo {
   PlatformInfoIO()
       : super(
           isWeb: false,

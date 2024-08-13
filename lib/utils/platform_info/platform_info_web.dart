@@ -1,7 +1,7 @@
-import 'package:nomo_ui_kit/utils/platform_info/platform_info.dart';
+import 'package:nomo_ui_kit/utils/platform_info/platform_info_base.dart';
 
-PlatformInfo getInstance() => const PlatformInfoWeb();
+BasePlatformInfo getInstance() => const PlatformInfoWeb();
 
-final class PlatformInfoWeb extends PlatformInfo {
+final class PlatformInfoWeb extends BasePlatformInfo {
   const PlatformInfoWeb() : super(isWeb: true);
 }
