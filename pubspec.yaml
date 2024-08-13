@@ -1,5 +1,5 @@
 name: nomo_ui_kit
-description: UI Component Library
+description: Highly opinionated and highly customizable UI Kit for Flutter. Meant to be a alternative to Material.
 version: 0.0.22
 repository: https://github.com/nomo-app/nomo-ui-kit
 homepage: https://nomo.app
@@ -22,13 +22,13 @@ dependencies:
   flutter_svg: ^2.0.10+1
   flutter_localizations:
     sdk: flutter
+  nomo_ui_generator: ^0.0.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   very_good_analysis: ^5.1.0
   build_runner: ^2.0.0
-  nomo_ui_generator: ^0.0.3
 
 flutter:
   fonts:

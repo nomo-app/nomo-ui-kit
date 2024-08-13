@@ -7,7 +7,7 @@ import 'package:nomo_ui_kit/components/input/cupertino_text_input.dart';
 import 'package:nomo_ui_kit/components/input/form/nomo_form.dart';
 import 'package:nomo_ui_kit/components/text/nomo_text.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
-import 'package:nomo_ui_kit/utils/platform_info.dart';
+import 'package:nomo_ui_kit/utils/platform_info/platform_info.dart';
 import 'package:nomo_ui_kit/utils/tweens.dart';
 
 part 'nomo_input.theme_data.g.dart';
@@ -469,11 +469,11 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
                   keyboardAppearance: context.colors.brightness,
                   keyboardType: widget.keyboardType,
                   enableInteractiveSelection: true,
-                  selectionControls: switch (PlatformInfo.I.isCupertino) {
-                    true when PlatformInfo.I.isMacOS =>
+                  selectionControls: switch (PlatformInfo.isCupertino) {
+                    true when PlatformInfo.isMacOS =>
                       CupertinoDesktopTextSelectionControls(),
                     true => CupertinoTextSelectionControls(),
-                    false when PlatformInfo.I.isDesktop =>
+                    false when PlatformInfo.isDesktop =>
                       DesktopTextSelectionControls(),
                     false => MaterialTextSelectionControls(),
                   },
