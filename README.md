@@ -31,19 +31,3 @@ Compared to Kits like Material UI, Nomo UI Kit offers a few outstanding features
 Each feature within our UI package is thoughtfully crafted; streamlining the creation of a cohesive and user-friendly app experience.
 
 - More Widgets Coming Soon!
-
-## How to integrate
-
-Add this as a Git-submodule to a Flutter app by using Git-commands:
-
-````
-git submodule add https://github.com/nomo-app/nomo-ui-kit.git packages/nomo-ui-kit
-````
-
-Afterwards, expand your pubspec.yaml accordingly:
-
-```
-dependencies:
-    nomo_ui_kit:
-        path: packages/nomo-ui-kit
-```
