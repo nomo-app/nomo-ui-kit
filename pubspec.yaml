@@ -18,7 +18,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  logger: ^1.4.0
   flutter_svg: ^2.0.10+1
   flutter_localizations:
     sdk: flutter

@@ -16,7 +16,7 @@ class DropDownItem<T> {
   });
 }
 
-@NomoComponentThemeData('dropdownButton')
+@NomoComponentThemeData('dropDownButton')
 class NomoDropDownButton<T> extends StatefulWidget {
   final List<DropDownItem<T>> options;
   final void Function(T? value) onChanged;
@@ -28,6 +28,9 @@ class NomoDropDownButton<T> extends StatefulWidget {
   final Widget? child;
   final ValueNotifier<T?>? valueNotifier;
   final EdgeInsetsGeometry? padding;
+
+  @NomoColorField(Colors.white)
+  final Color? dropdownColor;
 
   const NomoDropDownButton({
     required this.options,
@@ -41,6 +44,7 @@ class NomoDropDownButton<T> extends StatefulWidget {
     this.child,
     this.valueNotifier,
     this.padding,
+    this.dropdownColor,
   }) : assert(options.length > 0, 'options cannot be empty');
 
   @override
@@ -59,7 +63,7 @@ class _NomoDropDownButtonState<T> extends State<NomoDropDownButton<T>> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = NomoTheme.of(context);
+    final theme = getFromContext(context, widget);
     return ValueListenableBuilder(
       valueListenable: _valueNotifier,
       builder: (context, value, child) {
@@ -72,7 +76,7 @@ class _NomoDropDownButtonState<T> extends State<NomoDropDownButton<T>> {
                 widget.icon,
                 color: context.colors.foreground3,
               ),
-          dropdownColor: context.colors.surface,
+          dropdownColor: theme.dropdownColor,
           items: [
             for (final DropDownItem<T> item in widget.options)
               DropdownMenuItem<T>(
@@ -81,7 +85,7 @@ class _NomoDropDownButtonState<T> extends State<NomoDropDownButton<T>> {
                   width: widget.width,
                   child: NomoText(
                     overflow: TextOverflow.ellipsis,
-                    style: theme.typography.b2,
+                    style: context.typography.b2,
                     item.displayName,
                   ),
                 ),

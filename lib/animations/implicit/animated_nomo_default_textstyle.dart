@@ -29,7 +29,8 @@ class AnimatedNomoDefaultTextStyle extends ImplicitlyAnimatedWidget {
   final TextStyle style;
 
   @override
-  AnimatedWidgetBaseState<AnimatedNomoDefaultTextStyle> createState() => _AnimatedDefaultTextStyleState();
+  AnimatedWidgetBaseState<AnimatedNomoDefaultTextStyle> createState() =>
+      _AnimatedDefaultTextStyleState();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -38,13 +39,17 @@ class AnimatedNomoDefaultTextStyle extends ImplicitlyAnimatedWidget {
   }
 }
 
-class _AnimatedDefaultTextStyleState extends AnimatedWidgetBaseState<AnimatedNomoDefaultTextStyle> {
+class _AnimatedDefaultTextStyleState
+    extends AnimatedWidgetBaseState<AnimatedNomoDefaultTextStyle> {
   TextStyleTween? _style;
 
   @override
   void forEachTween(TweenVisitor<dynamic> visitor) {
-    _style =
-        visitor(_style, widget.style, (dynamic value) => TextStyleTween(begin: value as TextStyle)) as TextStyleTween?;
+    _style = visitor(
+      _style,
+      widget.style,
+      (dynamic value) => TextStyleTween(begin: value as TextStyle),
+    ) as TextStyleTween?;
   }
 
   @override
