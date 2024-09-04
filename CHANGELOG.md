@@ -102,3 +102,7 @@ Initial release.
 
 - Minor Improvements
 - Use CrossaxisAligment.strech for NomoRouteBody Footer
+
+## 0.0.25
+
+- Add onTap & onTapOutside Parameters for NomoInput

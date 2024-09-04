@@ -59,6 +59,9 @@ class NomoInput extends StatefulWidget {
   final int? maxLength;
   final int? maxParagraphs;
 
+  final void Function()? onTap;
+  final void Function(PointerDownEvent)? onTapOutside;
+
   final Widget? bottom;
   final Widget? top;
 
@@ -173,6 +176,8 @@ class NomoInput extends StatefulWidget {
     this.bottom,
     this.maxLength,
     this.maxParagraphs,
+    this.onTap,
+    this.onTapOutside,
   }) : assert(
           height == null || usePlaceholderAsTitle == false,
           'Not supported please ask Thomas to implement',
@@ -445,6 +450,8 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
                   scrollPhysics: widget.scrollable
                       ? null
                       : const NeverScrollableScrollPhysics(),
+                  onTap: widget.onTap,
+                  onTapOutside: widget.onTapOutside,
                   maxLength: widget.maxLength,
                   duration: theme.duration,
                   placeholder: widget.placeHolder,
