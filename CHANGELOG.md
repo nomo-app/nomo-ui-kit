@@ -106,3 +106,7 @@ Initial release.
 ## 0.0.25
 
 - Add onTap & onTapOutside Parameters for NomoInput
+
+## 0.0.26
+
+- Add HitTestBehavior Parameter to NomoInput

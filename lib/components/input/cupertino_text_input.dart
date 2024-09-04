@@ -224,6 +224,7 @@ class CupertinoInput extends StatefulWidget {
     this.magnifierConfiguration,
     this.bottom,
     this.top,
+    this.hitTestBehavior = HitTestBehavior.translucent,
   })  : assert(obscuringCharacter.length == 1),
         smartDashesType = smartDashesType ??
             (obscureText ? SmartDashesType.disabled : SmartDashesType.enabled),
@@ -304,6 +305,8 @@ class CupertinoInput extends StatefulWidget {
 
   final Widget? bottom;
   final Widget? top;
+
+  final HitTestBehavior hitTestBehavior;
 
   /// An optional [Widget] to display before the text.
   final Widget? prefix;
@@ -1337,7 +1340,7 @@ class _CupertinoInputState extends State<CupertinoInput>
                 children: [
                   if (widget.top != null) widget.top!,
                   _selectionGestureDetectorBuilder.buildGestureDetector(
-                    behavior: HitTestBehavior.translucent,
+                    behavior: widget.hitTestBehavior,
                     child: _TextInputDependetAttachment(
                       text: paddedEditable,
                       controller: controller,
