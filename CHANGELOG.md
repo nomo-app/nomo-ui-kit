@@ -110,3 +110,7 @@ Initial release.
 ## 0.0.26
 
 - Add HitTestBehavior Parameter to NomoInput
+
+## 0.0.27
+
+- Add splashRadius Parameter to Expandable
