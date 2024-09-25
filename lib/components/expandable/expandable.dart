@@ -21,6 +21,7 @@ class Expandable extends StatefulWidget {
   final EdgeInsetsGeometry? margin;
   final EdgeInsetsGeometry? padding;
   final BoxDecoration? decoration;
+  final double? splashRadius;
 
   /// If the [expansionNotifier] is defined [initiallyExpanded] is ignored
   /// If the [expansionNotifier] is not defined the state will be handled internally
@@ -73,6 +74,7 @@ class Expandable extends StatefulWidget {
     this.hoverColor,
     this.splashColor,
     this.iconColor,
+    this.splashRadius,
   });
 
   @override
@@ -182,7 +184,8 @@ class _ExpandableState extends State<Expandable> with TickerProviderStateMixin {
                             NomoButton(
                               onPressed: onTap,
                               shape: BoxShape.circle,
-                              padding: const EdgeInsets.all(12),
+                              padding:
+                                  EdgeInsets.all(widget.splashRadius ?? 12),
                               child: Transform.rotate(
                                 angle: turnAnimation.value,
                                 child: Icon(
