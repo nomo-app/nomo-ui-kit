@@ -45,6 +45,7 @@ class NomoInput extends StatefulWidget {
   final int? maxLines;
   final TextInputAction? textInputAction;
   final ValueNotifier<String>? valueNotifier;
+  final TextEditingController? textEditingController;
   final ValueNotifier<String?>? errorNotifier;
   final String? Function(String value)? validator;
   final String? formKey;
@@ -58,6 +59,7 @@ class NomoInput extends StatefulWidget {
   final FocusNode? focusNode;
   final int? maxLength;
   final int? maxParagraphs;
+  final void Function()? onFieldSubmitted;
 
   final void Function()? onTap;
   final void Function(PointerDownEvent)? onTapOutside;
@@ -181,9 +183,15 @@ class NomoInput extends StatefulWidget {
     this.onTap,
     this.onTapOutside,
     this.hitTestBehavior = HitTestBehavior.translucent,
-  }) : assert(
+    this.textEditingController,
+    this.onFieldSubmitted,
+  })  : assert(
           height == null || usePlaceholderAsTitle == false,
           'Not supported please ask Thomas to implement',
+        ),
+        assert(
+          textEditingController == null || valueNotifier == null,
+          'Please provide either a textEditingController or a valueNotifier',
         );
 
   @override
@@ -230,7 +238,8 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
     errorNotifer = widget.errorNotifier ?? ValueNotifier(null)
       ..addListener(errorChanged);
     inputStateNotifier = ValueNotifier(InputState.nonError);
-    textController = TextEditingController(text: valueNotifier.value)
+    textController = widget.textEditingController ??
+        TextEditingController(text: valueNotifier.value)
       ..addListener(textControllerChanged);
     focusNode = widget.focusNode ?? FocusNode()
       ..addListener(focusChanged);
@@ -284,8 +293,10 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
     /// Form
     ///
     formValidator = isInForm ? NomoForm.of(context)?.validator : null
-      ?..addListener(formValidate);
-    formValues = isInForm ? NomoForm.of(context)?.values : null;
+      ?..addListener(formValidate)
+      ..addField(widget.formKey!);
+    formValues = isInForm ? NomoForm.of(context)?.values : null
+      ?..setValueNotifierForField(widget.formKey!, valueNotifier);
   }
 
   @override
@@ -353,6 +364,7 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
     final error = widget.validator!(textController.text);
 
     errorNotifer.value = error;
+    formValidator?.validateField(widget.formKey!, error == null);
 
     return error == null;
   }
@@ -453,6 +465,7 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
                   scrollPhysics: widget.scrollable
                       ? null
                       : const NeverScrollableScrollPhysics(),
+                  onSubmitted: (_) => widget.onFieldSubmitted?.call(),
                   hitTestBehavior: widget.hitTestBehavior,
                   onTap: widget.onTap,
                   onTapOutside: widget.onTapOutside,

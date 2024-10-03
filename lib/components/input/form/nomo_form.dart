@@ -28,6 +28,8 @@ class NomoFormValues extends ChangeNotifier {
   final JSON value;
   final void Function(JSON value)? onChanged;
 
+  final Map<String, ValueNotifier<dynamic>> _valueNotifiers = {};
+
   NomoFormValues({
     this.onChanged,
   }) : value = {};
@@ -36,6 +38,22 @@ class NomoFormValues extends ChangeNotifier {
     value[key] = fieldValue;
     onChanged?.call(value);
     notifyListeners();
+  }
+
+  void setValueNotifierForField(
+    String key,
+    ValueNotifier<dynamic> valueNotifier,
+  ) {
+    _valueNotifiers[key] = valueNotifier;
+  }
+
+  void setValueForField(String key, dynamic fieldValue) {
+    final valueNotifer = _valueNotifiers[key];
+    if (valueNotifer == null) return;
+
+    /// Always has listener if not disposed
+    if (valueNotifer.hasListeners == false) return;
+    valueNotifer.value = fieldValue;
   }
 }
 
@@ -48,9 +66,14 @@ class NomoFormValidator extends ChangeNotifier {
     notifyListeners();
   }
 
+  void addField(String key) {
+    values[key] = false;
+  }
+
   void validateField(String key, bool valid) {
     values[key] = valid;
   }
 
-  bool get isValid => !values.values.any((valid) => !valid);
+  bool get isValid =>
+      !values.values.any((valid) => !valid) && values.isNotEmpty;
 }

@@ -114,3 +114,9 @@ Initial release.
 ## 0.0.27
 
 - Add splashRadius Parameter to Expandable
+
+## 0.0.28
+
+- Add textEditingController and onFieldSubmitted Parameters to NomoInput
+- Keep NomoFormValidator in sync when autovalidate is true
+- Allow setting values through NomoFormValues
