@@ -11,11 +11,13 @@ class NomoBottomBarColorDataNullable {
   final Color? foreground;
   final Color? background;
   final Color? selectedForeground;
+  final BorderRadius? itemBorderRadius;
   final BorderRadius? borderRadius;
   const NomoBottomBarColorDataNullable({
     this.foreground,
     this.background,
     this.selectedForeground,
+    this.itemBorderRadius,
     this.borderRadius,
   });
 }
@@ -28,12 +30,15 @@ class NomoBottomBarColorData implements NomoBottomBarColorDataNullable {
   @override
   final Color selectedForeground;
   @override
+  final BorderRadius itemBorderRadius;
+  @override
   final BorderRadius borderRadius;
   const NomoBottomBarColorData({
     this.foreground = Colors.black,
     this.background = Colors.white,
     this.selectedForeground = Colors.red,
-    this.borderRadius = const BorderRadius.all(Radius.circular(8)),
+    this.itemBorderRadius = const BorderRadius.all(Radius.circular(8)),
+    this.borderRadius = BorderRadius.zero,
   });
   static NomoBottomBarColorData lerp(
       NomoBottomBarColorData a, NomoBottomBarColorData b, double t) {
@@ -42,6 +47,8 @@ class NomoBottomBarColorData implements NomoBottomBarColorDataNullable {
       background: Color.lerp(a.background, b.background, t)!,
       selectedForeground:
           Color.lerp(a.selectedForeground, b.selectedForeground, t)!,
+      itemBorderRadius:
+          BorderRadius.lerp(a.itemBorderRadius, b.itemBorderRadius, t)!,
       borderRadius: BorderRadius.lerp(a.borderRadius, b.borderRadius, t)!,
     );
   }
@@ -53,6 +60,7 @@ class NomoBottomBarColorData implements NomoBottomBarColorDataNullable {
       background: override?.background ?? base.background,
       selectedForeground:
           override?.selectedForeground ?? base.selectedForeground,
+      itemBorderRadius: override?.itemBorderRadius ?? base.itemBorderRadius,
       borderRadius: override?.borderRadius ?? base.borderRadius,
     );
   }
@@ -63,12 +71,14 @@ class NomoBottomBarSizingDataNullable {
   final double? spacing;
   final double? iconSize;
   final EdgeInsetsGeometry? padding;
+  final double? elevation;
   final EdgeInsetsGeometry? itemPadding;
   const NomoBottomBarSizingDataNullable({
     this.height,
     this.spacing,
     this.iconSize,
     this.padding,
+    this.elevation,
     this.itemPadding,
   });
 }
@@ -83,12 +93,15 @@ class NomoBottomBarSizingData implements NomoBottomBarSizingDataNullable {
   @override
   final EdgeInsetsGeometry padding;
   @override
+  final double elevation;
+  @override
   final EdgeInsetsGeometry itemPadding;
   const NomoBottomBarSizingData({
     this.height = 56.0,
     this.spacing = 4.0,
     this.iconSize = 28.0,
     this.padding = const EdgeInsets.all(4),
+    this.elevation = 16.0,
     this.itemPadding = const EdgeInsets.symmetric(horizontal: 8),
   });
   static NomoBottomBarSizingData lerp(
@@ -98,6 +111,7 @@ class NomoBottomBarSizingData implements NomoBottomBarSizingDataNullable {
       spacing: lerpDouble(a.spacing, b.spacing, t)!,
       iconSize: lerpDouble(a.iconSize, b.iconSize, t)!,
       padding: EdgeInsetsGeometry.lerp(a.padding, b.padding, t)!,
+      elevation: lerpDouble(a.elevation, b.elevation, t)!,
       itemPadding: EdgeInsetsGeometry.lerp(a.itemPadding, b.itemPadding, t)!,
     );
   }
@@ -109,6 +123,7 @@ class NomoBottomBarSizingData implements NomoBottomBarSizingDataNullable {
       spacing: override?.spacing ?? base.spacing,
       iconSize: override?.iconSize ?? base.iconSize,
       padding: override?.padding ?? base.padding,
+      elevation: override?.elevation ?? base.elevation,
       itemPadding: override?.itemPadding ?? base.itemPadding,
     );
   }
@@ -134,6 +149,8 @@ class NomoBottomBarThemeData
   @override
   final Color selectedForeground;
   @override
+  final BorderRadius itemBorderRadius;
+  @override
   final BorderRadius borderRadius;
   @override
   final double height;
@@ -144,16 +161,20 @@ class NomoBottomBarThemeData
   @override
   final EdgeInsetsGeometry padding;
   @override
+  final double elevation;
+  @override
   final EdgeInsetsGeometry itemPadding;
   const NomoBottomBarThemeData({
     this.foreground = Colors.black,
     this.background = Colors.white,
     this.selectedForeground = Colors.red,
-    this.borderRadius = const BorderRadius.all(Radius.circular(8)),
+    this.itemBorderRadius = const BorderRadius.all(Radius.circular(8)),
+    this.borderRadius = BorderRadius.zero,
     this.height = 56.0,
     this.spacing = 4.0,
     this.iconSize = 28.0,
     this.padding = const EdgeInsets.all(4),
+    this.elevation = 16.0,
     this.itemPadding = const EdgeInsets.symmetric(horizontal: 8),
   });
   factory NomoBottomBarThemeData.from(
@@ -165,11 +186,13 @@ class NomoBottomBarThemeData
       foreground: colors.foreground,
       background: colors.background,
       selectedForeground: colors.selectedForeground,
+      itemBorderRadius: colors.itemBorderRadius,
       borderRadius: colors.borderRadius,
       height: sizing.height,
       spacing: sizing.spacing,
       iconSize: sizing.iconSize,
       padding: sizing.padding,
+      elevation: sizing.elevation,
       itemPadding: sizing.itemPadding,
     );
   }
@@ -178,11 +201,13 @@ class NomoBottomBarThemeData
       foreground: override?.foreground ?? foreground,
       background: override?.background ?? background,
       selectedForeground: override?.selectedForeground ?? selectedForeground,
+      itemBorderRadius: override?.itemBorderRadius ?? itemBorderRadius,
       borderRadius: override?.borderRadius ?? borderRadius,
       height: override?.height ?? height,
       spacing: override?.spacing ?? spacing,
       iconSize: override?.iconSize ?? iconSize,
       padding: override?.padding ?? padding,
+      elevation: override?.elevation ?? elevation,
       itemPadding: override?.itemPadding ?? itemPadding,
     );
   }
@@ -200,6 +225,8 @@ class NomoBottomBarThemeDataNullable
   @override
   final Color? selectedForeground;
   @override
+  final BorderRadius? itemBorderRadius;
+  @override
   final BorderRadius? borderRadius;
   @override
   final double? height;
@@ -210,16 +237,20 @@ class NomoBottomBarThemeDataNullable
   @override
   final EdgeInsetsGeometry? padding;
   @override
+  final double? elevation;
+  @override
   final EdgeInsetsGeometry? itemPadding;
   const NomoBottomBarThemeDataNullable({
     this.foreground,
     this.background,
     this.selectedForeground,
+    this.itemBorderRadius,
     this.borderRadius,
     this.height,
     this.spacing,
     this.iconSize,
     this.padding,
+    this.elevation,
     this.itemPadding,
   });
 }
@@ -267,11 +298,13 @@ NomoBottomBarThemeData getFromContext(
     background: widget.background ?? themeData.background,
     selectedForeground:
         widget.selectedForeground ?? themeData.selectedForeground,
+    itemBorderRadius: widget.itemBorderRadius ?? themeData.itemBorderRadius,
     borderRadius: widget.borderRadius ?? themeData.borderRadius,
     height: widget.height ?? themeData.height,
     spacing: widget.spacing ?? themeData.spacing,
     iconSize: widget.iconSize ?? themeData.iconSize,
     padding: widget.padding ?? themeData.padding,
+    elevation: widget.elevation ?? themeData.elevation,
     itemPadding: widget.itemPadding ?? themeData.itemPadding,
   );
 }

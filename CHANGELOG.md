@@ -120,3 +120,7 @@ Initial release.
 - Add textEditingController and onFieldSubmitted Parameters to NomoInput
 - Keep NomoFormValidator in sync when autovalidate is true
 - Allow setting values through NomoFormValues
+
+## 0.0.29
+
+- Add itemBorderRadius, borderRadius and elevation parameters to NomoBottomBar

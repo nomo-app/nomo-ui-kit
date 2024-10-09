@@ -23,12 +23,14 @@ class NomoBottomBar<T> extends StatelessWidget {
     this.background,
     this.foreground,
     this.selectedForeground,
-    this.borderRadius,
+    this.itemBorderRadius,
     this.spacing,
     this.padding,
     this.iconSize,
     this.itemPadding,
     this.itemDecorator,
+    this.elevation,
+    this.borderRadius,
   }) : assert(
           items.length > 0 && items.length <= 5,
           'Items must be between 1 and 5',
@@ -54,6 +56,9 @@ class NomoBottomBar<T> extends StatelessWidget {
   @NomoSizingField(EdgeInsets.all(4))
   final EdgeInsetsGeometry? padding;
 
+  @NomoSizingField(16.0)
+  final double? elevation;
+
   @NomoSizingField(EdgeInsets.symmetric(horizontal: 8))
   final EdgeInsetsGeometry? itemPadding;
 
@@ -67,6 +72,9 @@ class NomoBottomBar<T> extends StatelessWidget {
   final Color? selectedForeground;
 
   @NomoColorField(BorderRadius.all(Radius.circular(8)))
+  final BorderRadius? itemBorderRadius;
+
+  @NomoColorField(BorderRadius.zero)
   final BorderRadius? borderRadius;
 
   @override
@@ -77,7 +85,8 @@ class NomoBottomBar<T> extends StatelessWidget {
       height: theme.height,
       decoration: NomoDecoration(
         color: theme.background,
-        elevation: 16,
+        elevation: theme.elevation,
+        borderRadius: theme.borderRadius,
       ),
       padding: theme.padding,
       child: Row(
