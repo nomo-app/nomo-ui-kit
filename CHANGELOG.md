@@ -128,3 +128,7 @@ Initial release.
 ## 0.0.30
 
 - Fix conditional import of PlatformInfo for Wasm Builds
+
+## 0.0.31
+
+- Fix Wasm Bug
