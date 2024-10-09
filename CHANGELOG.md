@@ -132,3 +132,7 @@ Initial release.
 ## 0.0.31
 
 - Fix Wasm Bug
+
+## 0.0.32
+
+- Fix another Wasm Bug
