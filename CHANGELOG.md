@@ -124,3 +124,7 @@ Initial release.
 ## 0.0.29
 
 - Add itemBorderRadius, borderRadius and elevation parameters to NomoBottomBar
+
+## 0.0.30
+
+- Fix conditional import of PlatformInfo for Wasm Builds
