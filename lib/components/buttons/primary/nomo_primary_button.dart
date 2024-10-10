@@ -61,11 +61,12 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
   @NomoColorField<BorderRadiusGeometry>(BorderRadius.all(Radius.circular(8)))
   final BorderRadiusGeometry? borderRadius;
 
+  @override
+  final Border? border;
+
   /// Not used
   @override
   Color? get selectionColor => null;
-  @override
-  Border? get border => null;
 
   const PrimaryNomoButton({
     super.key,
@@ -90,6 +91,7 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
     this.expandToConstraints,
     this.translate,
     this.direction = Axis.horizontal,
+    this.border,
   }) : assert(
           child == null || (icon == null && text == null),
           'Either Specify child or text and icon',
@@ -171,6 +173,7 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
         _ => theme.backgroundColor,
       },
       foregroundColor: foregroundColor,
+      border: border,
       shape: shape,
       margin: margin,
       width: width,
