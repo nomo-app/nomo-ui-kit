@@ -29,6 +29,7 @@ class NomoDialog extends StatelessWidget {
     this.leading,
     this.scrollabe = false,
     this.centerTitle = true,
+    this.border,
     super.key,
   }) : assert(
           titleWidget == null || title == null,
@@ -46,6 +47,9 @@ class NomoDialog extends StatelessWidget {
   final Widget? leading;
   final bool scrollabe;
   final bool centerTitle;
+
+  @NomoColorField<BoxBorder>(Border.fromBorderSide(BorderSide.none))
+  final BoxBorder? border;
 
   @NomoSizingField(1.0)
   final double? elevation;
@@ -88,6 +92,7 @@ class NomoDialog extends StatelessWidget {
             decoration: BoxDecoration(
               color: theme.backgroundColor,
               borderRadius: theme.borderRadius,
+              border: border,
             ),
             elevation: theme.elevation,
             child: Padding(

@@ -148,6 +148,7 @@ class SecondaryNomoButton extends StatelessWidget with NomoButtonMixin {
         ActionType.danger => context.colors.error,
         _ => theme.foregroundColor,
       },
+      enableInkwellFeedback: true,
       shape: shape,
       margin: margin,
       width: width,

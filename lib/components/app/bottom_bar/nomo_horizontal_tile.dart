@@ -15,15 +15,21 @@ class NomoHorizontalListTile<T> extends StatefulWidget {
     this.style,
     this.onTap,
     this.selected = false,
+    this.padding,
+    this.axis = Axis.vertical,
+    this.height,
   });
   final NomoMenuItem<T> item;
   final NomoBottomBarThemeData theme;
   final TextStyle? style;
   final double? widthFactor;
   final double? itemWidth;
+  final EdgeInsetsGeometry? padding;
 
   final VoidCallback? onTap;
   final bool selected;
+  final Axis axis;
+  final double? height;
 
   @override
   State<NomoHorizontalListTile<T>> createState() =>
@@ -37,6 +43,7 @@ class _NomoHorizontalListTileState<T> extends State<NomoHorizontalListTile<T>>
   late final AnimationController foregroundController = AnimationController(
     duration: kDuration,
     vsync: this,
+    value: widget.selected ? 1 : 0,
   );
 
   late Animation<Color?> foreGroundAnimation;
@@ -68,12 +75,9 @@ class _NomoHorizontalListTileState<T> extends State<NomoHorizontalListTile<T>>
 
   @override
   Widget build(BuildContext context) {
-    if (widget.selected) {
-      foregroundController.forward();
-    } else {
+    if (widget.selected == false) {
       foregroundController.reverse();
     }
-
     return MouseRegion(
       onEnter: (event) {
         if (widget.selected) return;
@@ -120,20 +124,33 @@ class _NomoHorizontalListTileState<T> extends State<NomoHorizontalListTile<T>>
               splashColor: Colors.white10,
               child: SizedBox(
                 width: widget.itemWidth,
-                child: Center(
-                  widthFactor: widget.widthFactor,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      if (icon != null) icon,
-                      NomoText(
-                        widget.item.title,
-                        color: foreground,
-                        style: widget.style,
-                      ),
-                    ],
-                  ),
-                ),
+                height: widget.height,
+                child: switch (widget.axis) {
+                  Axis.vertical => Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        if (icon != null) icon,
+                        NomoText(
+                          widget.item.title,
+                          color: foreground,
+                          style: widget.style,
+                        ),
+                      ],
+                    ),
+                  Axis.horizontal => Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        if (icon != null) icon,
+                        NomoText(
+                          widget.item.title,
+                          color: foreground,
+                          style: widget.style,
+                        ),
+                      ],
+                    ),
+                },
               ),
             ),
           );
