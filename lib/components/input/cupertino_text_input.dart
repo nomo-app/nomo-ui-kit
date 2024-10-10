@@ -1289,6 +1289,7 @@ class _CupertinoInputState extends State<CupertinoInput>
       maxLines: widget.maxLines,
       overflow: placeHolderStyle.overflow ?? TextOverflow.ellipsis,
       textAlign: widget.textAlign,
+      style: placeHolderStyle,
     ).ifElseNull(widget.placeholder != null);
 
     return Semantics(
