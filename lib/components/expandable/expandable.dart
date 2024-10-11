@@ -172,10 +172,7 @@ class _ExpandableState extends State<Expandable> with TickerProviderStateMixin {
                       splashColor: theme.splashColor,
                       hoverColor: theme.hoverColor,
                       focusColor: theme.focusColor,
-                      borderRadius: widget.borderRadius ??
-                          widget.decoration?.borderRadius?.resolve(
-                            Directionality.of(context),
-                          ),
+                      borderRadius: theme.borderRadius,
                       child: Padding(
                         padding: theme.titlePadding,
                         child: Row(
