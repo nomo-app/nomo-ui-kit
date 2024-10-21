@@ -36,7 +36,7 @@ class NomoCard extends StatelessWidget {
   const NomoCard({
     required this.child,
     super.key,
-    this.elevation = 1,
+    this.elevation,
     this.offset,
     this.shadowColor,
     this.border,
