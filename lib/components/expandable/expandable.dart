@@ -22,6 +22,7 @@ class Expandable extends StatefulWidget {
   final EdgeInsetsGeometry? padding;
   final BoxDecoration? decoration;
   final double? splashRadius;
+  final double? iconButtonSize;
 
   /// If the [expansionNotifier] is defined [initiallyExpanded] is ignored
   /// If the [expansionNotifier] is not defined the state will be handled internally
@@ -75,6 +76,7 @@ class Expandable extends StatefulWidget {
     this.splashColor,
     this.iconColor,
     this.splashRadius,
+    this.iconButtonSize,
   });
 
   @override
@@ -179,6 +181,8 @@ class _ExpandableState extends State<Expandable> with TickerProviderStateMixin {
                           children: [
                             Expanded(child: widget.title),
                             NomoButton(
+                              width: widget.iconButtonSize,
+                              height: widget.iconButtonSize,
                               onPressed: onTap,
                               shape: BoxShape.circle,
                               padding:
