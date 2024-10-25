@@ -81,6 +81,9 @@ class NomoInput extends StatefulWidget {
   @NomoColorField<BorderRadiusGeometry>(BorderRadius.all(Radius.circular(8)))
   final BorderRadiusGeometry? borderRadius;
 
+  @NomoColorField<Color?>(null)
+  final Color? disabledColor;
+
   @NomoColorField(
     Border.fromBorderSide(
       BorderSide(
@@ -185,6 +188,7 @@ class NomoInput extends StatefulWidget {
     this.hitTestBehavior = HitTestBehavior.translucent,
     this.textEditingController,
     this.onFieldSubmitted,
+    this.disabledColor,
   })  : assert(
           height == null || usePlaceholderAsTitle == false,
           'Not supported please ask Thomas to implement',
@@ -430,7 +434,8 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
     var style = widget.style ?? defaultTextStyle;
 
     if (widget.enabled == false) {
-      style = style.copyWith(color: context.colors.onDisabled);
+      style = style.copyWith(
+          color: widget.disabledColor ?? context.colors.disabled);
     }
 
     return ValueListenableBuilder(
