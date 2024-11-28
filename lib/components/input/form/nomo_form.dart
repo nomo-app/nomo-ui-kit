@@ -67,7 +67,10 @@ class NomoFormValidator extends ChangeNotifier {
   }
 
   void addField(String key) {
-    values[key] = false;
+    values.putIfAbsent(
+      key,
+      () => false,
+    );
   }
 
   void validateField(String key, bool valid) {
