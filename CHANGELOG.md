@@ -136,3 +136,7 @@ Initial release.
 ## 0.0.32
 
 - Fix another Wasm Bug
+
+## 0.0.33
+
+- Refactor NomoFormValidator to use putIfAbsent for adding fields (Fixes Bug for didChangeDependencies of NomoInput)
