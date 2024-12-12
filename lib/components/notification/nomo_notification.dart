@@ -18,6 +18,7 @@ class NomoNotification extends StatelessWidget {
   final TextStyle? titleStyle;
   final TextStyle? subtitleStyle;
   final bool showCloseButton;
+  final Color? closeButtonBackGroundColor;
 
   @NomoColorField<Color?>(null)
   final Color? backgroundColor;
@@ -52,6 +53,7 @@ class NomoNotification extends StatelessWidget {
     this.backgroundColor,
     this.foregroundColor,
     this.showCloseButton = true,
+    this.closeButtonBackGroundColor,
   });
 
   @override
@@ -101,6 +103,7 @@ class NomoNotification extends StatelessWidget {
               SecondaryNomoButton(
                 shape: BoxShape.circle,
                 icon: Icons.close,
+                backgroundColor: closeButtonBackGroundColor,
                 border: const Border.fromBorderSide(BorderSide.none),
                 padding: const EdgeInsets.all(4),
                 onPressed: () {
