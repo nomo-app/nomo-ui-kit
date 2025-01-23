@@ -140,3 +140,7 @@ Initial release.
 ## 0.0.33
 
 - Refactor NomoFormValidator to use putIfAbsent for adding fields (Fixes Bug for didChangeDependencies of NomoInput)
+
+## 0.0.34
+
+- Improve showContextMenu to have space between the context menu and the screen edge

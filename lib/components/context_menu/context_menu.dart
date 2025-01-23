@@ -31,9 +31,13 @@ OverlayEntry showContextMenu({
 
   final overflowsRight = offset.dx + child.preferredSize.width > screenWidth;
 
-  final leftInset = overflowsRight
+  double leftInset = overflowsRight
       ? screenWidth - child.preferredSize.width - spacing
       : offset.dx;
+
+  if (leftInset < 20) {
+    leftInset = 20;
+  }
 
   final arrowLeft = offset.dx + size.width / 2;
 
@@ -52,6 +56,7 @@ OverlayEntry showContextMenu({
             Positioned(
               top: topInset,
               left: leftInset,
+              right: leftInset > 20 ? 20 : null,
               child: FadeIn(
                 duration: duration,
                 child: child,
