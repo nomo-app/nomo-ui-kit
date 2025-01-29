@@ -31,6 +31,7 @@ class Expandable extends StatefulWidget {
   final void Function()? onLongPress;
   final void Function(bool isExpanded)? onExpansionChanged;
   final bool initiallyExpanded;
+  final bool allowToggle;
 
   /// Styles
   @NomoSizingField(28.0)
@@ -57,7 +58,9 @@ class Expandable extends StatefulWidget {
     required this.children,
     super.key,
     this.decoration,
+    this.iconButtonSize,
     this.padding,
+    this.allowToggle = true,
     this.curve = _kCurve,
     this.duration = _kDuration,
     this.expandIcon = _kExpand,
@@ -76,7 +79,6 @@ class Expandable extends StatefulWidget {
     this.splashColor,
     this.iconColor,
     this.splashRadius,
-    this.iconButtonSize,
   });
 
   @override
@@ -146,6 +148,7 @@ class _ExpandableState extends State<Expandable> with TickerProviderStateMixin {
   }
 
   void onTap() {
+    if (widget.allowToggle == false) return;
     stateNotifier.value = !stateNotifier.value;
   }
 
@@ -180,22 +183,23 @@ class _ExpandableState extends State<Expandable> with TickerProviderStateMixin {
                         child: Row(
                           children: [
                             Expanded(child: widget.title),
-                            NomoButton(
-                              width: widget.iconButtonSize,
-                              height: widget.iconButtonSize,
-                              onPressed: onTap,
-                              shape: BoxShape.circle,
-                              padding:
-                                  EdgeInsets.all(widget.splashRadius ?? 12),
-                              child: Transform.rotate(
-                                angle: turnAnimation.value,
-                                child: Icon(
-                                  widget.expandIcon,
-                                  size: theme.iconSize,
-                                  color: theme.iconColor,
+                            if (widget.allowToggle)
+                              NomoButton(
+                                width: widget.iconButtonSize,
+                                height: widget.iconButtonSize,
+                                onPressed: onTap,
+                                shape: BoxShape.circle,
+                                padding:
+                                    EdgeInsets.all(widget.splashRadius ?? 12),
+                                child: Transform.rotate(
+                                  angle: turnAnimation.value,
+                                  child: Icon(
+                                    widget.expandIcon,
+                                    size: theme.iconSize,
+                                    color: theme.iconColor,
+                                  ),
                                 ),
                               ),
-                            ),
                           ],
                         ),
                       ),
