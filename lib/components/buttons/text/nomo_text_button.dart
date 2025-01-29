@@ -14,6 +14,8 @@ class NomoTextButton extends StatelessWidget with NomoButtonMixin {
   final bool? translate;
 
   @override
+  final bool? isActive;
+  @override
   final VoidCallback? onPressed;
   @override
   final bool? enabled;
@@ -68,6 +70,7 @@ class NomoTextButton extends StatelessWidget with NomoButtonMixin {
     this.child,
     this.translate,
     this.expandToConstraints,
+    this.isActive,
   }) : assert(child != null || text != null, 'Must specify child or text');
 
   @override
@@ -84,6 +87,7 @@ class NomoTextButton extends StatelessWidget with NomoButtonMixin {
       onPressed: onPressed,
       enabled: enabled,
       expandToConstraints: expandToConstraints,
+      isActive: isActive,
       child: child ??
           NomoText(
             text!,

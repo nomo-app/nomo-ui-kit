@@ -19,6 +19,7 @@ mixin NomoButtonMixin on Widget {
   Border? get border;
   BoxShape? get shape;
   bool? get expandToConstraints;
+  bool? get isActive;
 }
 
 class NomoButton extends StatefulWidget with NomoButtonMixin {
@@ -54,6 +55,8 @@ class NomoButton extends StatefulWidget with NomoButtonMixin {
   final BoxShape? shape;
   @override
   final bool? expandToConstraints;
+  @override
+  final bool? isActive;
 
   const NomoButton({
     required this.child,
@@ -74,6 +77,7 @@ class NomoButton extends StatefulWidget with NomoButtonMixin {
     this.shape,
     this.expandToConstraints,
     this.cursor = SystemMouseCursors.click,
+    this.isActive,
   });
 
   @override
@@ -85,6 +89,8 @@ class _NomoButtonState extends State<NomoButton>
   late final AnimationController _controller;
   late Animation<Color?> animation;
   late Animation<Color?>? borderAnimation;
+
+  bool get isActive => (widget.isActive != null && widget.isActive!);
 
   @override
   void initState() {
@@ -109,6 +115,10 @@ class _NomoButtonState extends State<NomoButton>
           ).animate(_controller)
         : null;
 
+    if (widget.isActive != null) {
+      _controller.value = widget.isActive! ? 1 : 0;
+    }
+
     super.didChangeDependencies();
   }
 
@@ -124,6 +134,9 @@ class _NomoButtonState extends State<NomoButton>
             end: widget.selectionColor,
           ).animate(_controller)
         : null;
+    if (widget.isActive != null) {
+      _controller.value = widget.isActive! ? 1 : 0;
+    }
     super.didUpdateWidget(oldWidget);
   }
 
@@ -183,8 +196,8 @@ class _NomoButtonState extends State<NomoButton>
       child: Material(
         type: MaterialType.transparency,
         child: MouseRegion(
-          onEnter: (_) => _controller.forward(),
-          onExit: (_) => _controller.reverse(),
+          onEnter: (_) => isActive ? null : _controller.forward(),
+          onExit: (_) => isActive ? null : _controller.reverse(),
           child: InkWell(
             onTap: widget.enabled ?? true ? widget.onPressed : () {},
             borderRadius: borderRadius,

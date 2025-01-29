@@ -28,6 +28,9 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
   final Axis direction;
 
   @override
+  final bool? isActive;
+
+  @override
   final VoidCallback? onPressed;
   @override
   final bool? enabled;
@@ -92,6 +95,7 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
     this.translate,
     this.direction = Axis.horizontal,
     this.border,
+    this.isActive,
   }) : assert(
           child == null || (icon == null && text == null),
           'Either Specify child or text and icon',
@@ -191,6 +195,7 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
       enabled: enabled,
       expandToConstraints: expandToConstraints,
       child: effectiveChild,
+      isActive: isActive,
     );
   }
 }

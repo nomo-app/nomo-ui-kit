@@ -13,6 +13,8 @@ class NomoLinkButton extends StatefulWidget with NomoButtonMixin {
   final TextStyle? textStyle;
 
   @override
+  final bool? isActive;
+  @override
   final VoidCallback? onPressed;
   @override
   final bool? enabled;
@@ -71,6 +73,7 @@ class NomoLinkButton extends StatefulWidget with NomoButtonMixin {
     this.height,
     this.margin,
     this.tapDownColor,
+    this.isActive,
   });
 
   @override
