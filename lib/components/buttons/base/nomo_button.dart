@@ -84,6 +84,7 @@ class _NomoButtonState extends State<NomoButton>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   late Animation<Color?> animation;
+  late Animation<Color?>? borderAnimation;
 
   @override
   void initState() {
@@ -101,6 +102,13 @@ class _NomoButtonState extends State<NomoButton>
       end: widget.selectionColor,
     ).animate(_controller);
 
+    borderAnimation = widget.border != null
+        ? ColorTween(
+            begin: widget.border!.top.color,
+            end: widget.selectionColor,
+          ).animate(_controller)
+        : null;
+
     super.didChangeDependencies();
   }
 
@@ -110,6 +118,12 @@ class _NomoButtonState extends State<NomoButton>
       begin: widget.foregroundColor,
       end: widget.selectionColor,
     ).animate(_controller);
+    borderAnimation = widget.border != null
+        ? ColorTween(
+            begin: widget.border!.top.color,
+            end: widget.selectionColor,
+          ).animate(_controller)
+        : null;
     super.didUpdateWidget(oldWidget);
   }
 
@@ -133,11 +147,11 @@ class _NomoButtonState extends State<NomoButton>
         if (widget.selectionColor != null && widget.border != null)
           (child) {
             return AnimatedBuilder(
-              animation: animation,
+              animation: borderAnimation!,
               builder: (context, child) {
                 return ElevatedBox(
                   elevation: widget.elevation,
-                  border: widget.border!.copyWithColor(animation.value),
+                  border: widget.border!.copyWithColor(borderAnimation!.value),
                   decoration: BoxDecoration(
                     color: widget.backgroundColor,
                     borderRadius: widget.borderRadius
