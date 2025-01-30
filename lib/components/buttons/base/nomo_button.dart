@@ -201,27 +201,15 @@ class _NomoButtonState extends State<NomoButton>
           child: InkWell(
             onTap: widget.enabled ?? true ? widget.onPressed : () {},
             borderRadius: borderRadius,
-            hoverColor: widget.backgroundColor
-                ?.darken(0.05)
-                .ifElse(
-                  widget.selectionColor == null,
-                  other: Colors.transparent,
-                )
-                .ifElse(
+            hoverColor: context.colors.primary.withValues(alpha: .25).ifElse(
                   widget.enableInkwellFeedback,
                   other: Colors.transparent,
                 ),
-            splashColor: Colors.black.withOpacity(0.06).ifElse(
+            splashColor: context.colors.primary.withValues(alpha: .25).ifElse(
                   widget.enableInkwellFeedback,
                   other: Colors.transparent,
                 ),
-            focusColor: widget.backgroundColor
-                ?.darken(0.05)
-                .ifElse(
-                  widget.selectionColor == null,
-                  other: Colors.black.withOpacity(0.06),
-                )
-                .ifElse(
+            focusColor: context.colors.primary.withValues(alpha: .5).ifElse(
                   widget.enableInkwellFeedback,
                   other: Colors.transparent,
                 ),
