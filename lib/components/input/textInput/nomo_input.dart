@@ -59,6 +59,7 @@ class NomoInput extends StatefulWidget {
   final FocusNode? focusNode;
   final int? maxLength;
   final int? maxParagraphs;
+  final bool autoCorrect;
   final void Function()? onFieldSubmitted;
 
   final void Function()? onTap;
@@ -184,6 +185,7 @@ class NomoInput extends StatefulWidget {
     this.onTapOutside,
     this.hitTestBehavior = HitTestBehavior.translucent,
     this.textEditingController,
+    this.autoCorrect = false,
     this.onFieldSubmitted,
   })  : assert(
           height == null || usePlaceholderAsTitle == false,
@@ -472,6 +474,7 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
                   maxLength: widget.maxLength,
                   duration: theme.duration,
                   placeholder: widget.placeHolder,
+                  autocorrect: widget.autoCorrect,
                   placeholderStyle: placeHolderStyle,
                   titleStyle: titleStyle,
                   minLines: widget.minLines,

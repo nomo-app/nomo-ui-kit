@@ -144,3 +144,7 @@ Initial release.
 ## 0.0.34
 
 - Improve showContextMenu to have space between the context menu and the screen edge
+
+## 0.0.35
+
+- Add autoCorrect Parameter to NomoInput
