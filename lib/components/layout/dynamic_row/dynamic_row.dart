@@ -10,10 +10,12 @@ class DynamicRow extends MultiChildRenderObjectWidget {
     this.vSpacing = 8,
     this.hSpacing = 8,
     this.mainAxisSize = MainAxisSize.max,
+    this.mainAxisAlignment = MainAxisAlignment.start,
   });
   final double vSpacing;
   final double hSpacing;
   final MainAxisSize mainAxisSize;
+  final MainAxisAlignment mainAxisAlignment;
 
   @override
   RenderObject createRenderObject(BuildContext context) {
@@ -21,6 +23,7 @@ class DynamicRow extends MultiChildRenderObjectWidget {
       mainAxisSize: mainAxisSize,
       vSpacing: vSpacing,
       hSpacing: hSpacing,
+      mainAxisAlignment: mainAxisAlignment,
     );
   }
 
@@ -29,7 +32,8 @@ class DynamicRow extends MultiChildRenderObjectWidget {
     renderObject
       ..mainAxisSize = mainAxisSize
       ..vSpacing = vSpacing
-      ..hSpacing = hSpacing;
+      ..hSpacing = hSpacing
+      ..mainAxisAlignment = mainAxisAlignment;
   }
 
   @override
@@ -43,7 +47,8 @@ class DynamicRow extends MultiChildRenderObjectWidget {
     properties
       ..add(DoubleProperty('vSpacing', vSpacing))
       ..add(DoubleProperty('hSpacing', hSpacing))
-      ..add(EnumProperty('mainAxisSize', mainAxisSize));
+      ..add(EnumProperty('mainAxisSize', mainAxisSize))
+      ..add(EnumProperty('mainAxisAlignment', mainAxisAlignment));
   }
 }
 
@@ -55,12 +60,14 @@ class CustomRenderBox extends RenderBox
     required this.mainAxisSize,
     required this.vSpacing,
     required this.hSpacing,
+    required this.mainAxisAlignment,
   });
 
   MainAxisSize mainAxisSize;
   double vSpacing;
   double hSpacing;
   CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment.center;
+  MainAxisAlignment mainAxisAlignment;
 
   @override
   void setupParentData(RenderObject child) {
@@ -108,7 +115,9 @@ class CustomRenderBox extends RenderBox
     var offset = Offset.zero;
     var height = 0.0;
     var width = 0.0;
-    final rowMaxHeights = <int, (Iterable<RenderBox>, Size)>{};
+    final rowMaxHeights = <int, Size>{};
+    final rowWidths = <int, double>{};
+    final rowBoxes = <int, Iterable<RenderBox>>{};
     var i = 0;
     while (child != null) {
       final childSize = childSizes[child]!;
@@ -116,22 +125,19 @@ class CustomRenderBox extends RenderBox
       final overlaps = offset.dx + childSize.width > maxWidth;
 
       if (overlaps) {
+        rowWidths[i] = offset.dx - hSpacing;
         offset = Offset(
           0,
-          offset.dy + (rowMaxHeights[i]?.$2.height ?? 0) + vSpacing,
+          offset.dy + (rowMaxHeights[i]?.height ?? 0) + vSpacing,
         );
         i++;
       }
 
-      rowMaxHeights[i] = (
-        [
-          ...?rowMaxHeights[i]?.$1,
-          child,
-        ],
-        Size(
-          max(rowMaxHeights[i]?.$2.width ?? 0, childSize.width),
-          max(rowMaxHeights[i]?.$2.height ?? 0, childSize.height),
-        ),
+      rowBoxes[i] = [...?rowBoxes[i], child];
+
+      rowMaxHeights[i] = Size(
+        max(rowMaxHeights[i]?.width ?? 0, childSize.width),
+        max(rowMaxHeights[i]?.height ?? 0, childSize.height),
       );
 
       childParentData.offset = offset;
@@ -146,31 +152,54 @@ class CustomRenderBox extends RenderBox
       child = childAfter(child);
     }
 
-    /// Position Phase 2: Align children in rows and calculate height
-    child = firstChild;
-    while (child != null) {
-      final childParentData = child.pData;
+    rowWidths[i] = offset.dx;
 
-      final maxVSize = rowMaxHeights.entries
-          .singleWhere((e) => e.value.$1.contains(child))
-          .value
-          .$2
-          .height;
+    /// Position Phase 2: Main Axis Alignment Center
+    if (mainAxisAlignment == MainAxisAlignment.center) {
+      for (var i = 0; i < rowBoxes.length; i++) {
+        final boxes = rowBoxes[i]!;
+        final width = rowWidths[i]!;
 
-      if (crossAxisAlignment == CrossAxisAlignment.center) {
+        final inset = (maxWidth - width) / 2;
+
+        for (final box in boxes) {
+          final childParentData = box.pData;
+          childParentData.offset = childParentData.offset.translate(inset, 0);
+        }
+      }
+    }
+
+    /// Position Phase 3: Align children in rows and calculate height
+    if (crossAxisAlignment == CrossAxisAlignment.center) {
+      child = firstChild;
+      while (child != null) {
+        final childParentData = child.pData;
+
+        final rowI = rowBoxes.entries.singleWhere(
+          (boxes) {
+            return boxes.value.contains(child);
+          },
+        ).key;
+
+        final maxVSize = rowMaxHeights[rowI]!.height;
+
         if (child.size.height < maxVSize) {
           childParentData.offset = childParentData.offset.translate(
             0,
             (maxVSize - child.size.height) / 2,
           );
         }
-      }
 
-      child = childAfter(child);
+        child = childAfter(child);
+      }
     }
 
-    height = offset.dy + rowMaxHeights[i]!.$2.height;
-    width = mainAxisSize == MainAxisSize.min ? width : maxWidth;
+    height = offset.dy + rowMaxHeights[i]!.height;
+
+    width = mainAxisSize == MainAxisSize.max ||
+            mainAxisAlignment == MainAxisAlignment.center
+        ? maxWidth
+        : width;
 
     size = Size(width, height);
   }
