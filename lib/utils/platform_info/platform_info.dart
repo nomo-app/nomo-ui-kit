@@ -1,5 +1,6 @@
 import 'package:nomo_ui_kit/utils/platform_info/platform_info_unsupported.dart'
     if (dart.library.io) 'platform_info_io.dart'
+    if (dart.library.js_interop) 'platform_info_web.dart'
     if (dart.library.html) 'platform_info_web.dart'
     if (dart.library.js) 'platform_info_web.dart';
 
