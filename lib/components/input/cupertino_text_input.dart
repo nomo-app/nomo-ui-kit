@@ -1286,7 +1286,6 @@ class _CupertinoInputState extends State<CupertinoInput>
 
     final placeHolder = NomoText(
       widget.placeholder ?? '',
-      maxLines: widget.maxLines,
       overflow: placeHolderStyle.overflow ?? TextOverflow.ellipsis,
       textAlign: widget.textAlign,
     ).ifElseNull(widget.placeholder != null);

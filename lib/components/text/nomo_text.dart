@@ -61,7 +61,7 @@ class _NomoTextState extends State<NomoText> {
   @override
   void initState() {
     super.initState();
-    _initialFontSize = widget.fontSize ?? (widget.style?.fontSize ?? 14);
+    _initialFontSize = widget.fontSize ?? widget.style?.fontSize;
   }
 
   double decreaseFontSize(double fontSize) {
