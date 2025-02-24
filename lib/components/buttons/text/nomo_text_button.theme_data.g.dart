@@ -11,9 +11,11 @@ part of 'nomo_text_button.dart';
 class NomoTextButtonColorDataNullable {
   final Color? foregroundColor;
   final BorderRadiusGeometry? borderRadius;
+  final Color? splashColor;
   const NomoTextButtonColorDataNullable({
     this.foregroundColor,
     this.borderRadius,
+    this.splashColor,
   });
 }
 
@@ -22,9 +24,12 @@ class NomoTextButtonColorData implements NomoTextButtonColorDataNullable {
   final Color foregroundColor;
   @override
   final BorderRadiusGeometry borderRadius;
+  @override
+  final Color? splashColor;
   const NomoTextButtonColorData({
     this.foregroundColor = Colors.black87,
     this.borderRadius = const BorderRadius.all(Radius.circular(8)),
+    this.splashColor = null,
   });
   static NomoTextButtonColorData lerp(
       NomoTextButtonColorData a, NomoTextButtonColorData b, double t) {
@@ -32,6 +37,7 @@ class NomoTextButtonColorData implements NomoTextButtonColorDataNullable {
       foregroundColor: Color.lerp(a.foregroundColor, b.foregroundColor, t)!,
       borderRadius:
           BorderRadiusGeometry.lerp(a.borderRadius, b.borderRadius, t)!,
+      splashColor: Color.lerp(a.splashColor, b.splashColor, t),
     );
   }
 
@@ -40,6 +46,7 @@ class NomoTextButtonColorData implements NomoTextButtonColorDataNullable {
     return NomoTextButtonColorData(
       foregroundColor: override?.foregroundColor ?? base.foregroundColor,
       borderRadius: override?.borderRadius ?? base.borderRadius,
+      splashColor: override?.splashColor ?? base.splashColor,
     );
   }
 }
@@ -90,10 +97,13 @@ class NomoTextButtonThemeData
   @override
   final BorderRadiusGeometry borderRadius;
   @override
+  final Color? splashColor;
+  @override
   final EdgeInsetsGeometry padding;
   const NomoTextButtonThemeData({
     this.foregroundColor = Colors.black87,
     this.borderRadius = const BorderRadius.all(Radius.circular(8)),
+    this.splashColor = null,
     this.padding = const EdgeInsets.all(16),
   });
   factory NomoTextButtonThemeData.from(
@@ -104,6 +114,7 @@ class NomoTextButtonThemeData
     return NomoTextButtonThemeData(
       foregroundColor: colors.foregroundColor,
       borderRadius: colors.borderRadius,
+      splashColor: colors.splashColor,
       padding: sizing.padding,
     );
   }
@@ -112,6 +123,7 @@ class NomoTextButtonThemeData
     return NomoTextButtonThemeData(
       foregroundColor: override?.foregroundColor ?? foregroundColor,
       borderRadius: override?.borderRadius ?? borderRadius,
+      splashColor: override?.splashColor ?? splashColor,
       padding: override?.padding ?? padding,
     );
   }
@@ -127,10 +139,13 @@ class NomoTextButtonThemeDataNullable
   @override
   final BorderRadiusGeometry? borderRadius;
   @override
+  final Color? splashColor;
+  @override
   final EdgeInsetsGeometry? padding;
   const NomoTextButtonThemeDataNullable({
     this.foregroundColor,
     this.borderRadius,
+    this.splashColor,
     this.padding,
   });
 }
@@ -176,6 +191,7 @@ NomoTextButtonThemeData getFromContext(
   return NomoTextButtonThemeData(
     foregroundColor: widget.foregroundColor ?? themeData.foregroundColor,
     borderRadius: widget.borderRadius ?? themeData.borderRadius,
+    splashColor: widget.splashColor ?? themeData.splashColor,
     padding: widget.padding ?? themeData.padding,
   );
 }

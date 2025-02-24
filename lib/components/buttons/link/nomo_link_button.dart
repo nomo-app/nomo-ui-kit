@@ -58,6 +58,9 @@ class NomoLinkButton extends StatefulWidget with NomoButtonMixin {
   @override
   BoxShape? get shape => null;
 
+  @override
+  Color? get splashColor => null;
+
   const NomoLinkButton({
     required this.text,
     super.key,

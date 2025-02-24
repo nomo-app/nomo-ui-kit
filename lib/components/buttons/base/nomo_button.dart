@@ -19,6 +19,7 @@ mixin NomoButtonMixin on Widget {
   Border? get border;
   BoxShape? get shape;
   bool? get expandToConstraints;
+  Color? get splashColor;
 }
 
 class NomoButton extends StatefulWidget with NomoButtonMixin {
@@ -55,6 +56,9 @@ class NomoButton extends StatefulWidget with NomoButtonMixin {
   @override
   final bool? expandToConstraints;
 
+  @override
+  final Color? splashColor;
+
   const NomoButton({
     required this.child,
     super.key,
@@ -74,6 +78,7 @@ class NomoButton extends StatefulWidget with NomoButtonMixin {
     this.shape,
     this.expandToConstraints,
     this.cursor = SystemMouseCursors.click,
+    this.splashColor,
   });
 
   @override
@@ -184,10 +189,11 @@ class _NomoButtonState extends State<NomoButton>
                   widget.enableInkwellFeedback,
                   other: Colors.transparent,
                 ),
-            splashColor: Colors.black.withOpacity(0.06).ifElse(
-                  widget.enableInkwellFeedback,
-                  other: Colors.transparent,
-                ),
+            splashColor: widget.splashColor ??
+                Colors.black.withOpacity(0.06).ifElse(
+                      widget.enableInkwellFeedback,
+                      other: Colors.transparent,
+                    ),
             focusColor: widget.backgroundColor
                 ?.darken(0.05)
                 .ifElse(

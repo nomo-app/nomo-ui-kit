@@ -61,6 +61,10 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
   @NomoColorField<BorderRadiusGeometry>(BorderRadius.all(Radius.circular(8)))
   final BorderRadiusGeometry? borderRadius;
 
+  @override
+  @NomoColorField<Color?>(null)
+  final Color? splashColor;
+
   /// Not used
   @override
   Color? get selectionColor => null;
@@ -89,6 +93,7 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
     this.child,
     this.expandToConstraints,
     this.translate,
+    this.splashColor,
     this.direction = Axis.horizontal,
   }) : assert(
           child == null || (icon == null && text == null),
@@ -170,6 +175,7 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
           context.colors.disabled,
         _ => theme.backgroundColor,
       },
+      splashColor: theme.splashColor,
       foregroundColor: foregroundColor,
       shape: shape,
       margin: margin,

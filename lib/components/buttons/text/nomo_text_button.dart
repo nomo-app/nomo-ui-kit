@@ -42,6 +42,10 @@ class NomoTextButton extends StatelessWidget with NomoButtonMixin {
   @NomoColorField<BorderRadiusGeometry>(BorderRadius.all(Radius.circular(8)))
   final BorderRadiusGeometry? borderRadius;
 
+  @override
+  @NomoColorField<Color?>(null)
+  final Color? splashColor;
+
   /// Not used
   @override
   Color? get selectionColor => null;
@@ -68,6 +72,7 @@ class NomoTextButton extends StatelessWidget with NomoButtonMixin {
     this.child,
     this.translate,
     this.expandToConstraints,
+    this.splashColor,
   }) : assert(child != null || text != null, 'Must specify child or text');
 
   @override
@@ -83,6 +88,7 @@ class NomoTextButton extends StatelessWidget with NomoButtonMixin {
       borderRadius: theme.borderRadius,
       onPressed: onPressed,
       enabled: enabled,
+      splashColor: theme.splashColor,
       expandToConstraints: expandToConstraints,
       child: child ??
           NomoText(

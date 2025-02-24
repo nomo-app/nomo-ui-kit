@@ -65,6 +65,10 @@ class SecondaryNomoButton extends StatelessWidget with NomoButtonMixin {
   @NomoSizingField(EdgeInsets.all(16))
   final EdgeInsetsGeometry? padding;
 
+  @override
+  @NomoColorField<Color?>(null)
+  final Color? splashColor;
+
   const SecondaryNomoButton({
     super.key,
     this.text,
@@ -89,6 +93,7 @@ class SecondaryNomoButton extends StatelessWidget with NomoButtonMixin {
     this.child,
     this.expandToConstraints,
     this.translate,
+    this.splashColor,
     this.direction = Axis.horizontal,
   }) : assert(
           child == null || (icon == null && text == null),
@@ -154,6 +159,7 @@ class SecondaryNomoButton extends StatelessWidget with NomoButtonMixin {
       height: height,
       border: theme.border,
       padding: padding,
+      splashColor: theme.splashColor,
       borderRadius: theme.borderRadius,
       onPressed: switch (type) {
         ActionType.nonInteractive => null,
