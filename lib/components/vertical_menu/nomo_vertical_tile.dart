@@ -32,9 +32,21 @@ class NomoVerticalListTile<T> extends StatefulWidget {
     this.titleStyle,
     this.subtitleStyle,
     this.traillingStyle,
+    this.focusColor,
+    this.highlightColor,
+    this.hoverColor,
+    this.splashColor,
   });
   final NomoMenuItem<T> item;
   final NomoVerticalMenuThemeData menuTheme;
+
+  final Color? splashColor;
+
+  final Color? hoverColor;
+
+  final Color? highlightColor;
+
+  final Color? focusColor;
 
   final bool collapsed;
   final VoidCallback? onTap;
@@ -201,8 +213,10 @@ class _NomoVerticalListTileState<T> extends State<NomoVerticalListTile<T>>
               child: InkWell(
                 onTap: widget.onTap,
                 borderRadius: menuTheme.borderRadius,
-                hoverColor: Colors.transparent,
-                splashColor: Colors.white10,
+                hoverColor: widget.hoverColor ?? Colors.transparent,
+                splashColor: widget.splashColor ?? Colors.transparent,
+                highlightColor: widget.highlightColor ?? Colors.transparent,
+                focusColor: widget.focusColor ?? Colors.transparent,
                 child: Padding(
                   padding: EdgeInsets.symmetric(
                     horizontal:

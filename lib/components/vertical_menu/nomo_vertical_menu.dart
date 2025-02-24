@@ -31,6 +31,10 @@ class NomoVerticalMenu<T> extends StatelessWidget {
     this.border,
     this.selectedBorder,
     this.itemDecorator,
+    this.focusColor,
+    this.highlightColor,
+    this.hoverColor,
+    this.splashColor,
     super.key,
   });
   final List<NomoMenuItem<T>> items;
@@ -76,6 +80,18 @@ class NomoVerticalMenu<T> extends StatelessWidget {
   @NomoSizingField(28.0)
   final double? iconSize;
 
+  @NomoColorField<Color?>(null)
+  final Color? splashColor;
+
+  @NomoColorField<Color?>(null)
+  final Color? hoverColor;
+
+  @NomoColorField<Color?>(null)
+  final Color? highlightColor;
+
+  @NomoColorField<Color?>(null)
+  final Color? focusColor;
+
   @override
   Widget build(BuildContext context) {
     final theme = getFromContext(context, this);
@@ -113,6 +129,10 @@ class NomoVerticalMenu<T> extends StatelessWidget {
                   menuTheme: theme,
                   titleStyle: style,
                   collapsed: collapsed,
+                  splashColor: theme.splashColor,
+                  hoverColor: theme.hoverColor,
+                  highlightColor: theme.highlightColor,
+                  focusColor: theme.focusColor,
                   onTap: () {
                     onTap?.call(items[index]);
                   },

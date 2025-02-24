@@ -177,7 +177,7 @@ class _NomoButtonState extends State<NomoButton>
           onEnter: (_) => _controller.forward(),
           onExit: (_) => _controller.reverse(),
           child: InkWell(
-            onTap: widget.enabled ?? true ? widget.onPressed : () {},
+            onTap: widget.enabled ?? true ? widget.onPressed : null,
             borderRadius: borderRadius,
             hoverColor: widget.backgroundColor
                 ?.darken(0.05)
@@ -204,7 +204,14 @@ class _NomoButtonState extends State<NomoButton>
                   widget.enableInkwellFeedback,
                   other: Colors.transparent,
                 ),
-            mouseCursor: widget.cursor,
+            highlightColor: widget.splashColor ??
+                Colors.black.withOpacity(0.06).ifElse(
+                      widget.enableInkwellFeedback,
+                      other: Colors.transparent,
+                    ),
+            mouseCursor: (widget.enabled ?? true)
+                ? widget.cursor
+                : SystemMouseCursors.basic,
             child: Padding(
               padding: widget.padding ?? EdgeInsets.zero,
               child: MultiWrapper(

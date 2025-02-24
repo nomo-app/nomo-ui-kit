@@ -16,6 +16,10 @@ class NomoVerticalMenuColorDataNullable {
   final Color? selectedBackground;
   final Color? selectedForeground;
   final BorderRadius? borderRadius;
+  final Color? splashColor;
+  final Color? hoverColor;
+  final Color? highlightColor;
+  final Color? focusColor;
   const NomoVerticalMenuColorDataNullable({
     this.border,
     this.selectedBorder,
@@ -24,6 +28,10 @@ class NomoVerticalMenuColorDataNullable {
     this.selectedBackground,
     this.selectedForeground,
     this.borderRadius,
+    this.splashColor,
+    this.hoverColor,
+    this.highlightColor,
+    this.focusColor,
   });
 }
 
@@ -42,6 +50,14 @@ class NomoVerticalMenuColorData implements NomoVerticalMenuColorDataNullable {
   final Color selectedForeground;
   @override
   final BorderRadius borderRadius;
+  @override
+  final Color? splashColor;
+  @override
+  final Color? hoverColor;
+  @override
+  final Color? highlightColor;
+  @override
+  final Color? focusColor;
   const NomoVerticalMenuColorData({
     this.border = BorderSide.none,
     this.selectedBorder = BorderSide.none,
@@ -50,6 +66,10 @@ class NomoVerticalMenuColorData implements NomoVerticalMenuColorDataNullable {
     this.selectedBackground = Colors.red,
     this.selectedForeground = Colors.red,
     this.borderRadius = const BorderRadius.all(Radius.circular(16)),
+    this.splashColor = null,
+    this.hoverColor = null,
+    this.highlightColor = null,
+    this.focusColor = null,
   });
   static NomoVerticalMenuColorData lerp(
       NomoVerticalMenuColorData a, NomoVerticalMenuColorData b, double t) {
@@ -63,6 +83,10 @@ class NomoVerticalMenuColorData implements NomoVerticalMenuColorDataNullable {
       selectedForeground:
           Color.lerp(a.selectedForeground, b.selectedForeground, t)!,
       borderRadius: BorderRadius.lerp(a.borderRadius, b.borderRadius, t)!,
+      splashColor: Color.lerp(a.splashColor, b.splashColor, t),
+      hoverColor: Color.lerp(a.hoverColor, b.hoverColor, t),
+      highlightColor: Color.lerp(a.highlightColor, b.highlightColor, t),
+      focusColor: Color.lerp(a.focusColor, b.focusColor, t),
     );
   }
 
@@ -78,6 +102,10 @@ class NomoVerticalMenuColorData implements NomoVerticalMenuColorDataNullable {
       selectedForeground:
           override?.selectedForeground ?? base.selectedForeground,
       borderRadius: override?.borderRadius ?? base.borderRadius,
+      splashColor: override?.splashColor ?? base.splashColor,
+      hoverColor: override?.hoverColor ?? base.hoverColor,
+      highlightColor: override?.highlightColor ?? base.highlightColor,
+      focusColor: override?.focusColor ?? base.focusColor,
     );
   }
 }
@@ -167,6 +195,14 @@ class NomoVerticalMenuThemeData
   @override
   final BorderRadius borderRadius;
   @override
+  final Color? splashColor;
+  @override
+  final Color? hoverColor;
+  @override
+  final Color? highlightColor;
+  @override
+  final Color? focusColor;
+  @override
   final double hPadding;
   @override
   final double itemSpacing;
@@ -184,6 +220,10 @@ class NomoVerticalMenuThemeData
     this.selectedBackground = Colors.red,
     this.selectedForeground = Colors.red,
     this.borderRadius = const BorderRadius.all(Radius.circular(16)),
+    this.splashColor = null,
+    this.hoverColor = null,
+    this.highlightColor = null,
+    this.focusColor = null,
     this.hPadding = 16.0,
     this.itemSpacing = 8.0,
     this.spacing = 8.0,
@@ -203,6 +243,10 @@ class NomoVerticalMenuThemeData
       selectedBackground: colors.selectedBackground,
       selectedForeground: colors.selectedForeground,
       borderRadius: colors.borderRadius,
+      splashColor: colors.splashColor,
+      hoverColor: colors.hoverColor,
+      highlightColor: colors.highlightColor,
+      focusColor: colors.focusColor,
       hPadding: sizing.hPadding,
       itemSpacing: sizing.itemSpacing,
       spacing: sizing.spacing,
@@ -220,6 +264,10 @@ class NomoVerticalMenuThemeData
       selectedBackground: override?.selectedBackground ?? selectedBackground,
       selectedForeground: override?.selectedForeground ?? selectedForeground,
       borderRadius: override?.borderRadius ?? borderRadius,
+      splashColor: override?.splashColor ?? splashColor,
+      hoverColor: override?.hoverColor ?? hoverColor,
+      highlightColor: override?.highlightColor ?? highlightColor,
+      focusColor: override?.focusColor ?? focusColor,
       hPadding: override?.hPadding ?? hPadding,
       itemSpacing: override?.itemSpacing ?? itemSpacing,
       spacing: override?.spacing ?? spacing,
@@ -249,6 +297,14 @@ class NomoVerticalMenuThemeDataNullable
   @override
   final BorderRadius? borderRadius;
   @override
+  final Color? splashColor;
+  @override
+  final Color? hoverColor;
+  @override
+  final Color? highlightColor;
+  @override
+  final Color? focusColor;
+  @override
   final double? hPadding;
   @override
   final double? itemSpacing;
@@ -266,6 +322,10 @@ class NomoVerticalMenuThemeDataNullable
     this.selectedBackground,
     this.selectedForeground,
     this.borderRadius,
+    this.splashColor,
+    this.hoverColor,
+    this.highlightColor,
+    this.focusColor,
     this.hPadding,
     this.itemSpacing,
     this.spacing,
@@ -322,6 +382,10 @@ NomoVerticalMenuThemeData getFromContext(
     selectedForeground:
         widget.selectedForeground ?? themeData.selectedForeground,
     borderRadius: widget.borderRadius ?? themeData.borderRadius,
+    splashColor: widget.splashColor ?? themeData.splashColor,
+    hoverColor: widget.hoverColor ?? themeData.hoverColor,
+    highlightColor: widget.highlightColor ?? themeData.highlightColor,
+    focusColor: widget.focusColor ?? themeData.focusColor,
     hPadding: widget.hPadding ?? themeData.hPadding,
     itemSpacing: widget.itemSpacing ?? themeData.itemSpacing,
     spacing: widget.spacing ?? themeData.spacing,

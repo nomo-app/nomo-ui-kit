@@ -73,6 +73,10 @@ NomoComponentColors predefinedComponentColors(NomoColors colors) {
       selectedBackground: colors.primaryContainer,
       foreground: colors.foreground1,
       selectedForeground: colors.primary,
+      splashColor: colors.primary.withOpacity(0.2),
+      hoverColor: colors.primary.withOpacity(0.06),
+      focusColor: colors.primary.withOpacity(0.1),
+      highlightColor: colors.primary.withOpacity(0.06),
     ),
     bottomBarColor: NomoBottomBarColorData(
       background: colors.surface,
