@@ -7,12 +7,57 @@ part of 'routes.dart';
 // **************************************************************************
 
 class AppRouter extends NomoAppRouter {
-  final Future<bool> Function()? shouldPop;
-  final Future<bool> Function()? willPop;
+  final List<NavigatorObserver> navigatorObservers;
+  final Map<Key, List<NavigatorObserver>> nestedNavigatorObservers;
+
+  /// Can only be accessed after [_configCompleter] is completed
   late final RouterConfig<Object> config;
+
+  /// Can only be accessed after [_configCompleter] is completed
   late final NomoRouterDelegate delegate;
-  AppRouter({this.shouldPop, this.willPop})
-      : super(
+
+  final Completer<RouterConfig<Object>> _configCompleter = Completer();
+
+  Future<RouterConfig<Object>> get configFuture => _configCompleter.future;
+
+  void init({
+    Widget? inital,
+    Uri? initialUri,
+    RouteInformationProvider? routeInformationProvider,
+    Future<bool> Function()? shouldPop,
+    Future<bool> Function()? willPop,
+  }) {
+    delegate = NomoRouterDelegate(
+      appRouter: this,
+      initial: inital,
+      nestedObservers: nestedNavigatorObservers,
+      observers: navigatorObservers,
+    );
+    config = RouterConfig(
+      routerDelegate: delegate,
+      backButtonDispatcher:
+          NomoBackButtonDispatcher(delegate, shouldPop, willPop),
+      routeInformationParser: NomoRouteInformationParser(),
+      routeInformationProvider: routeInformationProvider ??
+          PlatformRouteInformationProvider(
+            initialRouteInformation: RouteInformation(
+              uri: initialUri ??
+                  WidgetsBinding
+                      .instance.platformDispatcher.defaultRouteName.uri,
+            ),
+          ),
+    );
+    _configCompleter.complete(config);
+  }
+
+  AppRouter({
+    bool delayInit = false,
+    this.navigatorObservers = const [],
+    this.nestedNavigatorObservers = const {},
+    Widget? inital,
+    Future<bool> Function()? shouldPop,
+    Future<bool> Function()? willPop,
+  }) : super(
           {
             HomePageRoute.path: ([a]) {
               final typedArgs = a as HomePageArguments?;
@@ -122,18 +167,18 @@ class AppRouter extends NomoAppRouter {
           _routes.expanded.where((r) => r is! NestedNavigator).toList(),
           _routes.expanded.whereType<NestedNavigator>().toList(),
         ) {
-    delegate = NomoRouterDelegate(appRouter: this);
-    config = RouterConfig(
-        routerDelegate: delegate,
-        backButtonDispatcher:
-            NomoBackButtonDispatcher(delegate, shouldPop, willPop),
-        routeInformationParser: const NomoRouteInformationParser(),
-        routeInformationProvider: PlatformRouteInformationProvider(
-          initialRouteInformation: RouteInformation(
-            uri:
-                WidgetsBinding.instance.platformDispatcher.defaultRouteName.uri,
-          ),
-        ));
+    if (!delayInit) {
+      init(
+        inital: inital,
+        shouldPop: shouldPop,
+        willPop: willPop,
+      );
+    } else {
+      assert(
+        inital == null && willPop == null && shouldPop == null,
+        "Provide inital, shouldPop, willPop in the init method.",
+      );
+    }
   }
 }
 

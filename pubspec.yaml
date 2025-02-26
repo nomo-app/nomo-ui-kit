@@ -12,7 +12,7 @@ platforms:
   linux:
 
 environment:
-  sdk: ">=3.3.0 <4.0.0"
+  sdk: ">=3.6.0 <4.0.0"
   flutter: ">=3.27.3"
 
 dependencies:
@@ -21,7 +21,7 @@ dependencies:
   flutter_svg: ^2.0.10+1
   flutter_localizations:
     sdk: flutter
-  nomo_ui_generator: ^0.0.3
+  nomo_ui_generator: ^0.1.0
 
 dev_dependencies:
   flutter_test:

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:example/main.dart';
 import 'package:example/sections/button_section.dart';
 import 'package:example/sections/card_section.dart';
