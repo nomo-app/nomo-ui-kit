@@ -148,3 +148,7 @@ Initial release.
 ## 0.0.35
 
 - Add autoCorrect Parameter to NomoInput
+
+## 0.0.36
+
+- Update Dependencies and Smaller changes for NomoButton and Vertical Menu
