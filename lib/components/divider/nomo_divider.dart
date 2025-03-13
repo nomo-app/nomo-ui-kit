@@ -16,6 +16,8 @@ class NomoDivider extends StatelessWidget {
   @NomoSizingField(8.0)
   final double? crossAxisSpacing;
 
+  final BorderRadius? borderRadius;
+
   final Axis axis;
 
   final Widget? middle;
@@ -27,6 +29,7 @@ class NomoDivider extends StatelessWidget {
     this.crossAxisSize,
     this.crossAxisSpacing,
     this.middle,
+    this.borderRadius,
   });
 
   @override
@@ -58,7 +61,10 @@ class NomoDivider extends StatelessWidget {
     final div = Container(
       width: theme.crossAxisSize,
       margin: EdgeInsets.symmetric(horizontal: theme.crossAxisSpacing),
-      color: theme.color,
+      decoration: BoxDecoration(
+        color: theme.color,
+        borderRadius: borderRadius,
+      ),
     );
 
     if (middle != null) {
