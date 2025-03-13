@@ -63,6 +63,7 @@ class InAppNotification extends StatelessWidget {
     Curve curve = Curves.easeOutCubic,
     Curve dismissCurve = Curves.easeOutCubic,
     bool useRootNavigator = false,
+    bool center = false,
     // ignore: strict_raw_type
     @visibleForTesting FutureOr Function()? notificationCreatedCallback,
   }) async {
@@ -78,6 +79,7 @@ class InAppNotification extends StatelessWidget {
       left: left,
       right: right,
       useRootNavigator: useRootNavigator,
+      center: center,
     );
     if (kDebugMode) {
       await notificationCreatedCallback?.call();
@@ -129,6 +131,7 @@ class _NotificationController extends InheritedWidget {
     required BuildContext context,
     required double top,
     required bool useRootNavigator,
+    bool? center,
     double? left,
     double? right,
     VoidCallback? onTap,
@@ -150,13 +153,19 @@ class _NotificationController extends InheritedWidget {
           final _bottom =
               state.screenSize.height - state.currentVerticalPosition - top;
 
-          final _left = switch (right) {
+          var _left = switch (right) {
             final double right => state.screenSize.width -
                 right -
                 state.notificationSize.width -
                 state.currentHorizontalPosition,
             _ => state.currentHorizontalPosition + (left ?? 0.0),
           };
+
+          if (center ?? false) {
+            _left = state.currentHorizontalPosition +
+                state.screenSize.width / 2 -
+                state.notificationSize.width / 2;
+          }
 
           return Positioned(
             bottom: _bottom,

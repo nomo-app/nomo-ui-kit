@@ -117,6 +117,12 @@ class _ExpandableState extends State<Expandable> with TickerProviderStateMixin {
   }
 
   @override
+  void didUpdateWidget(covariant Expandable oldWidget) {
+    theme = getFromContext(context, widget);
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
   void didChangeDependencies() {
     theme = getFromContext(context, widget);
     super.didChangeDependencies();
