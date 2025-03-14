@@ -27,12 +27,14 @@ class _MetricReactorState extends State<MetricReactor>
 
     view = WidgetsBinding.instance.platformDispatcher.views.first;
     mediaQueryData = MediaQueryData.fromView(view);
+  }
 
-    Future.microtask(() {
-      ThemeProvider.of(context).changeSizingTheme(
-        widget.sizingThemeBuilder(mediaQueryData.size.width),
-      );
-    });
+  @override
+  void didChangeDependencies() {
+    ThemeProvider.of(context).changeSizingTheme(
+      widget.sizingThemeBuilder(mediaQueryData.size.width),
+    );
+    super.didChangeDependencies();
   }
 
   @override
