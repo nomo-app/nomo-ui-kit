@@ -496,14 +496,7 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
                   keyboardAppearance: context.colors.brightness,
                   keyboardType: widget.keyboardType,
                   enableInteractiveSelection: true,
-                  selectionControls: switch (PlatformInfo.isCupertino) {
-                    true when PlatformInfo.isMacOS =>
-                      CupertinoDesktopTextSelectionControls(),
-                    true => CupertinoTextSelectionControls(),
-                    false when PlatformInfo.isDesktop =>
-                      DesktopTextSelectionControls(),
-                    false => MaterialTextSelectionControls(),
-                  },
+                  magnifierConfiguration: TextMagnifierConfiguration.disabled,
                   contextMenuBuilder: (context, editableTextState) {
                     return AdaptiveTextSelectionToolbar.editableText(
                       editableTextState: editableTextState,
