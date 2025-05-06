@@ -101,6 +101,7 @@ class NomoBottomBar<T> extends StatelessWidget {
                 item: item,
                 theme: theme,
                 selected: item.key == selected,
+                style: style,
                 onTap: () => onTap?.call(item),
               );
               return itemDecorator?.call(item, widget) ?? widget;

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:nomo_ui_kit/components/card/nomo_card.dart';
+import 'package:nomo_ui_kit/components/divider/nomo_divider.dart';
 import 'package:nomo_ui_kit/components/loading/fade_in.dart';
 
-OverlayEntry showContextMenu({
+OverlayEntry createContextMenuOverlay({
   required BuildContext context,
   required PreferredSizeWidget child,
   required Color backgroundColor,
@@ -10,6 +11,7 @@ OverlayEntry showContextMenu({
   double spacing = 16,
   double arrowSize = 12,
   Duration duration = const Duration(milliseconds: 200),
+  void Function(OverlayEntry entry)? onOutsideTap,
 }) {
   final renderBox = context.findRenderObject() as RenderBox?;
 
@@ -26,22 +28,20 @@ OverlayEntry showContextMenu({
   final overflowsTop = offset.dy - child.preferredSize.height < 0;
 
   final topInset = overflowsTop
-      ? offset.dy + size.height
+      ? offset.dy + size.height + spacing
       : offset.dy - child.preferredSize.height - spacing;
 
   final overflowsRight = offset.dx + child.preferredSize.width > screenWidth;
 
-  double leftInset = overflowsRight
-      ? screenWidth - child.preferredSize.width - spacing
-      : offset.dx;
+  var leftInset = overflowsRight ? null : offset.dx;
 
-  if (leftInset < 20) {
-    leftInset = 20;
-  }
-
-  double? rightInset = leftInset > 20 ? 20 : null;
+  var rightInset = overflowsRight ? 20.0 : null;
 
   final arrowLeft = offset.dx + size.width / 2;
+
+  final arrowTop = overflowsTop
+      ? offset.dy + size.height + (spacing - arrowSize)
+      : offset.dy - arrowSize - (spacing - arrowSize);
 
   late final OverlayEntry _entry;
 
@@ -49,7 +49,9 @@ OverlayEntry showContextMenu({
     opaque: opaque,
     builder: (context) => GestureDetector(
       onTap: () {
-        _entry.remove();
+        if (onOutsideTap != null) {
+          return onOutsideTap(_entry);
+        }
       },
       child: ColoredBox(
         color: Colors.transparent,
@@ -65,13 +67,14 @@ OverlayEntry showContextMenu({
               ),
             ),
             Positioned(
-              top: offset.dy - arrowSize - (spacing - arrowSize),
+              top: arrowTop,
               left: arrowLeft - arrowSize / 2,
               child: FadeIn(
                 duration: duration,
                 child: CustomPaint(
                   painter: TrianglePainter(
                     strokeColor: backgroundColor,
+                    flip: overflowsTop,
                   ),
                   size: Size(arrowSize, arrowSize),
                 ),
@@ -82,8 +85,6 @@ OverlayEntry showContextMenu({
       ),
     ),
   );
-
-  Overlay.of(context, rootOverlay: true).insert(_entry);
 
   return _entry;
 }
@@ -147,9 +148,8 @@ class NomoContextMenu extends StatelessWidget implements PreferredSizeWidget {
               ),
             ),
             if (children.isNotEmpty)
-              const Divider(
-                height: 16,
-                thickness: 1,
+              const NomoDivider(
+                crossAxisSpacing: 16,
               ),
             Padding(
               padding: EdgeInsets.only(
@@ -187,7 +187,7 @@ class NomoContextMenu extends StatelessWidget implements PreferredSizeWidget {
             itemHeight +
             childrenSpacing * (children.length - 1) +
             padding.vertical +
-            16,
+            33,
       );
 }
 
@@ -195,8 +195,10 @@ class NomoContextMenu extends StatelessWidget implements PreferredSizeWidget {
 class TrianglePainter extends CustomPainter {
   final Color strokeColor;
   final PaintingStyle paintingStyle;
+  final bool flip;
 
   TrianglePainter({
+    required this.flip,
     this.strokeColor = Colors.black,
     this.paintingStyle = PaintingStyle.fill,
   });
@@ -207,13 +209,23 @@ class TrianglePainter extends CustomPainter {
       ..color = strokeColor
       ..style = paintingStyle;
 
-    final path = Path()
-      ..moveTo(0, 0)
-      ..lineTo(size.width, 0)
-      ..lineTo(size.width / 2, size.height)
-      ..lineTo(0, 0)
-      ..close();
+    final path = Path();
 
+    if (flip) {
+      path
+        ..moveTo(size.width / 2, 0)
+        ..lineTo(size.width, size.height)
+        ..lineTo(0, size.height)
+        ..lineTo(size.width / 2, 0)
+        ..close();
+    } else {
+      path
+        ..moveTo(0, 0)
+        ..lineTo(size.width, 0)
+        ..lineTo(size.width / 2, size.height)
+        ..lineTo(0, 0)
+        ..close();
+    }
     canvas.drawPath(path, paint);
   }
 

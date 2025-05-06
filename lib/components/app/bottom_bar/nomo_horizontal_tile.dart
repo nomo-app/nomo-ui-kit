@@ -4,6 +4,7 @@ import 'package:nomo_ui_kit/components/app/bottom_bar/nomo_bottom_bar.dart';
 import 'package:nomo_ui_kit/components/text/nomo_text.dart';
 import 'package:nomo_ui_kit/components/vertical_menu/nomo_vertical_menu.dart';
 import 'package:nomo_ui_kit/entities/menu_item.dart';
+import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 
 class NomoHorizontalListTile<T> extends StatefulWidget {
   const NomoHorizontalListTile({
@@ -93,6 +94,7 @@ class _NomoHorizontalListTileState<T> extends State<NomoHorizontalListTile<T>>
                 iconItem.icon,
                 color: foreground,
                 size: theme.iconSize,
+                weight: 4,
               ),
             final NomoMenuImageItem<T> imageItem
                 when imageItem.imagePath.contains('svg') =>
@@ -113,11 +115,14 @@ class _NomoHorizontalListTileState<T> extends State<NomoHorizontalListTile<T>>
           };
           return Material(
             color: Colors.transparent,
+            borderRadius: theme.itemBorderRadius,
             child: InkWell(
               onTap: widget.onTap,
-              borderRadius: theme.borderRadius,
-              hoverColor: Colors.transparent,
-              splashColor: Colors.white10,
+              borderRadius: theme.itemBorderRadius,
+              splashColor: context.colors.primary.withOpacity(0.2),
+              hoverColor: context.colors.primary.withOpacity(0.06),
+              focusColor: context.colors.primary.withOpacity(0.1),
+              highlightColor: context.colors.primary.withOpacity(0.06),
               child: SizedBox(
                 width: widget.itemWidth,
                 child: Center(

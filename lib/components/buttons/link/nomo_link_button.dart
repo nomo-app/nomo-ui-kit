@@ -13,6 +13,11 @@ class NomoLinkButton extends StatefulWidget with NomoButtonMixin {
   final TextStyle? textStyle;
 
   @override
+  final FocusNode? focusNode;
+  @override
+  final VoidCallback? onSecondaryPressed;
+
+  @override
   final VoidCallback? onPressed;
   @override
   final bool? enabled;
@@ -61,6 +66,15 @@ class NomoLinkButton extends StatefulWidget with NomoButtonMixin {
   @override
   Color? get splashColor => null;
 
+  @override
+  Color? get focusColor => null;
+
+  @override
+  Color? get hoverColor => null;
+
+  @override
+  Color? get highlightColor => null;
+
   const NomoLinkButton({
     required this.text,
     super.key,
@@ -74,6 +88,8 @@ class NomoLinkButton extends StatefulWidget with NomoButtonMixin {
     this.height,
     this.margin,
     this.tapDownColor,
+    this.focusNode,
+    this.onSecondaryPressed,
   });
 
   @override

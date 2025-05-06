@@ -12,10 +12,16 @@ class NomoTextButtonColorDataNullable {
   final Color? foregroundColor;
   final BorderRadiusGeometry? borderRadius;
   final Color? splashColor;
+  final Color? hoverColor;
+  final Color? highlightColor;
+  final Color? focusColor;
   const NomoTextButtonColorDataNullable({
     this.foregroundColor,
     this.borderRadius,
     this.splashColor,
+    this.hoverColor,
+    this.highlightColor,
+    this.focusColor,
   });
 }
 
@@ -26,10 +32,19 @@ class NomoTextButtonColorData implements NomoTextButtonColorDataNullable {
   final BorderRadiusGeometry borderRadius;
   @override
   final Color? splashColor;
+  @override
+  final Color? hoverColor;
+  @override
+  final Color? highlightColor;
+  @override
+  final Color? focusColor;
   const NomoTextButtonColorData({
     this.foregroundColor = Colors.black87,
     this.borderRadius = const BorderRadius.all(Radius.circular(8)),
     this.splashColor = null,
+    this.hoverColor = null,
+    this.highlightColor = null,
+    this.focusColor = null,
   });
   static NomoTextButtonColorData lerp(
       NomoTextButtonColorData a, NomoTextButtonColorData b, double t) {
@@ -38,6 +53,9 @@ class NomoTextButtonColorData implements NomoTextButtonColorDataNullable {
       borderRadius:
           BorderRadiusGeometry.lerp(a.borderRadius, b.borderRadius, t)!,
       splashColor: Color.lerp(a.splashColor, b.splashColor, t),
+      hoverColor: Color.lerp(a.hoverColor, b.hoverColor, t),
+      highlightColor: Color.lerp(a.highlightColor, b.highlightColor, t),
+      focusColor: Color.lerp(a.focusColor, b.focusColor, t),
     );
   }
 
@@ -47,6 +65,9 @@ class NomoTextButtonColorData implements NomoTextButtonColorDataNullable {
       foregroundColor: override?.foregroundColor ?? base.foregroundColor,
       borderRadius: override?.borderRadius ?? base.borderRadius,
       splashColor: override?.splashColor ?? base.splashColor,
+      hoverColor: override?.hoverColor ?? base.hoverColor,
+      highlightColor: override?.highlightColor ?? base.highlightColor,
+      focusColor: override?.focusColor ?? base.focusColor,
     );
   }
 }
@@ -99,11 +120,20 @@ class NomoTextButtonThemeData
   @override
   final Color? splashColor;
   @override
+  final Color? hoverColor;
+  @override
+  final Color? highlightColor;
+  @override
+  final Color? focusColor;
+  @override
   final EdgeInsetsGeometry padding;
   const NomoTextButtonThemeData({
     this.foregroundColor = Colors.black87,
     this.borderRadius = const BorderRadius.all(Radius.circular(8)),
     this.splashColor = null,
+    this.hoverColor = null,
+    this.highlightColor = null,
+    this.focusColor = null,
     this.padding = const EdgeInsets.all(16),
   });
   factory NomoTextButtonThemeData.from(
@@ -115,6 +145,9 @@ class NomoTextButtonThemeData
       foregroundColor: colors.foregroundColor,
       borderRadius: colors.borderRadius,
       splashColor: colors.splashColor,
+      hoverColor: colors.hoverColor,
+      highlightColor: colors.highlightColor,
+      focusColor: colors.focusColor,
       padding: sizing.padding,
     );
   }
@@ -124,6 +157,9 @@ class NomoTextButtonThemeData
       foregroundColor: override?.foregroundColor ?? foregroundColor,
       borderRadius: override?.borderRadius ?? borderRadius,
       splashColor: override?.splashColor ?? splashColor,
+      hoverColor: override?.hoverColor ?? hoverColor,
+      highlightColor: override?.highlightColor ?? highlightColor,
+      focusColor: override?.focusColor ?? focusColor,
       padding: override?.padding ?? padding,
     );
   }
@@ -141,11 +177,20 @@ class NomoTextButtonThemeDataNullable
   @override
   final Color? splashColor;
   @override
+  final Color? hoverColor;
+  @override
+  final Color? highlightColor;
+  @override
+  final Color? focusColor;
+  @override
   final EdgeInsetsGeometry? padding;
   const NomoTextButtonThemeDataNullable({
     this.foregroundColor,
     this.borderRadius,
     this.splashColor,
+    this.hoverColor,
+    this.highlightColor,
+    this.focusColor,
     this.padding,
   });
 }
@@ -192,6 +237,9 @@ NomoTextButtonThemeData getFromContext(
     foregroundColor: widget.foregroundColor ?? themeData.foregroundColor,
     borderRadius: widget.borderRadius ?? themeData.borderRadius,
     splashColor: widget.splashColor ?? themeData.splashColor,
+    hoverColor: widget.hoverColor ?? themeData.hoverColor,
+    highlightColor: widget.highlightColor ?? themeData.highlightColor,
+    focusColor: widget.focusColor ?? themeData.focusColor,
     padding: widget.padding ?? themeData.padding,
   );
 }

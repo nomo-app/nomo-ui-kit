@@ -14,12 +14,18 @@ class PrimaryNomoButtonColorDataNullable {
   final double? elevation;
   final BorderRadiusGeometry? borderRadius;
   final Color? splashColor;
+  final Color? hoverColor;
+  final Color? highlightColor;
+  final Color? focusColor;
   const PrimaryNomoButtonColorDataNullable({
     this.backgroundColor,
     this.foregroundColor,
     this.elevation,
     this.borderRadius,
     this.splashColor,
+    this.hoverColor,
+    this.highlightColor,
+    this.focusColor,
   });
 }
 
@@ -34,12 +40,21 @@ class PrimaryNomoButtonColorData implements PrimaryNomoButtonColorDataNullable {
   final BorderRadiusGeometry borderRadius;
   @override
   final Color? splashColor;
+  @override
+  final Color? hoverColor;
+  @override
+  final Color? highlightColor;
+  @override
+  final Color? focusColor;
   const PrimaryNomoButtonColorData({
     this.backgroundColor = primaryColor,
     this.foregroundColor = Colors.white,
     this.elevation = 1.0,
     this.borderRadius = const BorderRadius.all(Radius.circular(8)),
     this.splashColor = null,
+    this.hoverColor = null,
+    this.highlightColor = null,
+    this.focusColor = null,
   });
   static PrimaryNomoButtonColorData lerp(
       PrimaryNomoButtonColorData a, PrimaryNomoButtonColorData b, double t) {
@@ -50,6 +65,9 @@ class PrimaryNomoButtonColorData implements PrimaryNomoButtonColorDataNullable {
       borderRadius:
           BorderRadiusGeometry.lerp(a.borderRadius, b.borderRadius, t)!,
       splashColor: Color.lerp(a.splashColor, b.splashColor, t),
+      hoverColor: Color.lerp(a.hoverColor, b.hoverColor, t),
+      highlightColor: Color.lerp(a.highlightColor, b.highlightColor, t),
+      focusColor: Color.lerp(a.focusColor, b.focusColor, t),
     );
   }
 
@@ -62,6 +80,9 @@ class PrimaryNomoButtonColorData implements PrimaryNomoButtonColorDataNullable {
       elevation: override?.elevation ?? base.elevation,
       borderRadius: override?.borderRadius ?? base.borderRadius,
       splashColor: override?.splashColor ?? base.splashColor,
+      hoverColor: override?.hoverColor ?? base.hoverColor,
+      highlightColor: override?.highlightColor ?? base.highlightColor,
+      focusColor: override?.focusColor ?? base.focusColor,
     );
   }
 }
@@ -120,6 +141,12 @@ class PrimaryNomoButtonThemeData
   @override
   final Color? splashColor;
   @override
+  final Color? hoverColor;
+  @override
+  final Color? highlightColor;
+  @override
+  final Color? focusColor;
+  @override
   final EdgeInsetsGeometry padding;
   const PrimaryNomoButtonThemeData({
     this.backgroundColor = primaryColor,
@@ -127,6 +154,9 @@ class PrimaryNomoButtonThemeData
     this.elevation = 1.0,
     this.borderRadius = const BorderRadius.all(Radius.circular(8)),
     this.splashColor = null,
+    this.hoverColor = null,
+    this.highlightColor = null,
+    this.focusColor = null,
     this.padding = const EdgeInsets.all(16),
   });
   factory PrimaryNomoButtonThemeData.from(
@@ -140,6 +170,9 @@ class PrimaryNomoButtonThemeData
       elevation: colors.elevation,
       borderRadius: colors.borderRadius,
       splashColor: colors.splashColor,
+      hoverColor: colors.hoverColor,
+      highlightColor: colors.highlightColor,
+      focusColor: colors.focusColor,
       padding: sizing.padding,
     );
   }
@@ -151,6 +184,9 @@ class PrimaryNomoButtonThemeData
       elevation: override?.elevation ?? elevation,
       borderRadius: override?.borderRadius ?? borderRadius,
       splashColor: override?.splashColor ?? splashColor,
+      hoverColor: override?.hoverColor ?? hoverColor,
+      highlightColor: override?.highlightColor ?? highlightColor,
+      focusColor: override?.focusColor ?? focusColor,
       padding: override?.padding ?? padding,
     );
   }
@@ -172,6 +208,12 @@ class PrimaryNomoButtonThemeDataNullable
   @override
   final Color? splashColor;
   @override
+  final Color? hoverColor;
+  @override
+  final Color? highlightColor;
+  @override
+  final Color? focusColor;
+  @override
   final EdgeInsetsGeometry? padding;
   const PrimaryNomoButtonThemeDataNullable({
     this.backgroundColor,
@@ -179,6 +221,9 @@ class PrimaryNomoButtonThemeDataNullable
     this.elevation,
     this.borderRadius,
     this.splashColor,
+    this.hoverColor,
+    this.highlightColor,
+    this.focusColor,
     this.padding,
   });
 }
@@ -227,6 +272,9 @@ PrimaryNomoButtonThemeData getFromContext(
     elevation: widget.elevation ?? themeData.elevation,
     borderRadius: widget.borderRadius ?? themeData.borderRadius,
     splashColor: widget.splashColor ?? themeData.splashColor,
+    hoverColor: widget.hoverColor ?? themeData.hoverColor,
+    highlightColor: widget.highlightColor ?? themeData.highlightColor,
+    focusColor: widget.focusColor ?? themeData.focusColor,
     padding: widget.padding ?? themeData.padding,
   );
 }

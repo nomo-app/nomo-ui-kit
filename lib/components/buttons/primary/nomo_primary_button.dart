@@ -28,6 +28,10 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
   final Axis direction;
 
   @override
+  final FocusNode? focusNode;
+  @override
+  final VoidCallback? onSecondaryPressed;
+  @override
   final VoidCallback? onPressed;
   @override
   final bool? enabled;
@@ -65,6 +69,15 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
   @NomoColorField<Color?>(null)
   final Color? splashColor;
 
+  @NomoColorField<Color?>(null)
+  final Color? hoverColor;
+
+  @NomoColorField<Color?>(null)
+  final Color? highlightColor;
+
+  @NomoColorField<Color?>(null)
+  final Color? focusColor;
+
   /// Not used
   @override
   Color? get selectionColor => null;
@@ -94,7 +107,12 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
     this.expandToConstraints,
     this.translate,
     this.splashColor,
+    this.focusColor,
+    this.highlightColor,
+    this.hoverColor,
+    this.focusNode,
     this.direction = Axis.horizontal,
+    this.onSecondaryPressed,
   }) : assert(
           child == null || (icon == null && text == null),
           'Either Specify child or text and icon',
@@ -175,7 +193,11 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
           context.colors.disabled,
         _ => theme.backgroundColor,
       },
+      focusNode: focusNode,
       splashColor: theme.splashColor,
+      focusColor: theme.focusColor,
+      hoverColor: theme.hoverColor,
+      highlightColor: theme.highlightColor,
       foregroundColor: foregroundColor,
       shape: shape,
       margin: margin,
@@ -183,6 +205,7 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
       height: height,
       padding: theme.padding,
       borderRadius: theme.borderRadius,
+      onSecondaryPressed: onSecondaryPressed,
       onPressed: switch (type) {
         ActionType.nonInteractive => null,
         _ => onPressed,

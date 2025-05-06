@@ -14,6 +14,10 @@ class NomoTextButton extends StatelessWidget with NomoButtonMixin {
   final bool? translate;
 
   @override
+  final FocusNode? focusNode;
+  @override
+  final VoidCallback? onSecondaryPressed;
+  @override
   final VoidCallback? onPressed;
   @override
   final bool? enabled;
@@ -46,6 +50,15 @@ class NomoTextButton extends StatelessWidget with NomoButtonMixin {
   @NomoColorField<Color?>(null)
   final Color? splashColor;
 
+  @NomoColorField<Color?>(null)
+  final Color? hoverColor;
+
+  @NomoColorField<Color?>(null)
+  final Color? highlightColor;
+
+  @NomoColorField<Color?>(null)
+  final Color? focusColor;
+
   /// Not used
   @override
   Color? get selectionColor => null;
@@ -73,6 +86,11 @@ class NomoTextButton extends StatelessWidget with NomoButtonMixin {
     this.translate,
     this.expandToConstraints,
     this.splashColor,
+    this.hoverColor,
+    this.focusColor,
+    this.highlightColor,
+    this.focusNode,
+    this.onSecondaryPressed,
   }) : assert(child != null || text != null, 'Must specify child or text');
 
   @override
@@ -89,7 +107,11 @@ class NomoTextButton extends StatelessWidget with NomoButtonMixin {
       onPressed: onPressed,
       enabled: enabled,
       splashColor: theme.splashColor,
+      focusColor: theme.focusColor,
+      hoverColor: theme.hoverColor,
+      highlightColor: theme.highlightColor,
       expandToConstraints: expandToConstraints,
+      onSecondaryPressed: onSecondaryPressed,
       child: child ??
           NomoText(
             text!,

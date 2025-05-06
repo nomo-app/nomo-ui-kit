@@ -8,6 +8,7 @@ mixin NomoButtonMixin on Widget {
   EdgeInsetsGeometry? get padding;
   EdgeInsetsGeometry? get margin;
   VoidCallback? get onPressed;
+  VoidCallback? get onSecondaryPressed;
   bool? get enabled;
   double? get elevation;
   double? get width;
@@ -20,12 +21,22 @@ mixin NomoButtonMixin on Widget {
   BoxShape? get shape;
   bool? get expandToConstraints;
   Color? get splashColor;
+  Color? get focusColor;
+  Color? get highlightColor;
+  Color? get hoverColor;
+  FocusNode? get focusNode;
 }
 
 class NomoButton extends StatefulWidget with NomoButtonMixin {
   final Widget child;
   final bool enableInkwellFeedback;
   final MouseCursor cursor;
+
+  @override
+  final FocusNode? focusNode;
+
+  @override
+  final VoidCallback? onSecondaryPressed;
 
   @override
   final VoidCallback? onPressed;
@@ -59,8 +70,15 @@ class NomoButton extends StatefulWidget with NomoButtonMixin {
   @override
   final Color? splashColor;
 
+  final Color? hoverColor;
+
+  final Color? highlightColor;
+
+  final Color? focusColor;
+
   const NomoButton({
     required this.child,
+    this.focusNode,
     super.key,
     this.onPressed,
     this.enableInkwellFeedback = true,
@@ -78,7 +96,11 @@ class NomoButton extends StatefulWidget with NomoButtonMixin {
     this.shape,
     this.expandToConstraints,
     this.cursor = SystemMouseCursors.click,
+    this.focusColor,
+    this.highlightColor,
+    this.hoverColor,
     this.splashColor,
+    this.onSecondaryPressed,
   });
 
   @override
@@ -176,84 +198,62 @@ class _NomoButtonState extends State<NomoButton>
         child: MouseRegion(
           onEnter: (_) => _controller.forward(),
           onExit: (_) => _controller.reverse(),
-          child: InkWell(
-            onTap: widget.enabled ?? true ? widget.onPressed : null,
-            borderRadius: borderRadius,
-            hoverColor: widget.backgroundColor
-                ?.darken(0.05)
-                .ifElse(
-                  widget.selectionColor == null,
-                  other: Colors.transparent,
-                )
-                .ifElse(
-                  widget.enableInkwellFeedback,
-                  other: Colors.transparent,
-                ),
-            splashColor: widget.splashColor ??
-                Colors.black.withOpacity(0.06).ifElse(
-                      widget.enableInkwellFeedback,
-                      other: Colors.transparent,
-                    ),
-            focusColor: widget.backgroundColor
-                ?.darken(0.05)
-                .ifElse(
-                  widget.selectionColor == null,
-                  other: Colors.black.withOpacity(0.06),
-                )
-                .ifElse(
-                  widget.enableInkwellFeedback,
-                  other: Colors.transparent,
-                ),
-            highlightColor: widget.splashColor ??
-                Colors.black.withOpacity(0.06).ifElse(
-                      widget.enableInkwellFeedback,
-                      other: Colors.transparent,
-                    ),
-            mouseCursor: (widget.enabled ?? true)
-                ? widget.cursor
-                : SystemMouseCursors.basic,
-            child: Padding(
-              padding: widget.padding ?? EdgeInsets.zero,
-              child: MultiWrapper(
-                wrappers: [
-                  if (widget.width != null) (child) => Center(child: child),
-                  if (widget.height != null && widget.width == null)
-                    (child) => Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [child],
-                        ),
-                  if (widget.selectionColor != null)
-                    (child) {
-                      return AnimatedBuilder(
-                        animation: animation,
-                        builder: (context, child) {
-                          final colorValue = animation.value!;
-                          return NomoTextTheme(
-                            color: colorValue,
+          child: GestureDetector(
+            onSecondaryTap: widget.onSecondaryPressed,
+            child: InkWell(
+              focusNode: widget.focusNode,
+              onTap: widget.enabled ?? true ? widget.onPressed : null,
+              borderRadius: borderRadius,
+              hoverColor: widget.hoverColor ?? Colors.transparent,
+              splashColor: widget.splashColor ?? Colors.transparent,
+              highlightColor: widget.highlightColor ?? Colors.transparent,
+              focusColor: widget.focusColor ?? Colors.transparent,
+              mouseCursor: (widget.enabled ?? true)
+                  ? widget.cursor
+                  : SystemMouseCursors.basic,
+              child: Padding(
+                padding: widget.padding ?? EdgeInsets.zero,
+                child: MultiWrapper(
+                  wrappers: [
+                    if (widget.width != null) (child) => Center(child: child),
+                    if (widget.height != null && widget.width == null)
+                      (child) => Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [child],
+                          ),
+                    if (widget.selectionColor != null)
+                      (child) {
+                        return AnimatedBuilder(
+                          animation: animation,
+                          builder: (context, child) {
+                            final colorValue = animation.value!;
+                            return NomoTextTheme(
+                              color: colorValue,
+                              child: IconTheme(
+                                data: IconTheme.of(context).copyWith(
+                                  color: colorValue,
+                                ),
+                                child: child!,
+                              ),
+                            );
+                          },
+                          child: child,
+                        );
+                      },
+                    if (widget.selectionColor == null &&
+                        widget.foregroundColor != null)
+                      (child) => NomoTextTheme(
+                            color: widget.foregroundColor!,
                             child: IconTheme(
                               data: IconTheme.of(context).copyWith(
-                                color: colorValue,
+                                color: widget.foregroundColor,
                               ),
-                              child: child!,
+                              child: child,
                             ),
-                          );
-                        },
-                        child: child,
-                      );
-                    },
-                  if (widget.selectionColor == null &&
-                      widget.foregroundColor != null)
-                    (child) => NomoTextTheme(
-                          color: widget.foregroundColor!,
-                          child: IconTheme(
-                            data: IconTheme.of(context).copyWith(
-                              color: widget.foregroundColor,
-                            ),
-                            child: child,
                           ),
-                        ),
-                ],
-                child: widget.child,
+                  ],
+                  child: widget.child,
+                ),
               ),
             ),
           ),
