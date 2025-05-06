@@ -182,6 +182,7 @@ class _NomoVerticalListTileState<T> extends State<NomoVerticalListTile<T>>
             final border = borderAnimation.value;
 
             final icon = switch (widget.item) {
+              final NomoMenuWidgetItem<T> widgetItem => widgetItem.child,
               final NomoMenuIconItem<T> iconItem => Icon(
                   iconItem.icon,
                   color: foreground,

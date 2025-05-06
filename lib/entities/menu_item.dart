@@ -25,6 +25,18 @@ sealed class NomoMenuItem<T> {
           key == other.key;
 }
 
+final class NomoMenuWidgetItem<T> extends NomoMenuItem<T> {
+  const NomoMenuWidgetItem({
+    required super.title,
+    required super.key,
+    required this.child,
+    super.subtitle,
+    super.trailling,
+  });
+
+  final Widget child;
+}
+
 final class NomoMenuTextItem<T> extends NomoMenuItem<T> {
   const NomoMenuTextItem({
     required super.title,
