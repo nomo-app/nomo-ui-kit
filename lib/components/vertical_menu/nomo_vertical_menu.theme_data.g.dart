@@ -111,13 +111,13 @@ class NomoVerticalMenuColorData implements NomoVerticalMenuColorDataNullable {
 }
 
 class NomoVerticalMenuSizingDataNullable {
-  final double? hPadding;
+  final EdgeInsetsGeometry? padding;
   final double? itemSpacing;
   final double? spacing;
   final double? height;
   final double? iconSize;
   const NomoVerticalMenuSizingDataNullable({
-    this.hPadding,
+    this.padding,
     this.itemSpacing,
     this.spacing,
     this.height,
@@ -127,7 +127,7 @@ class NomoVerticalMenuSizingDataNullable {
 
 class NomoVerticalMenuSizingData implements NomoVerticalMenuSizingDataNullable {
   @override
-  final double hPadding;
+  final EdgeInsetsGeometry padding;
   @override
   final double itemSpacing;
   @override
@@ -137,7 +137,7 @@ class NomoVerticalMenuSizingData implements NomoVerticalMenuSizingDataNullable {
   @override
   final double iconSize;
   const NomoVerticalMenuSizingData({
-    this.hPadding = 16.0,
+    this.padding = const EdgeInsets.symmetric(horizontal: 8),
     this.itemSpacing = 8.0,
     this.spacing = 8.0,
     this.height = 56.0,
@@ -146,7 +146,7 @@ class NomoVerticalMenuSizingData implements NomoVerticalMenuSizingDataNullable {
   static NomoVerticalMenuSizingData lerp(
       NomoVerticalMenuSizingData a, NomoVerticalMenuSizingData b, double t) {
     return NomoVerticalMenuSizingData(
-      hPadding: lerpDouble(a.hPadding, b.hPadding, t)!,
+      padding: EdgeInsetsGeometry.lerp(a.padding, b.padding, t)!,
       itemSpacing: lerpDouble(a.itemSpacing, b.itemSpacing, t)!,
       spacing: lerpDouble(a.spacing, b.spacing, t)!,
       height: lerpDouble(a.height, b.height, t)!,
@@ -158,7 +158,7 @@ class NomoVerticalMenuSizingData implements NomoVerticalMenuSizingDataNullable {
       NomoVerticalMenuSizingData base,
       [NomoVerticalMenuSizingDataNullable? override]) {
     return NomoVerticalMenuSizingData(
-      hPadding: override?.hPadding ?? base.hPadding,
+      padding: override?.padding ?? base.padding,
       itemSpacing: override?.itemSpacing ?? base.itemSpacing,
       spacing: override?.spacing ?? base.spacing,
       height: override?.height ?? base.height,
@@ -203,7 +203,7 @@ class NomoVerticalMenuThemeData
   @override
   final Color? focusColor;
   @override
-  final double hPadding;
+  final EdgeInsetsGeometry padding;
   @override
   final double itemSpacing;
   @override
@@ -224,7 +224,7 @@ class NomoVerticalMenuThemeData
     this.hoverColor = null,
     this.highlightColor = null,
     this.focusColor = null,
-    this.hPadding = 16.0,
+    this.padding = const EdgeInsets.symmetric(horizontal: 8),
     this.itemSpacing = 8.0,
     this.spacing = 8.0,
     this.height = 56.0,
@@ -247,7 +247,7 @@ class NomoVerticalMenuThemeData
       hoverColor: colors.hoverColor,
       highlightColor: colors.highlightColor,
       focusColor: colors.focusColor,
-      hPadding: sizing.hPadding,
+      padding: sizing.padding,
       itemSpacing: sizing.itemSpacing,
       spacing: sizing.spacing,
       height: sizing.height,
@@ -268,7 +268,7 @@ class NomoVerticalMenuThemeData
       hoverColor: override?.hoverColor ?? hoverColor,
       highlightColor: override?.highlightColor ?? highlightColor,
       focusColor: override?.focusColor ?? focusColor,
-      hPadding: override?.hPadding ?? hPadding,
+      padding: override?.padding ?? padding,
       itemSpacing: override?.itemSpacing ?? itemSpacing,
       spacing: override?.spacing ?? spacing,
       height: override?.height ?? height,
@@ -305,7 +305,7 @@ class NomoVerticalMenuThemeDataNullable
   @override
   final Color? focusColor;
   @override
-  final double? hPadding;
+  final EdgeInsetsGeometry? padding;
   @override
   final double? itemSpacing;
   @override
@@ -326,7 +326,7 @@ class NomoVerticalMenuThemeDataNullable
     this.hoverColor,
     this.highlightColor,
     this.focusColor,
-    this.hPadding,
+    this.padding,
     this.itemSpacing,
     this.spacing,
     this.height,
@@ -386,7 +386,7 @@ NomoVerticalMenuThemeData getFromContext(
     hoverColor: widget.hoverColor ?? themeData.hoverColor,
     highlightColor: widget.highlightColor ?? themeData.highlightColor,
     focusColor: widget.focusColor ?? themeData.focusColor,
-    hPadding: widget.hPadding ?? themeData.hPadding,
+    padding: widget.padding ?? themeData.padding,
     itemSpacing: widget.itemSpacing ?? themeData.itemSpacing,
     spacing: widget.spacing ?? themeData.spacing,
     height: widget.height ?? themeData.height,

@@ -71,7 +71,10 @@ class NomoVerticalListTile<T> extends StatefulWidget {
 
     final _titleWidth = max(titleWidth, subTitleWidth);
 
-    return (menuTheme.hPadding * 2) + menuTheme.spacing + _titleWidth + 24;
+    return (menuTheme.padding.horizontal * 2) +
+        menuTheme.spacing +
+        _titleWidth +
+        24;
   }
 
   @override
@@ -219,10 +222,8 @@ class _NomoVerticalListTileState<T> extends State<NomoVerticalListTile<T>>
                 highlightColor: widget.highlightColor ?? Colors.transparent,
                 focusColor: widget.focusColor ?? Colors.transparent,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal:
-                        menuTheme.hPadding.whenElse(!widget.collapsed, 0),
-                  ),
+                  padding: menuTheme.padding
+                      .whenElse(!widget.collapsed, EdgeInsets.zero),
                   child: Row(
                     mainAxisAlignment: switch (widget.collapsed) {
                       true => MainAxisAlignment.center,

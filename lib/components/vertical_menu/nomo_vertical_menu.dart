@@ -20,7 +20,7 @@ class NomoVerticalMenu<T> extends StatelessWidget {
     this.selectedBackground,
     this.selectedForeground,
     this.height,
-    this.hPadding,
+    this.padding,
     this.itemSpacing,
     this.borderRadius,
     this.iconSize,
@@ -35,6 +35,7 @@ class NomoVerticalMenu<T> extends StatelessWidget {
     this.highlightColor,
     this.hoverColor,
     this.splashColor,
+    this.collapsed,
     super.key,
   });
   final List<NomoMenuItem<T>> items;
@@ -43,6 +44,7 @@ class NomoVerticalMenu<T> extends StatelessWidget {
   final void Function(NomoMenuItem<T> item)? onTap;
   final Widget Function(NomoMenuItem<T> item, Widget child)? itemDecorator;
   final T? selected;
+  final bool? collapsed;
 
   @NomoColorField<BorderSide>(BorderSide.none)
   final BorderSide? border;
@@ -65,8 +67,8 @@ class NomoVerticalMenu<T> extends StatelessWidget {
   @NomoColorField(BorderRadius.all(Radius.circular(16)))
   final BorderRadius? borderRadius;
 
-  @NomoSizingField(16.0)
-  final double? hPadding;
+  @NomoSizingField(EdgeInsets.symmetric(horizontal: 8))
+  final EdgeInsetsGeometry? padding;
 
   @NomoSizingField(8.0)
   final double? itemSpacing;
@@ -99,17 +101,18 @@ class NomoVerticalMenu<T> extends StatelessWidget {
       builder: (context, constraints) {
         final width = constraints.maxWidth;
 
-        final collapsed = [
-          for (final item in items)
-            NomoVerticalListTile(
-              item: item,
-              menuTheme: theme,
-              titleStyle: style,
-              onTap: () {
-                onTap?.call(item);
-              },
-            ),
-        ].any((tile) => tile.getIntrinsicWidth(context) > width);
+        final collapsed = this.collapsed ??
+            [
+              for (final item in items)
+                NomoVerticalListTile(
+                  item: item,
+                  menuTheme: theme,
+                  titleStyle: style,
+                  onTap: () {
+                    onTap?.call(item);
+                  },
+                ),
+            ].any((tile) => tile.getIntrinsicWidth(context) > width);
 
         return Column(
           mainAxisSize: MainAxisSize.min,
