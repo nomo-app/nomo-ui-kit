@@ -31,6 +31,7 @@ class NomoButton extends StatefulWidget with NomoButtonMixin {
   final Widget child;
   final bool enableInkwellFeedback;
   final MouseCursor cursor;
+  final Gradient? gradient;
 
   @override
   final FocusNode? focusNode;
@@ -101,6 +102,7 @@ class NomoButton extends StatefulWidget with NomoButtonMixin {
     this.hoverColor,
     this.splashColor,
     this.onSecondaryPressed,
+    this.gradient,
   });
 
   @override
@@ -170,6 +172,7 @@ class _NomoButtonState extends State<NomoButton>
                     borderRadius: widget.borderRadius
                         .ifElseNull(widget.shape != BoxShape.circle),
                     shape: widget.shape ?? BoxShape.rectangle,
+                    gradient: widget.gradient,
                   ),
                   child: child!,
                 );
@@ -185,6 +188,7 @@ class _NomoButtonState extends State<NomoButton>
                   widget.border ?? const Border.fromBorderSide(BorderSide.none),
               decoration: BoxDecoration(
                 color: widget.backgroundColor,
+                gradient: widget.gradient,
                 borderRadius: widget.borderRadius
                     .ifElseNull(widget.shape != BoxShape.circle),
                 shape: widget.shape ?? BoxShape.rectangle,

@@ -26,6 +26,7 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
   final Widget? child;
   final bool? translate;
   final Axis direction;
+  final Gradient? gradient;
 
   @override
   final FocusNode? focusNode;
@@ -87,6 +88,7 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
   const PrimaryNomoButton({
     super.key,
     this.type = ActionType.def,
+    this.gradient,
     this.text,
     this.icon,
     this.spacing = 12,
@@ -193,6 +195,7 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
           context.colors.disabled,
         _ => theme.backgroundColor,
       },
+      gradient: gradient,
       focusNode: focusNode,
       splashColor: theme.splashColor,
       focusColor: theme.focusColor,
