@@ -229,6 +229,8 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
   late NomoFormValidator? formValidator;
   late NomoFormValues? formValues;
 
+  TextEditingController? _internalTextEditingController;
+
   @override
   void initState() {
     super.initState();
@@ -241,7 +243,8 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
       ..addListener(errorChanged);
     inputStateNotifier = ValueNotifier(InputState.nonError);
     textController = widget.textEditingController ??
-        TextEditingController(text: valueNotifier.value)
+        (_internalTextEditingController =
+            TextEditingController(text: valueNotifier.value))
       ..addListener(textControllerChanged);
     focusNode = widget.focusNode ?? FocusNode()
       ..addListener(focusChanged);
@@ -308,9 +311,9 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
     }
     focusNode.removeListener(focusChanged);
 
-    textController
-      ..removeListener(textControllerChanged)
-      ..dispose();
+    textController.removeListener(textControllerChanged);
+    _internalTextEditingController?.dispose();
+
     valueNotifier.removeListener(notifierChanged);
 
     if (widget.valueNotifier == null) {
