@@ -32,6 +32,7 @@ class NomoButton extends StatefulWidget with NomoButtonMixin {
   final bool enableInkwellFeedback;
   final MouseCursor cursor;
   final Gradient? gradient;
+  final CustomPainter? backgroundPainter;
 
   @override
   final FocusNode? focusNode;
@@ -91,6 +92,7 @@ class NomoButton extends StatefulWidget with NomoButtonMixin {
     this.height,
     this.borderRadius,
     this.elevation = 0.0,
+    this.backgroundPainter,
     this.border,
     this.selectionColor,
     this.foregroundColor,
@@ -197,66 +199,69 @@ class _NomoButtonState extends State<NomoButton>
             );
           },
       ],
-      child: Material(
-        type: MaterialType.transparency,
-        child: MouseRegion(
-          onEnter: (_) => _controller.forward(),
-          onExit: (_) => _controller.reverse(),
-          child: GestureDetector(
-            onSecondaryTap: widget.onSecondaryPressed,
-            child: InkWell(
-              focusNode: widget.focusNode,
-              onTap: widget.enabled ?? true ? widget.onPressed : null,
-              borderRadius: borderRadius,
-              hoverColor: widget.hoverColor ?? Colors.transparent,
-              splashColor: widget.splashColor ?? Colors.transparent,
-              highlightColor: widget.highlightColor ?? Colors.transparent,
-              focusColor: widget.focusColor ?? Colors.transparent,
-              mouseCursor: (widget.enabled ?? true)
-                  ? widget.cursor
-                  : SystemMouseCursors.basic,
-              child: Padding(
-                padding: widget.padding ?? EdgeInsets.zero,
-                child: MultiWrapper(
-                  wrappers: [
-                    if (widget.width != null) (child) => Center(child: child),
-                    if (widget.height != null && widget.width == null)
-                      (child) => Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [child],
-                          ),
-                    if (widget.selectionColor != null)
-                      (child) {
-                        return AnimatedBuilder(
-                          animation: animation,
-                          builder: (context, child) {
-                            final colorValue = animation.value!;
-                            return NomoTextTheme(
-                              color: colorValue,
+      child: CustomPaint(
+        painter: widget.backgroundPainter,
+        child: Material(
+          type: MaterialType.transparency,
+          child: MouseRegion(
+            onEnter: (_) => _controller.forward(),
+            onExit: (_) => _controller.reverse(),
+            child: GestureDetector(
+              onSecondaryTap: widget.onSecondaryPressed,
+              child: InkWell(
+                focusNode: widget.focusNode,
+                onTap: widget.enabled ?? true ? widget.onPressed : null,
+                borderRadius: borderRadius,
+                hoverColor: widget.hoverColor ?? Colors.transparent,
+                splashColor: widget.splashColor ?? Colors.transparent,
+                highlightColor: widget.highlightColor ?? Colors.transparent,
+                focusColor: widget.focusColor ?? Colors.transparent,
+                mouseCursor: (widget.enabled ?? true)
+                    ? widget.cursor
+                    : SystemMouseCursors.basic,
+                child: Padding(
+                  padding: widget.padding ?? EdgeInsets.zero,
+                  child: MultiWrapper(
+                    wrappers: [
+                      if (widget.width != null) (child) => Center(child: child),
+                      if (widget.height != null && widget.width == null)
+                        (child) => Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [child],
+                            ),
+                      if (widget.selectionColor != null)
+                        (child) {
+                          return AnimatedBuilder(
+                            animation: animation,
+                            builder: (context, child) {
+                              final colorValue = animation.value!;
+                              return NomoTextTheme(
+                                color: colorValue,
+                                child: IconTheme(
+                                  data: IconTheme.of(context).copyWith(
+                                    color: colorValue,
+                                  ),
+                                  child: child!,
+                                ),
+                              );
+                            },
+                            child: child,
+                          );
+                        },
+                      if (widget.selectionColor == null &&
+                          widget.foregroundColor != null)
+                        (child) => NomoTextTheme(
+                              color: widget.foregroundColor!,
                               child: IconTheme(
                                 data: IconTheme.of(context).copyWith(
-                                  color: colorValue,
+                                  color: widget.foregroundColor,
                                 ),
-                                child: child!,
+                                child: child,
                               ),
-                            );
-                          },
-                          child: child,
-                        );
-                      },
-                    if (widget.selectionColor == null &&
-                        widget.foregroundColor != null)
-                      (child) => NomoTextTheme(
-                            color: widget.foregroundColor!,
-                            child: IconTheme(
-                              data: IconTheme.of(context).copyWith(
-                                color: widget.foregroundColor,
-                              ),
-                              child: child,
                             ),
-                          ),
-                  ],
-                  child: widget.child,
+                    ],
+                    child: widget.child,
+                  ),
                 ),
               ),
             ),
