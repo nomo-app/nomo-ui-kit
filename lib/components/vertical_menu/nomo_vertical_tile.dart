@@ -71,10 +71,7 @@ class NomoVerticalListTile<T> extends StatefulWidget {
 
     final _titleWidth = max(titleWidth, subTitleWidth);
 
-    return (menuTheme.padding.horizontal * 2) +
-        menuTheme.spacing +
-        _titleWidth +
-        24;
+    return (menuTheme.padding.horizontal * 2) + menuTheme.spacing + _titleWidth;
   }
 
   @override
@@ -230,6 +227,14 @@ class _NomoVerticalListTileState<T> extends State<NomoVerticalListTile<T>>
                       false => MainAxisAlignment.start,
                     },
                     children: [
+                      if (widget.item.leading != null)
+                        NomoTextTheme(
+                          color: foreground!,
+                          child: NomoDefaultTextStyle(
+                            style: theme.traillingStyle,
+                            child: widget.item.leading!,
+                          ),
+                        ),
                       if (icon != null) icon,
                       if (!widget.collapsed) ...[
                         SizedBox(width: widget.menuTheme.spacing),
@@ -249,18 +254,15 @@ class _NomoVerticalListTileState<T> extends State<NomoVerticalListTile<T>>
                               ),
                           ],
                         ),
+                        const Spacer(),
                         if (widget.item.trailling != null)
-                          Expanded(
-                            child: NomoTextTheme(
-                              color: foreground!,
-                              child: NomoDefaultTextStyle(
-                                style: theme.traillingStyle,
-                                child: widget.item.trailling!,
-                              ),
+                          NomoTextTheme(
+                            color: foreground!,
+                            child: NomoDefaultTextStyle(
+                              style: theme.traillingStyle,
+                              child: widget.item.trailling!,
                             ),
                           )
-                        else
-                          const Spacer(),
                       ],
                     ],
                   ),
