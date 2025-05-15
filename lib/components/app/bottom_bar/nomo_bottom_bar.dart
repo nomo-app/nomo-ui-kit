@@ -31,6 +31,9 @@ class NomoBottomBar<T> extends StatelessWidget {
     this.itemDecorator,
     this.elevation,
     this.borderRadius,
+    this.mainAxisAlignment,
+    this.crossAxisAlignment,
+    this.border,
   }) : assert(
           items.length > 0 && items.length <= 5,
           'Items must be between 1 and 5',
@@ -43,11 +46,14 @@ class NomoBottomBar<T> extends StatelessWidget {
   final T? selected;
   final double? widthFactor;
   final double? itemWidth;
+  final MainAxisAlignment? mainAxisAlignment;
+  final CrossAxisAlignment? crossAxisAlignment;
+  final BoxBorder? border;
 
   @NomoSizingField(56.0)
   final double? height;
 
-  @NomoSizingField(4.0)
+  @NomoSizingField(null)
   final double? spacing;
 
   @NomoSizingField(28.0)
@@ -87,11 +93,13 @@ class NomoBottomBar<T> extends StatelessWidget {
         color: theme.background,
         elevation: theme.elevation,
         borderRadius: theme.borderRadius,
+        border: this.border,
       ),
       padding: theme.padding,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: crossAxisAlignment ?? CrossAxisAlignment.stretch,
+        spacing: theme.spacing,
         children: [
           for (final item in items)
             () {

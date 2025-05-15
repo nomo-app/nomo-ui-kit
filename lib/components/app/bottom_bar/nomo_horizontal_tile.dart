@@ -123,8 +123,9 @@ class _NomoHorizontalListTileState<T> extends State<NomoHorizontalListTile<T>>
               hoverColor: context.colors.primary.withOpacity(0.06),
               focusColor: context.colors.primary.withOpacity(0.1),
               highlightColor: context.colors.primary.withOpacity(0.06),
-              child: SizedBox(
+              child: Container(
                 width: widget.itemWidth,
+                padding: widget.theme.itemPadding,
                 child: Center(
                   widthFactor: widget.widthFactor,
                   child: Column(
