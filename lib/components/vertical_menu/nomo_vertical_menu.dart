@@ -36,6 +36,7 @@ class NomoVerticalMenu<T> extends StatelessWidget {
     this.hoverColor,
     this.splashColor,
     this.collapsed,
+    this.seperatorBulder,
     super.key,
   });
   final List<NomoMenuItem<T>> items;
@@ -43,6 +44,7 @@ class NomoVerticalMenu<T> extends StatelessWidget {
   final Widget? title;
   final void Function(NomoMenuItem<T> item)? onTap;
   final Widget Function(NomoMenuItem<T> item, Widget child)? itemDecorator;
+  final Widget Function(int index)? seperatorBulder;
   final T? selected;
   final bool? collapsed;
 
@@ -144,7 +146,11 @@ class NomoVerticalMenu<T> extends StatelessWidget {
 
                 return itemDecorator?.call(item, widget) ?? widget;
               },
-              separatorBuilder: (context, index) => theme.spacing.vSpacing,
+              separatorBuilder: (context, index) => switch (seperatorBulder) {
+                final Widget Function(int) seperatorBulder =>
+                  seperatorBulder(index),
+                _ => const SizedBox.shrink(),
+              },
               itemCount: items.length,
             ),
           ],
