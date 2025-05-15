@@ -13,9 +13,13 @@ class NomoSider extends StatelessWidget {
     this.border,
     this.padding,
     this.width,
+    this.footer,
     this.scrollPadding,
+    this.header,
   });
   final Widget child;
+  final Widget? header;
+  final Widget? footer;
 
   @NomoColorField(primaryColor)
   final Color? backgroundColor;
@@ -40,21 +44,29 @@ class NomoSider extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = getFromContext(context, this);
     final scrollController = ScrollController();
-    return Scrollbar(
-      controller: scrollController,
-      thickness: theme.padding.horizontal / 3,
-      child: Container(
-        width: theme.width,
-        height: context.height,
-        decoration: BoxDecoration(
-          color: theme.backgroundColor,
-          border: theme.border,
-        ),
-        child: SingleChildScrollView(
-          controller: scrollController,
-          padding: theme.padding,
-          child: child,
-        ),
+    return Container(
+      width: theme.width,
+      height: context.height,
+      decoration: BoxDecoration(
+        color: theme.backgroundColor,
+        border: theme.border,
+      ),
+      padding: theme.padding,
+      child: Column(
+        children: [
+          if (header != null) header!,
+          Expanded(
+            child: Scrollbar(
+              controller: scrollController,
+              thickness: 8,
+              child: SingleChildScrollView(
+                controller: scrollController,
+                child: child,
+              ),
+            ),
+          ),
+          if (footer != null) footer!,
+        ],
       ),
     );
   }
