@@ -117,6 +117,23 @@ class _NomoVerticalListTileState<T> extends State<NomoVerticalListTile<T>>
   }
 
   @override
+  void didChangeDependencies() {
+    if (widget.selected) {
+      WidgetsBinding.instance.addPostFrameCallback(
+        (_) {
+          Scrollable.ensureVisible(
+            context,
+            duration: const Duration(milliseconds: 200),
+            curve: Curves.fastOutSlowIn,
+          );
+        },
+      );
+    }
+
+    super.didChangeDependencies();
+  }
+
+  @override
   void didUpdateWidget(covariant NomoVerticalListTile<T> oldWidget) {
     super.didUpdateWidget(oldWidget);
 
