@@ -45,6 +45,7 @@ OverlayEntry createContextMenuOverlay({
 
   late final OverlayEntry _entry;
 
+  // ignore: join_return_with_assignment
   _entry = OverlayEntry(
     opaque: opaque,
     builder: (context) => GestureDetector(

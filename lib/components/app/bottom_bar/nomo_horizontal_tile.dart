@@ -119,10 +119,10 @@ class _NomoHorizontalListTileState<T> extends State<NomoHorizontalListTile<T>>
             child: InkWell(
               onTap: widget.onTap,
               borderRadius: theme.itemBorderRadius,
-              splashColor: context.colors.primary.withOpacity(0.2),
-              hoverColor: context.colors.primary.withOpacity(0.06),
-              focusColor: context.colors.primary.withOpacity(0.1),
-              highlightColor: context.colors.primary.withOpacity(0.06),
+              splashColor: context.colors.primary.withValues(alpha: 0.2),
+              hoverColor: context.colors.primary.withValues(alpha: 0.06),
+              focusColor: context.colors.primary.withValues(alpha: 0.1),
+              highlightColor: context.colors.primary.withValues(alpha: 0.06),
               child: Container(
                 width: widget.itemWidth,
                 padding: widget.theme.itemPadding,
