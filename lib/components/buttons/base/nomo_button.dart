@@ -72,10 +72,13 @@ class NomoButton extends StatefulWidget with NomoButtonMixin {
   @override
   final Color? splashColor;
 
+  @override
   final Color? hoverColor;
 
+  @override
   final Color? highlightColor;
 
+  @override
   final Color? focusColor;
 
   const NomoButton({

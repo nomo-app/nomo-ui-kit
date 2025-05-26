@@ -33,9 +33,9 @@ OverlayEntry createContextMenuOverlay({
 
   final overflowsRight = offset.dx + child.preferredSize.width > screenWidth;
 
-  var leftInset = overflowsRight ? null : offset.dx;
+  final leftInset = overflowsRight ? null : offset.dx;
 
-  var rightInset = overflowsRight ? 20.0 : null;
+  final rightInset = overflowsRight ? 20.0 : null;
 
   final arrowLeft = offset.dx + size.width / 2;
 

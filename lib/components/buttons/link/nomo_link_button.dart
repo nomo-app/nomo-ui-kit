@@ -119,6 +119,7 @@ class _NomoLinkButtonState extends State<NomoLinkButton>
     super.initState();
   }
 
+  @override
   void dispose() {
     _controller.dispose();
     _controllerTapDown.dispose();

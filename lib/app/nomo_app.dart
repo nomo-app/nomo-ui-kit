@@ -6,7 +6,6 @@ import 'package:nomo_ui_kit/app/notifications/app_notification.dart';
 import 'package:nomo_ui_kit/components/text/nomo_text.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 import 'package:nomo_ui_kit/theme/theme_provider.dart';
-import 'package:nomo_ui_kit/utils/layout_extensions.dart';
 import 'package:nomo_ui_kit/utils/multi_wrapper.dart';
 
 const kThemeChangeDuration = Duration(milliseconds: 400);
@@ -77,8 +76,9 @@ class _NomoAppState extends State<NomoApp> {
       color: widget.color,
       routerConfig: widget.routerConfig,
       builder: (context, child) {
-        if (widget.appWrapper != null)
+        if (widget.appWrapper != null) {
           return widget.appWrapper!(context, child!);
+        }
         return child!;
       },
     );

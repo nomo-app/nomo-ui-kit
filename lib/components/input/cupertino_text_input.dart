@@ -1059,7 +1059,7 @@ class _CupertinoInputState extends State<CupertinoInput>
       return false;
     }
 
-    if (cause == SelectionChangedCause.scribble) {
+    if (cause == SelectionChangedCause.stylusHandwriting) {
       return true;
     }
 
@@ -1275,7 +1275,7 @@ class _CupertinoInputState extends State<CupertinoInput>
           autofillClient: this,
           clipBehavior: widget.clipBehavior,
           restorationId: 'editable',
-          scribbleEnabled: widget.scribbleEnabled,
+          stylusHandwritingEnabled: widget.scribbleEnabled,
           enableIMEPersonalizedLearning: widget.enableIMEPersonalizedLearning,
           contentInsertionConfiguration: widget.contentInsertionConfiguration,
           contextMenuBuilder: widget.contextMenuBuilder,

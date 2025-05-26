@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nomo_ui_generator/annotations.dart';
@@ -7,7 +6,6 @@ import 'package:nomo_ui_kit/components/input/cupertino_text_input.dart';
 import 'package:nomo_ui_kit/components/input/form/nomo_form.dart';
 import 'package:nomo_ui_kit/components/text/nomo_text.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
-import 'package:nomo_ui_kit/utils/platform_info/platform_info.dart';
 import 'package:nomo_ui_kit/utils/tweens.dart';
 
 part 'nomo_input.theme_data.g.dart';

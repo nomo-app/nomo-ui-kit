@@ -279,7 +279,7 @@ class _NomoVerticalListTileState<T> extends State<NomoVerticalListTile<T>>
                               style: theme.traillingStyle,
                               child: widget.item.trailling!,
                             ),
-                          )
+                          ),
                       ],
                     ],
                   ),
