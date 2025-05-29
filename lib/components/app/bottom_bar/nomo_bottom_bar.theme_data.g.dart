@@ -99,7 +99,7 @@ class NomoBottomBarSizingData implements NomoBottomBarSizingDataNullable {
   final EdgeInsetsGeometry itemPadding;
   const NomoBottomBarSizingData({
     this.height = 56.0,
-    this.spacing = 4.0,
+    this.spacing = 0.0,
     this.iconSize = 28.0,
     this.padding = const EdgeInsets.all(4),
     this.elevation = 16.0,
@@ -172,7 +172,7 @@ class NomoBottomBarThemeData
     this.itemBorderRadius = const BorderRadius.all(Radius.circular(8)),
     this.borderRadius = BorderRadius.zero,
     this.height = 56.0,
-    this.spacing = 4.0,
+    this.spacing = 0.0,
     this.iconSize = 28.0,
     this.padding = const EdgeInsets.all(4),
     this.elevation = 16.0,

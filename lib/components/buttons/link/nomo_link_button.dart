@@ -49,7 +49,7 @@ class NomoLinkButton extends StatefulWidget with NomoButtonMixin {
   /// Not used
 
   @override
-  Border? get border => null;
+  BorderSide? get border => null;
 
   @override
   Color? get backgroundColor => null;
