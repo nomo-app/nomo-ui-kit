@@ -37,12 +37,13 @@ class NomoDecoration extends BoxDecoration {
     double spreadRadiusK,
   ) {
     return [
-      BoxShadow(
-        color: color,
-        spreadRadius: spreadRadiusK * elevation,
-        blurRadius: blurRadiusK * elevation,
-        offset: offset,
-      ),
+      if (elevation > 0)
+        BoxShadow(
+          color: color,
+          spreadRadius: spreadRadiusK * elevation,
+          blurRadius: blurRadiusK * elevation,
+          offset: offset,
+        ),
     ];
   }
 }

@@ -152,7 +152,7 @@ class _InputSectionState extends State<InputSection> {
                 placeHolder: "Input1",
                 usePlaceholderAsTitle: false,
                 placeHolderStyle: context.typography.b3.copyWith(
-                    color: context.colors.foreground1.withOpacity(0.5)),
+                    color: context.colors.foreground1.withValues(alpha: 0.5)),
                 titleStyle: context.typography.h1,
                 title: "Input1",
                 style: context.typography.b3,

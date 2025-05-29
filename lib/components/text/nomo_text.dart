@@ -104,7 +104,7 @@ class _NomoTextState extends State<NomoText> {
     var style = (widget.style ?? NomoDefaultTextStyle.of(context)).copyWith(
       color: widget.opacity == null
           ? textColor
-          : textColor?.withOpacity(widget.opacity!),
+          : textColor?.withValues(alpha: widget.opacity!),
       fontWeight: widget.fontWeight,
       fontSize: widget.fontSize ?? _initialFontSize,
     );

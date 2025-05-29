@@ -73,12 +73,15 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
   @NomoColorField<Color?>(null)
   final Color? splashColor;
 
+  @override
   @NomoColorField<Color?>(null)
   final Color? hoverColor;
 
+  @override
   @NomoColorField<Color?>(null)
   final Color? highlightColor;
 
+  @override
   @NomoColorField<Color?>(null)
   final Color? focusColor;
 

@@ -9,7 +9,7 @@ extension NotifierUtil<T> on ValueNotifier<T> {
 
 extension ColorExtension on Color {
   String toHexColor() {
-    return '0x${value.toRadixString(16).padLeft(8, '0')}';
+    return '0x${toARGB32().toRadixString(16).padLeft(8, '0')}';
   }
 }
 
