@@ -66,7 +66,7 @@ class NomoTextButton extends StatelessWidget with NomoButtonMixin {
   @override
   Color? get selectionColor => null;
   @override
-  Border? get border => null;
+  BorderSide? get border => null;
   @override
   Color? get backgroundColor => null;
   @override

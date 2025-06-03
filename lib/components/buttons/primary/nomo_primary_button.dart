@@ -48,6 +48,8 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
   @override
   final bool? expandToConstraints;
 
+  final ShapeBorder? shapeBorder;
+
   ///
   /// Theme Fields
   ///
@@ -87,10 +89,11 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
   @override
   Color? get selectionColor => null;
   @override
-  Border? get border => null;
+  BorderSide? get border => null;
 
   const PrimaryNomoButton({
     super.key,
+    this.shapeBorder,
     this.type = ActionType.def,
     this.gradient,
     this.text,
@@ -211,6 +214,7 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
       shape: shape,
       margin: margin,
       width: width,
+      shapeBorder: shapeBorder,
       height: height,
       padding: theme.padding,
       borderRadius: theme.borderRadius,

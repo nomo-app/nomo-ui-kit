@@ -53,7 +53,7 @@ class NomoBottomBar<T> extends StatelessWidget {
   @NomoSizingField(56.0)
   final double? height;
 
-  @NomoSizingField(null)
+  @NomoSizingField<double>(0.0)
   final double? spacing;
 
   @NomoSizingField(28.0)

@@ -13,7 +13,7 @@ class SecondaryNomoButtonColorDataNullable {
   final Color? foregroundColor;
   final double? elevation;
   final Color? selectionColor;
-  final Border? border;
+  final BorderSide? border;
   final BorderRadiusGeometry? borderRadius;
   final Color? splashColor;
   final Color? hoverColor;
@@ -44,7 +44,7 @@ class SecondaryNomoButtonColorData
   @override
   final Color selectionColor;
   @override
-  final Border border;
+  final BorderSide border;
   @override
   final BorderRadiusGeometry borderRadius;
   @override
@@ -60,8 +60,7 @@ class SecondaryNomoButtonColorData
     this.foregroundColor = const Color(0xAA000000),
     this.elevation = 0.0,
     this.selectionColor = primaryColor,
-    this.border =
-        const Border.fromBorderSide(BorderSide(color: Color(0xAA000000))),
+    this.border = const BorderSide(color: Color(0xAA000000)),
     this.borderRadius = const BorderRadius.all(Radius.circular(8)),
     this.splashColor = null,
     this.hoverColor = null,
@@ -75,7 +74,7 @@ class SecondaryNomoButtonColorData
       foregroundColor: Color.lerp(a.foregroundColor, b.foregroundColor, t)!,
       elevation: lerpDouble(a.elevation, b.elevation, t)!,
       selectionColor: Color.lerp(a.selectionColor, b.selectionColor, t)!,
-      border: Border.lerp(a.border, b.border, t)!,
+      border: BorderSide.lerp(a.border, b.border, t)!,
       borderRadius:
           BorderRadiusGeometry.lerp(a.borderRadius, b.borderRadius, t)!,
       splashColor: Color.lerp(a.splashColor, b.splashColor, t),
@@ -156,7 +155,7 @@ class SecondaryNomoButtonThemeData
   @override
   final Color selectionColor;
   @override
-  final Border border;
+  final BorderSide border;
   @override
   final BorderRadiusGeometry borderRadius;
   @override
@@ -174,8 +173,7 @@ class SecondaryNomoButtonThemeData
     this.foregroundColor = const Color(0xAA000000),
     this.elevation = 0.0,
     this.selectionColor = primaryColor,
-    this.border =
-        const Border.fromBorderSide(BorderSide(color: Color(0xAA000000))),
+    this.border = const BorderSide(color: Color(0xAA000000)),
     this.borderRadius = const BorderRadius.all(Radius.circular(8)),
     this.splashColor = null,
     this.hoverColor = null,
@@ -234,7 +232,7 @@ class SecondaryNomoButtonThemeDataNullable
   @override
   final Color? selectionColor;
   @override
-  final Border? border;
+  final BorderSide? border;
   @override
   final BorderRadiusGeometry? borderRadius;
   @override

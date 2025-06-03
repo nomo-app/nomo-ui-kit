@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nomo_ui_kit/components/elevatedBox/elevated_box.dart';
 import 'package:nomo_ui_kit/components/text/nomo_text.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
+import 'package:nomo_ui_kit/utils/layout_extensions.dart';
 import 'package:nomo_ui_kit/utils/multi_wrapper.dart';
 
 mixin NomoButtonMixin on Widget {
@@ -17,7 +18,7 @@ mixin NomoButtonMixin on Widget {
   Color? get foregroundColor;
   Color? get selectionColor;
   BorderRadiusGeometry? get borderRadius;
-  Border? get border;
+  BorderSide? get border;
   BoxShape? get shape;
   bool? get expandToConstraints;
   Color? get splashColor;
@@ -33,7 +34,8 @@ class NomoButton extends StatefulWidget with NomoButtonMixin {
   final MouseCursor cursor;
   final Gradient? gradient;
   final CustomPainter? backgroundPainter;
-
+  @override
+  final BoxShape? shape;
   @override
   final FocusNode? focusNode;
 
@@ -57,15 +59,16 @@ class NomoButton extends StatefulWidget with NomoButtonMixin {
   @override
   final double elevation;
   @override
-  final Border? border;
+  final BorderSide? border;
+
+  final ShapeBorder? shapeBorder;
   @override
   final EdgeInsetsGeometry? padding;
   @override
   final EdgeInsetsGeometry? margin;
   @override
   final BorderRadiusGeometry? borderRadius;
-  @override
-  final BoxShape? shape;
+
   @override
   final bool? expandToConstraints;
 
@@ -86,6 +89,7 @@ class NomoButton extends StatefulWidget with NomoButtonMixin {
     this.focusNode,
     super.key,
     this.onPressed,
+    this.shapeBorder,
     this.enableInkwellFeedback = true,
     this.enabled,
     this.backgroundColor,
@@ -162,6 +166,18 @@ class _NomoButtonState extends State<NomoButton>
       null => null,
     };
 
+    final _shapeBorder = switch (widget.shapeBorder) {
+      final ShapeBorder shapeBorder => shapeBorder,
+      null when widget.shape == BoxShape.circle => StadiumBorder(
+          side: widget.border ?? BorderSide.none,
+        ),
+      null when widget.borderRadius != null => RoundedRectangleBorder(
+          borderRadius: widget.borderRadius!,
+          side: widget.border ?? BorderSide.none,
+        ),
+      _ => null,
+    };
+
     final child = MultiWrapper(
       wrappers: [
         if (widget.selectionColor != null && widget.border != null)
@@ -169,17 +185,11 @@ class _NomoButtonState extends State<NomoButton>
             return AnimatedBuilder(
               animation: animation,
               builder: (context, child) {
-                return ElevatedBox(
+                return Material(
                   elevation: widget.elevation,
-                  border: widget.border!.copyWithColor(animation.value),
-                  decoration: BoxDecoration(
-                    color: widget.backgroundColor,
-                    borderRadius: widget.borderRadius
-                        .ifElseNull(widget.shape != BoxShape.circle),
-                    shape: widget.shape ?? BoxShape.rectangle,
-                    gradient: widget.gradient,
-                  ),
-                  child: child!,
+                  shape: _shapeBorder?.copyWithColor(animation.value),
+                  color: widget.backgroundColor,
+                  child: child,
                 );
               },
               child: child,
@@ -187,89 +197,87 @@ class _NomoButtonState extends State<NomoButton>
           }
         else
           (child) {
-            return ElevatedBox(
+            return Material(
               elevation: widget.elevation,
-              border:
-                  widget.border ?? const Border.fromBorderSide(BorderSide.none),
-              decoration: BoxDecoration(
-                color: widget.backgroundColor,
-                gradient: widget.gradient,
-                borderRadius: widget.borderRadius
-                    .ifElseNull(widget.shape != BoxShape.circle),
-                shape: widget.shape ?? BoxShape.rectangle,
-              ),
+              shape: _shapeBorder,
+              color: widget.backgroundColor,
               child: child,
             );
           },
       ],
       child: CustomPaint(
         painter: widget.backgroundPainter,
-        child: Material(
-          type: MaterialType.transparency,
-          child: MouseRegion(
-            onEnter: (_) => _controller.forward(),
-            onExit: (_) => _controller.reverse(),
-            child: GestureDetector(
-              onSecondaryTap: widget.onSecondaryPressed,
-              child: InkWell(
-                focusNode: widget.focusNode,
-                onTap: widget.enabled ?? true ? widget.onPressed : null,
-                borderRadius: borderRadius,
-                hoverColor: widget.hoverColor ?? Colors.transparent,
-                splashColor: widget.splashColor ?? Colors.transparent,
-                highlightColor: widget.highlightColor ?? Colors.transparent,
-                focusColor: widget.focusColor ?? Colors.transparent,
-                mouseCursor: (widget.enabled ?? true)
-                    ? widget.cursor
-                    : SystemMouseCursors.basic,
-                child: Padding(
-                  padding: widget.padding ?? EdgeInsets.zero,
-                  child: MultiWrapper(
-                    wrappers: [
-                      if (widget.width != null) (child) => Center(child: child),
-                      if (widget.height != null && widget.width == null)
-                        (child) => Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [child],
-                            ),
-                      if (widget.selectionColor != null)
-                        (child) {
-                          return AnimatedBuilder(
-                            animation: animation,
-                            builder: (context, child) {
-                              final colorValue = animation.value!;
-                              return NomoTextTheme(
+        child: MouseRegion(
+          onEnter: (_) => _controller.forward(),
+          onExit: (_) => _controller.reverse(),
+          child: InkWell(
+            focusNode: widget.focusNode,
+            onTap: widget.enabled ?? true ? widget.onPressed : null,
+            customBorder: widget.shapeBorder,
+            onSecondaryTap: widget.onSecondaryPressed,
+            hoverColor: widget.hoverColor ?? Colors.transparent,
+            splashColor: widget.splashColor ?? Colors.transparent,
+            highlightColor: widget.highlightColor ?? Colors.transparent,
+            focusColor: widget.focusColor ?? Colors.transparent,
+            mouseCursor: (widget.enabled ?? true)
+                ? widget.cursor
+                : SystemMouseCursors.basic,
+            child: Padding(
+              padding: widget.padding ?? EdgeInsets.zero,
+              child: MultiWrapper(
+                wrappers: [
+                  if (widget.width != null) (child) => Center(child: child),
+                  if (widget.height != null && widget.width == null)
+                    (child) => Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [child],
+                        ),
+                  if (widget.selectionColor != null)
+                    (child) {
+                      return AnimatedBuilder(
+                        animation: animation,
+                        builder: (context, child) {
+                          final colorValue = animation.value!;
+                          return NomoTextTheme(
+                            color: colorValue,
+                            child: IconTheme(
+                              data: IconTheme.of(context).copyWith(
                                 color: colorValue,
-                                child: IconTheme(
-                                  data: IconTheme.of(context).copyWith(
-                                    color: colorValue,
-                                  ),
-                                  child: child!,
-                                ),
-                              );
-                            },
-                            child: child,
+                              ),
+                              child: child!,
+                            ),
                           );
                         },
-                      if (widget.selectionColor == null &&
-                          widget.foregroundColor != null)
-                        (child) => NomoTextTheme(
-                              color: widget.foregroundColor!,
-                              child: IconTheme(
-                                data: IconTheme.of(context).copyWith(
-                                  color: widget.foregroundColor,
-                                ),
-                                child: child,
-                              ),
+                        child: child,
+                      );
+                    },
+                  if (widget.selectionColor == null &&
+                      widget.foregroundColor != null)
+                    (child) => NomoTextTheme(
+                          color: widget.foregroundColor!,
+                          child: IconTheme(
+                            data: IconTheme.of(context).copyWith(
+                              color: widget.foregroundColor,
                             ),
-                    ],
-                    child: widget.child,
-                  ),
-                ),
+                            child: child,
+                          ),
+                        ),
+                ],
+                child: widget.child,
               ),
             ),
           ),
         ),
+      ),
+    ).wrapIf(
+      widget.gradient != null,
+      (child) => DecoratedBox(
+        decoration: BoxDecoration(
+          gradient: widget.gradient,
+          borderRadius: widget.borderRadius,
+          shape: widget.shape ?? BoxShape.rectangle,
+        ),
+        child: child,
       ),
     );
 
@@ -306,13 +314,13 @@ class _NomoButtonState extends State<NomoButton>
   }
 }
 
-extension BorderUtil on Border {
-  Border copyWithColor(Color? color) {
-    return Border(
-      top: top.copyWith(color: color),
-      bottom: bottom.copyWith(color: color),
-      left: left.copyWith(color: color),
-      right: right.copyWith(color: color),
-    );
+extension BorderUtil on ShapeBorder {
+  ShapeBorder copyWithColor(Color? color) {
+    return switch (this) {
+      final OutlinedBorder border => border.copyWith(
+          side: border.side.copyWith(color: color),
+        ),
+      _ => this,
+    };
   }
 }

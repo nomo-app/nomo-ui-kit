@@ -101,7 +101,7 @@ class NomoNotification extends StatelessWidget {
               SecondaryNomoButton(
                 shape: BoxShape.circle,
                 icon: Icons.close,
-                border: const Border.fromBorderSide(BorderSide.none),
+                border: BorderSide.none,
                 padding: const EdgeInsets.all(4),
                 onPressed: () {
                   InAppNotification.dismiss(context: context);

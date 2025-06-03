@@ -58,8 +58,10 @@ class SecondaryNomoButton extends StatelessWidget with NomoButtonMixin {
   final Color? selectionColor;
 
   @override
-  @NomoColorField(Border.fromBorderSide(BorderSide(color: Color(0xAA000000))))
-  final Border? border;
+  @NomoColorField(BorderSide(color: Color(0xAA000000)))
+  final BorderSide? border;
+
+  final ShapeBorder? shapeBorder;
 
   @override
   @NomoColorField<BorderRadiusGeometry>(BorderRadius.all(Radius.circular(8)))
@@ -87,6 +89,7 @@ class SecondaryNomoButton extends StatelessWidget with NomoButtonMixin {
 
   const SecondaryNomoButton({
     super.key,
+    this.shapeBorder,
     this.text,
     this.type = ActionType.def,
     this.icon,
@@ -180,6 +183,7 @@ class SecondaryNomoButton extends StatelessWidget with NomoButtonMixin {
       width: width,
       height: height,
       border: theme.border,
+      shapeBorder: shapeBorder,
       padding: padding,
       splashColor: theme.splashColor,
       focusColor: theme.focusColor,

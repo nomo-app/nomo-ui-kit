@@ -109,9 +109,6 @@ class NomoDialog extends StatelessWidget {
                         if (showCloseButton!)
                           AppBarItem.actions: closeButton ??
                               SecondaryNomoButton(
-                                border: const Border.fromBorderSide(
-                                  BorderSide.none,
-                                ),
                                 onPressed: () => Navigator.of(context).pop(),
                                 shape: BoxShape.circle,
                                 icon: Icons.close,
@@ -135,9 +132,6 @@ class NomoDialog extends StatelessWidget {
                         if (showCloseButton!)
                           closeButton ??
                               SecondaryNomoButton(
-                                border: const Border.fromBorderSide(
-                                  BorderSide.none,
-                                ),
                                 onPressed: () => Navigator.of(context).pop(),
                                 shape: BoxShape.circle,
                                 icon: Icons.close,
