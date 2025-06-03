@@ -1,8 +1,7 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nomo_ui_generator/annotations.dart';
+import 'package:nomo_ui_kit/components/loading/fade_in.dart';
 import 'package:nomo_ui_kit/components/text/nomo_text.dart';
 import 'package:nomo_ui_kit/components/vertical_menu/nomo_vertical_menu.dart';
 import 'package:nomo_ui_kit/entities/menu_item.dart';
@@ -51,28 +50,6 @@ class NomoVerticalListTile<T> extends StatefulWidget {
   final bool collapsed;
   final VoidCallback? onTap;
   final bool selected;
-
-  double getIntrinsicWidth(BuildContext context) {
-    final theme = getFromContext(context, this);
-
-    final titleWidth = calculateTextSize(
-      text: item.title,
-      style: theme.titleStyle,
-      context: context,
-    ).width;
-
-    final subTitleWidth = item.subtitle != null
-        ? calculateTextSize(
-            text: item.subtitle!,
-            style: theme.subtitleStyle,
-            context: context,
-          ).width
-        : 0;
-
-    final _titleWidth = max(titleWidth, subTitleWidth);
-
-    return (menuTheme.padding.horizontal * 2) + menuTheme.spacing + _titleWidth;
-  }
 
   @override
   State<NomoVerticalListTile<T>> createState() => _NomoVerticalListTileState();
@@ -255,21 +232,24 @@ class _NomoVerticalListTileState<T> extends State<NomoVerticalListTile<T>>
                       if (icon != null) icon,
                       if (!widget.collapsed) ...[
                         SizedBox(width: widget.menuTheme.spacing),
-                        Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            NomoText(
-                              widget.item.title,
-                              color: foreground,
-                              style: theme.titleStyle,
-                            ),
-                            if (widget.item.subtitle != null)
+                        FadeIn(
+                          duration: const Duration(milliseconds: 140),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
                               NomoText(
-                                widget.item.subtitle!,
+                                widget.item.title,
                                 color: foreground,
-                                style: theme.subtitleStyle,
+                                style: theme.titleStyle,
                               ),
-                          ],
+                              if (widget.item.subtitle != null)
+                                NomoText(
+                                  widget.item.subtitle!,
+                                  color: foreground,
+                                  style: theme.subtitleStyle,
+                                ),
+                            ],
+                          ),
                         ),
                         const Spacer(),
                         if (widget.item.trailling != null)

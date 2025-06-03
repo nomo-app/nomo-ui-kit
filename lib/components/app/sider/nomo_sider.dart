@@ -44,7 +44,9 @@ class NomoSider extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = getFromContext(context, this);
     final scrollController = ScrollController();
-    return Container(
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 140),
+      curve: Curves.fastOutSlowIn,
       width: theme.width,
       height: context.height,
       decoration: BoxDecoration(

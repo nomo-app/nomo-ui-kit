@@ -99,63 +99,33 @@ class NomoVerticalMenu<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = getFromContext(context, this);
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final width = constraints.maxWidth;
-
-        final collapsed = this.collapsed ??
-            [
-              for (final item in items)
-                NomoVerticalListTile(
-                  item: item,
-                  menuTheme: theme,
-                  titleStyle: style,
-                  onTap: () {
-                    onTap?.call(item);
-                  },
-                ),
-            ].any((tile) => tile.getIntrinsicWidth(context) > width);
-
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (title != null && !collapsed) ...[
-              title!,
-              (theme.spacing * 2).vSpacing,
-            ],
-            ListView.separated(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                final item = items[index];
-                final widget = NomoVerticalListTile(
-                  item: item,
-                  menuTheme: theme,
-                  titleStyle: style,
-                  collapsed: collapsed,
-                  splashColor: theme.splashColor,
-                  hoverColor: theme.hoverColor,
-                  highlightColor: theme.highlightColor,
-                  focusColor: theme.focusColor,
-                  onTap: () {
-                    onTap?.call(items[index]);
-                  },
-                  selected: item.key == selected,
-                );
-
-                return itemDecorator?.call(item, widget) ?? widget;
-              },
-              separatorBuilder: (context, index) => switch (seperatorBulder) {
-                final Widget Function(int) seperatorBulder =>
-                  seperatorBulder(index),
-                _ => const SizedBox.shrink(),
-              },
-              itemCount: items.length,
-            ),
-          ],
+    return ListView.separated(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemBuilder: (context, index) {
+        final item = items[index];
+        final widget = NomoVerticalListTile(
+          item: item,
+          menuTheme: theme,
+          titleStyle: style,
+          collapsed: collapsed ?? false,
+          splashColor: theme.splashColor,
+          hoverColor: theme.hoverColor,
+          highlightColor: theme.highlightColor,
+          focusColor: theme.focusColor,
+          onTap: () {
+            onTap?.call(items[index]);
+          },
+          selected: item.key == selected,
         );
+
+        return itemDecorator?.call(item, widget) ?? widget;
       },
+      separatorBuilder: (context, index) => switch (seperatorBulder) {
+        final Widget Function(int) seperatorBulder => seperatorBulder(index),
+        _ => const SizedBox.shrink(),
+      },
+      itemCount: items.length,
     );
   }
 }
