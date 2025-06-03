@@ -93,9 +93,12 @@ class FadeInState extends State<FadeIn> with SingleTickerProviderStateMixin {
     return AnimatedBuilder(
       animation: animation,
       builder: (BuildContext context, Widget? child) {
-        return Opacity(
-          opacity: animation.value,
-          child: widget.child,
+        return Offstage(
+          offstage: animation.value == 0,
+          child: Opacity(
+            opacity: animation.value,
+            child: widget.child,
+          ),
         );
       },
     );

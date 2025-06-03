@@ -233,6 +233,7 @@ class _NomoVerticalListTileState<T> extends State<NomoVerticalListTile<T>>
                       if (!widget.collapsed) ...[
                         SizedBox(width: widget.menuTheme.spacing),
                         FadeIn(
+                          delay: const Duration(milliseconds: 140),
                           duration: const Duration(milliseconds: 140),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
