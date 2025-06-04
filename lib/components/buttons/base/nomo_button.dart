@@ -159,16 +159,9 @@ class _NomoButtonState extends State<NomoButton>
 
   @override
   Widget build(BuildContext context) {
-    final borderRadius = switch (widget.borderRadius) {
-      _ when widget.shape == BoxShape.circle => BorderRadius.circular(1E3),
-      final BorderRadiusGeometry borderRadius =>
-        borderRadius.resolve(Directionality.of(context)),
-      null => null,
-    };
-
     final _shapeBorder = switch (widget.shapeBorder) {
       final ShapeBorder shapeBorder => shapeBorder,
-      null when widget.shape == BoxShape.circle => StadiumBorder(
+      null when widget.shape == BoxShape.circle => CircleBorder(
           side: widget.border ?? BorderSide.none,
         ),
       null when widget.borderRadius != null => RoundedRectangleBorder(
@@ -213,7 +206,7 @@ class _NomoButtonState extends State<NomoButton>
           child: InkWell(
             focusNode: widget.focusNode,
             onTap: widget.enabled ?? true ? widget.onPressed : null,
-            customBorder: widget.shapeBorder,
+            customBorder: _shapeBorder,
             onSecondaryTap: widget.onSecondaryPressed,
             hoverColor: widget.hoverColor ?? Colors.transparent,
             splashColor: widget.splashColor ?? Colors.transparent,

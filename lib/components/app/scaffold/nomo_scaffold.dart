@@ -49,6 +49,29 @@ class NomoScaffold extends StatefulWidget {
   @NomoSizingField(true)
   final bool? showSider;
 
+  NomoScaffold copyWith({
+    NomoAppBar? appBar,
+  }) {
+    return NomoScaffold(
+      backgroundColor: backgroundColor,
+      backgroundImage: backgroundImage,
+      bottomBar: bottomBar,
+      bottomSheet: bottomSheet,
+      drawer: drawer,
+      endDrawer: endDrawer,
+      floatingActionButton: floatingActionButton,
+      floatingActionButtonLocation: floatingActionButtonLocation,
+      nestedAppBar: nestedAppBar,
+      padding: padding,
+      showBottomBar: showBottomBar,
+      showSider: showSider,
+      sider: sider,
+      appBar: appBar ?? this.appBar,
+      key: key,
+      child: child,
+    );
+  }
+
   static ScaffoldState of(BuildContext context) {
     final result = context
         .findAncestorStateOfType<_NomoScaffoldState>()!

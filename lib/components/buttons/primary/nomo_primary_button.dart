@@ -109,7 +109,7 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
     this.margin,
     this.onPressed,
     this.enabled,
-    this.borderRadius = const BorderRadius.all(Radius.circular(6)),
+    this.borderRadius,
     this.textStyle,
     this.iconSize,
     this.shape,

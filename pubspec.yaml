@@ -3,6 +3,7 @@ description: Highly opinionated and highly customizable UI Kit for Flutter. Mean
 version: 0.0.36
 repository: https://github.com/nomo-app/nomo-ui-kit
 homepage: https://nomo.app
+publish_to: none
 platforms:
   ios:
   android:
@@ -23,7 +24,8 @@ dependencies:
   flutter_svg: ^2.0.10+1
   flutter_localizations:
     sdk: flutter
-  nomo_ui_generator: ^0.1.0
+  nomo_ui_generator:
+    path: ../nomo-ui-kit-generator
 
 dev_dependencies:
   flutter_test:

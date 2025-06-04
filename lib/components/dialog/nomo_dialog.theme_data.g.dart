@@ -37,6 +37,7 @@ class NomoDialogColorData implements NomoDialogColorDataNullable {
 }
 
 class NomoDialogSizingDataNullable {
+  final double? maxWidth;
   final double? elevation;
   final Widget? contentSpacing;
   final double? widthRatio;
@@ -44,6 +45,7 @@ class NomoDialogSizingDataNullable {
   final EdgeInsetsGeometry? padding;
   final BorderRadiusGeometry? borderRadius;
   const NomoDialogSizingDataNullable({
+    this.maxWidth,
     this.elevation,
     this.contentSpacing,
     this.widthRatio,
@@ -54,6 +56,8 @@ class NomoDialogSizingDataNullable {
 }
 
 class NomoDialogSizingData implements NomoDialogSizingDataNullable {
+  @override
+  final double? maxWidth;
   @override
   final double elevation;
   @override
@@ -67,6 +71,7 @@ class NomoDialogSizingData implements NomoDialogSizingDataNullable {
   @override
   final BorderRadiusGeometry borderRadius;
   const NomoDialogSizingData({
+    this.maxWidth = null,
     this.elevation = 1.0,
     this.contentSpacing = const SizedBox(height: 12),
     this.widthRatio = 0.75,
@@ -77,6 +82,7 @@ class NomoDialogSizingData implements NomoDialogSizingDataNullable {
   static NomoDialogSizingData lerp(
       NomoDialogSizingData a, NomoDialogSizingData b, double t) {
     return NomoDialogSizingData(
+      maxWidth: lerpDouble(a.maxWidth, b.maxWidth, t),
       elevation: lerpDouble(a.elevation, b.elevation, t)!,
       contentSpacing: t < 0.5 ? a.contentSpacing : b.contentSpacing,
       widthRatio: lerpDouble(a.widthRatio, b.widthRatio, t)!,
@@ -90,6 +96,7 @@ class NomoDialogSizingData implements NomoDialogSizingDataNullable {
   static NomoDialogSizingData overrideWith(NomoDialogSizingData base,
       [NomoDialogSizingDataNullable? override]) {
     return NomoDialogSizingData(
+      maxWidth: override?.maxWidth ?? base.maxWidth,
       elevation: override?.elevation ?? base.elevation,
       contentSpacing: override?.contentSpacing ?? base.contentSpacing,
       widthRatio: override?.widthRatio ?? base.widthRatio,
@@ -113,6 +120,8 @@ class NomoDialogThemeData
   @override
   final Color backgroundColor;
   @override
+  final double? maxWidth;
+  @override
   final double elevation;
   @override
   final Widget contentSpacing;
@@ -126,6 +135,7 @@ class NomoDialogThemeData
   final BorderRadiusGeometry borderRadius;
   const NomoDialogThemeData({
     this.backgroundColor = Colors.white,
+    this.maxWidth = null,
     this.elevation = 1.0,
     this.contentSpacing = const SizedBox(height: 12),
     this.widthRatio = 0.75,
@@ -140,6 +150,7 @@ class NomoDialogThemeData
   ) {
     return NomoDialogThemeData(
       backgroundColor: colors.backgroundColor,
+      maxWidth: sizing.maxWidth,
       elevation: sizing.elevation,
       contentSpacing: sizing.contentSpacing,
       widthRatio: sizing.widthRatio,
@@ -151,6 +162,7 @@ class NomoDialogThemeData
   NomoDialogThemeData copyWith([NomoDialogThemeDataNullable? override]) {
     return NomoDialogThemeData(
       backgroundColor: override?.backgroundColor ?? backgroundColor,
+      maxWidth: override?.maxWidth ?? maxWidth,
       elevation: override?.elevation ?? elevation,
       contentSpacing: override?.contentSpacing ?? contentSpacing,
       widthRatio: override?.widthRatio ?? widthRatio,
@@ -169,6 +181,8 @@ class NomoDialogThemeDataNullable
   @override
   final Color? backgroundColor;
   @override
+  final double? maxWidth;
+  @override
   final double? elevation;
   @override
   final Widget? contentSpacing;
@@ -182,6 +196,7 @@ class NomoDialogThemeDataNullable
   final BorderRadiusGeometry? borderRadius;
   const NomoDialogThemeDataNullable({
     this.backgroundColor,
+    this.maxWidth,
     this.elevation,
     this.contentSpacing,
     this.widthRatio,
@@ -231,6 +246,7 @@ NomoDialogThemeData getFromContext(
       .copyWith(themeOverride);
   return NomoDialogThemeData(
     backgroundColor: widget.backgroundColor ?? themeData.backgroundColor,
+    maxWidth: widget.maxWidth ?? themeData.maxWidth,
     elevation: widget.elevation ?? themeData.elevation,
     contentSpacing: widget.contentSpacing ?? themeData.contentSpacing,
     widthRatio: widget.widthRatio ?? themeData.widthRatio,

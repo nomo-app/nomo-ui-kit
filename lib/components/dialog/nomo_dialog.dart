@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nomo_ui_generator/annotations.dart';
 import 'package:nomo_ui_kit/components/app/app_bar/layout/appbar_layout_delegate.dart';
+import 'package:nomo_ui_kit/components/buttons/primary/nomo_primary_button.dart';
 import 'package:nomo_ui_kit/components/buttons/secondary/nomo_secondary_button.dart';
 import 'package:nomo_ui_kit/components/elevatedBox/elevated_box.dart';
 import 'package:nomo_ui_kit/components/text/nomo_text.dart';
@@ -40,12 +41,15 @@ class NomoDialog extends StatelessWidget {
   final Widget content;
   final bool? showCloseButton;
   final List<Widget>? actions;
-  final double? maxWidth;
+
   final Widget? titleWidget;
   final Widget? closeButton;
   final Widget? leading;
   final bool scrollabe;
   final bool centerTitle;
+
+  @NomoSizingField<double?>(null)
+  final double? maxWidth;
 
   @NomoSizingField(1.0)
   final double? elevation;
@@ -78,7 +82,7 @@ class NomoDialog extends StatelessWidget {
     return Center(
       child: ConstrainedBox(
         constraints: BoxConstraints(
-          maxWidth: maxWidth ?? width,
+          maxWidth: theme.maxWidth ?? width,
           maxHeight: height * 0.9,
         ),
         child: Container(
@@ -108,11 +112,15 @@ class NomoDialog extends StatelessWidget {
                           AppBarItem.title: titleWidget!,
                         if (showCloseButton!)
                           AppBarItem.actions: closeButton ??
-                              SecondaryNomoButton(
+                              PrimaryNomoButton(
                                 onPressed: () => Navigator.of(context).pop(),
                                 shape: BoxShape.circle,
                                 icon: Icons.close,
-                                padding: const EdgeInsets.all(8),
+                                elevation: 0,
+                                foregroundColor: context.colors.foreground1,
+                                width: 48,
+                                height: 48,
+                                padding: EdgeInsets.zero,
                                 backgroundColor: theme.backgroundColor,
                               ),
                       },
@@ -131,11 +139,13 @@ class NomoDialog extends StatelessWidget {
                         const Spacer(),
                         if (showCloseButton!)
                           closeButton ??
-                              SecondaryNomoButton(
+                              PrimaryNomoButton(
                                 onPressed: () => Navigator.of(context).pop(),
                                 shape: BoxShape.circle,
                                 icon: Icons.close,
-                                padding: const EdgeInsets.all(8),
+                                width: 48,
+                                height: 48,
+                                padding: EdgeInsets.zero,
                                 backgroundColor: theme.backgroundColor,
                               ),
                       ],
