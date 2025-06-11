@@ -120,6 +120,11 @@ NomoComponentSizes lerpNomoComponentSizes(
       b.dropDownMenuSizing,
       t,
     ),
+    switchSizing: NomoSwitchSizingData.lerp(
+      a.switchSizing,
+      b.switchSizing,
+      t,
+    ),
   );
 }
 
@@ -146,6 +151,7 @@ class NomoComponentSizesNullable {
   final NomoDropDownButtonSizingDataNullable? dropDownButtonSizing;
   final NomoElevationSizingDataNullable? elevationSizing;
   final NomoDropDownMenuSizingDataNullable? dropDownMenuSizing;
+  final NomoSwitchSizingDataNullable? switchSizing;
   const NomoComponentSizesNullable({
     this.outlineContainerSizing,
     this.appBarSizing,
@@ -169,6 +175,7 @@ class NomoComponentSizesNullable {
     this.dropDownButtonSizing,
     this.elevationSizing,
     this.dropDownMenuSizing,
+    this.switchSizing,
   });
 }
 
@@ -217,6 +224,8 @@ class NomoComponentSizes implements NomoComponentSizesNullable {
   final NomoElevationSizingData elevationSizing;
   @override
   final NomoDropDownMenuSizingData dropDownMenuSizing;
+  @override
+  final NomoSwitchSizingData switchSizing;
   const NomoComponentSizes({
     this.outlineContainerSizing = const NomoOutlineContainerSizingData(),
     this.appBarSizing = const NomoAppBarSizingData(),
@@ -240,6 +249,7 @@ class NomoComponentSizes implements NomoComponentSizesNullable {
     this.dropDownButtonSizing = const NomoDropDownButtonSizingData(),
     this.elevationSizing = const NomoElevationSizingData(),
     this.dropDownMenuSizing = const NomoDropDownMenuSizingData(),
+    this.switchSizing = const NomoSwitchSizingData(),
   });
 }
 
@@ -291,6 +301,8 @@ extension NomoComponentSizesOverride on NomoComponentSizes {
           elevationSizing, nullable.elevationSizing),
       dropDownMenuSizing: NomoDropDownMenuSizingData.overrideWith(
           dropDownMenuSizing, nullable.dropDownMenuSizing),
+      switchSizing: NomoSwitchSizingData.overrideWith(
+          switchSizing, nullable.switchSizing),
     );
   }
 }

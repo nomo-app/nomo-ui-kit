@@ -107,6 +107,7 @@ class ThemeProvider extends InheritedWidget {
 
   @override
   bool updateShouldNotify(ThemeProvider oldWidget) {
-    return false;
+    return oldWidget.colorMode != colorMode ||
+        oldWidget.sizingMode != sizingMode;
   }
 }

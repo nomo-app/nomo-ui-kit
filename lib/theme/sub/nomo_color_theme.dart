@@ -23,6 +23,7 @@ import 'package:nomo_ui_kit/components/nomo_elevation/nomo_elevation.dart';
 import 'package:nomo_ui_kit/components/notification/nomo_notification.dart';
 import 'package:nomo_ui_kit/components/outline_container/nomo_outline_container.dart';
 import 'package:nomo_ui_kit/components/snackbar/nomo_snackbar.dart';
+import 'package:nomo_ui_kit/components/switch/nomo_switch.dart';
 import 'package:nomo_ui_kit/components/vertical_menu/nomo_vertical_menu.dart';
 import 'package:nomo_ui_kit/utils/extensions.dart';
 
@@ -57,6 +58,7 @@ const _ = [
   NomoDropDownButtonColorData,
   NomoElevationColorData,
   NomoDropDownMenuColorData,
+  NomoSwitchColorData,
 ];
 
 NomoComponentColors predefinedComponentColors(NomoColors colors) {

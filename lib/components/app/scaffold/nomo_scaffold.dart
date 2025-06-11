@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nomo_ui_generator/annotations.dart';
 import 'package:nomo_ui_kit/components/app/app_bar/nomo_app_bar.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
+import 'package:nomo_ui_kit/utils/layout_extensions.dart';
 
 part 'nomo_scaffold.theme_data.g.dart';
 
@@ -24,6 +25,7 @@ class NomoScaffold extends StatefulWidget {
     this.floatingActionButton,
     this.floatingActionButtonLocation,
     this.backgroundImage,
+    this.borderRadius,
   });
   final Widget child;
   final NomoAppBar? appBar;
@@ -36,6 +38,7 @@ class NomoScaffold extends StatefulWidget {
   final Widget? floatingActionButton;
   final FloatingActionButtonLocation? floatingActionButtonLocation;
   final DecorationImage? backgroundImage;
+  final BorderRadiusGeometry? borderRadius;
 
   @NomoSizingField(EdgeInsets.zero)
   final EdgeInsetsGeometry? padding;
@@ -51,6 +54,7 @@ class NomoScaffold extends StatefulWidget {
 
   NomoScaffold copyWith({
     NomoAppBar? appBar,
+    BorderRadiusGeometry? borderRadius,
   }) {
     return NomoScaffold(
       backgroundColor: backgroundColor,
@@ -68,6 +72,7 @@ class NomoScaffold extends StatefulWidget {
       sider: sider,
       appBar: appBar ?? this.appBar,
       key: key,
+      borderRadius: borderRadius ?? this.borderRadius,
       child: child,
     );
   }
@@ -154,6 +159,14 @@ class _NomoScaffoldState extends State<NomoScaffold> {
       drawer: widget.drawer,
       endDrawer: widget.endDrawer,
       floatingActionButton: widget.floatingActionButton,
+    ).wrapIf(
+      widget.borderRadius != null,
+      (p0) {
+        return ClipRRect(
+          borderRadius: widget.borderRadius!,
+          child: p0,
+        );
+      },
     );
   }
 }
