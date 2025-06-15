@@ -35,6 +35,8 @@ class NomoVerticalListTile<T> extends StatefulWidget {
     this.highlightColor,
     this.hoverColor,
     this.splashColor,
+    this.iconForeground,
+    this.trailling,
   });
   final NomoMenuItem<T> item;
   final NomoVerticalMenuThemeData menuTheme;
@@ -47,9 +49,13 @@ class NomoVerticalListTile<T> extends StatefulWidget {
 
   final Color? focusColor;
 
+  final Color? iconForeground;
+
   final bool collapsed;
   final VoidCallback? onTap;
   final bool selected;
+
+  final Widget? trailling;
 
   @override
   State<NomoVerticalListTile<T>> createState() => _NomoVerticalListTileState();
@@ -71,6 +77,7 @@ class _NomoVerticalListTileState<T> extends State<NomoVerticalListTile<T>>
 
   late Animation<Color?> foreGroundAnimation;
   late Animation<Color?> backgroundAnimation;
+  late Animation<Color?> iconforegroundAnimation;
   late Animation<BorderSide?> borderAnimation;
 
   @override
@@ -84,6 +91,11 @@ class _NomoVerticalListTileState<T> extends State<NomoVerticalListTile<T>>
       begin: widget.menuTheme.background,
       end: widget.menuTheme.selectedBackground,
     ).animate(backgroundController);
+
+    iconforegroundAnimation = ColorTween(
+      begin: widget.menuTheme.iconForeground,
+      end: widget.menuTheme.selectedForeground,
+    ).animate(foregroundController);
 
     borderAnimation = BorderSideTween(
       begin: widget.menuTheme.border,
@@ -116,6 +128,11 @@ class _NomoVerticalListTileState<T> extends State<NomoVerticalListTile<T>>
 
     foreGroundAnimation = ColorTween(
       begin: widget.menuTheme.foreground,
+      end: widget.menuTheme.selectedForeground,
+    ).animate(foregroundController);
+
+    iconforegroundAnimation = ColorTween(
+      begin: widget.menuTheme.iconForeground,
       end: widget.menuTheme.selectedForeground,
     ).animate(foregroundController);
 
@@ -179,7 +196,7 @@ class _NomoVerticalListTileState<T> extends State<NomoVerticalListTile<T>>
               final NomoMenuWidgetItem<T> widgetItem => widgetItem.child,
               final NomoMenuIconItem<T> iconItem => Icon(
                   iconItem.icon,
-                  color: foreground,
+                  color: iconforegroundAnimation.value,
                   size: menuTheme.iconSize,
                 ),
               final NomoMenuImageItem<T> imageItem
@@ -253,7 +270,9 @@ class _NomoVerticalListTileState<T> extends State<NomoVerticalListTile<T>>
                           ),
                         ),
                         const Spacer(),
-                        if (widget.item.trailling != null)
+                        if (widget.trailling != null)
+                          widget.trailling!
+                        else if (widget.item.trailling != null)
                           NomoTextTheme(
                             color: foreground!,
                             child: NomoDefaultTextStyle(

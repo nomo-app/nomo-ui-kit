@@ -8,12 +8,15 @@ sealed class NomoMenuItem<T> {
     this.subtitle,
     this.trailling,
     this.leading,
+    this.children,
   });
   final String title;
   final T key;
   final String? subtitle;
   final Widget? trailling;
   final Widget? leading;
+
+  final List<NomoMenuItem<T>>? children;
 
   @override
   int get hashCode => title.hashCode ^ key.hashCode;
@@ -35,6 +38,7 @@ final class NomoMenuWidgetItem<T> extends NomoMenuItem<T> {
     super.subtitle,
     super.trailling,
     super.leading,
+    super.children,
   });
 
   final Widget child;
@@ -58,6 +62,7 @@ final class NomoMenuIconItem<T> extends NomoMenuItem<T> {
     super.subtitle,
     super.trailling,
     super.leading,
+    super.children,
   });
   final IconData icon;
 }
@@ -70,6 +75,7 @@ final class NomoMenuImageItem<T> extends NomoMenuItem<T> {
     super.subtitle,
     super.trailling,
     super.leading,
+    super.children,
   });
   final String imagePath;
 }

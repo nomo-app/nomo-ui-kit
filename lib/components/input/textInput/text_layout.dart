@@ -171,7 +171,7 @@ class TextInputLayoutRenderbox extends RenderBox
 
       final topInset = (placeHolderTitleHeight != null
           ? animation * centerVertically(maxHeight, placeHolderSize)
-          : 0.0);
+          : centerVertically(maxHeight, placeHolderSize));
       placeHolder.layout(constraints);
 
       final dx = switch (textAlign) {

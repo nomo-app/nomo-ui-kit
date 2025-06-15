@@ -12,6 +12,7 @@ class NomoVerticalMenuColorDataNullable {
   final BorderSide? border;
   final BorderSide? selectedBorder;
   final Color? foreground;
+  final Color? iconForeground;
   final Color? background;
   final Color? selectedBackground;
   final Color? selectedForeground;
@@ -20,10 +21,12 @@ class NomoVerticalMenuColorDataNullable {
   final Color? hoverColor;
   final Color? highlightColor;
   final Color? focusColor;
+  final IconData? expandIcon;
   const NomoVerticalMenuColorDataNullable({
     this.border,
     this.selectedBorder,
     this.foreground,
+    this.iconForeground,
     this.background,
     this.selectedBackground,
     this.selectedForeground,
@@ -32,6 +35,7 @@ class NomoVerticalMenuColorDataNullable {
     this.hoverColor,
     this.highlightColor,
     this.focusColor,
+    this.expandIcon,
   });
 }
 
@@ -42,6 +46,8 @@ class NomoVerticalMenuColorData implements NomoVerticalMenuColorDataNullable {
   final BorderSide selectedBorder;
   @override
   final Color foreground;
+  @override
+  final Color iconForeground;
   @override
   final Color background;
   @override
@@ -58,10 +64,13 @@ class NomoVerticalMenuColorData implements NomoVerticalMenuColorDataNullable {
   final Color? highlightColor;
   @override
   final Color? focusColor;
+  @override
+  final IconData? expandIcon;
   const NomoVerticalMenuColorData({
     this.border = BorderSide.none,
     this.selectedBorder = BorderSide.none,
     this.foreground = Colors.black,
+    this.iconForeground = Colors.black,
     this.background = Colors.white,
     this.selectedBackground = Colors.red,
     this.selectedForeground = Colors.red,
@@ -70,6 +79,7 @@ class NomoVerticalMenuColorData implements NomoVerticalMenuColorDataNullable {
     this.hoverColor = null,
     this.highlightColor = null,
     this.focusColor = null,
+    this.expandIcon = null,
   });
   static NomoVerticalMenuColorData lerp(
       NomoVerticalMenuColorData a, NomoVerticalMenuColorData b, double t) {
@@ -77,6 +87,7 @@ class NomoVerticalMenuColorData implements NomoVerticalMenuColorDataNullable {
       border: BorderSide.lerp(a.border, b.border, t)!,
       selectedBorder: BorderSide.lerp(a.selectedBorder, b.selectedBorder, t)!,
       foreground: Color.lerp(a.foreground, b.foreground, t)!,
+      iconForeground: Color.lerp(a.iconForeground, b.iconForeground, t)!,
       background: Color.lerp(a.background, b.background, t)!,
       selectedBackground:
           Color.lerp(a.selectedBackground, b.selectedBackground, t)!,
@@ -87,6 +98,7 @@ class NomoVerticalMenuColorData implements NomoVerticalMenuColorDataNullable {
       hoverColor: Color.lerp(a.hoverColor, b.hoverColor, t),
       highlightColor: Color.lerp(a.highlightColor, b.highlightColor, t),
       focusColor: Color.lerp(a.focusColor, b.focusColor, t),
+      expandIcon: t < 0.5 ? a.expandIcon : b.expandIcon,
     );
   }
 
@@ -96,6 +108,7 @@ class NomoVerticalMenuColorData implements NomoVerticalMenuColorDataNullable {
       border: override?.border ?? base.border,
       selectedBorder: override?.selectedBorder ?? base.selectedBorder,
       foreground: override?.foreground ?? base.foreground,
+      iconForeground: override?.iconForeground ?? base.iconForeground,
       background: override?.background ?? base.background,
       selectedBackground:
           override?.selectedBackground ?? base.selectedBackground,
@@ -106,6 +119,7 @@ class NomoVerticalMenuColorData implements NomoVerticalMenuColorDataNullable {
       hoverColor: override?.hoverColor ?? base.hoverColor,
       highlightColor: override?.highlightColor ?? base.highlightColor,
       focusColor: override?.focusColor ?? base.focusColor,
+      expandIcon: override?.expandIcon ?? base.expandIcon,
     );
   }
 }
@@ -116,12 +130,14 @@ class NomoVerticalMenuSizingDataNullable {
   final double? spacing;
   final double? height;
   final double? iconSize;
+  final double? subMenuIconSpacing;
   const NomoVerticalMenuSizingDataNullable({
     this.padding,
     this.itemSpacing,
     this.spacing,
     this.height,
     this.iconSize,
+    this.subMenuIconSpacing,
   });
 }
 
@@ -136,12 +152,15 @@ class NomoVerticalMenuSizingData implements NomoVerticalMenuSizingDataNullable {
   final double height;
   @override
   final double iconSize;
+  @override
+  final double subMenuIconSpacing;
   const NomoVerticalMenuSizingData({
     this.padding = const EdgeInsets.symmetric(horizontal: 8),
     this.itemSpacing = 8.0,
     this.spacing = 8.0,
     this.height = 56.0,
     this.iconSize = 28.0,
+    this.subMenuIconSpacing = 8,
   });
   static NomoVerticalMenuSizingData lerp(
       NomoVerticalMenuSizingData a, NomoVerticalMenuSizingData b, double t) {
@@ -151,6 +170,8 @@ class NomoVerticalMenuSizingData implements NomoVerticalMenuSizingDataNullable {
       spacing: lerpDouble(a.spacing, b.spacing, t)!,
       height: lerpDouble(a.height, b.height, t)!,
       iconSize: lerpDouble(a.iconSize, b.iconSize, t)!,
+      subMenuIconSpacing:
+          lerpDouble(a.subMenuIconSpacing, b.subMenuIconSpacing, t)!,
     );
   }
 
@@ -163,6 +184,8 @@ class NomoVerticalMenuSizingData implements NomoVerticalMenuSizingDataNullable {
       spacing: override?.spacing ?? base.spacing,
       height: override?.height ?? base.height,
       iconSize: override?.iconSize ?? base.iconSize,
+      subMenuIconSpacing:
+          override?.subMenuIconSpacing ?? base.subMenuIconSpacing,
     );
   }
 }
@@ -187,6 +210,8 @@ class NomoVerticalMenuThemeData
   @override
   final Color foreground;
   @override
+  final Color iconForeground;
+  @override
   final Color background;
   @override
   final Color selectedBackground;
@@ -203,6 +228,8 @@ class NomoVerticalMenuThemeData
   @override
   final Color? focusColor;
   @override
+  final IconData? expandIcon;
+  @override
   final EdgeInsetsGeometry padding;
   @override
   final double itemSpacing;
@@ -212,10 +239,13 @@ class NomoVerticalMenuThemeData
   final double height;
   @override
   final double iconSize;
+  @override
+  final double subMenuIconSpacing;
   const NomoVerticalMenuThemeData({
     this.border = BorderSide.none,
     this.selectedBorder = BorderSide.none,
     this.foreground = Colors.black,
+    this.iconForeground = Colors.black,
     this.background = Colors.white,
     this.selectedBackground = Colors.red,
     this.selectedForeground = Colors.red,
@@ -224,11 +254,13 @@ class NomoVerticalMenuThemeData
     this.hoverColor = null,
     this.highlightColor = null,
     this.focusColor = null,
+    this.expandIcon = null,
     this.padding = const EdgeInsets.symmetric(horizontal: 8),
     this.itemSpacing = 8.0,
     this.spacing = 8.0,
     this.height = 56.0,
     this.iconSize = 28.0,
+    this.subMenuIconSpacing = 8,
   });
   factory NomoVerticalMenuThemeData.from(
     NomoVerticalMenuColorData colors,
@@ -239,6 +271,7 @@ class NomoVerticalMenuThemeData
       border: colors.border,
       selectedBorder: colors.selectedBorder,
       foreground: colors.foreground,
+      iconForeground: colors.iconForeground,
       background: colors.background,
       selectedBackground: colors.selectedBackground,
       selectedForeground: colors.selectedForeground,
@@ -247,11 +280,13 @@ class NomoVerticalMenuThemeData
       hoverColor: colors.hoverColor,
       highlightColor: colors.highlightColor,
       focusColor: colors.focusColor,
+      expandIcon: colors.expandIcon,
       padding: sizing.padding,
       itemSpacing: sizing.itemSpacing,
       spacing: sizing.spacing,
       height: sizing.height,
       iconSize: sizing.iconSize,
+      subMenuIconSpacing: sizing.subMenuIconSpacing,
     );
   }
   NomoVerticalMenuThemeData copyWith(
@@ -260,6 +295,7 @@ class NomoVerticalMenuThemeData
       border: override?.border ?? border,
       selectedBorder: override?.selectedBorder ?? selectedBorder,
       foreground: override?.foreground ?? foreground,
+      iconForeground: override?.iconForeground ?? iconForeground,
       background: override?.background ?? background,
       selectedBackground: override?.selectedBackground ?? selectedBackground,
       selectedForeground: override?.selectedForeground ?? selectedForeground,
@@ -268,11 +304,13 @@ class NomoVerticalMenuThemeData
       hoverColor: override?.hoverColor ?? hoverColor,
       highlightColor: override?.highlightColor ?? highlightColor,
       focusColor: override?.focusColor ?? focusColor,
+      expandIcon: override?.expandIcon ?? expandIcon,
       padding: override?.padding ?? padding,
       itemSpacing: override?.itemSpacing ?? itemSpacing,
       spacing: override?.spacing ?? spacing,
       height: override?.height ?? height,
       iconSize: override?.iconSize ?? iconSize,
+      subMenuIconSpacing: override?.subMenuIconSpacing ?? subMenuIconSpacing,
     );
   }
 }
@@ -288,6 +326,8 @@ class NomoVerticalMenuThemeDataNullable
   final BorderSide? selectedBorder;
   @override
   final Color? foreground;
+  @override
+  final Color? iconForeground;
   @override
   final Color? background;
   @override
@@ -305,6 +345,8 @@ class NomoVerticalMenuThemeDataNullable
   @override
   final Color? focusColor;
   @override
+  final IconData? expandIcon;
+  @override
   final EdgeInsetsGeometry? padding;
   @override
   final double? itemSpacing;
@@ -314,10 +356,13 @@ class NomoVerticalMenuThemeDataNullable
   final double? height;
   @override
   final double? iconSize;
+  @override
+  final double? subMenuIconSpacing;
   const NomoVerticalMenuThemeDataNullable({
     this.border,
     this.selectedBorder,
     this.foreground,
+    this.iconForeground,
     this.background,
     this.selectedBackground,
     this.selectedForeground,
@@ -326,11 +371,13 @@ class NomoVerticalMenuThemeDataNullable
     this.hoverColor,
     this.highlightColor,
     this.focusColor,
+    this.expandIcon,
     this.padding,
     this.itemSpacing,
     this.spacing,
     this.height,
     this.iconSize,
+    this.subMenuIconSpacing,
   });
 }
 
@@ -376,6 +423,7 @@ NomoVerticalMenuThemeData getFromContext(
     border: widget.border ?? themeData.border,
     selectedBorder: widget.selectedBorder ?? themeData.selectedBorder,
     foreground: widget.foreground ?? themeData.foreground,
+    iconForeground: widget.iconForeground ?? themeData.iconForeground,
     background: widget.background ?? themeData.background,
     selectedBackground:
         widget.selectedBackground ?? themeData.selectedBackground,
@@ -386,10 +434,13 @@ NomoVerticalMenuThemeData getFromContext(
     hoverColor: widget.hoverColor ?? themeData.hoverColor,
     highlightColor: widget.highlightColor ?? themeData.highlightColor,
     focusColor: widget.focusColor ?? themeData.focusColor,
+    expandIcon: widget.expandIcon ?? themeData.expandIcon,
     padding: widget.padding ?? themeData.padding,
     itemSpacing: widget.itemSpacing ?? themeData.itemSpacing,
     spacing: widget.spacing ?? themeData.spacing,
     height: widget.height ?? themeData.height,
     iconSize: widget.iconSize ?? themeData.iconSize,
+    subMenuIconSpacing:
+        widget.subMenuIconSpacing ?? themeData.subMenuIconSpacing,
   );
 }
