@@ -132,6 +132,7 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
     required IconData icon,
     required void Function() onTap,
     Color backgroundColor = Colors.transparent,
+    double iconSize = 18,
   }) {
     return PrimaryNomoButton(
       icon: icon,
@@ -139,9 +140,10 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
       shape: BoxShape.circle,
       onPressed: onTap,
       backgroundColor: backgroundColor,
-      width: 48,
-      height: 48,
+      width: 42,
+      height: 42,
       elevation: 0,
+      iconSize: iconSize,
     );
   }
 
