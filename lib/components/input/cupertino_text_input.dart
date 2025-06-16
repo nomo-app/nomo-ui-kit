@@ -159,6 +159,7 @@ class CupertinoInput extends StatefulWidget {
     required this.usePlaceholderAsTitle,
     required this.duration,
     required this.curve,
+    required this.textSpacing,
     super.key,
     this.controller,
     this.focusNode,
@@ -256,6 +257,7 @@ class CupertinoInput extends StatefulWidget {
             (maxLines == 1 ? TextInputType.text : TextInputType.multiline),
         enableInteractiveSelection =
             enableInteractiveSelection ?? (!readOnly || !obscureText);
+  final double textSpacing;
 
   /// Controls the text being edited.
   ///
@@ -1354,6 +1356,7 @@ class _CupertinoInputState extends State<CupertinoInput>
                       curve: widget.curve,
                       duration: widget.duration,
                       textAlign: widget.textAlign,
+                      textSpacing: widget.textSpacing,
                     ),
                   ),
                   if (widget.bottom != null) widget.bottom!,
@@ -1381,6 +1384,7 @@ class _TextInputDependetAttachment extends StatefulWidget {
   final Duration duration;
   final Curve curve;
   final TextAlign textAlign;
+  final double textSpacing;
 
   const _TextInputDependetAttachment({
     required this.text,
@@ -1393,6 +1397,7 @@ class _TextInputDependetAttachment extends StatefulWidget {
     required this.duration,
     required this.curve,
     required this.textAlign,
+    required this.textSpacing,
     this.trailling,
     this.leading,
     this.placeHolder,
@@ -1491,6 +1496,7 @@ class _TextInputDependetAttachmentState
         final inverted = 1 - val;
 
         return TextInputLayoutDelegate(
+          textSpacing: widget.textSpacing,
           children: {
             if (widget.leading != null) TextLayoutItem.leading: widget.leading!,
             if (widget.trailling != null)

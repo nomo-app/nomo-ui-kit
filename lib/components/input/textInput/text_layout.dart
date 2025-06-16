@@ -17,11 +17,13 @@ class TextInputLayoutDelegate
     required this.placeHolderTitleHeight,
     required this.animation,
     required this.textAlign,
+    required this.textSpacing,
   }) : super(key: ValueKey(children.hashCode));
   final Map<TextLayoutItem, Widget> children;
   final Size? placeHolderTitleHeight;
   final double animation;
   final TextAlign textAlign;
+  final double? textSpacing;
 
   @override
   Iterable<TextLayoutItem> get slots => children.keys;
@@ -37,11 +39,11 @@ class TextInputLayoutDelegate
     BuildContext context,
   ) {
     return TextInputLayoutRenderbox(
-      items: children.keys.toList(),
-      placeHolderTitleHeight: placeHolderTitleHeight,
-      animation: animation,
-      textAlign: textAlign,
-    );
+        items: children.keys.toList(),
+        placeHolderTitleHeight: placeHolderTitleHeight,
+        animation: animation,
+        textAlign: textAlign,
+        textSpacing: textSpacing);
   }
 
   @override
@@ -62,12 +64,14 @@ class TextInputLayoutRenderbox extends RenderBox
     required this.placeHolderTitleHeight,
     required this.animation,
     required this.textAlign,
+    required this.textSpacing,
   });
   final List<TextLayoutItem> items;
   final Size? placeHolderTitleHeight;
   late Size contentSize;
   final double animation;
   final TextAlign textAlign;
+  final double? textSpacing;
 
   double centerVertically(double maxHeight, Size s) {
     if (maxHeight == double.infinity) {
@@ -150,14 +154,17 @@ class TextInputLayoutRenderbox extends RenderBox
     var textSize = intrinsicSizes[TextLayoutItem.text]!;
     text.layout(
       BoxConstraints(
-        maxWidth: maxWidth - leadingSize.width - traillingSize.width,
+        maxWidth: maxWidth -
+            leadingSize.width -
+            traillingSize.width -
+            (textSpacing ?? 0) * 2,
         maxHeight: textMaxHeight,
       ),
       parentUsesSize: true,
     );
     textSize = text.size;
     final textOffset = Offset(
-      leadingSize.width,
+      (textSpacing ?? 0) + leadingSize.width,
       textInset + centerVertically(textMaxHeight, textSize),
     );
     (text.parentData! as BoxParentData).offset = textOffset;
@@ -178,7 +185,7 @@ class TextInputLayoutRenderbox extends RenderBox
         TextAlign.start ||
         TextAlign.left ||
         TextAlign.justify =>
-          leadingSize.width,
+          (textSpacing ?? 0) + leadingSize.width,
         TextAlign.end ||
         TextAlign.right =>
           maxWidth - traillingSize.width - placeHolderSize.width,

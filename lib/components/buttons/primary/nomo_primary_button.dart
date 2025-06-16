@@ -128,6 +128,23 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
           'Either Specify child or text and icon',
         );
 
+  factory PrimaryNomoButton.iconButton({
+    required IconData icon,
+    required void Function() onTap,
+    Color backgroundColor = Colors.transparent,
+  }) {
+    return PrimaryNomoButton(
+      icon: icon,
+      padding: EdgeInsets.zero,
+      shape: BoxShape.circle,
+      onPressed: onTap,
+      backgroundColor: backgroundColor,
+      width: 48,
+      height: 48,
+      elevation: 0,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = getFromContext(context, this);
