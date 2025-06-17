@@ -28,6 +28,7 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
   final Axis direction;
   final Gradient? gradient;
   final CustomPainter? backgroundPainter;
+  final Color? disabledBackgroundColor;
 
   @override
   final FocusNode? focusNode;
@@ -94,6 +95,7 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
   const PrimaryNomoButton({
     super.key,
     this.shapeBorder,
+    this.disabledBackgroundColor,
     this.type = ActionType.def,
     this.gradient,
     this.text,
@@ -133,6 +135,7 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
     required void Function() onTap,
     Color backgroundColor = Colors.transparent,
     double iconSize = 18,
+    bool disabled = false,
   }) {
     return PrimaryNomoButton(
       icon: icon,
@@ -140,9 +143,12 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
       shape: BoxShape.circle,
       onPressed: onTap,
       backgroundColor: backgroundColor,
+      enabled: !disabled,
       width: 42,
       height: 42,
       elevation: 0,
+      disabledBackgroundColor: Colors.transparent,
+      type: disabled ? ActionType.nonInteractive : ActionType.def,
       iconSize: iconSize,
     );
   }
@@ -219,7 +225,7 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
         ActionType.danger => context.colors.error,
         ActionType.disabled ||
         ActionType.nonInteractive =>
-          context.colors.disabled,
+          disabledBackgroundColor ?? context.colors.disabled,
         _ => theme.backgroundColor,
       },
       backgroundPainter: backgroundPainter,

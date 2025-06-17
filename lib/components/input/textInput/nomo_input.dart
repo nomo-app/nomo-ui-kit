@@ -256,6 +256,15 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
 
   @override
   void didUpdateWidget(covariant NomoInput oldWidget) {
+    Future.microtask(
+      () {
+        if (widget.initialText != null &&
+            widget.initialText != oldWidget.initialText) {
+          valueNotifier.value = widget.initialText!;
+        }
+      },
+    );
+
     theme = getFromContext(context, widget);
 
     defaultDecoration = BoxDecoration(
