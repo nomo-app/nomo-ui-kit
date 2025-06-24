@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nomo_ui_generator/annotations.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 import 'package:nomo_ui_kit/utils/layout_extensions.dart';
+import 'package:nomo_ui_kit/utils/multi_wrapper.dart';
 
 part 'nomo_route_body.theme_data.g.dart';
 
@@ -13,6 +14,7 @@ class NomoRouteBody extends StatelessWidget {
   final List<Widget> Function(BuildContext context)? sliverBuilder;
   final List<Widget>? children;
   final List<Widget> Function(BuildContext context)? childrenBuilder;
+  final Widget? appBar;
 
   final ScrollController? scrollController;
 
@@ -40,12 +42,17 @@ class NomoRouteBody extends StatelessWidget {
 
   final Widget? floatingFooter;
 
+  final bool expands;
+
+  final BorderRadiusGeometry? borderRadius;
+
   /// Only used when [child] or [builder] is provided
   /// If true, the child will be wrapped in a SingleChildScrollView
   final bool scrollable;
 
   const NomoRouteBody({
     this.child,
+    this.appBar,
     super.key,
     this.scrollController,
     this.padding,
@@ -62,7 +69,9 @@ class NomoRouteBody extends StatelessWidget {
     this.scrollable = false,
     this.maxContentWidth,
     this.background,
+    this.borderRadius,
     this.floatingFooter,
+    this.expands = true,
   }) : assert(
           child != null ||
               slivers != null ||
@@ -73,74 +82,120 @@ class NomoRouteBody extends StatelessWidget {
           'Either child or builder must be provided',
         );
 
+  NomoRouteBody copyWith({
+    bool? expands,
+    BorderRadiusGeometry? borderRadius,
+  }) {
+    return NomoRouteBody(
+      appBar: appBar,
+      background: background,
+      backgroundColor: backgroundColor,
+      builder: builder,
+      child: child,
+      children: children,
+      childrenBuilder: childrenBuilder,
+      expands: expands ?? this.expands,
+      floatingFooter: floatingFooter,
+      footer: footer,
+      key: key,
+      maxContentWidth: maxContentWidth,
+      padding: padding,
+      scrollBarRadius: scrollBarRadius,
+      scrollBarThickness: scrollBarThickness,
+      scrollController: scrollController,
+      scrollable: scrollable,
+      sliverBuilder: sliverBuilder,
+      slivers: slivers,
+      useScrollBar: useScrollBar,
+      borderRadius: borderRadius ?? this.borderRadius,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = getFromContext(context, this);
     final _scrollController = scrollController ?? ScrollController();
 
-    return DefaultScrollController(
-      scrollController: _scrollController,
-      child: switch (this) {
-        _ when child != null => _ChildBody(
+    final body = switch (this) {
+      _ when child != null => _ChildBody(
+          theme: theme,
+          parent: this,
+          child: child!,
+        ),
+      _ when builder != null => Builder(
+          builder: (context) => _ChildBody(
             theme: theme,
             parent: this,
-            child: child!,
+            child: builder!(context),
           ),
-        _ when builder != null => Builder(
-            builder: (context) => _ChildBody(
-              theme: theme,
-              parent: this,
-              child: builder!(context),
-            ),
-          ),
-        _ when slivers != null => _SliverBody(
+        ),
+      _ when slivers != null => _SliverBody(
+          theme: theme,
+          slivers: slivers!,
+          parent: this,
+        ),
+      _ when sliverBuilder != null => Builder(
+          builder: (context) => _SliverBody(
             theme: theme,
-            slivers: slivers!,
+            slivers: sliverBuilder!(context),
             parent: this,
           ),
-        _ when sliverBuilder != null => Builder(
-            builder: (context) => _SliverBody(
-              theme: theme,
-              slivers: sliverBuilder!(context),
-              parent: this,
-            ),
-          ),
-        _ when children != null => _ChildrenBody(
+        ),
+      _ when children != null => _ChildrenBody(
+          theme: theme,
+          parent: this,
+          children: children!,
+        ),
+      _ => Builder(
+          builder: (context) => _ChildrenBody(
             theme: theme,
             parent: this,
-            children: children!,
+            children: childrenBuilder!(context),
           ),
-        _ => Builder(
-            builder: (context) => _ChildrenBody(
-              theme: theme,
-              parent: this,
-              children: childrenBuilder!(context),
-            ),
-          ),
-      },
-    )
-        .wrapIf(
-          useScrollBar,
-          (child) => Scrollbar(
-            controller: _scrollController,
-            radius: theme.scrollBarRadius,
-            thickness: theme.scrollBarThickness,
-            child: child,
-          ),
-        )
-        .wrapIf(
-          theme.backgroundColor != null,
-          (child) => ColoredBox(color: theme.backgroundColor!, child: child),
-        )
-        .wrapIf(
-          theme.background != null,
-          (child) => Stack(
-            children: [
-              theme.background!,
-              child,
-            ],
-          ),
-        );
+        ),
+    };
+
+    return MultiWrapper(
+      wrappers: [
+        if (useScrollBar)
+          (child) {
+            return Scrollbar(
+              controller: _scrollController,
+              radius: theme.scrollBarRadius,
+              thickness: theme.scrollBarThickness,
+              child: child,
+            );
+          },
+        if (theme.background != null)
+          (child) {
+            return DecoratedBox(
+              decoration: BoxDecoration(
+                borderRadius: borderRadius,
+              ),
+              child: Stack(
+                children: [
+                  theme.background!,
+                  child,
+                ],
+              ),
+            );
+          }
+        else if (theme.backgroundColor != null)
+          (child) {
+            return Container(
+              decoration: BoxDecoration(
+                color: theme.backgroundColor,
+                borderRadius: borderRadius,
+              ),
+              child: child,
+            );
+          }
+      ],
+      child: DefaultScrollController(
+        scrollController: _scrollController,
+        child: body,
+      ),
+    );
   }
 }
 
@@ -247,50 +302,41 @@ class _ChildBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (parent.scrollable) {
-      return Center(
-        child: Container(
-          constraints: BoxConstraints(
-            maxWidth: theme.maxContentWidth ?? double.infinity,
-          ),
-          padding: theme.padding,
-          child: Stack(
-            children: [
-              Column(
-                children: [
-                  Expanded(
-                    child: SingleChildScrollView(
-                      controller: DefaultScrollController.of(context),
-                      child: child,
-                    ),
-                  ),
-                  if (parent.footer != null) parent.footer!,
-                ],
-              ),
-              if (parent.floatingFooter != null) parent.floatingFooter!,
-            ],
-          ),
-        ),
-      );
-    }
-
     return Center(
+      heightFactor: 1,
+      widthFactor: 1,
       child: ConstrainedBox(
         constraints: BoxConstraints(
           maxWidth: theme.maxContentWidth ?? double.infinity,
         ),
         child: Stack(
           children: [
-            Padding(
-              padding: theme.padding,
-              child: Column(
-                children: [
-                  Expanded(
-                    child: child,
-                  ),
-                  if (parent.footer != null) parent.footer!,
-                ],
-              ),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (parent.appBar != null) parent.appBar!,
+                MultiWrapper(
+                  wrappers: [
+                    if (parent.scrollable)
+                      (c) {
+                        return Expanded(
+                          child: SingleChildScrollView(
+                            controller: DefaultScrollController.of(context),
+                            child: c,
+                          ),
+                        );
+                      }
+                    else if (parent.expands)
+                      (c) {
+                        return Expanded(
+                          child: c,
+                        );
+                      },
+                  ],
+                  child: Padding(padding: theme.padding, child: child),
+                ),
+                if (parent.footer != null) parent.footer!,
+              ],
             ),
             if (parent.floatingFooter != null) parent.floatingFooter!,
           ],
