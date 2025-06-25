@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nomo_ui_generator/annotations.dart';
+import 'package:nomo_ui_kit/components/app/app.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 import 'package:nomo_ui_kit/utils/layout_extensions.dart';
 import 'package:nomo_ui_kit/utils/multi_wrapper.dart';
@@ -14,12 +15,12 @@ class NomoRouteBody extends StatelessWidget {
   final List<Widget> Function(BuildContext context)? sliverBuilder;
   final List<Widget>? children;
   final List<Widget> Function(BuildContext context)? childrenBuilder;
-  final Widget? appBar;
+  final NomoAppBar? appBar;
 
   final ScrollController? scrollController;
 
-  @NomoSizingField(EdgeInsets.all(8))
-  final EdgeInsetsGeometry? padding;
+  @NomoSizingField<EdgeInsets>(EdgeInsets.all(8))
+  final EdgeInsets? padding;
 
   @NomoSizingField(8.0)
   final double? scrollBarThickness;
@@ -82,12 +83,37 @@ class NomoRouteBody extends StatelessWidget {
           'Either child or builder must be provided',
         );
 
-  NomoRouteBody copyWith({
+  NomoRouteBody copyWith(
+    BuildContext context, {
     bool? expands,
-    BorderRadiusGeometry? borderRadius,
+    bool? scrollable,
+    BorderRadius? borderRadius,
+    bool? showAppBarBackButton,
+    bool addTopInset = false,
+    double? modalAppBarHeight,
+    double? padding,
   }) {
+    final theme = getFromContext(context, this);
     return NomoRouteBody(
-      appBar: appBar,
+      appBar: showAppBarBackButton != null
+          ? appBar?.copyWith(
+              leading: showAppBarBackButton ? null : const SizedBox.shrink(),
+              trailling: const CloseButton(),
+              borderRadius: BorderRadius.only(
+                topLeft: borderRadius?.topLeft ?? Radius.zero,
+                topRight: borderRadius?.topRight ?? Radius.zero,
+              ),
+              topInset: addTopInset ? theme.padding.top : 0,
+              height: modalAppBarHeight,
+            )
+          : appBar?.copyWith(
+              borderRadius: BorderRadius.only(
+                topLeft: borderRadius?.topLeft ?? Radius.zero,
+                topRight: borderRadius?.topRight ?? Radius.zero,
+              ),
+              topInset: addTopInset ? theme.padding.top : 0,
+              height: modalAppBarHeight,
+            ),
       background: background,
       backgroundColor: backgroundColor,
       builder: builder,
@@ -99,11 +125,11 @@ class NomoRouteBody extends StatelessWidget {
       footer: footer,
       key: key,
       maxContentWidth: maxContentWidth,
-      padding: padding,
+      padding: padding != null ? EdgeInsets.all(padding) : this.padding,
       scrollBarRadius: scrollBarRadius,
       scrollBarThickness: scrollBarThickness,
       scrollController: scrollController,
-      scrollable: scrollable,
+      scrollable: scrollable ?? this.scrollable,
       sliverBuilder: sliverBuilder,
       slivers: slivers,
       useScrollBar: useScrollBar,
@@ -168,7 +194,7 @@ class NomoRouteBody extends StatelessWidget {
           },
         if (theme.background != null)
           (child) {
-            return DecoratedBox(
+            return Container(
               decoration: BoxDecoration(
                 borderRadius: borderRadius,
               ),
@@ -214,6 +240,8 @@ class _ChildrenBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final verticalPadding = theme.padding.vertical / 2;
     return Center(
+      heightFactor: 1,
+      widthFactor: 1,
       child: ConstrainedBox(
         constraints: BoxConstraints(
           maxWidth: theme.maxContentWidth ?? double.infinity,
@@ -221,9 +249,13 @@ class _ChildrenBody extends StatelessWidget {
         child: Stack(
           children: [
             CustomScrollView(
+              shrinkWrap: !parent.expands,
               controller: DefaultScrollController.of(context),
               slivers: [
-                verticalPadding.vSpacing.toBox,
+                if (parent.appBar != null)
+                  parent.appBar!.toSliverBar(context)
+                else
+                  verticalPadding.vSpacing.toBox,
                 SliverPadding(
                   padding: EdgeInsets.symmetric(
                     horizontal: theme.padding.horizontal / 2,
@@ -233,12 +265,21 @@ class _ChildrenBody extends StatelessWidget {
                     itemCount: children.length,
                   ),
                 ),
-                if (parent.footer != null)
+                if (parent.footer != null && parent.expands)
                   FillRemainingFooter(
                     padding: verticalPadding,
                     child: parent.footer!,
                   )
-                else
+                else if (parent.footer != null) ...[
+                  verticalPadding.vSpacing.toBox,
+                  SliverPadding(
+                    sliver: parent.footer!.toBox,
+                    padding: EdgeInsetsGeometry.symmetric(
+                      horizontal: theme.padding.horizontal / 2,
+                    ),
+                  ),
+                  verticalPadding.vSpacing.toBox,
+                ] else
                   verticalPadding.vSpacing.toBox,
               ],
             ),
@@ -335,7 +376,15 @@ class _ChildBody extends StatelessWidget {
                   ],
                   child: Padding(padding: theme.padding, child: child),
                 ),
-                if (parent.footer != null) parent.footer!,
+                if (parent.footer != null)
+                  Padding(
+                    padding: EdgeInsetsGeometry.only(
+                      left: theme.padding.left,
+                      right: theme.padding.right,
+                      bottom: theme.padding.bottom,
+                    ),
+                    child: parent.footer,
+                  ),
               ],
             ),
             if (parent.floatingFooter != null) parent.floatingFooter!,
@@ -393,6 +442,7 @@ class FillRemainingFooter extends StatelessWidget {
       hasScrollBody: false,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
         children: [
           const Expanded(
             child: SizedBox.shrink(),
@@ -413,4 +463,16 @@ class DisableImplicitScrolling extends ScrollPhysics {
 
   @override
   bool get allowImplicitScrolling => false;
+}
+
+extension BorderRadiusToEdgeInsets on BorderRadius {
+  /// Converts the BorderRadius to EdgeInsets by using the x value of each corner.
+  EdgeInsets toEdgeInsets() {
+    return EdgeInsets.only(
+      top: this.topLeft.x,
+      right: this.topRight.x,
+      bottom: this.bottomRight.x,
+      left: this.bottomLeft.x,
+    );
+  }
 }

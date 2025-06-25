@@ -63,10 +63,10 @@ class NomoDialog extends StatelessWidget {
   @NomoSizingField(0.75)
   final double? widthRatio;
 
-  @NomoSizingField(EdgeInsets.zero)
+  @NomoSizingField<EdgeInsetsGeometry>(EdgeInsets.zero)
   final EdgeInsetsGeometry? margin;
 
-  @NomoSizingField(EdgeInsets.all(12))
+  @NomoSizingField<EdgeInsetsGeometry>(EdgeInsets.all(12))
   final EdgeInsetsGeometry? padding;
 
   @NomoSizingField<BorderRadiusGeometry>(BorderRadius.all(Radius.circular(12)))

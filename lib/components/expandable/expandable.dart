@@ -34,9 +34,10 @@ class Expandable extends StatefulWidget {
   /// Styles
   @NomoSizingField(28.0)
   final double? iconSize;
-  @NomoColorField(EdgeInsets.symmetric(horizontal: 8.0, vertical: 4))
+  @NomoColorField<EdgeInsetsGeometry>(
+      EdgeInsets.symmetric(horizontal: 8.0, vertical: 4))
   final EdgeInsetsGeometry? titlePadding;
-  @NomoColorField(EdgeInsets.symmetric(vertical: 4.0))
+  @NomoColorField<EdgeInsetsGeometry>(EdgeInsets.symmetric(vertical: 4.0))
   final EdgeInsetsGeometry? childrenPadding;
   @NomoColorField(BorderRadius.all(Radius.circular(12)))
   final BorderRadius? borderRadius;

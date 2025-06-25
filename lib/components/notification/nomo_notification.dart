@@ -25,7 +25,7 @@ class NomoNotification extends StatelessWidget {
   @NomoColorField<Color?>(null)
   final Color? foregroundColor;
 
-  @NomoSizingField(EdgeInsets.all(16))
+  @NomoSizingField<EdgeInsetsGeometry>(EdgeInsets.all(16))
   final EdgeInsetsGeometry? padding;
 
   @NomoSizingField(BorderRadius.all(Radius.circular(16)))

@@ -16,7 +16,7 @@ class NomoInputColorDataNullable {
   final Border? selectedBorder;
   final Border? errorBorder;
   final Border? selectedErrorBorder;
-  final EdgeInsetsGeometry? margin;
+  final EdgeInsets? margin;
   const NomoInputColorDataNullable({
     this.background,
     this.errorColor,
@@ -45,7 +45,7 @@ class NomoInputColorData implements NomoInputColorDataNullable {
   @override
   final Border selectedErrorBorder;
   @override
-  final EdgeInsetsGeometry margin;
+  final EdgeInsets margin;
   const NomoInputColorData({
     this.background = Colors.white,
     this.errorColor = Colors.redAccent,
@@ -72,7 +72,7 @@ class NomoInputColorData implements NomoInputColorDataNullable {
       errorBorder: Border.lerp(a.errorBorder, b.errorBorder, t)!,
       selectedErrorBorder:
           Border.lerp(a.selectedErrorBorder, b.selectedErrorBorder, t)!,
-      margin: EdgeInsetsGeometry.lerp(a.margin, b.margin, t)!,
+      margin: EdgeInsets.lerp(a.margin, b.margin, t)!,
     );
   }
 
@@ -93,7 +93,7 @@ class NomoInputColorData implements NomoInputColorDataNullable {
 }
 
 class NomoInputSizingDataNullable {
-  final EdgeInsetsGeometry? padding;
+  final EdgeInsets? padding;
   final double? textSpacing;
   const NomoInputSizingDataNullable({
     this.padding,
@@ -103,7 +103,7 @@ class NomoInputSizingDataNullable {
 
 class NomoInputSizingData implements NomoInputSizingDataNullable {
   @override
-  final EdgeInsetsGeometry padding;
+  final EdgeInsets padding;
   @override
   final double textSpacing;
   const NomoInputSizingData({
@@ -113,7 +113,7 @@ class NomoInputSizingData implements NomoInputSizingDataNullable {
   static NomoInputSizingData lerp(
       NomoInputSizingData a, NomoInputSizingData b, double t) {
     return NomoInputSizingData(
-      padding: EdgeInsetsGeometry.lerp(a.padding, b.padding, t)!,
+      padding: EdgeInsets.lerp(a.padding, b.padding, t)!,
       textSpacing: lerpDouble(a.textSpacing, b.textSpacing, t)!,
     );
   }
@@ -169,9 +169,9 @@ class NomoInputThemeData
   @override
   final Border selectedErrorBorder;
   @override
-  final EdgeInsetsGeometry margin;
+  final EdgeInsets margin;
   @override
-  final EdgeInsetsGeometry padding;
+  final EdgeInsets padding;
   @override
   final double textSpacing;
   @override
@@ -259,9 +259,9 @@ class NomoInputThemeDataNullable
   @override
   final Border? selectedErrorBorder;
   @override
-  final EdgeInsetsGeometry? margin;
+  final EdgeInsets? margin;
   @override
-  final EdgeInsetsGeometry? padding;
+  final EdgeInsets? padding;
   @override
   final double? textSpacing;
   @override

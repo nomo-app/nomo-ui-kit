@@ -109,16 +109,16 @@ class _NomoTextState extends State<NomoText> {
       fontSize: widget.fontSize ?? _initialFontSize,
     );
 
-    if (!widget.fit) {
-      return Text(
-        effectiveText,
-        style: style,
-        maxLines: widget.maxLines,
-        overflow: widget.overflow,
-        textAlign: widget.textAlign,
-        textDirection: widget.textDirection,
-      );
-    }
+    // if (!widget.fit) {
+    return Text(
+      effectiveText,
+      style: style,
+      maxLines: widget.maxLines,
+      overflow: widget.overflow,
+      textAlign: widget.textAlign,
+      textDirection: widget.textDirection,
+    );
+    // }
 
     return LayoutBuilder(
       builder: (context, constraints) {

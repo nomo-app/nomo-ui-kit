@@ -76,7 +76,7 @@ class NomoVerticalMenu<T> extends StatelessWidget {
   @NomoColorField(BorderRadius.all(Radius.circular(16)))
   final BorderRadius? borderRadius;
 
-  @NomoSizingField(EdgeInsets.symmetric(horizontal: 8))
+  @NomoSizingField<EdgeInsetsGeometry>(EdgeInsets.symmetric(horizontal: 8))
   final EdgeInsetsGeometry? padding;
 
   @NomoSizingField(8.0)

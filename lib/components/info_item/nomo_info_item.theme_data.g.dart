@@ -26,7 +26,7 @@ class NomoInfoItemColorData implements NomoInfoItemColorDataNullable {
 }
 
 class NomoInfoItemSizingDataNullable {
-  final EdgeInsetsGeometry? padding;
+  final EdgeInsets? padding;
   const NomoInfoItemSizingDataNullable({
     this.padding,
   });
@@ -34,14 +34,14 @@ class NomoInfoItemSizingDataNullable {
 
 class NomoInfoItemSizingData implements NomoInfoItemSizingDataNullable {
   @override
-  final EdgeInsetsGeometry padding;
+  final EdgeInsets padding;
   const NomoInfoItemSizingData({
     this.padding = EdgeInsets.zero,
   });
   static NomoInfoItemSizingData lerp(
       NomoInfoItemSizingData a, NomoInfoItemSizingData b, double t) {
     return NomoInfoItemSizingData(
-      padding: EdgeInsetsGeometry.lerp(a.padding, b.padding, t)!,
+      padding: EdgeInsets.lerp(a.padding, b.padding, t)!,
     );
   }
 
@@ -79,7 +79,7 @@ class NomoInfoItemThemeData
         NomoInfoItemSizingData,
         NomoInfoItemConstants {
   @override
-  final EdgeInsetsGeometry padding;
+  final EdgeInsets padding;
   @override
   final TextStyle titleStyle;
   @override
@@ -115,7 +115,7 @@ class NomoInfoItemThemeDataNullable
         NomoInfoItemSizingDataNullable,
         NomoInfoItemConstantsNullable {
   @override
-  final EdgeInsetsGeometry? padding;
+  final EdgeInsets? padding;
   @override
   final TextStyle? titleStyle;
   @override

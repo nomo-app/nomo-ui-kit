@@ -64,7 +64,7 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
   @NomoColorField(1.0)
   final double? elevation;
   @override
-  @NomoSizingField(EdgeInsets.all(16))
+  @NomoSizingField<EdgeInsetsGeometry>(EdgeInsets.all(16))
   final EdgeInsetsGeometry? padding;
   @override
   @NomoColorField<BorderRadiusGeometry>(BorderRadius.all(Radius.circular(8)))

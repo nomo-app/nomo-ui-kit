@@ -40,7 +40,7 @@ class NomoTextButton extends StatelessWidget with NomoButtonMixin {
   @NomoColorField(Colors.black87)
   final Color? foregroundColor;
   @override
-  @NomoSizingField(EdgeInsets.all(16))
+  @NomoSizingField<EdgeInsetsGeometry>(EdgeInsets.all(16))
   final EdgeInsetsGeometry? padding;
   @override
   @NomoColorField<BorderRadiusGeometry>(BorderRadius.all(Radius.circular(8)))

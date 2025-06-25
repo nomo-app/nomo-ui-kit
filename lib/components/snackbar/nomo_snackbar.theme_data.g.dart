@@ -59,7 +59,7 @@ class NomoSnackBarColorData implements NomoSnackBarColorDataNullable {
 
 class NomoSnackBarSizingDataNullable {
   final double? height;
-  final EdgeInsetsGeometry? margin;
+  final EdgeInsets? margin;
   final double? spacing;
   const NomoSnackBarSizingDataNullable({
     this.height,
@@ -72,7 +72,7 @@ class NomoSnackBarSizingData implements NomoSnackBarSizingDataNullable {
   @override
   final double height;
   @override
-  final EdgeInsetsGeometry margin;
+  final EdgeInsets margin;
   @override
   final double spacing;
   const NomoSnackBarSizingData({
@@ -84,7 +84,7 @@ class NomoSnackBarSizingData implements NomoSnackBarSizingDataNullable {
       NomoSnackBarSizingData a, NomoSnackBarSizingData b, double t) {
     return NomoSnackBarSizingData(
       height: lerpDouble(a.height, b.height, t)!,
-      margin: EdgeInsetsGeometry.lerp(a.margin, b.margin, t)!,
+      margin: EdgeInsets.lerp(a.margin, b.margin, t)!,
       spacing: lerpDouble(a.spacing, b.spacing, t)!,
     );
   }
@@ -130,7 +130,7 @@ class NomoSnackBarThemeData
   @override
   final double height;
   @override
-  final EdgeInsetsGeometry margin;
+  final EdgeInsets margin;
   @override
   final double spacing;
   @override
@@ -191,7 +191,7 @@ class NomoSnackBarThemeDataNullable
   @override
   final double? height;
   @override
-  final EdgeInsetsGeometry? margin;
+  final EdgeInsets? margin;
   @override
   final double? spacing;
   @override

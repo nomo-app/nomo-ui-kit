@@ -68,7 +68,7 @@ class SecondaryNomoButton extends StatelessWidget with NomoButtonMixin {
   final BorderRadiusGeometry? borderRadius;
 
   @override
-  @NomoSizingField(EdgeInsets.all(16))
+  @NomoSizingField<EdgeInsetsGeometry>(EdgeInsets.all(16))
   final EdgeInsetsGeometry? padding;
 
   @override

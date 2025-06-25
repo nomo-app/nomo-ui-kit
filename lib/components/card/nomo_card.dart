@@ -27,10 +27,10 @@ class NomoCard extends StatelessWidget {
   @NomoColorField(Colors.white)
   final Color? backgroundColor;
 
-  @NomoSizingField(EdgeInsets.zero)
+  @NomoSizingField<EdgeInsetsGeometry>(EdgeInsets.zero)
   final EdgeInsetsGeometry? padding;
 
-  @NomoSizingField(EdgeInsets.zero)
+  @NomoSizingField<EdgeInsetsGeometry>(EdgeInsets.zero)
   final EdgeInsetsGeometry? margin;
 
   const NomoCard({
