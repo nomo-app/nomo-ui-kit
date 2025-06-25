@@ -43,7 +43,7 @@ class TextInputLayoutDelegate
         placeHolderTitleHeight: placeHolderTitleHeight,
         animation: animation,
         textAlign: textAlign,
-        textSpacing: textSpacing);
+        textSpacing: textSpacing,);
   }
 
   @override

@@ -215,7 +215,7 @@ class NomoRouteBody extends StatelessWidget {
               ),
               child: child,
             );
-          }
+          },
       ],
       child: DefaultScrollController(
         scrollController: _scrollController,
@@ -469,10 +469,10 @@ extension BorderRadiusToEdgeInsets on BorderRadius {
   /// Converts the BorderRadius to EdgeInsets by using the x value of each corner.
   EdgeInsets toEdgeInsets() {
     return EdgeInsets.only(
-      top: this.topLeft.x,
-      right: this.topRight.x,
-      bottom: this.bottomRight.x,
-      left: this.bottomLeft.x,
+      top: topLeft.x,
+      right: topRight.x,
+      bottom: bottomRight.x,
+      left: bottomLeft.x,
     );
   }
 }

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:nomo_ui_generator/annotations.dart';
+import 'package:nomo_ui_kit/components/divider/nomo_divider.dart';
 import 'package:nomo_ui_kit/components/vertical_menu/nomo_vertical_tile.dart';
 import 'package:nomo_ui_kit/entities/menu_item.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 import 'package:nomo_ui_kit/utils/layout_extensions.dart';
-import 'package:nomo_ui_kit/components/divider/nomo_divider.dart';
-import 'package:nomo_ui_kit/components/expandable/expandable.dart';
+
 part 'nomo_vertical_menu.theme_data.g.dart';
 
 const kDuration = Duration(milliseconds: 200);
@@ -151,7 +151,7 @@ class NomoVerticalMenu<T> extends StatelessWidget {
       },
       separatorBuilder: (context, index) => switch (seperatorBulder) {
         final Widget Function(int) seperatorBulder => seperatorBulder(index),
-        _ => itemSpacing?.vSpacing ?? SizedBox.shrink(),
+        _ => itemSpacing?.vSpacing ?? const SizedBox.shrink(),
       },
       itemCount: items.length,
     );
@@ -167,11 +167,7 @@ class ItemWrapper<T> extends StatefulWidget {
   final void Function(NomoMenuItem<T> item) onTap;
 
   const ItemWrapper({
-    super.key,
-    required this.item,
-    required this.theme,
-    required this.selected,
-    required this.onTap,
+    required this.item, required this.theme, required this.selected, required this.onTap, super.key,
     this.style,
     this.collapsed,
   });
@@ -298,7 +294,7 @@ class _ItemWrapperState<T> extends State<ItemWrapper<T>>
                                       iconForeground:
                                           widget.theme.iconForeground,
                                       onTap: () {
-                                        widget.onTap?.call(child);
+                                        widget.onTap.call(child);
                                       },
                                       selected: child.key == widget.selected,
                                     );
