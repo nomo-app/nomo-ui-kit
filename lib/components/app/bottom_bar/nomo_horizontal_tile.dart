@@ -136,6 +136,7 @@ class _NomoHorizontalListTileState<T> extends State<NomoHorizontalListTile<T>>
                         widget.item.title,
                         color: foreground,
                         style: widget.style,
+                        maxLines: 1,
                       ),
                     ],
                   ),
