@@ -136,6 +136,7 @@ class NomoAppBar extends StatelessWidget {
       delegate: NomoSliverAppBarDelegate(
         appBar: this,
         theme: getFromContext(context, this),
+        size: asPreferedSizeWidget(context).preferredSize,
       ),
       pinned: true,
     );
@@ -145,10 +146,12 @@ class NomoAppBar extends StatelessWidget {
 class NomoSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   final NomoAppBar appBar;
   final NomoAppBarThemeData theme;
+  final Size size;
 
   NomoSliverAppBarDelegate({
     required this.appBar,
     required this.theme,
+    required this.size,
   });
 
   @override
@@ -161,10 +164,10 @@ class NomoSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   }
 
   @override
-  double get maxExtent => theme.height;
+  double get maxExtent => size.height;
 
   @override
-  double get minExtent => theme.height;
+  double get minExtent => size.height;
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) =>
