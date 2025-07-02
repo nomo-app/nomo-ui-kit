@@ -150,10 +150,6 @@ class TextButtonWrapper extends StatelessWidget {
               data: SecondaryNomoButtonThemeDataNullable(
                 elevation: 0,
                 backgroundColor: Colors.white12,
-                border: Border.all(
-                  color: context.colors.foreground1,
-                  width: 2,
-                ),
                 foregroundColor: context.colors.foreground1,
               ),
               child: DynamicRow(
@@ -229,10 +225,6 @@ class TextButtonWrapper extends StatelessWidget {
               data: SecondaryNomoButtonThemeDataNullable(
                 elevation: 0,
                 backgroundColor: Colors.white12,
-                border: Border.all(
-                  color: context.colors.foreground1,
-                  width: 2,
-                ),
                 foregroundColor: context.colors.foreground1,
               ),
               child: DynamicRow(
