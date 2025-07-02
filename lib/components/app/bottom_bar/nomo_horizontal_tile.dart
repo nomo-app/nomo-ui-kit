@@ -132,10 +132,24 @@ class _NomoHorizontalListTileState<T> extends State<NomoHorizontalListTile<T>>
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       if (icon != null) icon,
-                      NomoText(
-                        widget.item.title,
-                        color: foreground,
-                        style: widget.style,
+                      Row(
+                        children: [
+                          if (widget.item.leading != null)
+                            NomoTextTheme(
+                              color: foreground!,
+                              child: widget.item.leading!,
+                            ),
+                          NomoText(
+                            widget.item.title,
+                            color: foreground,
+                            style: widget.style,
+                          ),
+                          if (widget.item.trailling != null)
+                            NomoTextTheme(
+                              color: foreground!,
+                              child: widget.item.trailling!,
+                            ),
+                        ],
                       ),
                     ],
                   ),
