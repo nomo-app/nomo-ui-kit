@@ -24,7 +24,7 @@ class NomoSider extends StatelessWidget {
   @NomoColorField(primaryColor)
   final Color? backgroundColor;
 
-  @NomoSizingField(EdgeInsets.all(16))
+  @NomoSizingField<EdgeInsetsGeometry>(EdgeInsets.all(16))
   final EdgeInsetsGeometry? padding;
 
   @NomoSizingField(4.0)

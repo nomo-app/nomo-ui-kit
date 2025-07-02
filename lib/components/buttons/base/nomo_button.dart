@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nomo_ui_kit/components/elevatedBox/elevated_box.dart';
 import 'package:nomo_ui_kit/components/text/nomo_text.dart';
-import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 import 'package:nomo_ui_kit/utils/layout_extensions.dart';
 import 'package:nomo_ui_kit/utils/multi_wrapper.dart';
 
@@ -33,6 +31,7 @@ class NomoButton extends StatefulWidget with NomoButtonMixin {
   final bool enableInkwellFeedback;
   final MouseCursor cursor;
   final Gradient? gradient;
+  final DecorationImage? image;
   final CustomPainter? backgroundPainter;
   @override
   final BoxShape? shape;
@@ -112,6 +111,7 @@ class NomoButton extends StatefulWidget with NomoButtonMixin {
     this.splashColor,
     this.onSecondaryPressed,
     this.gradient,
+    this.image,
   });
 
   @override
@@ -263,12 +263,13 @@ class _NomoButtonState extends State<NomoButton>
         ),
       ),
     ).wrapIf(
-      widget.gradient != null,
+      widget.gradient != null || widget.image != null,
       (child) => DecoratedBox(
         decoration: BoxDecoration(
           gradient: widget.gradient,
           borderRadius: widget.borderRadius,
           shape: widget.shape ?? BoxShape.rectangle,
+          image: widget.image,
         ),
         child: child,
       ),

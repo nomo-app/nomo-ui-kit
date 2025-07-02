@@ -130,4 +130,46 @@ class NomoAppBar extends StatelessWidget {
       elevation: elevation ?? this.elevation,
     );
   }
+
+  SliverPersistentHeader toSliverBar(BuildContext context) {
+    return SliverPersistentHeader(
+      delegate: NomoSliverAppBarDelegate(
+        appBar: this,
+        theme: getFromContext(context, this),
+        size: asPreferedSizeWidget(context).preferredSize,
+      ),
+      pinned: true,
+    );
+  }
+}
+
+class NomoSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
+  final NomoAppBar appBar;
+  final NomoAppBarThemeData theme;
+  final Size size;
+
+  NomoSliverAppBarDelegate({
+    required this.appBar,
+    required this.theme,
+    required this.size,
+  });
+
+  @override
+  Widget build(
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
+    return appBar;
+  }
+
+  @override
+  double get maxExtent => size.height;
+
+  @override
+  double get minExtent => size.height;
+
+  @override
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) =>
+      false;
 }

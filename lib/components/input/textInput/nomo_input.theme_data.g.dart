@@ -16,7 +16,7 @@ class NomoInputColorDataNullable {
   final Border? selectedBorder;
   final Border? errorBorder;
   final Border? selectedErrorBorder;
-  final EdgeInsetsGeometry? margin;
+  final EdgeInsets? margin;
   const NomoInputColorDataNullable({
     this.background,
     this.errorColor,
@@ -45,7 +45,7 @@ class NomoInputColorData implements NomoInputColorDataNullable {
   @override
   final Border selectedErrorBorder;
   @override
-  final EdgeInsetsGeometry margin;
+  final EdgeInsets margin;
   const NomoInputColorData({
     this.background = Colors.white,
     this.errorColor = Colors.redAccent,
@@ -72,7 +72,7 @@ class NomoInputColorData implements NomoInputColorDataNullable {
       errorBorder: Border.lerp(a.errorBorder, b.errorBorder, t)!,
       selectedErrorBorder:
           Border.lerp(a.selectedErrorBorder, b.selectedErrorBorder, t)!,
-      margin: EdgeInsetsGeometry.lerp(a.margin, b.margin, t)!,
+      margin: EdgeInsets.lerp(a.margin, b.margin, t)!,
     );
   }
 
@@ -93,22 +93,28 @@ class NomoInputColorData implements NomoInputColorDataNullable {
 }
 
 class NomoInputSizingDataNullable {
-  final EdgeInsetsGeometry? padding;
+  final EdgeInsets? padding;
+  final double? textSpacing;
   const NomoInputSizingDataNullable({
     this.padding,
+    this.textSpacing,
   });
 }
 
 class NomoInputSizingData implements NomoInputSizingDataNullable {
   @override
-  final EdgeInsetsGeometry padding;
+  final EdgeInsets padding;
+  @override
+  final double textSpacing;
   const NomoInputSizingData({
     this.padding = const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+    this.textSpacing = 8.0,
   });
   static NomoInputSizingData lerp(
       NomoInputSizingData a, NomoInputSizingData b, double t) {
     return NomoInputSizingData(
-      padding: EdgeInsetsGeometry.lerp(a.padding, b.padding, t)!,
+      padding: EdgeInsets.lerp(a.padding, b.padding, t)!,
+      textSpacing: lerpDouble(a.textSpacing, b.textSpacing, t)!,
     );
   }
 
@@ -116,6 +122,7 @@ class NomoInputSizingData implements NomoInputSizingDataNullable {
       [NomoInputSizingDataNullable? override]) {
     return NomoInputSizingData(
       padding: override?.padding ?? base.padding,
+      textSpacing: override?.textSpacing ?? base.textSpacing,
     );
   }
 }
@@ -162,9 +169,11 @@ class NomoInputThemeData
   @override
   final Border selectedErrorBorder;
   @override
-  final EdgeInsetsGeometry margin;
+  final EdgeInsets margin;
   @override
-  final EdgeInsetsGeometry padding;
+  final EdgeInsets padding;
+  @override
+  final double textSpacing;
   @override
   final Duration duration;
   @override
@@ -185,6 +194,7 @@ class NomoInputThemeData
         BorderSide(color: Colors.redAccent, width: 2)),
     this.margin = EdgeInsets.zero,
     this.padding = const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+    this.textSpacing = 8.0,
     this.duration = const Duration(milliseconds: 200),
     this.curve = Curves.easeInOut,
     this.titleSpacing = 2.0,
@@ -204,6 +214,7 @@ class NomoInputThemeData
       selectedErrorBorder: colors.selectedErrorBorder,
       margin: colors.margin,
       padding: sizing.padding,
+      textSpacing: sizing.textSpacing,
       duration: constants.duration,
       curve: constants.curve,
       titleSpacing: constants.titleSpacing,
@@ -220,6 +231,7 @@ class NomoInputThemeData
       selectedErrorBorder: override?.selectedErrorBorder ?? selectedErrorBorder,
       margin: override?.margin ?? margin,
       padding: override?.padding ?? padding,
+      textSpacing: override?.textSpacing ?? textSpacing,
       duration: override?.duration ?? duration,
       curve: override?.curve ?? curve,
       titleSpacing: override?.titleSpacing ?? titleSpacing,
@@ -247,9 +259,11 @@ class NomoInputThemeDataNullable
   @override
   final Border? selectedErrorBorder;
   @override
-  final EdgeInsetsGeometry? margin;
+  final EdgeInsets? margin;
   @override
-  final EdgeInsetsGeometry? padding;
+  final EdgeInsets? padding;
+  @override
+  final double? textSpacing;
   @override
   final Duration? duration;
   @override
@@ -266,6 +280,7 @@ class NomoInputThemeDataNullable
     this.selectedErrorBorder,
     this.margin,
     this.padding,
+    this.textSpacing,
     this.duration,
     this.curve,
     this.titleSpacing,
@@ -322,6 +337,7 @@ NomoInputThemeData getFromContext(
         widget.selectedErrorBorder ?? themeData.selectedErrorBorder,
     margin: widget.margin ?? themeData.margin,
     padding: widget.padding ?? themeData.padding,
+    textSpacing: widget.textSpacing ?? themeData.textSpacing,
     duration: widget.duration ?? themeData.duration,
     curve: widget.curve ?? themeData.curve,
     titleSpacing: widget.titleSpacing ?? themeData.titleSpacing,

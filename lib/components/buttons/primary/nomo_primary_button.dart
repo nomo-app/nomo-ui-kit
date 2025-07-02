@@ -28,6 +28,8 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
   final Axis direction;
   final Gradient? gradient;
   final CustomPainter? backgroundPainter;
+  final Color? disabledBackgroundColor;
+  final DecorationImage? image;
 
   @override
   final FocusNode? focusNode;
@@ -63,7 +65,7 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
   @NomoColorField(1.0)
   final double? elevation;
   @override
-  @NomoSizingField(EdgeInsets.all(16))
+  @NomoSizingField<EdgeInsetsGeometry>(EdgeInsets.all(16))
   final EdgeInsetsGeometry? padding;
   @override
   @NomoColorField<BorderRadiusGeometry>(BorderRadius.all(Radius.circular(8)))
@@ -94,6 +96,7 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
   const PrimaryNomoButton({
     super.key,
     this.shapeBorder,
+    this.disabledBackgroundColor,
     this.type = ActionType.def,
     this.gradient,
     this.text,
@@ -123,10 +126,36 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
     this.focusNode,
     this.direction = Axis.horizontal,
     this.onSecondaryPressed,
+    this.image,
   }) : assert(
           child == null || (icon == null && text == null),
           'Either Specify child or text and icon',
         );
+
+  factory PrimaryNomoButton.iconButton({
+    required IconData icon,
+    required void Function() onTap,
+    Color backgroundColor = Colors.transparent,
+    double iconSize = 18,
+    bool disabled = false,
+    Color? foregroundColor,
+  }) {
+    return PrimaryNomoButton(
+      icon: icon,
+      padding: EdgeInsets.zero,
+      shape: BoxShape.circle,
+      onPressed: onTap,
+      backgroundColor: backgroundColor,
+      enabled: !disabled,
+      width: 42,
+      height: 42,
+      elevation: 0,
+      disabledBackgroundColor: Colors.transparent,
+      type: disabled ? ActionType.nonInteractive : ActionType.def,
+      iconSize: iconSize,
+      foregroundColor: foregroundColor,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -200,9 +229,10 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
         ActionType.danger => context.colors.error,
         ActionType.disabled ||
         ActionType.nonInteractive =>
-          context.colors.disabled,
+          disabledBackgroundColor ?? context.colors.disabled,
         _ => theme.backgroundColor,
       },
+      image: image,
       backgroundPainter: backgroundPainter,
       gradient: gradient,
       focusNode: focusNode,

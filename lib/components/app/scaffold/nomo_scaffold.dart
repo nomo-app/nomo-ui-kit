@@ -40,7 +40,7 @@ class NomoScaffold extends StatefulWidget {
   final DecorationImage? backgroundImage;
   final BorderRadiusGeometry? borderRadius;
 
-  @NomoSizingField(EdgeInsets.zero)
+  @NomoSizingField<EdgeInsetsGeometry>(EdgeInsets.zero)
   final EdgeInsetsGeometry? padding;
 
   @NomoColorField(Colors.white)

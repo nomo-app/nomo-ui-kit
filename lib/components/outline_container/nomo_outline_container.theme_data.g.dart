@@ -60,7 +60,7 @@ class NomoOutlineContainerColorData
 }
 
 class NomoOutlineContainerSizingDataNullable {
-  final EdgeInsetsGeometry? padding;
+  final EdgeInsets? padding;
   final double? spacing;
   const NomoOutlineContainerSizingDataNullable({
     this.padding,
@@ -71,7 +71,7 @@ class NomoOutlineContainerSizingDataNullable {
 class NomoOutlineContainerSizingData
     implements NomoOutlineContainerSizingDataNullable {
   @override
-  final EdgeInsetsGeometry padding;
+  final EdgeInsets padding;
   @override
   final double spacing;
   const NomoOutlineContainerSizingData({
@@ -81,7 +81,7 @@ class NomoOutlineContainerSizingData
   static NomoOutlineContainerSizingData lerp(NomoOutlineContainerSizingData a,
       NomoOutlineContainerSizingData b, double t) {
     return NomoOutlineContainerSizingData(
-      padding: EdgeInsetsGeometry.lerp(a.padding, b.padding, t)!,
+      padding: EdgeInsets.lerp(a.padding, b.padding, t)!,
       spacing: lerpDouble(a.spacing, b.spacing, t)!,
     );
   }
@@ -119,7 +119,7 @@ class NomoOutlineContainerThemeData
   @override
   final BoxBorder border;
   @override
-  final EdgeInsetsGeometry padding;
+  final EdgeInsets padding;
   @override
   final double spacing;
   const NomoOutlineContainerThemeData({
@@ -171,7 +171,7 @@ class NomoOutlineContainerThemeDataNullable
   @override
   final BoxBorder? border;
   @override
-  final EdgeInsetsGeometry? padding;
+  final EdgeInsets? padding;
   @override
   final double? spacing;
   const NomoOutlineContainerThemeDataNullable({

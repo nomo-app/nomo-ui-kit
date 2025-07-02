@@ -44,7 +44,7 @@ class NomoRouteBodyColorData implements NomoRouteBodyColorDataNullable {
 }
 
 class NomoRouteBodySizingDataNullable {
-  final EdgeInsetsGeometry? padding;
+  final EdgeInsets? padding;
   final double? scrollBarThickness;
   final Radius? scrollBarRadius;
   final double? maxContentWidth;
@@ -58,7 +58,7 @@ class NomoRouteBodySizingDataNullable {
 
 class NomoRouteBodySizingData implements NomoRouteBodySizingDataNullable {
   @override
-  final EdgeInsetsGeometry padding;
+  final EdgeInsets padding;
   @override
   final double scrollBarThickness;
   @override
@@ -74,7 +74,7 @@ class NomoRouteBodySizingData implements NomoRouteBodySizingDataNullable {
   static NomoRouteBodySizingData lerp(
       NomoRouteBodySizingData a, NomoRouteBodySizingData b, double t) {
     return NomoRouteBodySizingData(
-      padding: EdgeInsetsGeometry.lerp(a.padding, b.padding, t)!,
+      padding: EdgeInsets.lerp(a.padding, b.padding, t)!,
       scrollBarThickness:
           lerpDouble(a.scrollBarThickness, b.scrollBarThickness, t)!,
       scrollBarRadius: Radius.lerp(a.scrollBarRadius, b.scrollBarRadius, t)!,
@@ -112,7 +112,7 @@ class NomoRouteBodyThemeData
   @override
   final Widget? background;
   @override
-  final EdgeInsetsGeometry padding;
+  final EdgeInsets padding;
   @override
   final double scrollBarThickness;
   @override
@@ -163,7 +163,7 @@ class NomoRouteBodyThemeDataNullable
   @override
   final Widget? background;
   @override
-  final EdgeInsetsGeometry? padding;
+  final EdgeInsets? padding;
   @override
   final double? scrollBarThickness;
   @override

@@ -59,13 +59,13 @@ class NomoBottomBar<T> extends StatelessWidget {
   @NomoSizingField(28.0)
   final double? iconSize;
 
-  @NomoSizingField(EdgeInsets.all(4))
+  @NomoSizingField<EdgeInsetsGeometry>(EdgeInsets.all(4))
   final EdgeInsetsGeometry? padding;
 
   @NomoSizingField(16.0)
   final double? elevation;
 
-  @NomoSizingField(EdgeInsets.symmetric(horizontal: 8))
+  @NomoSizingField<EdgeInsetsGeometry>(EdgeInsets.symmetric(horizontal: 8))
   final EdgeInsetsGeometry? itemPadding;
 
   @NomoColorField(Colors.black)

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:nomo_ui_generator/annotations.dart';
 import 'package:nomo_ui_kit/components/app/app_bar/layout/appbar_layout_delegate.dart';
 import 'package:nomo_ui_kit/components/buttons/primary/nomo_primary_button.dart';
-import 'package:nomo_ui_kit/components/buttons/secondary/nomo_secondary_button.dart';
 import 'package:nomo_ui_kit/components/elevatedBox/elevated_box.dart';
 import 'package:nomo_ui_kit/components/text/nomo_text.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
@@ -63,10 +62,10 @@ class NomoDialog extends StatelessWidget {
   @NomoSizingField(0.75)
   final double? widthRatio;
 
-  @NomoSizingField(EdgeInsets.zero)
+  @NomoSizingField<EdgeInsetsGeometry>(EdgeInsets.zero)
   final EdgeInsetsGeometry? margin;
 
-  @NomoSizingField(EdgeInsets.all(12))
+  @NomoSizingField<EdgeInsetsGeometry>(EdgeInsets.all(12))
   final EdgeInsetsGeometry? padding;
 
   @NomoSizingField<BorderRadiusGeometry>(BorderRadius.all(Radius.circular(12)))

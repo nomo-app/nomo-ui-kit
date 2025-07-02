@@ -104,21 +104,21 @@ class _NomoTextState extends State<NomoText> {
     var style = (widget.style ?? NomoDefaultTextStyle.of(context)).copyWith(
       color: widget.opacity == null
           ? textColor
-          : textColor?.withValues(alpha: widget.opacity!),
+          : textColor?.withValues(alpha: widget.opacity),
       fontWeight: widget.fontWeight,
       fontSize: widget.fontSize ?? _initialFontSize,
     );
 
-    if (!widget.fit) {
-      return Text(
-        effectiveText,
-        style: style,
-        maxLines: widget.maxLines,
-        overflow: widget.overflow,
-        textAlign: widget.textAlign,
-        textDirection: widget.textDirection,
-      );
-    }
+    // if (!widget.fit) {
+    return Text(
+      effectiveText,
+      style: style,
+      maxLines: widget.maxLines,
+      overflow: widget.overflow,
+      textAlign: widget.textAlign,
+      textDirection: widget.textDirection,
+    );
+    // }
 
     return LayoutBuilder(
       builder: (context, constraints) {

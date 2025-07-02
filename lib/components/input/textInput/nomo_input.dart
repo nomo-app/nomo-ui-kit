@@ -77,6 +77,9 @@ class NomoInput extends StatefulWidget {
   @NomoSizingField(EdgeInsets.symmetric(horizontal: 16, vertical: 12))
   final EdgeInsets? padding;
 
+  @NomoSizingField(8.0)
+  final double? textSpacing;
+
   @NomoColorField<BorderRadiusGeometry>(BorderRadius.all(Radius.circular(8)))
   final BorderRadiusGeometry? borderRadius;
 
@@ -185,6 +188,7 @@ class NomoInput extends StatefulWidget {
     this.textEditingController,
     this.autoCorrect = false,
     this.onFieldSubmitted,
+    this.textSpacing,
   })  : assert(
           height == null || usePlaceholderAsTitle == false,
           'Not supported please ask Thomas to implement',
@@ -252,6 +256,15 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
 
   @override
   void didUpdateWidget(covariant NomoInput oldWidget) {
+    Future.microtask(
+      () {
+        if (widget.initialText != null &&
+            widget.initialText != oldWidget.initialText) {
+          valueNotifier.value = widget.initialText!;
+        }
+      },
+    );
+
     theme = getFromContext(context, widget);
 
     defaultDecoration = BoxDecoration(
@@ -458,6 +471,7 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
                 child: CupertinoInput(
                   bottom: widget.bottom,
                   top: widget.top,
+                  textSpacing: theme.textSpacing,
                   obscureText: widget.obscureText ?? false,
                   usePlaceholderAsTitle: widget.usePlaceholderAsTitle,
                   decorationTween: decorationNotifier,

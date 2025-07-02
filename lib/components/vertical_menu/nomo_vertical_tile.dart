@@ -196,7 +196,8 @@ class _NomoVerticalListTileState<T> extends State<NomoVerticalListTile<T>>
               final NomoMenuWidgetItem<T> widgetItem => widgetItem.child,
               final NomoMenuIconItem<T> iconItem => Icon(
                   iconItem.icon,
-                  color: iconforegroundAnimation.value,
+                  color: iconforegroundAnimation.value ??
+                      foreGroundAnimation.value,
                   size: menuTheme.iconSize,
                 ),
               final NomoMenuImageItem<T> imageItem
