@@ -3,6 +3,7 @@ import 'dart:math' show pi;
 import 'package:flutter/material.dart';
 import 'package:nomo_ui_generator/annotations.dart';
 import 'package:nomo_ui_kit/components/buttons/base/nomo_button.dart';
+import 'package:nomo_ui_kit/components/buttons/primary/nomo_primary_button.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 
 part 'expandable.theme_data.g.dart';
@@ -22,6 +23,9 @@ class Expandable extends StatefulWidget {
   final EdgeInsetsGeometry? padding;
   final BoxDecoration? decoration;
   final double? splashRadius;
+  final void Function()? onTap;
+  final bool expandOnTap;
+  final bool showExpandButton;
 
   /// If the [expansionNotifier] is defined [initiallyExpanded] is ignored
   /// If the [expansionNotifier] is not defined the state will be handled internally
@@ -35,7 +39,8 @@ class Expandable extends StatefulWidget {
   @NomoSizingField(28.0)
   final double? iconSize;
   @NomoColorField<EdgeInsetsGeometry>(
-      EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),)
+    EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
+  )
   final EdgeInsetsGeometry? titlePadding;
   @NomoColorField<EdgeInsetsGeometry>(EdgeInsets.symmetric(vertical: 4.0))
   final EdgeInsetsGeometry? childrenPadding;
@@ -76,6 +81,9 @@ class Expandable extends StatefulWidget {
     this.splashColor,
     this.iconColor,
     this.splashRadius,
+    this.expandOnTap = true,
+    this.onTap,
+    this.showExpandButton = true,
   });
 
   @override
@@ -151,7 +159,8 @@ class _ExpandableState extends State<Expandable> with TickerProviderStateMixin {
   }
 
   void onTap() {
-    stateNotifier.value = !stateNotifier.value;
+    if (widget.expandOnTap) stateNotifier.value = !stateNotifier.value;
+    if (widget.onTap != null) widget.onTap!();
   }
 
   @override
@@ -188,20 +197,24 @@ class _ExpandableState extends State<Expandable> with TickerProviderStateMixin {
                         child: Row(
                           children: [
                             Expanded(child: widget.title),
-                            NomoButton(
-                              onPressed: onTap,
-                              shape: BoxShape.circle,
-                              padding:
-                                  EdgeInsets.all(widget.splashRadius ?? 12),
-                              child: Transform.rotate(
-                                angle: turnAnimation.value,
-                                child: Icon(
-                                  widget.expandIcon,
-                                  size: theme.iconSize,
-                                  color: theme.iconColor,
+                            if (widget.showExpandButton)
+                              PrimaryNomoButton(
+                                onPressed: () {
+                                  stateNotifier.value = !stateNotifier.value;
+                                },
+                                backgroundColor: Colors.transparent,
+                                shape: BoxShape.circle,
+                                elevation: 0,
+                                padding: const EdgeInsets.all(6),
+                                child: Transform.rotate(
+                                  angle: turnAnimation.value,
+                                  child: Icon(
+                                    widget.expandIcon,
+                                    size: theme.iconSize,
+                                    color: theme.iconColor,
+                                  ),
                                 ),
                               ),
-                            ),
                           ],
                         ),
                       ),

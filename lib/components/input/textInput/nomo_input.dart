@@ -457,9 +457,12 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
           mainAxisSize: MainAxisSize.min,
           children: [
             if (widget.title != null)
-              NomoText(
-                widget.title!,
-                style: titleStyle,
+              Padding(
+                padding: EdgeInsets.only(bottom: theme.titleSpacing),
+                child: NomoText(
+                  widget.title!,
+                  style: titleStyle,
+                ),
               ),
             Container(
               height: widget.height,
