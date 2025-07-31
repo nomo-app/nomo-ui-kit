@@ -101,6 +101,7 @@ class NomoTextButton extends StatelessWidget with NomoButtonMixin {
     final theme = getFromContext(context, this);
     return NomoButton(
       foregroundColor: theme.foregroundColor,
+      backgroundColor: Colors.transparent,
       shape: shape,
       margin: margin,
       width: width,
