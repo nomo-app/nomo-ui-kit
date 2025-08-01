@@ -9,7 +9,6 @@
 
 /// @docImport 'package:flutter/material.dart';
 ///
-/// @docImport 'list_tile.dart';
 library;
 
 import 'dart:ui';
@@ -98,7 +97,12 @@ class CupertinoSwitch extends StatefulWidget {
   ///
   /// The [dragStartBehavior] parameter defaults to [DragStartBehavior.start].
   const CupertinoSwitch({
-    required this.value, required this.onChanged, required this.height, required this.width, required this.thumbSize, super.key,
+    required this.value,
+    required this.onChanged,
+    required this.height,
+    required this.width,
+    required this.thumbSize,
+    super.key,
     @Deprecated(
       'Use activeTrackColor instead. '
       'This feature was deprecated after v3.24.0-0.2.pre.',
@@ -454,12 +458,20 @@ class CupertinoSwitch extends StatefulWidget {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties.add(
-      FlagProperty('value',
-          value: value, ifTrue: 'on', ifFalse: 'off', showName: true,),
+      FlagProperty(
+        'value',
+        value: value,
+        ifTrue: 'on',
+        ifFalse: 'off',
+        showName: true,
+      ),
     );
     properties.add(
-      ObjectFlagProperty<ValueChanged<bool>>('onChanged', onChanged,
-          ifNull: 'disabled',),
+      ObjectFlagProperty<ValueChanged<bool>>(
+        'onChanged',
+        onChanged,
+        ifNull: 'disabled',
+      ),
     );
   }
 }
@@ -619,9 +631,13 @@ class _CupertinoSwitchState extends State<CupertinoSwitch>
     final onOffLabelColors = MediaQuery.onOffSwitchLabelsOf(context)
         ? (
             CupertinoDynamicColor.resolve(
-                widget.onLabelColor ?? CupertinoColors.white, context,),
+              widget.onLabelColor ?? CupertinoColors.white,
+              context,
+            ),
             CupertinoDynamicColor.resolve(
-                widget.offLabelColor ?? _kOffLabelColor, context,),
+              widget.offLabelColor ?? _kOffLabelColor,
+              context,
+            ),
           )
         : null;
 
@@ -653,7 +669,9 @@ class _CupertinoSwitchState extends State<CupertinoSwitch>
     final effectiveInactiveTrackColor =
         _resolveTrackColor(widget.inactiveTrackColor, inactiveStates) ??
             CupertinoDynamicColor.resolve(
-                CupertinoColors.secondarySystemFill, context,);
+              CupertinoColors.secondarySystemFill,
+              context,
+            );
 
     final effectiveInactiveTrackOutlineColor =
         widget.trackOutlineColor?.resolve(
@@ -713,8 +731,9 @@ class _CupertinoSwitchState extends State<CupertinoSwitch>
               ..reactionHoverFade = reactionHoverFade
               ..focusColor = CupertinoDynamicColor.resolve(
                 widget.focusColor ??
-                    HSLColor.fromColor(activeColor
-                            .withOpacity(kCupertinoFocusColorOpacity),)
+                    HSLColor.fromColor(
+                      activeColor.withOpacity(kCupertinoFocusColorOpacity),
+                    )
                         .withLightness(kCupertinoFocusColorBrightness)
                         .withSaturation(kCupertinoFocusColorSaturation)
                         .toColor(),
@@ -1077,7 +1096,10 @@ class _SwitchPainter extends ToggleablePainter {
         inactiveTrackOutlineColor == null || activeTrackOutlineColor == null
             ? null
             : Color.lerp(
-                inactiveTrackOutlineColor, activeTrackOutlineColor, colorValue,);
+                inactiveTrackOutlineColor,
+                activeTrackOutlineColor,
+                colorValue,
+              );
     final trackOutlineWidth = lerpDouble(
       inactiveTrackOutlineWidth,
       activeTrackOutlineWidth,
@@ -1284,7 +1306,10 @@ class _SwitchPainter extends ToggleablePainter {
       _paintCupertinoThumbShadowAndBorder(canvas, thumbPaintOffset, thumbSize);
 
       thumbPainter.paint(
-          canvas, thumbPaintOffset, configuration.copyWith(size: thumbSize),);
+        canvas,
+        thumbPaintOffset,
+        configuration.copyWith(size: thumbSize),
+      );
 
       if (thumbIcon != null && thumbIcon.icon != null) {
         final iconColor =
@@ -1332,7 +1357,10 @@ class _SwitchPainter extends ToggleablePainter {
   }
 
   void _paintCupertinoThumbShadowAndBorder(
-      Canvas canvas, Offset thumbPaintOffset, Size thumbSize,) {
+    Canvas canvas,
+    Offset thumbPaintOffset,
+    Size thumbSize,
+  ) {
     final thumbBounds = RRect.fromLTRBR(
       thumbPaintOffset.dx,
       thumbPaintOffset.dy,
@@ -1344,7 +1372,9 @@ class _SwitchPainter extends ToggleablePainter {
       canvas.drawRRect(thumbBounds.shift(shadow.offset), shadow.toPaint());
     }
     canvas.drawRRect(
-        thumbBounds.inflate(0.5), Paint()..color = const Color(0x0A000000),);
+      thumbBounds.inflate(0.5),
+      Paint()..color = const Color(0x0A000000),
+    );
   }
 
   @override

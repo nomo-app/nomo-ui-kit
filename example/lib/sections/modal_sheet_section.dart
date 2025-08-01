@@ -5,7 +5,7 @@ import 'package:nomo_ui_kit/components/app/routebody/nomo_route_body.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 
 class ModalSheetSection extends StatelessWidget {
-  const ModalSheetSection({Key? key}) : super(key: key);
+  const ModalSheetSection({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class ModalSheetSection extends StatelessWidget {
 }
 
 class ModalSheet1 extends StatefulWidget {
-  const ModalSheet1({Key? key}) : super(key: key);
+  const ModalSheet1({super.key});
 
   @override
   State<ModalSheet1> createState() => _ModalSheet1State();

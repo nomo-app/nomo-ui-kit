@@ -6,7 +6,7 @@ import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 import 'package:nomo_ui_kit/utils/layout_extensions.dart';
 
 class TextSection extends StatelessWidget {
-  const TextSection({Key? key}) : super(key: key);
+  const TextSection({super.key});
 
   @override
   Widget build(BuildContext context) {

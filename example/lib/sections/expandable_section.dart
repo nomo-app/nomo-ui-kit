@@ -7,7 +7,7 @@ import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 import 'package:nomo_ui_kit/utils/layout_extensions.dart';
 
 class ExpandableSection extends StatelessWidget {
-  const ExpandableSection({Key? key}) : super(key: key);
+  const ExpandableSection({super.key});
 
   @override
   Widget build(BuildContext context) {

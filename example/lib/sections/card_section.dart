@@ -5,7 +5,7 @@ import 'package:nomo_ui_kit/components/card/nomo_card.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 
 class CardSection extends StatelessWidget {
-  const CardSection({Key? key}) : super(key: key);
+  const CardSection({super.key});
 
   @override
   Widget build(BuildContext context) {

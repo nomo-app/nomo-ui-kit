@@ -13,9 +13,9 @@ class DrawerEx extends StatelessWidget {
   final double? topInset;
 
   const DrawerEx({
-    Key? key,
+    super.key,
     this.topInset,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

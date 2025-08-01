@@ -9,8 +9,8 @@ import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 
 class Sider extends StatelessWidget {
   const Sider({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

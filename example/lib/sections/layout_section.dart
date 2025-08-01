@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:nomo_ui_kit/components/layout/dynamic_row/dynamic_row.dart';
 
 class LayoutSection extends StatelessWidget {
-  const LayoutSection({Key? key}) : super(key: key);
+  const LayoutSection({super.key});
 
   @override
   Widget build(BuildContext context) {

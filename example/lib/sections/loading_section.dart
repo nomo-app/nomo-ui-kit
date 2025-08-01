@@ -9,7 +9,7 @@ import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 import 'package:nomo_ui_kit/utils/layout_extensions.dart';
 
 class LoadingSection extends StatelessWidget {
-  const LoadingSection({Key? key}) : super(key: key);
+  const LoadingSection({super.key});
 
   @override
   Widget build(BuildContext context) {

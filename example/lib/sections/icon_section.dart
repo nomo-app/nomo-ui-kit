@@ -10,7 +10,7 @@ import 'package:nomo_ui_kit/utils/layout_extensions.dart';
 final icons = allIcons.entries.toList();
 
 class IconSection extends StatefulWidget {
-  const IconSection({Key? key}) : super(key: key);
+  const IconSection({super.key});
 
   @override
   State<IconSection> createState() => _IconSectionState();

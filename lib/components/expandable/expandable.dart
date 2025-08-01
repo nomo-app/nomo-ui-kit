@@ -1,8 +1,8 @@
 import 'dart:math' show pi;
+import 'dart:nativewrappers/_internal/vm/lib/ffi_allocation_patch.dart';
 
 import 'package:flutter/material.dart';
 import 'package:nomo_ui_generator/annotations.dart';
-import 'package:nomo_ui_kit/components/buttons/base/nomo_button.dart';
 import 'package:nomo_ui_kit/components/buttons/primary/nomo_primary_button.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
 
@@ -160,7 +160,7 @@ class _ExpandableState extends State<Expandable> with TickerProviderStateMixin {
 
   void onTap() {
     if (widget.expandOnTap) stateNotifier.value = !stateNotifier.value;
-    if (widget.onTap != null) widget.onTap!();
+    widget.onTap?.call();
   }
 
   @override
