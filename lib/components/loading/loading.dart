@@ -31,24 +31,27 @@ class Loading extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = getFromContext(context, this);
 
-    if (endColor != null) {
-      return LoadingColorAnimation(
-        startColor: theme.color,
-        endColor: endColor!,
-        period: period ?? const Duration(milliseconds: 1000),
-        strokeWidth: theme.strokeWidth,
-      );
-    }
-
     return Container(
       width: size,
       height: size,
       padding: padding,
-      child: CircularProgressIndicator(
-        color: theme.color,
-        strokeWidth: theme.strokeWidth,
-        strokeCap: StrokeCap.round,
-      ),
+      child: endColor != null
+          ? LoadingColorAnimation(
+              startColor: theme.color,
+              endColor: endColor!,
+              period: period ?? const Duration(milliseconds: 1000),
+              size: size,
+              strokeWidth: theme.strokeWidth,
+            )
+          : CircularProgressIndicator(
+              color: theme.color,
+              strokeWidth: theme.strokeWidth,
+              strokeCap: StrokeCap.round,
+              constraints: BoxConstraints(
+                maxWidth: size ?? double.infinity,
+                maxHeight: size ?? double.infinity,
+              ),
+            ),
     );
   }
 }
@@ -58,12 +61,14 @@ class LoadingColorAnimation extends StatefulWidget {
   final Color endColor;
   final Duration period;
   final double strokeWidth;
+  final double? size;
 
   const LoadingColorAnimation({
     required this.endColor,
     required this.startColor,
     required this.period,
     required this.strokeWidth,
+    required this.size,
     super.key,
   });
 
@@ -99,6 +104,9 @@ class _LoadingColorAnimationState extends State<LoadingColorAnimation>
       valueColor: animation,
       strokeWidth: widget.strokeWidth,
       strokeCap: StrokeCap.round,
+      constraints: BoxConstraints(
+          maxWidth: widget.size ?? double.infinity,
+          maxHeight: widget.size ?? double.infinity),
     );
   }
 }
