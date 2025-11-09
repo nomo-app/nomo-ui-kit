@@ -76,6 +76,8 @@ final class NomoMenuImageItem<T> extends NomoMenuItem<T> {
     super.trailling,
     super.leading,
     super.children,
+    this.size,
   });
   final String imagePath;
+  final double? size;
 }

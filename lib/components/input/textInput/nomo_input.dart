@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nomo_ui_generator/annotations.dart';
 import 'package:nomo_ui_kit/animations/implicit/animated_nomo_default_textstyle.dart';
+import 'package:nomo_ui_kit/components/elevatedBox/elevated_box.dart';
 import 'package:nomo_ui_kit/components/input/cupertino_text_input.dart';
 import 'package:nomo_ui_kit/components/input/form/nomo_form.dart';
 import 'package:nomo_ui_kit/components/text/nomo_text.dart';
@@ -67,6 +68,9 @@ class NomoInput extends StatefulWidget {
   final Widget? top;
 
   final HitTestBehavior hitTestBehavior;
+
+  @NomoColorField<double?>(null)
+  final double? elevation;
 
   @NomoColorField(Colors.white)
   final Color? background;
@@ -156,6 +160,7 @@ class NomoInput extends StatefulWidget {
     this.minLines,
     this.textInputAction,
     this.valueNotifier,
+    this.elevation,
     this.validator,
     this.errorColor,
     this.errorStyle,
@@ -271,6 +276,11 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
       color: theme.background,
       borderRadius: theme.borderRadius,
       border: theme.border,
+      boxShadow: getElevationShadow(
+        elevation: widget.elevation ?? 0,
+        shadowColor: Colors.black12,
+        offset: Offset.zero,
+      ),
     );
 
     selectedDecoration =

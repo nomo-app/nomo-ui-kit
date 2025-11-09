@@ -217,6 +217,7 @@ class _NomoDropDownMenuState<T> extends State<NomoDropDownMenu<T>> {
                         child: Icon(
                           widget.icon,
                           color: theme.iconColor,
+                          size: 20,
                         ),
                       ),
                   ],
