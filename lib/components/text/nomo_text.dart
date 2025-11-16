@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-class NomoText extends StatefulWidget {
+class NomoText extends StatelessWidget {
   const NomoText(
     this.text, {
     super.key,
@@ -52,181 +52,30 @@ class NomoText extends StatefulWidget {
   final bool translate;
 
   @override
-  State<NomoText> createState() => _NomoTextState();
-}
-
-class _NomoTextState extends State<NomoText> {
-  double? _initialFontSize;
-
-  @override
-  void initState() {
-    super.initState();
-    _initialFontSize = widget.fontSize ?? widget.style?.fontSize;
-  }
-
-  double decreaseFontSize(double fontSize) {
-    if (widget.fontSizes != null) {
-      return widget.fontSizes!.firstWhere(
-        (size) => size < fontSize,
-        orElse: () => fontSize - widget.decreaseBy,
-      );
-    }
-
-    return fontSize - widget.decreaseBy;
-  }
-
-  double increaseFontSize(double fontSize) {
-    if (widget.fontSizes != null) {
-      return widget.fontSizes!.firstWhere(
-        (size) => size > fontSize,
-        orElse: () => fontSize + widget.decreaseBy,
-      );
-    }
-
-    return fontSize + widget.decreaseBy;
-  }
-
-  @override
   Widget build(BuildContext context) {
     final translator = NomoTextTranslator.of(context);
-    var effectiveText = widget.translate && translator != null
-        ? translator(widget.text)
-        : widget.text;
+    var effectiveText =
+        translate && translator != null ? translator(text) : text;
 
-    final textColor = widget.useInheritedTheme
-        ? widget.color ??
-            NomoTextTheme.maybeOf(context)?.color ??
-            widget.style?.color
-        : widget.color ??
-            widget.style?.color ??
-            NomoTextTheme.maybeOf(context)?.color;
+    final textColor = useInheritedTheme
+        ? color ?? NomoTextTheme.maybeOf(context)?.color ?? style?.color
+        : color ?? style?.color ?? NomoTextTheme.maybeOf(context)?.color;
 
-    var style = (widget.style ?? NomoDefaultTextStyle.of(context)).copyWith(
-      color: widget.opacity == null
-          ? textColor
-          : textColor?.withValues(alpha: widget.opacity),
-      fontWeight: widget.fontWeight,
-      fontSize: widget.fontSize ?? _initialFontSize,
+    var _style = (style ?? NomoDefaultTextStyle.of(context)).copyWith(
+      color:
+          opacity == null ? textColor : textColor?.withValues(alpha: opacity),
+      fontWeight: fontWeight,
+      fontSize: fontSize,
     );
 
     // if (!widget.fit) {
     return Text(
       effectiveText,
-      style: style,
-      maxLines: widget.maxLines,
-      overflow: widget.overflow,
-      textAlign: widget.textAlign,
-      textDirection: widget.textDirection,
-    );
-    // }
-
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final maxWidth = constraints.maxWidth;
-        final maxHeight = constraints.maxHeight;
-        var fontSize = _initialFontSize ?? widget.minFontSize;
-        final defaultTextStyle = DefaultTextStyle.of(context);
-        style = defaultTextStyle.style.merge(style);
-
-        if (widget.fitHeight != null) {
-          if (constraints.maxHeight == double.infinity) {
-            throw Exception('Cant use fitHeight with infinite height');
-          }
-          final (size, lines) = findStyleForFitHeight(
-            maxWidth: maxWidth,
-            maxHeight: maxHeight,
-            text: effectiveText,
-            style: style,
-          );
-          style = style.copyWith(fontSize: size);
-          return Text(
-            effectiveText,
-            style: style,
-            maxLines: lines,
-            overflow: widget.overflow,
-            textAlign: widget.textAlign,
-            textDirection: widget.textDirection,
-          );
-        }
-
-        style = style.copyWith(fontSize: fontSize);
-
-        final textPainter = TextPainter(
-          text: TextSpan(
-            text: effectiveText,
-            style: style,
-          ),
-          textDirection: widget.textDirection ?? TextDirection.ltr,
-          maxLines: widget.maxLines,
-        )..layout(maxWidth: maxWidth);
-
-        var lines = textPainter.computeLineMetrics();
-        var totalHeight = lines.fold(0.0, (prev, line) => prev + line.height);
-
-        while ((totalHeight > maxHeight || textPainter.didExceedMaxLines) &&
-            fontSize > widget.minFontSize) {
-          fontSize = decreaseFontSize(fontSize);
-
-          style = style.copyWith(fontSize: fontSize);
-
-          textPainter
-            ..text = TextSpan(
-              text: effectiveText,
-              style: style,
-            )
-            ..layout(maxWidth: maxWidth);
-          lines = textPainter.computeLineMetrics();
-          totalHeight = lines.fold(0.0, (prev, line) => prev + line.height);
-        }
-
-        while (totalHeight <= maxHeight &&
-            textPainter.didExceedMaxLines &&
-            fontSize < (_initialFontSize ?? widget.minFontSize)) {
-          fontSize = increaseFontSize(fontSize);
-
-          style = style.copyWith(fontSize: fontSize);
-
-          textPainter
-            ..text = TextSpan(
-              text: effectiveText,
-              style: style,
-            )
-            ..layout(maxWidth: maxWidth);
-          lines = textPainter.computeLineMetrics();
-          totalHeight = lines.fold(0.0, (prev, line) => prev + line.height);
-          if (totalHeight > maxHeight || textPainter.didExceedMaxLines) {
-            fontSize = decreaseFontSize(fontSize);
-            break;
-          }
-        }
-
-        final initalLength = effectiveText.length;
-        if (widget.textShortener != null) {
-          for (var i = 1;
-              textPainter.didExceedMaxLines || totalHeight > maxHeight;
-              i++) {
-            effectiveText =
-                widget.textShortener!(effectiveText, initalLength - i);
-            textPainter
-              ..text = TextSpan(
-                text: effectiveText,
-                style: style,
-              )
-              ..layout(maxWidth: maxWidth);
-            lines = textPainter.computeLineMetrics();
-            totalHeight = lines.fold(0.0, (prev, line) => prev + line.height);
-          }
-        }
-
-        return Text(
-          effectiveText,
-          style: style,
-          maxLines: widget.maxLines,
-          overflow: widget.overflow,
-          textAlign: widget.textAlign,
-          textDirection: widget.textDirection,
-        );
-      },
+      style: _style,
+      maxLines: maxLines,
+      overflow: overflow,
+      textAlign: textAlign,
+      textDirection: textDirection,
     );
   }
 }
