@@ -30,6 +30,7 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
   final CustomPainter? backgroundPainter;
   final Color? disabledBackgroundColor;
   final DecorationImage? image;
+  final bool? textFirst;
 
   @override
   final FocusNode? focusNode;
@@ -103,6 +104,7 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
     this.backgroundPainter,
     this.icon,
     this.spacing = 12,
+    this.textFirst,
     this.backgroundColor,
     this.foregroundColor,
     this.elevation,
@@ -170,9 +172,9 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
         .textStyle
         ?.copyWith(color: foregroundColor, fontWeight: FontWeight.bold);
 
-    final effectiveChild = switch (direction) {
+    final effectiveChild = switch ((direction, textFirst ?? false)) {
       _ when child != null => child!,
-      Axis.horizontal => Row(
+      (Axis.horizontal, false) => Row(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -197,7 +199,7 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
               ),
           ],
         ),
-      Axis.vertical => Column(
+      (Axis.vertical, false) => Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             if (type == ActionType.loading)
@@ -219,6 +221,55 @@ class PrimaryNomoButton extends StatelessWidget with NomoButtonMixin {
                 style: textStyle,
                 translate: translate ?? true,
               ),
+          ],
+        ),
+      (Axis.horizontal, true) => Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (text != null)
+              NomoText(
+                text!,
+                style: textStyle,
+                translate: translate ?? true,
+              ),
+            if (text != null && type == ActionType.loading)
+              SizedBox(width: spacing),
+            if (icon != null && text != null) SizedBox(width: spacing),
+            if (type == ActionType.loading)
+              Loading(
+                size: switch (height) {
+                  final double height => height / 3,
+                  _ => 24,
+                },
+                color: foregroundColor,
+              )
+            else if (icon != null)
+              Icon(icon, size: iconSize),
+          ],
+        ),
+      (Axis.vertical, true) => Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (text != null)
+              NomoText(
+                text!,
+                style: textStyle,
+                translate: translate ?? true,
+              ),
+            if (icon != null && text != null) SizedBox(height: spacing),
+            if (text != null && type == ActionType.loading)
+              SizedBox(height: spacing),
+            if (type == ActionType.loading)
+              Loading(
+                size: switch (height) {
+                  final double height => height / 3,
+                  _ => 24,
+                },
+                color: foregroundColor,
+              )
+            else if (icon != null)
+              Icon(icon, size: iconSize),
           ],
         ),
     };
