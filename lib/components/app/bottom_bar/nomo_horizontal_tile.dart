@@ -5,6 +5,7 @@ import 'package:nomo_ui_kit/components/text/nomo_text.dart';
 import 'package:nomo_ui_kit/components/vertical_menu/nomo_vertical_menu.dart';
 import 'package:nomo_ui_kit/entities/menu_item.dart';
 import 'package:nomo_ui_kit/theme/nomo_theme.dart';
+import 'package:nomo_ui_kit/utils/layout_extensions.dart';
 
 class NomoHorizontalListTile<T> extends StatefulWidget {
   const NomoHorizontalListTile({
@@ -16,12 +17,14 @@ class NomoHorizontalListTile<T> extends StatefulWidget {
     this.style,
     this.onTap,
     this.selected = false,
+    this.direction,
   });
   final NomoMenuItem<T> item;
   final NomoBottomBarThemeData theme;
   final TextStyle? style;
   final double? widthFactor;
   final double? itemWidth;
+  final Axis? direction;
 
   final VoidCallback? onTap;
   final bool selected;
@@ -128,10 +131,12 @@ class _NomoHorizontalListTileState<T> extends State<NomoHorizontalListTile<T>>
                 padding: widget.theme.itemPadding,
                 child: Center(
                   widthFactor: widget.widthFactor,
-                  child: Column(
+                  child: Flex(
+                    direction: widget.direction ?? Axis.vertical,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       if (icon != null) icon,
+                      8.hSpacing,
                       Row(
                         children: [
                           if (widget.item.leading != null)

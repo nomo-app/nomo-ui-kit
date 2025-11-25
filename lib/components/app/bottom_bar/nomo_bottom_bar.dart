@@ -32,6 +32,7 @@ class NomoBottomBar<T> extends StatelessWidget {
     this.elevation,
     this.borderRadius,
     this.mainAxisAlignment,
+    this.childDirection,
     this.crossAxisAlignment,
     this.border,
   }) : assert(
@@ -49,6 +50,7 @@ class NomoBottomBar<T> extends StatelessWidget {
   final MainAxisAlignment? mainAxisAlignment;
   final CrossAxisAlignment? crossAxisAlignment;
   final BoxBorder? border;
+  final Axis? childDirection;
 
   @NomoSizingField(56.0)
   final double? height;
@@ -110,6 +112,7 @@ class NomoBottomBar<T> extends StatelessWidget {
                 theme: theme,
                 selected: item.key == selected,
                 style: style,
+                direction: childDirection,
                 onTap: () => onTap?.call(item),
               );
               return itemDecorator?.call(item, widget) ?? widget;
