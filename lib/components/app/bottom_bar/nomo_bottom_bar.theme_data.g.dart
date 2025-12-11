@@ -12,12 +12,16 @@ class NomoBottomBarColorDataNullable {
   final Color? foreground;
   final Color? background;
   final Color? selectedForeground;
+  final Color? itemBackground;
+  final Color? selectedBackground;
   final BorderRadius? itemBorderRadius;
   final BorderRadius? borderRadius;
   const NomoBottomBarColorDataNullable({
     this.foreground,
     this.background,
     this.selectedForeground,
+    this.itemBackground,
+    this.selectedBackground,
     this.itemBorderRadius,
     this.borderRadius,
   });
@@ -31,6 +35,10 @@ class NomoBottomBarColorData implements NomoBottomBarColorDataNullable {
   @override
   final Color selectedForeground;
   @override
+  final Color itemBackground;
+  @override
+  final Color selectedBackground;
+  @override
   final BorderRadius itemBorderRadius;
   @override
   final BorderRadius borderRadius;
@@ -38,6 +46,8 @@ class NomoBottomBarColorData implements NomoBottomBarColorDataNullable {
     this.foreground = Colors.black,
     this.background = Colors.white,
     this.selectedForeground = Colors.red,
+    this.itemBackground = Colors.transparent,
+    this.selectedBackground = Colors.transparent,
     this.itemBorderRadius = const BorderRadius.all(Radius.circular(8)),
     this.borderRadius = BorderRadius.zero,
   });
@@ -48,6 +58,9 @@ class NomoBottomBarColorData implements NomoBottomBarColorDataNullable {
       background: Color.lerp(a.background, b.background, t)!,
       selectedForeground:
           Color.lerp(a.selectedForeground, b.selectedForeground, t)!,
+      itemBackground: Color.lerp(a.itemBackground, b.itemBackground, t)!,
+      selectedBackground:
+          Color.lerp(a.selectedBackground, b.selectedBackground, t)!,
       itemBorderRadius:
           BorderRadius.lerp(a.itemBorderRadius, b.itemBorderRadius, t)!,
       borderRadius: BorderRadius.lerp(a.borderRadius, b.borderRadius, t)!,
@@ -61,6 +74,9 @@ class NomoBottomBarColorData implements NomoBottomBarColorDataNullable {
       background: override?.background ?? base.background,
       selectedForeground:
           override?.selectedForeground ?? base.selectedForeground,
+      itemBackground: override?.itemBackground ?? base.itemBackground,
+      selectedBackground:
+          override?.selectedBackground ?? base.selectedBackground,
       itemBorderRadius: override?.itemBorderRadius ?? base.itemBorderRadius,
       borderRadius: override?.borderRadius ?? base.borderRadius,
     );
@@ -150,6 +166,10 @@ class NomoBottomBarThemeData
   @override
   final Color selectedForeground;
   @override
+  final Color itemBackground;
+  @override
+  final Color selectedBackground;
+  @override
   final BorderRadius itemBorderRadius;
   @override
   final BorderRadius borderRadius;
@@ -169,6 +189,8 @@ class NomoBottomBarThemeData
     this.foreground = Colors.black,
     this.background = Colors.white,
     this.selectedForeground = Colors.red,
+    this.itemBackground = Colors.transparent,
+    this.selectedBackground = Colors.transparent,
     this.itemBorderRadius = const BorderRadius.all(Radius.circular(8)),
     this.borderRadius = BorderRadius.zero,
     this.height = 56.0,
@@ -187,6 +209,8 @@ class NomoBottomBarThemeData
       foreground: colors.foreground,
       background: colors.background,
       selectedForeground: colors.selectedForeground,
+      itemBackground: colors.itemBackground,
+      selectedBackground: colors.selectedBackground,
       itemBorderRadius: colors.itemBorderRadius,
       borderRadius: colors.borderRadius,
       height: sizing.height,
@@ -202,6 +226,8 @@ class NomoBottomBarThemeData
       foreground: override?.foreground ?? foreground,
       background: override?.background ?? background,
       selectedForeground: override?.selectedForeground ?? selectedForeground,
+      itemBackground: override?.itemBackground ?? itemBackground,
+      selectedBackground: override?.selectedBackground ?? selectedBackground,
       itemBorderRadius: override?.itemBorderRadius ?? itemBorderRadius,
       borderRadius: override?.borderRadius ?? borderRadius,
       height: override?.height ?? height,
@@ -226,6 +252,10 @@ class NomoBottomBarThemeDataNullable
   @override
   final Color? selectedForeground;
   @override
+  final Color? itemBackground;
+  @override
+  final Color? selectedBackground;
+  @override
   final BorderRadius? itemBorderRadius;
   @override
   final BorderRadius? borderRadius;
@@ -245,6 +275,8 @@ class NomoBottomBarThemeDataNullable
     this.foreground,
     this.background,
     this.selectedForeground,
+    this.itemBackground,
+    this.selectedBackground,
     this.itemBorderRadius,
     this.borderRadius,
     this.height,
@@ -299,6 +331,9 @@ NomoBottomBarThemeData getFromContext(
     background: widget.background ?? themeData.background,
     selectedForeground:
         widget.selectedForeground ?? themeData.selectedForeground,
+    itemBackground: widget.itemBackground ?? themeData.itemBackground,
+    selectedBackground:
+        widget.selectedBackground ?? themeData.selectedBackground,
     itemBorderRadius: widget.itemBorderRadius ?? themeData.itemBorderRadius,
     borderRadius: widget.borderRadius ?? themeData.borderRadius,
     height: widget.height ?? themeData.height,

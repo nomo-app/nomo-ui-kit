@@ -9,6 +9,7 @@ part of 'nomo_input.dart';
 
 // ignore_for_file: prefer_constructors_over_static_methods,avoid_unused_constructor_parameters, require_trailing_commas, avoid_init_to_null, use_named_constants, strict_raw_type, prefer_const_constructors, unnecessary_non_null_assertion
 class NomoInputColorDataNullable {
+  final double? elevation;
   final Color? background;
   final Color? errorColor;
   final BorderRadiusGeometry? borderRadius;
@@ -18,6 +19,7 @@ class NomoInputColorDataNullable {
   final Border? selectedErrorBorder;
   final EdgeInsets? margin;
   const NomoInputColorDataNullable({
+    this.elevation,
     this.background,
     this.errorColor,
     this.borderRadius,
@@ -30,6 +32,8 @@ class NomoInputColorDataNullable {
 }
 
 class NomoInputColorData implements NomoInputColorDataNullable {
+  @override
+  final double? elevation;
   @override
   final Color background;
   @override
@@ -47,6 +51,7 @@ class NomoInputColorData implements NomoInputColorDataNullable {
   @override
   final EdgeInsets margin;
   const NomoInputColorData({
+    this.elevation = null,
     this.background = Colors.white,
     this.errorColor = Colors.redAccent,
     this.borderRadius = const BorderRadius.all(Radius.circular(8)),
@@ -63,6 +68,7 @@ class NomoInputColorData implements NomoInputColorDataNullable {
   static NomoInputColorData lerp(
       NomoInputColorData a, NomoInputColorData b, double t) {
     return NomoInputColorData(
+      elevation: lerpDouble(a.elevation, b.elevation, t),
       background: Color.lerp(a.background, b.background, t)!,
       errorColor: Color.lerp(a.errorColor, b.errorColor, t)!,
       borderRadius:
@@ -79,6 +85,7 @@ class NomoInputColorData implements NomoInputColorDataNullable {
   static NomoInputColorData overrideWith(NomoInputColorData base,
       [NomoInputColorDataNullable? override]) {
     return NomoInputColorData(
+      elevation: override?.elevation ?? base.elevation,
       background: override?.background ?? base.background,
       errorColor: override?.errorColor ?? base.errorColor,
       borderRadius: override?.borderRadius ?? base.borderRadius,
@@ -155,6 +162,8 @@ class NomoInputConstants implements NomoInputConstantsNullable {
 class NomoInputThemeData
     implements NomoInputColorData, NomoInputSizingData, NomoInputConstants {
   @override
+  final double? elevation;
+  @override
   final Color background;
   @override
   final Color errorColor;
@@ -181,6 +190,7 @@ class NomoInputThemeData
   @override
   final double titleSpacing;
   const NomoInputThemeData({
+    this.elevation = null,
     this.background = Colors.white,
     this.errorColor = Colors.redAccent,
     this.borderRadius = const BorderRadius.all(Radius.circular(8)),
@@ -205,6 +215,7 @@ class NomoInputThemeData
     NomoInputConstants constants,
   ) {
     return NomoInputThemeData(
+      elevation: colors.elevation,
       background: colors.background,
       errorColor: colors.errorColor,
       borderRadius: colors.borderRadius,
@@ -222,6 +233,7 @@ class NomoInputThemeData
   }
   NomoInputThemeData copyWith([NomoInputThemeDataNullable? override]) {
     return NomoInputThemeData(
+      elevation: override?.elevation ?? elevation,
       background: override?.background ?? background,
       errorColor: override?.errorColor ?? errorColor,
       borderRadius: override?.borderRadius ?? borderRadius,
@@ -244,6 +256,8 @@ class NomoInputThemeDataNullable
         NomoInputColorDataNullable,
         NomoInputSizingDataNullable,
         NomoInputConstantsNullable {
+  @override
+  final double? elevation;
   @override
   final Color? background;
   @override
@@ -271,6 +285,7 @@ class NomoInputThemeDataNullable
   @override
   final double? titleSpacing;
   const NomoInputThemeDataNullable({
+    this.elevation,
     this.background,
     this.errorColor,
     this.borderRadius,
@@ -327,6 +342,7 @@ NomoInputThemeData getFromContext(
           globalColorTheme, globalSizingTheme, globalConstants)
       .copyWith(themeOverride);
   return NomoInputThemeData(
+    elevation: widget.elevation ?? themeData.elevation,
     background: widget.background ?? themeData.background,
     errorColor: widget.errorColor ?? themeData.errorColor,
     borderRadius: widget.borderRadius ?? themeData.borderRadius,

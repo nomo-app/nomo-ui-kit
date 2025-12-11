@@ -35,7 +35,7 @@ class NomoHorizontalListTile<T> extends StatefulWidget {
 }
 
 class _NomoHorizontalListTileState<T> extends State<NomoHorizontalListTile<T>>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   NomoBottomBarThemeData get theme => widget.theme;
 
   late final AnimationController foregroundController = AnimationController(
@@ -43,7 +43,13 @@ class _NomoHorizontalListTileState<T> extends State<NomoHorizontalListTile<T>>
     vsync: this,
   );
 
+  late final AnimationController backgroundController = AnimationController(
+    duration: kDuration,
+    vsync: this,
+  );
+
   late Animation<Color?> foreGroundAnimation;
+  late Animation<Color?> backgroundAnimation;
 
   @override
   void initState() {
@@ -52,12 +58,18 @@ class _NomoHorizontalListTileState<T> extends State<NomoHorizontalListTile<T>>
       end: widget.theme.selectedForeground,
     ).animate(foregroundController);
 
+    backgroundAnimation = ColorTween(
+      begin: widget.theme.itemBackground,
+      end: widget.theme.selectedBackground,
+    ).animate(backgroundController);
+
     super.initState();
   }
 
   @override
   void dispose() {
     foregroundController.dispose();
+    backgroundController.dispose();
     super.dispose();
   }
 
@@ -67,6 +79,12 @@ class _NomoHorizontalListTileState<T> extends State<NomoHorizontalListTile<T>>
       begin: widget.theme.foreground,
       end: widget.theme.selectedForeground,
     ).animate(foregroundController);
+
+    backgroundAnimation = ColorTween(
+      begin: widget.theme.itemBackground,
+      end: widget.theme.selectedBackground,
+    ).animate(backgroundController);
+
     super.didUpdateWidget(oldWidget);
   }
 
@@ -74,8 +92,10 @@ class _NomoHorizontalListTileState<T> extends State<NomoHorizontalListTile<T>>
   Widget build(BuildContext context) {
     if (widget.selected) {
       foregroundController.forward();
+      backgroundController.forward();
     } else {
       foregroundController.reverse();
+      backgroundController.reverse();
     }
 
     return MouseRegion(
@@ -88,9 +108,13 @@ class _NomoHorizontalListTileState<T> extends State<NomoHorizontalListTile<T>>
         foregroundController.reverse();
       },
       child: AnimatedBuilder(
-        animation: foregroundController,
+        animation: Listenable.merge([
+          foregroundController,
+          backgroundController,
+        ]),
         builder: (context, snapshot) {
           final foreground = foreGroundAnimation.value;
+          final background = backgroundAnimation.value;
 
           final icon = switch (widget.item) {
             final NomoMenuIconItem<T> iconItem => Icon(
@@ -117,7 +141,7 @@ class _NomoHorizontalListTileState<T> extends State<NomoHorizontalListTile<T>>
             _ => null
           };
           return Material(
-            color: Colors.transparent,
+            color: background,
             borderRadius: theme.itemBorderRadius,
             child: InkWell(
               onTap: widget.onTap,

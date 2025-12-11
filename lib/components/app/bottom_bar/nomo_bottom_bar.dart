@@ -23,6 +23,8 @@ class NomoBottomBar<T> extends StatelessWidget {
     this.background,
     this.foreground,
     this.selectedForeground,
+    this.itemBackground,
+    this.selectedBackground,
     this.itemBorderRadius,
     this.spacing,
     this.padding,
@@ -78,6 +80,12 @@ class NomoBottomBar<T> extends StatelessWidget {
 
   @NomoColorField(Colors.red)
   final Color? selectedForeground;
+
+  @NomoColorField(Colors.transparent)
+  final Color? itemBackground;
+
+  @NomoColorField(Colors.transparent)
+  final Color? selectedBackground;
 
   @NomoColorField(BorderRadius.all(Radius.circular(8)))
   final BorderRadius? itemBorderRadius;
