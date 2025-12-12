@@ -22,6 +22,8 @@ class NomoScaffold extends StatefulWidget {
     this.drawer,
     this.nestedAppBar,
     this.endDrawer,
+    this.drawerVisibleNotifier,
+    this.endDrawerVisibleNotifier,
     this.floatingActionButton,
     this.floatingActionButtonLocation,
     this.backgroundImage,
@@ -35,6 +37,17 @@ class NomoScaffold extends StatefulWidget {
   final Widget? bottomSheet;
   final Widget? drawer;
   final Widget? endDrawer;
+
+  /// Optional notifier to programmatically control drawer visibility.
+  /// When provided, the scaffold will listen to this notifier and
+  /// open/close the drawer accordingly.
+  final ValueNotifier<bool>? drawerVisibleNotifier;
+
+  /// Optional notifier to programmatically control end drawer visibility.
+  /// When provided, the scaffold will listen to this notifier and
+  /// open/close the end drawer accordingly.
+  final ValueNotifier<bool>? endDrawerVisibleNotifier;
+
   final Widget? floatingActionButton;
   final FloatingActionButtonLocation? floatingActionButtonLocation;
   final DecorationImage? backgroundImage;
@@ -101,6 +114,61 @@ class NomoScaffold extends StatefulWidget {
 
 class _NomoScaffoldState extends State<NomoScaffold> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+    widget.drawerVisibleNotifier?.addListener(_onDrawerNotifierChanged);
+    widget.endDrawerVisibleNotifier?.addListener(_onEndDrawerNotifierChanged);
+  }
+
+  @override
+  void didUpdateWidget(covariant NomoScaffold oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.drawerVisibleNotifier != widget.drawerVisibleNotifier) {
+      oldWidget.drawerVisibleNotifier?.removeListener(_onDrawerNotifierChanged);
+      widget.drawerVisibleNotifier?.addListener(_onDrawerNotifierChanged);
+    }
+    if (oldWidget.endDrawerVisibleNotifier != widget.endDrawerVisibleNotifier) {
+      oldWidget.endDrawerVisibleNotifier?.removeListener(_onEndDrawerNotifierChanged);
+      widget.endDrawerVisibleNotifier?.addListener(_onEndDrawerNotifierChanged);
+    }
+  }
+
+  @override
+  void dispose() {
+    widget.drawerVisibleNotifier?.removeListener(_onDrawerNotifierChanged);
+    widget.endDrawerVisibleNotifier?.removeListener(_onEndDrawerNotifierChanged);
+    super.dispose();
+  }
+
+  void _onDrawerNotifierChanged() {
+    final scaffoldState = scaffoldKey.currentState;
+    if (scaffoldState == null) return;
+
+    final shouldBeOpen = widget.drawerVisibleNotifier?.value ?? false;
+    final isOpen = scaffoldState.isDrawerOpen;
+
+    if (shouldBeOpen && !isOpen) {
+      scaffoldState.openDrawer();
+    } else if (!shouldBeOpen && isOpen) {
+      Navigator.of(context).pop();
+    }
+  }
+
+  void _onEndDrawerNotifierChanged() {
+    final scaffoldState = scaffoldKey.currentState;
+    if (scaffoldState == null) return;
+
+    final shouldBeOpen = widget.endDrawerVisibleNotifier?.value ?? false;
+    final isOpen = scaffoldState.isEndDrawerOpen;
+
+    if (shouldBeOpen && !isOpen) {
+      scaffoldState.openEndDrawer();
+    } else if (!shouldBeOpen && isOpen) {
+      Navigator.of(context).pop();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

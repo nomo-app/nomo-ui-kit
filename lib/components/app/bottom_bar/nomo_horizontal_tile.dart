@@ -157,10 +157,10 @@ class _NomoHorizontalListTileState<T> extends State<NomoHorizontalListTile<T>>
                   widthFactor: widget.widthFactor,
                   child: Flex(
                     direction: widget.direction ?? Axis.vertical,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       if (icon != null) icon,
-                      8.hSpacing,
+                      10.spacing,
                       Row(
                         children: [
                           if (widget.item.leading != null)

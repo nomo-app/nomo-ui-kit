@@ -18,12 +18,14 @@ class TextInputLayoutDelegate
     required this.animation,
     required this.textAlign,
     required this.textSpacing,
+    this.centerPlaceholder = false,
   }) : super(key: ValueKey(children.hashCode));
   final Map<TextLayoutItem, Widget> children;
   final Size? placeHolderTitleHeight;
   final double animation;
   final TextAlign textAlign;
   final double? textSpacing;
+  final bool centerPlaceholder;
 
   @override
   Iterable<TextLayoutItem> get slots => children.keys;
@@ -39,11 +41,13 @@ class TextInputLayoutDelegate
     BuildContext context,
   ) {
     return TextInputLayoutRenderbox(
-        items: children.keys.toList(),
-        placeHolderTitleHeight: placeHolderTitleHeight,
-        animation: animation,
-        textAlign: textAlign,
-        textSpacing: textSpacing,);
+      items: children.keys.toList(),
+      placeHolderTitleHeight: placeHolderTitleHeight,
+      animation: animation,
+      textAlign: textAlign,
+      textSpacing: textSpacing,
+      centerPlaceholder: centerPlaceholder,
+    );
   }
 
   @override
@@ -65,6 +69,7 @@ class TextInputLayoutRenderbox extends RenderBox
     required this.animation,
     required this.textAlign,
     required this.textSpacing,
+    this.centerPlaceholder = false,
   });
   final List<TextLayoutItem> items;
   final Size? placeHolderTitleHeight;
@@ -72,6 +77,7 @@ class TextInputLayoutRenderbox extends RenderBox
   final double animation;
   final TextAlign textAlign;
   final double? textSpacing;
+  final bool centerPlaceholder;
 
   double centerVertically(double maxHeight, Size s) {
     if (maxHeight == double.infinity) {
@@ -192,7 +198,10 @@ class TextInputLayoutRenderbox extends RenderBox
         TextAlign.center => (maxWidth - placeHolderSize.width) / 2,
       };
 
-      final placeHolderOffset = Offset(dx, topInset);
+      // Compute dy: if centerPlaceholder is true, center vertically in the available space
+      final dy = centerPlaceholder ? topInset : 0.0;
+
+      final placeHolderOffset = Offset(dx, dy);
       (placeHolder.parentData! as BoxParentData).offset = placeHolderOffset;
     }
 

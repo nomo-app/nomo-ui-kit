@@ -226,6 +226,7 @@ class CupertinoInput extends StatefulWidget {
     this.bottom,
     this.top,
     this.hitTestBehavior = HitTestBehavior.translucent,
+    this.centerPlaceholder = false,
   })  : assert(obscuringCharacter.length == 1),
         smartDashesType = smartDashesType ??
             (obscureText ? SmartDashesType.disabled : SmartDashesType.enabled),
@@ -309,6 +310,9 @@ class CupertinoInput extends StatefulWidget {
   final Widget? top;
 
   final HitTestBehavior hitTestBehavior;
+
+  /// When true, centers the placeholder vertically within the input field.
+  final bool centerPlaceholder;
 
   /// An optional [Widget] to display before the text.
   final Widget? prefix;
@@ -1357,6 +1361,7 @@ class _CupertinoInputState extends State<CupertinoInput>
                       duration: widget.duration,
                       textAlign: widget.textAlign,
                       textSpacing: widget.textSpacing,
+                      centerPlaceholder: widget.centerPlaceholder,
                     ),
                   ),
                   if (widget.bottom != null) widget.bottom!,
@@ -1385,6 +1390,7 @@ class _TextInputDependetAttachment extends StatefulWidget {
   final Curve curve;
   final TextAlign textAlign;
   final double textSpacing;
+  final bool centerPlaceholder;
 
   const _TextInputDependetAttachment({
     required this.text,
@@ -1398,6 +1404,7 @@ class _TextInputDependetAttachment extends StatefulWidget {
     required this.curve,
     required this.textAlign,
     required this.textSpacing,
+    this.centerPlaceholder = false,
     this.trailling,
     this.leading,
     this.placeHolder,
@@ -1497,6 +1504,7 @@ class _TextInputDependetAttachmentState
 
         return TextInputLayoutDelegate(
           textSpacing: widget.textSpacing,
+          centerPlaceholder: widget.centerPlaceholder,
           children: {
             if (widget.leading != null) TextLayoutItem.leading: widget.leading!,
             if (widget.trailling != null)

@@ -69,6 +69,9 @@ class NomoInput extends StatefulWidget {
 
   final HitTestBehavior hitTestBehavior;
 
+  /// When true, centers the placeholder vertically within the input field.
+  final bool centerPlaceholder;
+
   @NomoColorField<double?>(null)
   final double? elevation;
 
@@ -194,6 +197,7 @@ class NomoInput extends StatefulWidget {
     this.autoCorrect = false,
     this.onFieldSubmitted,
     this.textSpacing,
+    this.centerPlaceholder = false,
   })  : assert(
           height == null || usePlaceholderAsTitle == false,
           'Not supported please ask Thomas to implement',
@@ -530,6 +534,7 @@ class _NomoInputState extends State<NomoInput> with TickerProviderStateMixin {
                       editableTextState: editableTextState,
                     );
                   },
+                  centerPlaceholder: widget.centerPlaceholder,
                 ),
               ),
             ),

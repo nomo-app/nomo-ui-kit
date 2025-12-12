@@ -37,6 +37,7 @@ class NomoBottomBar<T> extends StatelessWidget {
     this.childDirection,
     this.crossAxisAlignment,
     this.border,
+    this.expandChildren = false,
   }) : assert(
           items.length > 0 && items.length <= 5,
           'Items must be between 1 and 5',
@@ -53,6 +54,10 @@ class NomoBottomBar<T> extends StatelessWidget {
   final CrossAxisAlignment? crossAxisAlignment;
   final BoxBorder? border;
   final Axis? childDirection;
+
+  /// When true, each child will be wrapped in an [Expanded] widget
+  /// to make them take equal space in the row.
+  final bool expandChildren;
 
   @NomoSizingField(56.0)
   final double? height;
@@ -123,7 +128,8 @@ class NomoBottomBar<T> extends StatelessWidget {
                 direction: childDirection,
                 onTap: () => onTap?.call(item),
               );
-              return itemDecorator?.call(item, widget) ?? widget;
+              final decorated = itemDecorator?.call(item, widget) ?? widget;
+              return expandChildren ? Expanded(child: decorated) : decorated;
             }.call(),
         ],
       ),
